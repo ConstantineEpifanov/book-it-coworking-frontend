@@ -5,18 +5,33 @@ import "./button.css";
 /**
  * Primary UI component for user interaction
  */
-export const Button = ({ primary, backgroundColor, size, label, ...props }) => {
+export const Button = ({
+  primary,
+  backgroundColor,
+  size,
+  label,
+  isValid,
+  ...props
+}) => {
   const mode = primary
     ? "storybook-button--primary"
     : "storybook-button--secondary";
+
+  const styleButtonPrimary = [
+    "storybook-button",
+    `storybook-button--${size}`,
+    mode,
+  ].join(" ");
+  // стили для валидации кнопки
+  const styleButtonValid = isValid ? "" : "storybook-button--disabled";
+
   return (
     <button
       type="button"
-      className={["storybook-button", `storybook-button--${size}`, mode].join(
-        " ",
-      )}
+      className={`${styleButtonPrimary} ${styleButtonValid}`}
       style={backgroundColor && { backgroundColor }}
       {...props}
+      disabled={!isValid}
     >
       {label}
     </button>
@@ -39,11 +54,15 @@ Button.propTypes = {
   /**
    * Button contents
    */
-  label: PropTypes.string.isRequired,
+  label: PropTypes.string,
   /**
    * Optional click handler
    */
   onClick: PropTypes.func,
+  /**
+   * =Boolean login props
+   */
+  isValid: PropTypes.bool,
 };
 
 Button.defaultProps = {
@@ -51,4 +70,6 @@ Button.defaultProps = {
   primary: false,
   size: "medium",
   onClick: undefined,
+  label: "Продолжить",
+  isValid: false,
 };
