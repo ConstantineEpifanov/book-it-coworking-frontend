@@ -1,12 +1,15 @@
 import React from "react";
-import logo from "./logo.svg";
+// import logo from "./logo.svg";
 import "./App.css";
+import EntryForm from "./components/EntryForm/EntryForm";
+// import Popup from "./components/Popup/Popup";
 
 function App() {
   return (
     <div className="App">
+      <EntryForm title="Вход" btnText="Войти" isValidBtn="true" />
       <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
+        {/* <img src={logo} className="App-logo" alt="logo" />
         <p>
           Edit <code>src/App.js</code> and save to reload.
         </p>
@@ -17,7 +20,7 @@ function App() {
           rel="noopener noreferrer"
         >
           Learn React
-        </a>
+        </a> */}
       </header>
     </div>
   );

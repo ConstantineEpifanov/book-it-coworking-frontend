@@ -1,0 +1,39 @@
+.button {
+  outline: none;
+  border: none;
+  box-sizing: border-box;
+  cursor: pointer;
+  background-color: #0d0137;
+  transition: 0.3s ease;
+  padding: 0;
+  margin: 0;
+  color: #fff;
+  text-align: center;
+  opacity: 1;
+  border-radius: 20px;
+}
+
+.button:hover {
+  opacity: 0.8;
+}
+
+.button_disabled {
+  opacity: 0.3;
+  pointer-events: none;
+}
+
+.button_type_close {
+  background: url("../../images/close-icon.svg");
+  background-size: cover;
+  border: none;
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  width: 20px;
+  height: 20px;
+}
+
+.button_type_form {
+  width: 360px;
+  padding: 12px 32px;
+}
