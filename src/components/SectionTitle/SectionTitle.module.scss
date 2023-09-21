@@ -1,0 +1,11 @@
+@import "./../../scss/variables.scss";
+
+.title {
+  margin: 0;
+  padding: 0;
+  color: $black;
+  font-size: 60px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 72px;
+}
