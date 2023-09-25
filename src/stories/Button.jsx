@@ -5,14 +5,14 @@ import "./button.css";
 /**
  * Primary UI component for user interaction
  */
-export const Button = ({
+export function Button({
   primary,
   backgroundColor,
   size,
   label,
   isValid,
   ...props
-}) => {
+}) {
   const mode = primary
     ? "storybook-button--primary"
     : "storybook-button--secondary";
@@ -36,7 +36,7 @@ export const Button = ({
       {label}
     </button>
   );
-};
+}
 
 Button.propTypes = {
   /**

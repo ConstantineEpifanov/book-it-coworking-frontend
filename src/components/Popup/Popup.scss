@@ -1,0 +1,44 @@
+@import "../../scss/variables.scss";
+
+.popup {
+  display: flex;
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  top: 0;
+  height: 100%;
+  width: 100%;
+  backdrop-filter: blur(5px);
+  align-items: center;
+  justify-content: center;
+  visibility: visible;
+  opacity: 1;
+  transition:
+    visibility 0.5s,
+    opacity 0.5s ease;
+
+  &__container {
+    min-width: 200px;
+    max-width: 520px;
+    width: calc(100% - 160px);
+    border-radius: 20px;
+    box-sizing: border-box;
+    background: $light-gray;
+    padding: 80px;
+    position: relative;
+    box-shadow: 0px 0px 25px rgba(0, 0, 0, 0.15);
+  }
+  &__header {
+    font-size: 40px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 48px;
+  }
+  &__text {
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 30px;
+  }
+}
