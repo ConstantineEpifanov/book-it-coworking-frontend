@@ -1,7 +1,7 @@
 import { SectionTitle } from "./SectionTitle";
 
 export default {
-  title: "SectionTitle",
+  title: "Components/SectionTitle",
   component: SectionTitle,
   tags: ["autodocs"],
   parameters: {
