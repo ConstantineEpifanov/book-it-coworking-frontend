@@ -1,0 +1,64 @@
+
+@import "./../../scss/variables.scss";
+@import url("./../../vendor/fonts/fonts.css");
+@import url("./../../vendor/normalize.css");
+
+.rule {
+  margin: 0;
+  padding: 0;
+  display: flex;
+  width: 550px;
+  padding: 20px;
+  flex-direction: column;
+  border-radius: 40px;
+  background-color: $main-light-grey;
+
+  &__img {
+    width: 170px;
+    height: 170px;
+  }
+
+  &__title {
+    font-family: $font-family;
+    font-style: normal;
+    font-weight: 500;
+    margin: 20px 0;
+    padding: 0;
+    font-size: 20px;
+    line-height: 1.5;
+    text-transform: uppercase;
+    color: $black;
+  }
+
+  &__scroll-content {
+    border-radius: 20px;
+    width: 510px;
+    height: 292px;
+    background-color: $main-white;
+    overflow-y: auto;
+
+    &::-webkit-scrollbar {
+      width: 4px;
+      background-color: transparent;
+      border-radius: 20px;
+      cursor: pointer;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      width: 4px;
+      background-color: $gray;
+      border-radius: 20px;
+    }
+  }
+
+  &__text {
+    font-family: $font-family;
+    font-style: normal;
+    font-weight: 300;
+    padding: 12px 12px 12px 25px;
+    color: $main-black;
+    font-size: 14px;
+    line-height: 1.57;
+    margin: 0;
+  }
+}
