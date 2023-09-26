@@ -6,6 +6,7 @@ import Popup from "./components/Popup/Popup";
 import Button from "./components/UI-kit/Button/Button";
 import Input from "./components/UI-kit/Input/Input";
 import { Logo } from "./components/UI-kit/Logo/Logo";
+import { Footer } from "./components/Footer/Footer";
 
 function App() {
   // временно выставлено true, далее нужно поменять значение на false
@@ -57,6 +58,7 @@ function App() {
           Learn React
         </a>
       </header>
+      <Footer />
     </div>
   );
 }

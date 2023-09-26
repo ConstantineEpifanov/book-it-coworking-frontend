@@ -8,6 +8,7 @@
   border: 2px solid $dark-gray;
   background: $white;
   position: relative;
+  z-index: 0;
   // margin-bottom: 34px;
   /* кастомный псевдоэлемент для placeholder */
   &::before {
