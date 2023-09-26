@@ -27,3 +27,13 @@
     url("./Onest-Medium.woff") format("woff"),
     url("./OnestMedium1602-hint.ttf") format("ttf");
 }
+
+@font-face {
+  font-family: "MursGothic";
+  font-style: normal;
+  font-weight: 800;
+  font-display: swap;
+  src:
+    url("./MursGothic-WideDark.woff") format("woff"),
+    url("./MursGothic-WideDark.ttf") format("ttf");
+}
