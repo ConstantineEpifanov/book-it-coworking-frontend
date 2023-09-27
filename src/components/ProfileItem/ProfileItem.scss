@@ -1,0 +1,46 @@
+@import "./../../scss/variables.scss";
+@import url("./../../vendor/fonts/fonts.css");
+@import url("./../../vendor/normalize.css");
+
+.profile-item {
+  box-sizing: border-box;
+  max-width: 455px;
+  padding: 40px 58px;
+  border-radius: 40px;
+  color: $white;
+  background-color: $black;
+  font-family: $font-family;
+
+  &__row {
+    display: flex;
+    gap: 16px;
+  }
+
+  &__title {
+    align-self: center;
+    margin: 0;
+    padding: 0;
+    font-family: $font-family;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 30px;
+    text-transform: uppercase;
+  }
+
+  &__link {
+    display: inline-block;
+    margin: 32px 0 0;
+    padding: 16px 12px;
+    font-family: $font-family;
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 22px;
+    transition: opacity 0.3s ease;
+    cursor: pointer;
+    &:hover {
+      opacity: 0.7;
+    }
+  }
+}
