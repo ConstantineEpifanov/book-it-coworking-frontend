@@ -60,6 +60,12 @@
     border: 2px solid $black;
     background-color: $white;
     color: $black;
+    font-family: Onest;
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 22px;
+
     &:hover {
       border: 2px solid $dark-gray;
       color: $dark-gray;
@@ -71,6 +77,12 @@
   }
   &_size_small {
     width: 148px;
+  }
+  &_size_small-s {
+    width: 118px;
+  }
+  &_size_medium {
+    width: 245px;
   }
   &_size_middle {
     width: 265px;
