@@ -1,6 +1,7 @@
 @import "../../../scss/variables.scss";
 
 .button {
+  font-family: $font-family;
   width: 360px;
   outline: none;
   border: none;
@@ -50,6 +51,7 @@
     }
   }
   &_type_link {
+    font-family: $font-family;
     border: none;
     background: none;
     &:hover {
