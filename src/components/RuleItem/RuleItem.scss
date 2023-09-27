@@ -46,6 +46,10 @@
       background-color: $gray;
       border-radius: 20px;
     }
+
+    &::-webkit-scrollbar-track {
+      margin: 20px 0;
+  }
   }
 
   &__text {
