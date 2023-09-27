@@ -4,7 +4,7 @@ export default {
   title: "Components/Popup",
   component: Popup,
   parameters: {
-    layout: "centered",
+    layout: "fullscreen",
   },
   tags: ["autodocs"],
   argTypes: {
