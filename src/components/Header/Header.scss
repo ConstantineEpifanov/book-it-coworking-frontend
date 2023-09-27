@@ -1,0 +1,23 @@
+@import "../../scss/variables.scss";
+
+.header {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  text-align: center;
+  padding: 20px 160px 20px;
+  box-sizing: border-box;
+  font-family: $font-family;
+  background-color: $main-white;
+
+  &__profile-info {
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 22px;
+    padding: 20px 10px;
+    margin: 0;
+    box-sizing: border-box;
+  }
+}
