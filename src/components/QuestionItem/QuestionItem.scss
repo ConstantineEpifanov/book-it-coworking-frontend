@@ -36,7 +36,7 @@
     stroke: $green;
     fill: $green;
     border-radius: 50%;
-    transition: all .3s;
+    transition: all 0.3s;
 
     &_active {
       transform: rotate(45deg);
