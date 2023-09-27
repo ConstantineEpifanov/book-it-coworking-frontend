@@ -40,7 +40,7 @@ export function QuestionItem({ title, text }) {
       </div>
       <p
         className={
-          isActive ? "question__text question__text_active" : "question__text"
+          !isActive ? "question__text question__text_active" : "question__text"
         }
       >
         {text}
