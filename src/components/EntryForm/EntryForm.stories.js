@@ -7,7 +7,7 @@ export default {
   title: "Components/Form",
   component: EntryForm,
   parameters: {
-    layout: "centered",
+    layout: "fullscreen",
   },
   tags: ["autodocs"],
   argTypes: {

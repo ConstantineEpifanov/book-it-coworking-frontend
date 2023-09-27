@@ -4,7 +4,7 @@ export default {
   title: "UI-Kit/Button",
   component: Button,
   parameters: {
-    layout: "centered",
+    layout: "fullscreen",
   },
   tags: ["autodocs"],
   argTypes: {

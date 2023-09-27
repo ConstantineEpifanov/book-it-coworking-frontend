@@ -1,4 +1,3 @@
-// eslint-disable-next-line import/no-extraneous-dependencies
 import PropTypes from "prop-types";
 import Button from "../UI-kit/Button/Button";
 import "./Popup.scss";

@@ -16,6 +16,7 @@
       placeholder
     ); // Отображаем текст placeholder в качестве содержимого псевдоэлемента
     color: $gray;
+    font-family: $font-family;
     font-size: 16px;
     font-style: normal;
     font-weight: 300;
@@ -29,6 +30,7 @@
   }
 
   &__error {
+    // font-family: $font-family;
     display: block;
     font-size: 12px;
     font-style: normal;
