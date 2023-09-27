@@ -1,0 +1,13 @@
+@import "./../../scss/variables.scss";
+
+.section-subtitle {
+  margin: 0;
+  padding: 0;
+  padding-top: 20px;
+  color: $black;
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 1.5;
+  font-family: $font-family;
+}
