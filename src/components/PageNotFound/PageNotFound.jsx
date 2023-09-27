@@ -1,3 +1,5 @@
+/* eslint-disable import/no-extraneous-dependencies */
+import { Link } from "react-router-dom";
 import "./PageNotFound.scss";
 import logo404 from "../../images/404-Error.svg";
 import Button from "../UI-kit/Button/Button";
@@ -12,11 +14,13 @@ const PageNotFound = () => (
       />
       <h4 className="not-found__title">Сожалеем, но здесь ничего нет</h4>
     </div>
-    <Button
-      btnClass="button_type_transparent button_size_medium"
-      btnText="Перейти на главную"
-      onClick={() => {}}
-    />
+    <Link to="/">
+      <Button
+        btnClass="button_type_transparent button_size_medium"
+        btnText="Перейти на главную"
+        onClick={() => {}}
+      />
+    </Link>
   </section>
 );
 export default PageNotFound;
