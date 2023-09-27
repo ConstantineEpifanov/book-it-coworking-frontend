@@ -1,0 +1,14 @@
+@import "./../../scss/variables.scss";
+
+.promo {
+
+
+  &__list {
+    @include mp-null;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    list-style: none;
+    gap: 20px;
+  }
+}

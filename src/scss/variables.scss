@@ -16,3 +16,11 @@ $warning: #ffea30;
 // Шрифты
 $font-family: "Onest", Arial, sans-serif;
 $font-family-accent: "MursGothic", Arial, sans-serif;
+
+
+// Миксины
+
+@mixin mp-null {
+  margin: 0;
+  padding: 0;
+}
