@@ -19,23 +19,11 @@
     margin: 0;
     padding: 0;
     display: flex;
-    gap: 10px;
   }
-  &__input {
-    max-width: 360px;
-    z-index: 0;
-  }
-  &__button {
-    background-color: $green;
-    max-width: 170px;
-    font-family: $font-family;
-    font-size: 18px;
-    font-style: normal;
-    font-weight: 500;
-    line-height: 22px;
-    transition: opacity 0.3s ease;
-    &:hover {
-      opacity: 0.7;
-    }
-  }
+}
+
+.input__wrapper {
+  max-width: 360px;
+  display: flex;
+  flex-direction: column;
 }

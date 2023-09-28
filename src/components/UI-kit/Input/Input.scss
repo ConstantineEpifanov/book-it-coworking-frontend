@@ -69,4 +69,14 @@
     max-width: 305px;
     border-color: $black;
   }
+
+  &__subscription {
+    border-radius: 32px;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+    border-right: none;
+    max-width: 360px;
+    border: none;
+    height: 58px;
+  }
 }

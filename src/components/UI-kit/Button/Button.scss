@@ -23,6 +23,15 @@
     max-width: 170px;
   }
 
+  &__subscription {
+    border-radius: 32px;
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+    border-left: none;
+    max-width: 190px;
+    height: 58px;
+  }
+
   &:disabled {
     opacity: 0.8;
     pointer-events: none;
