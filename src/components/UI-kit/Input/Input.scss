@@ -4,7 +4,7 @@
   width: 360px;
   padding: 18px 12px;
   box-sizing: border-box;
-  border-radius: 20px;
+  border-radius: 40px;
   border: 2px solid $dark-gray;
   background: $white;
   position: relative;
@@ -13,7 +13,9 @@
   // margin-bottom: 34px;
   /* кастомный псевдоэлемент для placeholder */
   &::before {
-    content: attr(placeholder); // Отображаем текст placeholder в качестве содержимого псевдоэлемента
+    content: attr(
+      placeholder
+    ); // Отображаем текст placeholder в качестве содержимого псевдоэлемента
     color: $gray;
     font-family: $font-family;
     font-size: 16px;
@@ -27,6 +29,21 @@
   /* При фокусе убираем placeholder */
   &:focus::before {
     display: none;
+  }
+
+  &__info {
+    display: block;
+    color: $dark-gray;
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 300;
+    line-height: 14px;
+    min-height: 34px;
+    padding: 0;
+    margin: 0;
+    border: 0;
+    text-align: start;
+    padding-top: 5px;
   }
 
   &__error {

@@ -10,6 +10,7 @@ function Input({
   inputPlaceholder,
   inputValue,
   onChangeInput,
+  inputInfo,
 }) {
   const [inputError, setInputError] = React.useState("");
 
@@ -29,7 +30,11 @@ function Input({
         onChange={handleChange}
         required
       />
-      <span className="input__error">{inputError}</span>
+      {inputError ? (
+        <span className="input__error">{inputError}</span>
+      ) : (
+        <span className="input__info">{inputInfo}</span>
+      )}
     </>
   );
 }
@@ -38,14 +43,17 @@ Input.propTypes = {
   inputClass: PropTypes.string,
   inputType: PropTypes.string.isRequired,
   inputName: PropTypes.string,
+  inputInfo: PropTypes.string,
   inputPlaceholder: PropTypes.string,
   inputValue: PropTypes.string.isRequired,
   onChangeInput: PropTypes.func,
 };
+
 Input.defaultProps = {
   inputClass: "",
   inputName: "",
   inputPlaceholder: "",
+  inputInfo: "",
   onChangeInput: () => {},
 };
 

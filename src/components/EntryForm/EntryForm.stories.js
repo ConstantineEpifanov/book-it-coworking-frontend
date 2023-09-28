@@ -1,4 +1,7 @@
-import Popup from "../Popup/Popup";
+import LoginForm from "../LoginForm/LoginForm";
+import RegisterForm from "../RegisterForm/RegisterForm";
+import RestorePassForm from "../RestorePassForm/RestorePassForm";
+// import Popup from "../Popup/Popup";
 import Button from "../UI-kit/Button/Button";
 import Input from "../UI-kit/Input/Input";
 import EntryForm from "./EntryForm";
@@ -31,25 +34,11 @@ export function FormPromo(args) {
   );
 }
 
-export function TypeLogin(args) {
-  return (
-    <Popup isOpen="true">
-      <EntryForm title="Вход" {...args}>
-        <Input inputType="email" inputPlaceholder="Email" />
-        <Input inputType="password" inputPlaceholder="Пароль" />
-        <Button
-          btnClass="button_type_form"
-          btnType="button"
-          btnText="Войти"
-          onClick={() => {}}
-        />
-        <Button
-          btnClass="button_type_link"
-          btnType="button"
-          btnText="Зарегистрироваться"
-          onClick={() => {}}
-        />
-      </EntryForm>
-    </Popup>
-  );
+export const TypeLogin = (args) => <LoginForm {...args} />;
+
+export function TypeRestorePassword(args) {
+  return <RestorePassForm {...args} />;
+}
+export function TypeRegister(args) {
+  return <RegisterForm {...args} />;
 }

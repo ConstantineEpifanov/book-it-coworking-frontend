@@ -12,7 +12,7 @@
   margin: 0;
   text-align: center;
   opacity: 1;
-  border-radius: 20px;
+  border-radius: 32px;
   padding: 12px 24px;
 
   &__promo {
@@ -54,6 +54,8 @@
   &_type_form {
     background-color: $green;
     color: $black;
+    // @TODO пересмотреть решение
+    margin-top: 32px;
     &:hover {
       background-color: $dark-gray;
     }
@@ -62,6 +64,8 @@
     font-family: $font-family;
     border: none;
     background: none;
+    padding: 16px 12px;
+    margin-top: 12px;
     &:hover {
       color: $dark-gray;
     }
