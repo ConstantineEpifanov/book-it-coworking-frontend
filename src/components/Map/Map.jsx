@@ -26,11 +26,11 @@ export const MainMap = ({ points, defaultState }) => (
             key={point.id}
             defaultGeometry={point.coordinates}
             properties={{
-              balloonContentHeader: `<img src="${point.image}" class="map__image" height="150" width="200">`,
+              balloonContentHeader: `<img src="${point.image}" alt="${point.name}" class="map__image" height="150" width="200">`,
               balloonContentBody: `
               <div class='map__body-wrapper'>
               <div class ="map__row">
-              <a href = "${point.link}" class="map__name">${point.name}</a><div class="map__rating-container"><span class="map__rating">${point.rating}</span><img src="${Star}" class="map__icon" alt="Рейтинг" /></div></div>
+              <span class="map__name">${point.name}</span><div class="map__rating-container"><span class="map__rating">${point.rating}</span><img src="${Star}" class="map__icon" alt="Рейтинг" /></div></div>
               <div class ="map__address-container"><img src="${Tag}" alt="Тег" /><span class="map__address">${point.address}</span></div><a href = "${point.link}" class="map__button">Подробнее</a>
               </div> `,
 
