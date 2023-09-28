@@ -1,0 +1,24 @@
+@import "./../../scss/variables.scss";
+@import "./../../scss/mixins.scss";
+
+.discounts {
+  @include mp-null;
+  display: flex;
+  flex-direction: column;
+
+  &__list {
+    @include mp-null;
+    list-style: none;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 20px;
+    margin-top: 32px;
+    margin-bottom: 182px;
+  }
+
+  &__img {
+    max-width: 360px;
+    max-height: 360px;
+  }
+}
