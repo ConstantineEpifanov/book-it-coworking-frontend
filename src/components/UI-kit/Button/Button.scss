@@ -15,6 +15,14 @@
   border-radius: 20px;
   padding: 12px 24px;
 
+  &__promo {
+    border: 2px solid $black;
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+    border-left: none;
+    max-width: 170px;
+  }
+
   &:disabled {
     opacity: 0.8;
     pointer-events: none;

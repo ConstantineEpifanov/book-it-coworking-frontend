@@ -37,6 +37,7 @@
     fill: $green;
     border-radius: 50%;
     transition: all 0.3s;
+    overflow: hidden;
 
     &_active {
       transform: rotate(45deg);

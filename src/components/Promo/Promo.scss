@@ -2,6 +2,52 @@
 @import "./../../scss/mixins.scss";
 
 .promo {
+  max-width: 1120px;
+  display: flex;
+  flex-direction: column;
+
+&__container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+  &__text {
+    display: flex;
+    flex-direction: column;
+    max-width: 485px;
+  }
+
+  &__title {
+    @include mp-null;
+    font-family: $font-family-accent;
+    color: $black;
+    font-size: 100px;
+    font-style: normal;
+    font-weight: 800;
+    line-height: 1.2;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    margin-bottom: 32px;
+  }
+
+  &__subtitle {
+    @include mp-null;
+    font-family: $font-family;
+    color: $black;
+    font-size: 28px;
+    font-style: normal;
+    font-weight: 300;
+    line-height: 1.5;
+    margin-bottom: 40px;
+  }
+
+  &__img {
+    justify-self: right;
+    width: 550px;
+    height: 550px;
+  }
+
   &__list {
     @include mp-null;
     display: flex;
@@ -9,5 +55,11 @@
     flex-wrap: nowrap;
     list-style: none;
     gap: 20px;
+  }
+
+  &__search {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
   }
 }
