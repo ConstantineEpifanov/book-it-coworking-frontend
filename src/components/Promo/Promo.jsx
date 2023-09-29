@@ -49,7 +49,6 @@ export const Promo = () => {
               btnClass="button__promo"
               btnType="submit"
               btnText="Искать"
-              onClick=""
               isValidBtn
               backgroundColor="#b0ff1a"
             />

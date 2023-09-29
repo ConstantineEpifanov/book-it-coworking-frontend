@@ -22,6 +22,7 @@
     border-bottom-left-radius: 0;
     border-left: none;
     max-width: 170px;
+    max-height: 54px;
   }
 
   &__subscription {
@@ -65,20 +66,29 @@
   &_type_form {
     background-color: $green;
     color: $black;
-    &_margin-top {
-      margin-top: 32px;
-    }
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 1.22;
 
     &:hover {
-      background-color: $dark-gray;
+      opacity: 0.7;
+    }
+
+    &:active {
+      background-color: $black;
+      color: $green;
+      opacity: 1;
     }
   }
+
   &_type_link {
     border: none;
     background: none;
 
     padding: 16px 12px;
     margin-top: 12px;
+
     &:hover {
       color: $dark-gray;
     }
@@ -99,24 +109,6 @@
     }
   }
 
-  &_type_form {
-    background-color: $green;
-    color: $black;
-    font-size: 18px;
-    font-style: normal;
-    font-weight: 400;
-    line-height: 1.22;
-
-    &:hover {
-      opacity: 0.7;
-    }
-
-    &:active {
-      background-color: $black;
-      color: $green;
-      opacity: 1;
-    }
-  }
   //стили кнопки пароля
   &__password-toggle {
     @include mp-null;
@@ -126,9 +118,11 @@
     position: absolute;
     top: 16px;
     right: 20px;
+
     &-active {
       background: url("../../../images/visible-password-icon.svg") no-repeat;
     }
+
     &-hide {
       background: url("../../../images/hide-pass-icon.svg") no-repeat;
     }
