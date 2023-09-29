@@ -1,7 +1,12 @@
-import Popup from "../Popup/Popup";
-import Button from "../UI-kit/Button/Button";
-import Input from "../UI-kit/Input/Input";
 import EntryForm from "./EntryForm";
+import Popup from "../../Popup/Popup";
+import Button from "../../UI-kit/Button/Button";
+import Input from "../../UI-kit/Input/Input";
+import ConfirmRegisterForm from "../ConfirmRegisterForm/ConfirmRegisterForm";
+import RestorePassForm from "../RestorePassForm/RestorePassForm";
+import RegisterForm from "../RegisterForm/RegisterForm";
+import PasswordInput from "../../UI-kit/PasswordInput/PasswordInput";
+import ChangePassForm from "../ChangePassForm/ChangePassForm";
 
 export default {
   title: "Components/Form",
@@ -17,7 +22,9 @@ export default {
   },
 };
 
-export function FormPromo(args) {
+// Истории компонента EntryForm
+
+export function FormDemo(args) {
   return (
     <EntryForm title="Form" {...args}>
       <Input inputType="text" inputPlaceholder="Введите текст.." />
@@ -31,12 +38,12 @@ export function FormPromo(args) {
   );
 }
 
-export function TypeLogin(args) {
+export function Formlogin(args) {
   return (
-    <Popup isOpen="true">
-      <EntryForm title="Вход" {...args}>
+    <Popup>
+      <EntryForm title="Войдите на сайт" {...args}>
         <Input inputType="email" inputPlaceholder="Email" />
-        <Input inputType="password" inputPlaceholder="Пароль" />
+        <PasswordInput inputPlaceholder="Пароль" inputInfo="Забыли пароль?" />
         <Button
           btnClass="button_type_form"
           btnType="button"
@@ -53,3 +60,8 @@ export function TypeLogin(args) {
     </Popup>
   );
 }
+
+export const TypeRestorePassword = () => <RestorePassForm />;
+export const TypeRegister = () => <RegisterForm />;
+export const TypeConfirmRegister = () => <ConfirmRegisterForm />;
+export const TypeChangePass = () => <ChangePassForm />;

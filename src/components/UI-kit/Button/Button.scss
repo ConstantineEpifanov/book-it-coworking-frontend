@@ -1,4 +1,5 @@
 @import "../../../scss/variables.scss";
+@import "../../../scss/mixins.scss";
 
 .button {
   font-family: $font-family;
@@ -12,7 +13,7 @@
   margin: 0;
   text-align: center;
   opacity: 1;
-  border-radius: 20px;
+  border-radius: 32px;
   padding: 12px 24px;
 
   &__promo {
@@ -43,7 +44,7 @@
   }
 
   &_type_close {
-    background: url("../../../images/close-icon.svg");
+    background: url("../../../images/close-icon.svg") no-repeat;
     background-size: cover;
     border: none;
     position: absolute;
@@ -61,10 +62,23 @@
     align-items: flex-start;
   }
 
+  &_type_form {
+    background-color: $green;
+    color: $black;
+    &_margin-top {
+      margin-top: 32px;
+    }
+
+    &:hover {
+      background-color: $dark-gray;
+    }
+  }
   &_type_link {
     border: none;
     background: none;
 
+    padding: 16px 12px;
+    margin-top: 12px;
     &:hover {
       color: $dark-gray;
     }
@@ -72,7 +86,7 @@
 
   &_type_transparent {
     border: 2px solid $black;
-    background-color: $white;
+    background-color: $main-white;
     color: $black;
     font-size: 18px;
     font-style: normal;
@@ -101,6 +115,22 @@
       background-color: $black;
       color: $green;
       opacity: 1;
+    }
+  }
+  //стили кнопки пароля
+  &__password-toggle {
+    @include mp-null;
+    width: 24px;
+    height: 24px;
+    background-color: $white;
+    position: absolute;
+    top: 16px;
+    right: 20px;
+    &-active {
+      background: url("../../../images/visible-password-icon.svg") no-repeat;
+    }
+    &-hide {
+      background: url("../../../images/hide-pass-icon.svg") no-repeat;
     }
   }
 
