@@ -24,6 +24,10 @@ const data = [
 export const Promo = () => {
   const onChangeInput = () => {};
 
+  const handleSubmit = (e) => {
+    e.preventDefault();
+  };
+
   return (
     <section className="promo">
       <div className="promo__container">
@@ -32,7 +36,7 @@ export const Promo = () => {
           <h2 className="promo__subtitle">
             Сеть коворкингов созданная специально для IT специалистов
           </h2>
-          <div className="promo__search">
+          <form className="promo__search" onSubmit={handleSubmit} noValidate>
             <Input
               inputClass="input__promo"
               inputType="text"
@@ -49,7 +53,7 @@ export const Promo = () => {
               isValidBtn
               backgroundColor="#b0ff1a"
             />
-          </div>
+          </form>
         </div>
         <img className="promo__img" src={img} alt="Промо" />
       </div>

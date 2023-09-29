@@ -12,6 +12,7 @@ import { Footer } from "./components/Footer/Footer";
 import Header from "./components/Header/Header";
 import PageNotFound from "./components/PageNotFound/PageNotFound";
 import PasswordInput from "./components/UI-kit/PasswordInput/PasswordInput";
+import { MainMap } from "./components/Map/Map";
 
 function App() {
   // временно выставлено true, далее нужно поменять значение на false
@@ -30,7 +31,7 @@ function App() {
   return (
     <div className="App">
       <Header onOpenPopup={handleOpenPopup} />
-
+      <MainMap />
       <Routes>
         <Route
           path="/"

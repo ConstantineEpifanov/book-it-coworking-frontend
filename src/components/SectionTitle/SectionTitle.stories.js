@@ -5,7 +5,7 @@ export default {
   component: SectionTitle,
   tags: ["autodocs"],
   parameters: {
-    layout: "fullscreen",
+    layout: "centered",
   },
 };
 
