@@ -3,7 +3,7 @@ import React from "react";
 import { Route, Routes } from "react-router-dom";
 // import logo from "./logo.svg";
 import "./App.css";
-import EntryForm from "./components/EntryForm/EntryForm";
+import EntryForm from "./components/Forms/EntryForm/EntryForm";
 import Popup from "./components/Popup/Popup";
 import Button from "./components/UI-kit/Button/Button";
 import Input from "./components/UI-kit/Input/Input";
@@ -11,6 +11,7 @@ import { SectionTitle } from "./components/SectionTitle/SectionTitle";
 import { Footer } from "./components/Footer/Footer";
 import Header from "./components/Header/Header";
 import PageNotFound from "./components/PageNotFound/PageNotFound";
+import PasswordInput from "./components/UI-kit/PasswordInput/PasswordInput";
 import { MainMap } from "./components/Map/Map";
 
 function App() {
@@ -43,9 +44,17 @@ function App() {
 
       {/* пример формы */}
       <Popup isOpen={isOpenPopup} onClickClose={handleClosePopup}>
-        <EntryForm title="Вход">
-          <Input inputType="email" inputPlaceholder="Email" />
-          <Input inputType="password" inputPlaceholder="Пароль" />
+        <EntryForm title="Войдите на сайт">
+          <Input
+            inputType="email"
+            inputPlaceholder="Email"
+            inputName="emailLogin"
+          />
+          <PasswordInput
+            inputName="passwordLogin"
+            inputPlaceholder="Пароль"
+            inputInfo="Забыли пароль?"
+          />
           <Button
             btnClass="button_type_form"
             btnType="button"

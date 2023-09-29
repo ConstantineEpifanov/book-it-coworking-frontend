@@ -6,7 +6,7 @@ import InstagramIcon from "./icons/InstagramIcon";
 import TwitterIcon from "./icons/TwitterIcon";
 import YoutubeIcon from "./icons/YoutubeIcon";
 import TelegramIcon from "./icons/TelegramIcon";
-import { SubscriptionForm } from "../SubscriptionForm/SubscriptionForm";
+import { SubscriptionForm } from "../Forms/SubscriptionForm/SubscriptionForm";
 
 export const Footer = ({ onSubmit }) => (
   <footer className="footer">
