@@ -1,3 +1,0 @@
-.input{width:360px;padding:18px 12px;box-sizing:border-box;border-radius:20px;border:2px solid #71797b;background:#fdf8f1;position:relative;z-index:0}.input::before{content:attr(placeholder);color:#b8bcbd;font-family:"Onest",Arial,sans-serif;font-size:16px;font-style:normal;font-weight:300;line-height:22px;position:absolute;pointer-events:none}.input:focus::before{display:none}.input__error{display:block;font-size:12px;font-style:normal;font-weight:300;line-height:14px;color:#f24e1e;min-height:34px;padding:0;margin:0;border:0;text-align:start;padding-top:5px}
-
-/*# sourceMappingURL=components-UI-kit-Input-Input-stories.fe8f4704.chunk.css.map*/
