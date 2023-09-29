@@ -37,6 +37,7 @@
     opacity: 0.8;
     pointer-events: none;
   }
+
   &_active {
     border: 2px solid $black;
     background-color: $light-gray;
@@ -73,23 +74,23 @@
     }
   }
   &_type_link {
-    font-family: $font-family;
     border: none;
     background: none;
+
     padding: 16px 12px;
     margin-top: 12px;
     &:hover {
       color: $dark-gray;
     }
   }
+
   &_type_transparent {
     border: 2px solid $black;
     background-color: $main-white;
     color: $black;
-    font-family: Onest;
     font-size: 18px;
     font-style: normal;
-    font-weight: 500;
+    font-weight: 400;
     line-height: 22px;
 
     &:hover {
@@ -98,6 +99,24 @@
     }
   }
 
+  &_type_form {
+    background-color: $green;
+    color: $black;
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 1.22;
+
+    &:hover {
+      opacity: 0.7;
+    }
+
+    &:active {
+      background-color: $black;
+      color: $green;
+      opacity: 1;
+    }
+  }
   //стили кнопки пароля
   &__password-toggle {
     @include mp-null;
@@ -118,21 +137,27 @@
   &_size_mini {
     width: 75px;
   }
+
   &_size_small {
     width: 148px;
   }
+
   &_size_small-s {
     width: 118px;
   }
+
   &_size_medium {
     width: 245px;
   }
+
   &_size_middle {
     width: 265px;
   }
+
   &_size_postmiddle {
     width: 320px;
   }
+
   &_size_large {
     width: 550px;
   }
