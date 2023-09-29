@@ -1,9 +1,9 @@
 import PropTypes from "prop-types";
 
 import EntryForm from "../EntryForm/EntryForm";
-import Popup from "../Popup/Popup";
-import Button from "../UI-kit/Button/Button";
-import Input from "../UI-kit/Input/Input";
+import Input from "../../UI-kit/Input/Input";
+import Button from "../../UI-kit/Button/Button";
+import Popup from "../../Popup/Popup";
 
 const LoginForm = ({ isOpenPopup, handleClosePopup }) => (
   <Popup isOpen={isOpenPopup} onClickClose={handleClosePopup}>
@@ -15,7 +15,7 @@ const LoginForm = ({ isOpenPopup, handleClosePopup }) => (
         inputInfo="Забыли пароль?"
       />
       <Button
-        btnClass="button_type_form"
+        btnClass="button_type_form button_type_form_margin-top"
         btnType="button"
         btnText="Войти"
         onClick={() => {}}

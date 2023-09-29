@@ -1,8 +1,8 @@
 import React from "react";
 import PropTypes from "prop-types";
 import "./SubscriptionForm.scss";
-import Input from "../UI-kit/Input/Input";
-import Button from "../UI-kit/Button/Button";
+import Input from "../../UI-kit/Input/Input";
+import Button from "../../UI-kit/Button/Button";
 
 const SubscriptionForm = ({ onSubmit }) => {
   const onChangeInput = () => {};

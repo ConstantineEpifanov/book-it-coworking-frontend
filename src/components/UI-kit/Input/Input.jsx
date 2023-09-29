@@ -1,5 +1,4 @@
 import React from "react";
-// eslint-disable-next-line import/no-extraneous-dependencies
 import PropTypes from "prop-types";
 import "./Input.scss";
 
@@ -8,34 +7,39 @@ function Input({
   inputType,
   inputName,
   inputPlaceholder,
-  inputValue,
-  onChangeInput,
   inputInfo,
 }) {
+  const [value, setValue] = React.useState("");
   const [inputError, setInputError] = React.useState("");
 
   const handleChange = (event) => {
-    onChangeInput(event.target.value);
+    setValue(event.target.value);
     setInputError(event.target.validationMessage);
   };
 
   return (
-    <>
+    <div className="input__items">
+      {value && (
+        <label htmlFor={inputName} className="input__label">
+          {inputPlaceholder}
+        </label>
+      )}
       <input
         className={`input ${inputClass}`}
         type={inputType}
         name={inputName}
         placeholder={inputPlaceholder}
-        value={inputValue}
+        value={value || ""}
         onChange={handleChange}
         required
       />
+      {/* если нет ошибки ввода, то покажи информацию */}
       {inputError ? (
-        <span className="input__error">{inputError}</span>
+        <span className="input__text input__text_error">{inputError}</span>
       ) : (
-        <span className="input__info">{inputInfo}</span>
+        <span className="input__text input__text_info">{inputInfo}</span>
       )}
-    </>
+    </div>
   );
 }
 
@@ -45,8 +49,6 @@ Input.propTypes = {
   inputName: PropTypes.string,
   inputInfo: PropTypes.string,
   inputPlaceholder: PropTypes.string,
-  inputValue: PropTypes.string.isRequired,
-  onChangeInput: PropTypes.func,
 };
 
 Input.defaultProps = {
@@ -54,7 +56,7 @@ Input.defaultProps = {
   inputName: "",
   inputPlaceholder: "",
   inputInfo: "",
-  onChangeInput: () => {},
+  // onChangeInput: () => {},
 };
 
 export default Input;

@@ -1,9 +1,10 @@
 import PropTypes from "prop-types";
 
 import EntryForm from "../EntryForm/EntryForm";
-import Popup from "../Popup/Popup";
-import Button from "../UI-kit/Button/Button";
-import Input from "../UI-kit/Input/Input";
+import Input from "../../UI-kit/Input/Input";
+import Button from "../../UI-kit/Button/Button";
+import Popup from "../../Popup/Popup";
+import PasswordInput from "../../UI-kit/PasswordInput/PasswordInput";
 
 const RegisterForm = ({ isOpenPopup, handleClosePopup }) => (
   <Popup isOpen={isOpenPopup} onClickClose={handleClosePopup}>
@@ -15,14 +16,18 @@ const RegisterForm = ({ isOpenPopup, handleClosePopup }) => (
         inputPlaceholder="Email"
         inputInfo="Будет использован как логин"
       />
-      <Input
+      <PasswordInput
         inputType="password"
         inputPlaceholder="Пароль"
         inputInfo="Используйте сложный пароль"
       />
-      <Input inputType="password" inputPlaceholder="Проверка пароля" />
+      <PasswordInput inputType="password" inputPlaceholder="Проверка пароля" />
+      <span className="input__text input__text_confirm">
+        Нажимая зарегистрироваться вы даёте согласие на обработку ваших
+        персональных данных{" "}
+      </span>
       <Button
-        btnClass="button_type_form"
+        btnClass="button_type_form button_type_form_margin-top"
         btnType="button"
         btnText="Зарегистрироваться"
         onClick={() => {}}

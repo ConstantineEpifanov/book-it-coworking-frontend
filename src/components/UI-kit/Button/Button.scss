@@ -1,4 +1,5 @@
 @import "../../../scss/variables.scss";
+@import "../../../scss/mixins.scss";
 
 .button {
   font-family: $font-family;
@@ -42,7 +43,7 @@
   }
 
   &_type_close {
-    background: url("../../../images/close-icon.svg");
+    background: url("../../../images/close-icon.svg") no-repeat;
     background-size: cover;
     border: none;
     position: absolute;
@@ -63,8 +64,10 @@
   &_type_form {
     background-color: $green;
     color: $black;
-    // @TODO пересмотреть решение
-    margin-top: 32px;
+    &_margin-top {
+      margin-top: 32px;
+    }
+
     &:hover {
       background-color: $dark-gray;
     }
@@ -81,7 +84,7 @@
   }
   &_type_transparent {
     border: 2px solid $black;
-    background-color: $white;
+    background-color: $main-white;
     color: $black;
     font-family: Onest;
     font-size: 18px;
@@ -92,6 +95,23 @@
     &:hover {
       border: 2px solid $dark-gray;
       color: $dark-gray;
+    }
+  }
+
+  //стили кнопки пароля
+  &__password-toggle {
+    @include mp-null;
+    width: 24px;
+    height: 24px;
+    background-color: $white;
+    position: absolute;
+    top: 16px;
+    right: 20px;
+    &-active {
+      background: url("../../../images/visible-password-icon.svg") no-repeat;
+    }
+    &-hide {
+      background: url("../../../images/hide-pass-icon.svg") no-repeat;
     }
   }
 

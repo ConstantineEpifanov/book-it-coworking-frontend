@@ -1,4 +1,4 @@
-@import "../../scss/variables.scss";
+@import "../../../scss/variables.scss";
 
 .entry-form {
   width: 100%;
@@ -39,7 +39,7 @@
 
   &__container {
     width: 100%;
-    max-width: 260px;
+    // max-width: 260px;
     box-sizing: border-box;
     text-align: center;
   }
