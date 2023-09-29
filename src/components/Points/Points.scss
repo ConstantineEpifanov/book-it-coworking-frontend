@@ -1,0 +1,16 @@
+@import "./../../scss/variables.scss";
+@import "./../../scss/mixins.scss";
+
+.points {
+  max-width: 1120px;
+  display: flex;
+  flex-direction: column;
+
+  &__list {
+    @include mp-null;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    list-style: none;
+  }
+}
