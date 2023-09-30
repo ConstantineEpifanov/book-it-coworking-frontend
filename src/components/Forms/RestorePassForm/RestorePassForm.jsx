@@ -11,7 +11,7 @@ const RestorePassForm = ({ isOpenPopup, handleClosePopup }) => (
       <Input
         inputType="email"
         inputPlaceholder="Email"
-        inputInfo="Ссылка для сброса пароля будет направлена на этот адрес электронной почты"
+        inputInfo="Код для сброса пароля будет направлен на этот адрес электронной почты"
       />
       <Button
         btnClass="button_type_form button_type_form_margin-top"

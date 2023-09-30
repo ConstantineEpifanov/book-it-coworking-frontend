@@ -1,4 +1,5 @@
 @import "../../../scss/variables.scss";
+@import "../../../scss/mixins.scss";
 
 .entry-form {
   width: 100%;
@@ -13,6 +14,9 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+    &_reviews {
+      align-items: start;
+    }
   }
 
   &__box {
@@ -23,6 +27,26 @@
     padding: 32px 0 0;
     margin: 0;
     border: none;
+    div {
+      align-self: flex-start;
+    }
+    &_reviews {
+      align-items: start;
+    }
+    &_text {
+      display: block;
+      color: $black;
+      font-size: 12px;
+      font-style: normal;
+      font-weight: 300;
+      line-height: 14px;
+      min-height: 34px;
+      padding: 5px 0 20px;
+      align-self: end;
+    }
+    &_error {
+      color: $alert-red;
+    }
   }
 
   &__title {
@@ -62,5 +86,15 @@
     text-decoration: none;
     padding-top: 15px;
     margin: 0;
+  }
+  &__reviews {
+    @include mp-null;
+    display: flex;
+    padding: 16px 12px 0px 20px;
+    margin-top: 20px;
+    border-radius: 28px;
+    border: 2px solid $black;
+    background: $white;
+    resize: none;
   }
 }

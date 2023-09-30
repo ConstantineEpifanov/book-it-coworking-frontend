@@ -134,6 +134,12 @@
     }
   }
 
+  &_type_review {
+    background: none;
+    padding: 0;
+    display: contents;
+  }
+
   &_size_mini {
     width: 75px;
   }

@@ -29,7 +29,7 @@ EntryForm.propTypes = {
 };
 
 EntryForm.defaultProps = {
-  title: "Войдите на сайт",
+  title: "",
   onSubmit: () => {},
 };
 

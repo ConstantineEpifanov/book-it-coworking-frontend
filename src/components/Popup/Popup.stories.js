@@ -17,7 +17,7 @@ export default {
 export function PopupPromo(args) {
   return (
     <Popup {...args}>
-      <p className="popup__header">Оплата прошла успешно</p>
+      <p className="popup__title">Оплата прошла успешно</p>
       <p className="popup__text">
         Письмо с подтверждением и деталями бронирования отправленовам на
         указанный номер телефона и электронную почту

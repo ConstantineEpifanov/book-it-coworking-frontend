@@ -10,18 +10,18 @@ const ConfirmRegisterForm = ({ isOpenPopup, handleClosePopup }) => (
       <Input
         inputType="text"
         inputPlaceholder="Код подтверждения"
-        inputInfo="Ссылка для сброса пароля будет направлена на этот адрес электронной почтыЗабыли пароль?"
+        inputInfo="Введите код подтверждения, который был отправлен вам на почту"
       />
       <Button
         btnClass="button_type_form button_type_form_margin-top"
         btnType="button"
-        btnText="Зарегистрироваться"
+        btnText="Отправить"
         onClick={() => {}}
       />
       <Button
         btnClass="button_type_link"
         btnType="button"
-        btnText="Уже есть аккаунт?"
+        btnText="Новый код"
         onClick={() => {}}
       />
     </EntryForm>

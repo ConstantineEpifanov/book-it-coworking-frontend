@@ -1,4 +1,5 @@
 @import "../../scss/variables.scss";
+@import "../../scss/mixins.scss";
 
 .popup {
   display: flex;
@@ -30,14 +31,28 @@
     padding: 80px;
     position: relative;
     box-shadow: 0px 0px 25px rgba(0, 0, 0, 0.15);
+    &_reviews-form {
+      max-width: 740px;
+      width: calc(100% - 190px);
+      padding: 60px 95px 92px;
+    }
   }
-  &__header {
+  &__title {
     font-size: 40px;
     font-style: normal;
     font-weight: 400;
     line-height: 48px;
   }
+  &__subtitle {
+    @include mp-null;
+    color: $main-black;
+    font-size: 28px;
+    font-style: normal;
+    font-weight: 300;
+    line-height: 42px; /* 150% */
+  }
   &__text {
+    @include mp-null;
     font-size: 20px;
     font-style: normal;
     font-weight: 400;
