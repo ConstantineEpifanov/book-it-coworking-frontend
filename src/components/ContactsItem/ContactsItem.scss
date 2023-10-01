@@ -1,0 +1,26 @@
+@import "./../../scss/variables.scss";
+@import "./../../scss/mixins.scss";
+
+.contacts-item {
+  @include mp-null;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  max-width: 360px;
+
+  &__header {
+    @include mp-null;
+    @include text-font-normal;
+    font-weight: 500;
+    text-transform: uppercase;
+  }
+  &__info {
+    @include mp-null;
+    @include text-font-normal;
+    font-weight: 300;
+  }
+  &__image {
+    width: 58px;
+    height: 58px;
+  }
+}

@@ -13,6 +13,7 @@ import Header from "./components/Header/Header";
 import PageNotFound from "./components/PageNotFound/PageNotFound";
 import PasswordInput from "./components/UI-kit/PasswordInput/PasswordInput";
 import { MainMap } from "./components/Map/Map";
+import Contacts from "./components/Contacts/Contacts";
 
 function App() {
   // временно выставлено true, далее нужно поменять значение на false
@@ -39,6 +40,7 @@ function App() {
             <SectionTitle titleText="Здесь могла бы быть ваша реклама" />
           }
         />
+        <Route path="/contacts" element={<Contacts />} />
         <Route path="*" element={<PageNotFound />} />
       </Routes>
 

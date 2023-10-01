@@ -28,7 +28,7 @@ function Navigation() {
           Правила и вопросы
         </NavLink>
         <NavLink
-          to="/ts"
+          to="/contacts"
           className={({ isActive }) =>
             isActive ? activeLinkClass : inativeLinkClass
           }
