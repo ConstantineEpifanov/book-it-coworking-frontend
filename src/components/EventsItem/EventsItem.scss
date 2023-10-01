@@ -1,0 +1,74 @@
+@import "./../../scss/variables.scss";
+@import "./../../scss/mixins.scss";
+
+.events-item {
+  font-family: $font-family;
+  color: $black;
+  box-sizing: border-box;
+  border-radius: 40px;
+  border: 2px solid $black;
+  overflow: hidden;
+  width: 360px;
+  &__image-container {
+    position: relative;
+  }
+  &__info__container {
+    margin: 20px;
+  }
+  &__image {
+    object-fit: fill;
+    display: block;
+    width: 360px;
+    height: 250px;
+  }
+  &__date {
+    @include mp-null;
+    position: absolute;
+    padding: 4px 12px;
+    top: 20px;
+    left: 20px;
+    background-color: $white;
+    border-radius: 20px;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 300;
+    line-height: 22px;
+  }
+  &__name {
+    @include mp-null;
+    margin-bottom: 16px;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 30px;
+    text-transform: uppercase;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  &__row {
+    @include mp-null;
+    margin-top: 8px;
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-start;
+    gap: 12px;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 300;
+    line-height: 22px;
+    &_last {
+      margin-bottom: 20px;
+    }
+    :first-child {
+      flex-shrink: 0;
+    }
+  }
+  &__slots {
+    @include mp-null;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 22px;
+  }
+}
