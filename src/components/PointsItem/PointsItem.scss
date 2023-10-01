@@ -11,6 +11,11 @@
   background-color: $white;
   overflow: hidden;
 
+  &_own-page {
+    border: none;
+    border-radius: 0;
+  }
+
   &:hover {
     border-color: $pink;
   }
@@ -45,6 +50,13 @@
       width: 455px;
       height: 460px;
     }
+
+    &_own-page {
+      width: 740px;
+      height: 450px;
+      border-radius: 20px;
+      overflow: hidden;
+    }
   }
 
   &__image {
@@ -56,6 +68,11 @@
     &_large {
       width: 455px;
       height: 460px;
+    }
+
+    &_own-page {
+      width: 740px;
+      height: 450px;
     }
   }
 
@@ -73,6 +90,11 @@
     font-style: normal;
     font-weight: 300;
     line-height: 1.37;
+
+    &_own-page {
+      top: 40px;
+      left: 17px;
+    }
   }
 
   &__rating-container {
@@ -92,10 +114,26 @@
     gap: 8px;
     background-color: $white;
     border-radius: 20px;
+
+    &_own-page {
+      bottom: 7px;
+      left: 17px;
+    }
   }
 
   &__rating {
     @include mp-null;
+  }
+
+  &__info-buttons {
+    display: flex;
+    gap: 8px;
+    position: absolute;
+    top: 40px;
+    right: 17px;
+    background-color: $white;
+    border-radius: 20px;
+    padding: 8px 12px;
   }
 
   &__list-item {

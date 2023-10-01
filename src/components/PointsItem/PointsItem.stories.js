@@ -11,6 +11,9 @@ export default {
     isCompact: {
       options: [true, false],
     },
+    isListed: {
+      options: [true, false],
+    },
   },
 };
 

@@ -22,6 +22,7 @@ SwiperCore.use([Pagination]);
 
 export const PointsItem = ({
   isCompact,
+  isListed,
   rating,
   title,
   subtitle,
@@ -83,13 +84,17 @@ export const PointsItem = ({
       </div>
     </div>
   ) : (
-    // Большая карточка для страницы коворкингов
+    // Большая карточка для страницы коворкингов и переменной isListed когда карточка в списка, а не на странице отдельной
 
-    <div className="point point_large">
-      <div className="point__image-container point__image-container_large">
+    <div className={`point point_large ${!isListed && "point_own-page"}`}>
+      <div
+        className={`point__image-container point__image-container_large ${
+          !isListed && "point__image-container_own-page"
+        }`}
+      >
         <Swiper
           slidesPerView={1}
-          spaceBetween={10}
+          spaceBetween={20}
           pagination={{
             el: ".swiper-pagination-points",
             type: "bullets",
@@ -104,23 +109,33 @@ export const PointsItem = ({
               <img
                 src={item.url}
                 alt={title}
-                className="point__image point__image_large"
+                className={`point__image point__image_large ${
+                  !isListed && "point__image_own-page"
+                }`}
               />
             </SwiperSlide>
           ))}
         </Swiper>
-        <p className="point__cost z-index-2">От 200&#8381;/час</p>
-        <div className="point__rating-container z-index-2">
+        <p
+          className={`point__cost z-index-2 ${
+            !isListed && "point__cost_own-page"
+          }`}
+        >
+          От 200&#8381;/час
+        </p>
+        <div
+          className={`point__rating-container z-index-2 ${
+            !isListed && "point__rating-container_own-page"
+          }`}
+        >
           <p className="point__rating">{rating}</p>
           <RatingStar />
         </div>
-        <div className="swiper-pagination-points" />
-      </div>
 
-      <div className="point__info-container">
-        <div>
-          <div className="point__title-container">
-            <h3 className="point__title">{title}</h3>
+        {/* блок кнопок для страницы коворкинга */}
+
+        {!isListed && (
+          <div className="point__info-buttons z-index-2">
             <button
               type="button"
               className="point__action-button"
@@ -129,9 +144,6 @@ export const PointsItem = ({
             >
               <LikeButton isLiked={isLiked} />
             </button>
-          </div>
-          <div className="point__subtitle-container">
-            <h4 className="point__subtitle">{subtitle}</h4>
             <button
               type="button"
               className="point__action-button"
@@ -141,8 +153,38 @@ export const PointsItem = ({
               <Share />
             </button>
           </div>
-          <p className="point__about">{info}</p>
-        </div>
+        )}
+        <div className="swiper-pagination-points" />
+      </div>
+
+      <div className="point__info-container">
+        {isListed && (
+          <div>
+            <div className="point__title-container">
+              <h3 className="point__title">{title}</h3>
+              <button
+                type="button"
+                className="point__action-button"
+                onClick={handleLike}
+                aria-labelledby="Добавить в избранное"
+              >
+                <LikeButton isLiked={isLiked} />
+              </button>
+            </div>
+            <div className="point__subtitle-container">
+              <h4 className="point__subtitle">{subtitle}</h4>
+              <button
+                type="button"
+                className="point__action-button"
+                onClick={handleShare}
+                aria-labelledby="Поделиться"
+              >
+                <Share />
+              </button>
+            </div>
+            <p className="point__about">{info}</p>
+          </div>
+        )}
         <ul className="point__info point__info_large">
           <li className="point__list-item">
             <Address />
@@ -159,15 +201,15 @@ export const PointsItem = ({
           <li className="point__list-item">
             <GeneralRoom />
             <p className="point__info-text">
-              Мест в общей зоне:{" "}
-              <span className="point__span">{generalQuantity}</span>
+              Мест в общей зоне:
+              <span className="point__span"> {generalQuantity}</span>
             </p>
           </li>
           <li className="point__list-item">
             <MeetingRoom />
             <p className="point__info-text">
-              Переговорных:{" "}
-              <span className="point__span">{meetingQuantity}</span>
+              Переговорных:
+              <span className="point__span"> {meetingQuantity}</span>
             </p>
           </li>
         </ul>
@@ -176,10 +218,12 @@ export const PointsItem = ({
             btnClass="button_type_form button_size_middle"
             btnText="Забронировать место"
           />
-          <Button
-            btnClass="button_type_transparent button_size_middle"
-            btnText="Подробнее"
-          />
+          {isListed && (
+            <Button
+              btnClass="button_type_transparent button_size_middle"
+              btnText="Подробнее"
+            />
+          )}
         </div>
       </div>
     </div>
@@ -188,6 +232,7 @@ export const PointsItem = ({
 
 PointsItem.propTypes = {
   isCompact: PropTypes.bool,
+  isListed: PropTypes.bool,
   rating: PropTypes.string,
   title: PropTypes.string,
   subtitle: PropTypes.string,
@@ -216,5 +261,6 @@ PointsItem.defaultProps = {
   time: undefined,
   generalQuantity: undefined,
   meetingQuantity: undefined,
-  isCompact: true,
+  isCompact: false,
+  isListed: true,
 };
