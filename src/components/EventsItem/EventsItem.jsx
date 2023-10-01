@@ -3,8 +3,8 @@ import PropTypes from "prop-types";
 
 import Button from "../UI-kit/Button/Button";
 
-import { TagIcon } from "../Events/icons/TagIcon";
-import { UserIcon } from "../Events/icons/UserIcon";
+import { TagIcon } from "./icons/TagIcon";
+import { UserIcon } from "./icons/UserIcon";
 
 import "./EventsItem.scss";
 
