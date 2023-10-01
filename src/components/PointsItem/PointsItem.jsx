@@ -2,6 +2,12 @@ import React, { useState } from "react";
 import PropTypes from "prop-types";
 
 import "./PointsItem.scss";
+import "swiper/swiper-bundle.min.css";
+import "swiper/swiper.min.css";
+
+import { Swiper, SwiperSlide } from "swiper/react";
+import SwiperCore, { Pagination } from "swiper";
+
 import Button from "../UI-kit/Button/Button";
 import { RatingStar } from "./icons/RatingStar";
 import { LikeButton } from "./icons/LikeButton";
@@ -12,6 +18,8 @@ import { Time } from "./icons/Time";
 import { MeetingRoom } from "./icons/MeetingRoom";
 import { Share } from "./icons/Share";
 
+SwiperCore.use([Pagination]);
+
 export const PointsItem = ({
   isCompact,
   rating,
@@ -21,7 +29,7 @@ export const PointsItem = ({
   generalQuantity,
   meetingQuantity,
   info,
-  photo,
+  photoArray,
   address,
   metro,
 }) => {
@@ -38,7 +46,7 @@ export const PointsItem = ({
 
     <div className="point">
       <div className="point__image-container">
-        <img src={photo} alt={title} className="point__image" />
+        <img src={photoArray[0].url} alt={title} className="point__image" />
         <p className="point__cost">От 200&#8381;/час</p>
         <div className="point__rating-container">
           <p className="point__rating">{rating}</p>
@@ -79,17 +87,36 @@ export const PointsItem = ({
 
     <div className="point point_large">
       <div className="point__image-container point__image-container_large">
-        <img
-          src={photo}
-          alt={title}
-          className="point__image point__image_large"
-        />
-        <p className="point__cost">От 200&#8381;/час</p>
-        <div className="point__rating-container">
+        <Swiper
+          slidesPerView={1}
+          spaceBetween={10}
+          pagination={{
+            el: ".swiper-pagination-points",
+            type: "bullets",
+            dynamicBullets: true,
+            dynamicMainBullets: 2,
+            clickable: true,
+          }}
+          observeParents
+        >
+          {photoArray.map((item) => (
+            <SwiperSlide>
+              <img
+                src={item.url}
+                alt={title}
+                className="point__image point__image_large"
+              />
+            </SwiperSlide>
+          ))}
+        </Swiper>
+        <p className="point__cost z-index-2">От 200&#8381;/час</p>
+        <div className="point__rating-container z-index-2">
           <p className="point__rating">{rating}</p>
           <RatingStar />
         </div>
+        <div className="swiper-pagination-points" />
       </div>
+
       <div className="point__info-container">
         <div>
           <div className="point__title-container">
@@ -165,7 +192,12 @@ PointsItem.propTypes = {
   title: PropTypes.string,
   subtitle: PropTypes.string,
   info: PropTypes.string,
-  photo: PropTypes.string,
+  photoArray: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.number.isRequired,
+      url: PropTypes.string,
+    }),
+  ),
   address: PropTypes.string,
   metro: PropTypes.string,
   time: PropTypes.string,
@@ -178,7 +210,7 @@ PointsItem.defaultProps = {
   title: undefined,
   subtitle: undefined,
   info: undefined,
-  photo: undefined,
+  photoArray: [{ id: undefined, url: undefined }],
   address: undefined,
   metro: undefined,
   time: undefined,
