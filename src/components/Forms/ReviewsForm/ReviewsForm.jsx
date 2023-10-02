@@ -27,7 +27,9 @@ const ReviewsForm = ({ isOpenPopup, handleClosePopup }) => {
             <fieldset className="entry-form__box entry-form__box_reviews">
               <StarRating rating={rating} onRatingChange={setRating} />
               <textarea
-                className="entry-form__reviews"
+                className={`entry-form__reviews ${
+                  inputError ? "entry-form__reviews-error" : ""
+                }`}
                 rows="10"
                 cols="45"
                 name="reviews"

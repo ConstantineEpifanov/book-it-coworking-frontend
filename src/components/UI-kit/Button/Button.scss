@@ -37,6 +37,8 @@
   &:disabled {
     opacity: 0.8;
     pointer-events: none;
+    border: 2px solid $gray;
+    background: $light-gray;
   }
 
   &_active {
@@ -90,7 +92,7 @@
     margin-top: 12px;
 
     &:hover {
-      color: $dark-gray;
+      color: $pink;
     }
   }
 
@@ -104,8 +106,13 @@
     line-height: 22px;
 
     &:hover {
-      border: 2px solid $dark-gray;
-      color: $dark-gray;
+      border: 2px solid $pink;
+      color: $pink;
+    }
+    &:active {
+      border: 2px solid $black;
+      background: $pink;
+      color: $black;
     }
   }
 
@@ -126,7 +133,7 @@
     &-hide {
       background: url("../../../images/hide-pass-icon.svg") no-repeat;
     }
-  }
+}
 
   &_type_review {
     background: none;

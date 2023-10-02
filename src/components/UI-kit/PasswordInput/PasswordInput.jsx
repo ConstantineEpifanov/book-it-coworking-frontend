@@ -16,13 +16,18 @@ function PasswordInput({ inputClass, inputName, inputPlaceholder, inputInfo }) {
     <>
       <div className="input__items">
         {value && (
-          <label htmlFor={inputName} className="input__label">
+          <label
+            htmlFor={inputName}
+            className={`input__label ${
+              inputError ? "input__label_error" : ""
+            }}`}
+          >
             {inputPlaceholder}
           </label>
         )}
         <input
           id={inputName}
-          className={`input ${inputClass}`}
+          className={`input ${inputClass} ${inputError ? "input-error" : ""}`}
           type={passwordVisible ? "text" : "password"}
           name={inputName}
           placeholder={inputPlaceholder}

@@ -11,7 +11,7 @@
   box-sizing: border-box;
 
   &__overlay {
-    width: calc(100% + 320px); 
+    width: calc(100% + 320px);
     transform: translateX(-160px);
     max-width: 1440px;
     min-height: 594px;
@@ -53,4 +53,3 @@
     }
   }
 }
-

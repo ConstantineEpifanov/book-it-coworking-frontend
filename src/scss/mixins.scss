@@ -1,5 +1,6 @@
 @import "./variables.scss";
 // Миксины
+//  -------------- BASIC -----------------
 @mixin mp-null {
   margin: 0;
   padding: 0;
@@ -12,4 +13,14 @@
   font-size: 20px;
   font-style: normal;
   line-height: 30px;
+}
+//  -------------- INPUT -----------------
+@mixin error-input {
+  border: 2px solid $alert-red;
+  background: $alert-light-red;
+  color: $alert-red;
+  &:focus {
+    border: 2px solid $alert-red;
+    outline: none;
+  }
 }

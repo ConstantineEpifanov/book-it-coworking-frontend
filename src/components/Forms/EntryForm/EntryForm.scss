@@ -96,5 +96,12 @@
     border: 2px solid $black;
     background: $white;
     resize: none;
+    &:focus {
+      border: 2px solid $green;
+      outline: none;
+    }
+    &-error {
+      @include error-input;
+    }
   }
 }
