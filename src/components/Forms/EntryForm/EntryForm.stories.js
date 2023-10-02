@@ -39,7 +39,7 @@ export function FormDemo(args) {
   );
 }
 
-export function Formlogin(args) {
+export function FormLogin(args) {
   return (
     <Popup>
       <EntryForm title="Войдите на сайт" {...args}>

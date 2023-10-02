@@ -3,7 +3,7 @@ import Contacts from "./Contacts";
 export default {
   title: "Pages/Contacts",
   component: Contacts,
-  tags: ["autodocs"],
+  // tags: ["autodocs"],
   parameters: {
     layout: "fullscreen",
   },
