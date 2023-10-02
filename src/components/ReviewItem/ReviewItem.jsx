@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import "./ReviewItem.scss";
-import { RatingStar } from "../PointsItem/icons/RatingStar";
+import { PointRating } from "../UI-kit/PointRating/PointRating";
 
 export const ReviewItem = ({ author, date, text, rating }) => (
   <div className="review-item">
@@ -10,10 +10,7 @@ export const ReviewItem = ({ author, date, text, rating }) => (
       <p className="review-item__date">{date}</p>
       <p className="review-item__text">{text}</p>
     </div>
-    <div className="review-item__rating-container">
-      <p className="review-item__rating">{rating}</p>
-      <RatingStar />
-    </div>
+    <PointRating rating={rating} />
   </div>
 );
 ReviewItem.propTypes = {

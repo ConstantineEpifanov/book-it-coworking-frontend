@@ -9,7 +9,7 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import SwiperCore, { Pagination } from "swiper";
 
 import Button from "../UI-kit/Button/Button";
-import { RatingStar } from "./icons/RatingStar";
+import { PointRating } from "../UI-kit/PointRating/PointRating";
 import { LikeButton } from "./icons/LikeButton";
 import { Address } from "./icons/Address";
 import { Metro } from "./icons/Metro";
@@ -49,10 +49,7 @@ export const PointsItem = ({
       <div className="point__image-container">
         <img src={photoArray[0].url} alt={title} className="point__image" />
         <p className="point__cost">От 200&#8381;/час</p>
-        <div className="point__rating-container">
-          <p className="point__rating">{rating}</p>
-          <RatingStar />
-        </div>
+        <PointRating rating={rating} optionalClass="point-rating_on-image" />
       </div>
       <div className="point__info-container">
         <div className="point__title-container">
@@ -123,17 +120,15 @@ export const PointsItem = ({
         >
           От 200&#8381;/час
         </p>
-        <div
-          className={`point__rating-container z-index-2 ${
+
+        <PointRating
+          rating={rating}
+          optionalClass={`point-rating_on-image ${
             !isListed && "point__rating-container_own-page"
           }`}
-        >
-          <p className="point__rating">{rating}</p>
-          <RatingStar />
-        </div>
+        />
 
         {/* блок кнопок для страницы коворкинга */}
-
         {!isListed && (
           <div className="point__info-buttons z-index-2">
             <button
@@ -154,6 +149,7 @@ export const PointsItem = ({
             </button>
           </div>
         )}
+
         <div className="swiper-pagination-points" />
       </div>
 

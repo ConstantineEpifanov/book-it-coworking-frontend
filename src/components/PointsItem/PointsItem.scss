@@ -97,34 +97,6 @@
     }
   }
 
-  &__rating-container {
-    position: absolute;
-    bottom: 25px;
-    left: 20px;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-between;
-    padding: 4px 12px;
-    font-family: $font-family;
-    font-size: 20px;
-    font-style: normal;
-    font-weight: 400;
-    line-height: 1.5;
-    gap: 8px;
-    background-color: $white;
-    border-radius: 20px;
-
-    &_own-page {
-      bottom: 7px;
-      left: 17px;
-    }
-  }
-
-  &__rating {
-    @include mp-null;
-  }
-
   &__info-buttons {
     display: flex;
     gap: 8px;
