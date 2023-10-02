@@ -1,14 +1,20 @@
 @import "../../../scss/variables.scss";
+@import "../../../scss/mixins.scss";
 
 .input {
   width: 360px;
-  padding: 18px 20px;
+  padding: 18px 40px 18px 20px;
   box-sizing: border-box;
   border-radius: 40px;
   border: 2px solid $dark-gray;
   background: $white;
   z-index: 0;
+  position: relative;
 
+  // убирает дефолтный показ иконки пароля в Microsoft Edge
+  &::-ms-reveal {
+    display: none;
+  }
   /* кастомный псевдоэлемент для placeholder */
   &::before {
     content: attr(
@@ -26,8 +32,17 @@
   }
 
   /* При фокусе убираем placeholder */
-  &:focus::before {
-    display: none;
+  &:focus {
+    border: 2px solid $green;
+    outline: none;
+
+    &::before {
+      display: none;
+    }
+  }
+  // стили для ошибки импута
+  &-error {
+    @include error-input;
   }
   &__label {
     font-size: 10px;
@@ -46,7 +61,6 @@
   }
 
   &__text {
-    // font-family: $font-family;
     display: block;
     font-size: 12px;
     font-style: normal;
@@ -95,7 +109,6 @@
     height: 58px;
   }
   &__items {
-    // display: flex;
     position: relative;
   }
 }

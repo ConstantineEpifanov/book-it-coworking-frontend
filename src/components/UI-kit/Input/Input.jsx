@@ -20,12 +20,15 @@ function Input({
   return (
     <div className="input__items">
       {value && (
-        <label htmlFor={inputName} className="input__label">
+        <label
+          htmlFor={inputName}
+          className={`input__label ${inputError ? "input__label-error" : ""}}`}
+        >
           {inputPlaceholder}
         </label>
       )}
       <input
-        className={`input ${inputClass}`}
+        className={`input ${inputClass} ${inputError ? "input-error" : ""}`}
         type={inputType}
         name={inputName}
         placeholder={inputPlaceholder}
