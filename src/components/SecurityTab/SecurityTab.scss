@@ -1,0 +1,46 @@
+@import "./../../scss/variables.scss";
+@import "./../../scss/mixins.scss";
+
+.security {
+  font-family: $font-family;
+  width: 100%;
+  &__title {
+    @include mp-null;
+    max-width: 323px;
+    font-size: 28px;
+    font-style: normal;
+    font-weight: 300;
+    line-height: 42px;
+  }
+  &__board {
+    @include mp-null;
+    margin-top: 30px;
+    list-style-type: none;
+    &-row {
+      display: flex;
+      align-items: center;
+      margin-bottom: 20px;
+      & > :first-child {
+        flex-basis: 340px;
+      }
+    }
+  }
+  &__password-container {
+    display: flex;
+    align-items: center;
+    gap: 68px;
+  }
+  &__feature-name {
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 30px;
+  }
+  &__feature-description {
+    @include mp-null;
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 300;
+    line-height: 14px;
+  }
+}

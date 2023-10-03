@@ -1,0 +1,29 @@
+@import "./../../scss/variables.scss";
+@import "./../../scss/mixins.scss";
+
+.profile {
+  @include mp-null;
+  font-family: $font-family;
+  color: $black;
+  display: flex;
+  gap: 20px;
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 20px;
+
+  &__menu {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  &__tab {
+    box-sizing: border-box;
+    width: 681px;
+    height: 100%;
+    padding: 50px 40px;
+    border-radius: 40px;
+    border: 2px solid $black;
+    background-color: $main-white;
+  }
+}
