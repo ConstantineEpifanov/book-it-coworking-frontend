@@ -1,0 +1,86 @@
+@keyframes spinning {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+.loader {
+  width: 200px;
+  height: 200px;
+  display: inline-block;
+  overflow: hidden;
+
+  &__view {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    transform: translateZ(0) scale(1);
+    backface-visibility: hidden;
+    transform-origin: 0 0;
+
+    div {
+      box-sizing: content-box;
+      left: 94px;
+      top: 48px;
+      position: absolute;
+      animation-name: spinning;
+      animation-timing-function: linear;
+      animation-iteration-count: infinite;
+      width: 12px;
+      height: 24px;
+      border-radius: 6px / 12px;
+      transform-origin: 6px 52px;
+
+      &:nth-child(1) {
+        transform: rotate(0deg);
+      }
+
+      &:nth-child(2) {
+        transform: rotate(30deg);
+      }
+
+      &:nth-child(3) {
+        transform: rotate(60deg);
+      }
+
+      &:nth-child(4) {
+        transform: rotate(90deg);
+      }
+
+      &:nth-child(5) {
+        transform: rotate(120deg);
+      }
+
+      &:nth-child(6) {
+        transform: rotate(150deg);
+      }
+
+      &:nth-child(7) {
+        transform: rotate(180deg);
+      }
+
+      &:nth-child(8) {
+        transform: rotate(210deg);
+      }
+
+      &:nth-child(9) {
+        transform: rotate(240deg);
+      }
+
+      &:nth-child(10) {
+        transform: rotate(270deg);
+      }
+
+      &:nth-child(11) {
+        transform: rotate(300deg);
+      }
+
+      &:nth-child(12) {
+        transform: rotate(330deg);
+      }
+    }
+  }
+}
