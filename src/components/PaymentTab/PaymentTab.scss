@@ -1,0 +1,49 @@
+@import "./../../scss/variables.scss";
+@import "./../../scss/mixins.scss";
+
+.payment {
+  font-family: $font-family;
+  width: 100%;
+  &__title {
+    @include mp-null;
+    font-size: 28px;
+    font-style: normal;
+    font-weight: 300;
+    line-height: 42px;
+  }
+  &__board {
+    @include mp-null;
+    list-style-type: none;
+    margin-top: 30px;
+    &-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 20px;
+      & > :first-child {
+        flex-basis: 460px;
+      }
+    }
+  }
+  &__feature-name {
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 30px;
+  }
+  &__card-container {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+  }
+  &__card-data {
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+  }
+  &__card-data {
+    display: block;
+    object-fit: contain;
+  }
+}

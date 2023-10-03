@@ -1,0 +1,45 @@
+@import "./../../scss/variables.scss";
+@import "./../../scss/mixins.scss";
+
+.profile-data {
+  font-family: $font-family;
+  color: $black;
+  width: 100%;
+  &__header-container {
+    margin-bottom: 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  &__title {
+    @include mp-null;
+    font-size: 28px;
+    font-style: normal;
+    font-weight: 300;
+    line-height: 42px;
+  }
+  &__image {
+    display: block;
+    object-fit: contain;
+  }
+  &__list {
+    @include mp-null;
+    list-style-type: none;
+  }
+  &__list-item {
+    margin-top: 30px;
+    display: flex;
+    :first-child {
+      flex-basis: 235px;
+    }
+  }
+  &__info {
+    @include mp-null;
+    margin-top: 25px;
+    max-width: 275px;
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 300;
+    line-height: 14px;
+  }
+}

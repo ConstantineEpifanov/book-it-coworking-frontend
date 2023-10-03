@@ -24,3 +24,16 @@
     outline: none;
   }
 }
+
+//  ------------ BUTTON -----------------
+@mixin button-with-image($image-path) {
+  background-image: url($image-path);
+  background-repeat: no-repeat;
+  background-position: 30px 24px;
+  background-size: 32px;
+}
+
+@mixin button-active {
+  color: $green;
+  background-color: black;
+}
