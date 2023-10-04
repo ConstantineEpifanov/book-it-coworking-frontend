@@ -26,16 +26,20 @@ export const PointsItem = ({
   rating,
   title,
   subtitle,
-  time,
-  cost,
+  openTime,
+  closeTime,
+  lowPrice,
   generalQuantity,
   meetingQuantity,
   about,
-  photoArray,
+  mainPhoto,
+  extraPhoto,
   address,
   metro,
 }) => {
   const [isLiked, setLiked] = useState(false);
+  const photos = [{ url: mainPhoto }, ...extraPhoto];
+  const time = `с ${openTime} до ${closeTime}`;
 
   const handleLike = () => {
     setLiked(!isLiked);
@@ -48,8 +52,8 @@ export const PointsItem = ({
 
     <div className="point">
       <div className="point__image-container">
-        <img src={photoArray[0].url} alt={title} className="point__image" />
-        <p className="point__cost">От {cost}&#8381;/час</p>
+        <img src={mainPhoto} alt={title} className="point__image" />
+        <p className="point__cost">От {lowPrice}&#8381;/час</p>
         <PointRating rating={rating} optionalClass="point-rating_on-image" />
       </div>
       <div className="point__info-container">
@@ -102,7 +106,7 @@ export const PointsItem = ({
           }}
           observeParents
         >
-          {photoArray.map((item) => (
+          {photos.map((item) => (
             <SwiperSlide>
               <img
                 src={item.url}
@@ -119,7 +123,7 @@ export const PointsItem = ({
             !isListed && "point__cost_own-page"
           }`}
         >
-          От {cost}&#8381;/час
+          От {lowPrice}&#8381;/час
         </p>
 
         <PointRating
@@ -234,8 +238,11 @@ PointsItem.propTypes = {
   title: PropTypes.string,
   subtitle: PropTypes.string,
   about: PropTypes.string,
-  cost: PropTypes.number,
-  photoArray: PropTypes.arrayOf(
+  openTime: PropTypes.number,
+  closeTime: PropTypes.number,
+  lowPrice: PropTypes.number,
+  mainPhoto: PropTypes.string,
+  extraPhoto: PropTypes.arrayOf(
     PropTypes.shape({
       id: PropTypes.number.isRequired,
       url: PropTypes.string,
@@ -243,7 +250,6 @@ PointsItem.propTypes = {
   ),
   address: PropTypes.string,
   metro: PropTypes.string,
-  time: PropTypes.string,
   generalQuantity: PropTypes.number,
   meetingQuantity: PropTypes.number,
 };
@@ -253,11 +259,13 @@ PointsItem.defaultProps = {
   title: undefined,
   subtitle: undefined,
   about: undefined,
-  cost: undefined,
-  photoArray: [{ id: undefined, url: undefined }],
+  mainPhoto: undefined,
+  extraPhoto: [{ id: undefined, url: undefined }],
   address: undefined,
   metro: undefined,
-  time: undefined,
+  openTime: undefined,
+  closeTime: undefined,
+  lowPrice: undefined,
   generalQuantity: undefined,
   meetingQuantity: undefined,
   isCompact: false,

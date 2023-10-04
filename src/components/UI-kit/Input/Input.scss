@@ -45,7 +45,7 @@
     @include error-input;
     font-family: $font-family;
   }
-  
+
   &__label {
     font-family: $font-family;
     font-size: 10px;
@@ -120,6 +120,6 @@
     position: relative;
     padding-left: 46px;
     background-color: $main-white;
-    border: 2px solid $black; 
+    border: 2px solid $black;
   }
 }

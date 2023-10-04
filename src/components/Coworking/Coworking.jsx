@@ -17,7 +17,8 @@ export const Coworking = ({ coworking, equipment, reviews }) => (
       time={coworking.time}
       generalQuantity={coworking.generalQuantity}
       meetingQuantity={coworking.meetingQuantity}
-      photoArray={coworking.photoArray}
+      mainPhoto={coworking.mainPhoto}
+      extraPhoto={coworking.extraPhoto}
       address={coworking.address}
       metro={coworking.metro}
       cost={coworking.cost}
