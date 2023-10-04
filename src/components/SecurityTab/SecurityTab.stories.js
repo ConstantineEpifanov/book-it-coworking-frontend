@@ -1,7 +1,7 @@
 import { SecurityTab } from "./SecurityTab";
 
 export default {
-  title: "Profile/SecurityTab",
+  title: "Pages/Profile/Tabs/SecurityTab",
   component: SecurityTab,
   tags: ["autodocs"],
   parameters: {

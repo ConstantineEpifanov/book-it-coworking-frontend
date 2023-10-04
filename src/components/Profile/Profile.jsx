@@ -9,9 +9,9 @@ import { ProfileDataTab } from "../ProfileDataTab/ProfileDataTab";
 import { SecurityTab } from "../SecurityTab/SecurityTab";
 import { PaymentTab } from "../PaymentTab/PaymentTab";
 import { BookingsTab } from "../BookingsTab/BookingsTab";
-import { FavoritesTab } from "../FavoritesTab/FavorutesTab";
+import { FavoritesTab } from "../FavoritesTab/FavoritesTab";
 
-export const Profile = ({ user }) => {
+export const Profile = ({ user, favorites, bookings }) => {
   const [activeTab, setActiveTab] = useState("personalData");
 
   const handleTabClick = (tab) => {
@@ -27,9 +27,9 @@ export const Profile = ({ user }) => {
       case "payment":
         return <PaymentTab user={user} />;
       case "bookings":
-        return <BookingsTab />;
+        return <BookingsTab bookings={bookings} />;
       case "favorites":
-        return <FavoritesTab />;
+        return <FavoritesTab favorites={favorites} />;
       default:
         return null;
     }
@@ -98,6 +98,28 @@ Profile.propTypes = {
       type: PropTypes.string.isRequired,
     }),
   }),
+  favorites: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.string,
+      street: PropTypes.string,
+      name: PropTypes.string,
+      rating: PropTypes.number,
+      image: PropTypes.number,
+    }),
+  ),
+  bookings: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.string,
+      spot: PropTypes.shape({
+        name: PropTypes.string,
+      }),
+      date: PropTypes.string,
+      start_time: PropTypes.string,
+      end_time: PropTypes.string,
+      bill: PropTypes.number,
+      status: PropTypes.oneOf(["Confirmed", "Processing"]),
+    }),
+  ),
 };
 
 Profile.defaultProps = {
@@ -111,4 +133,6 @@ Profile.defaultProps = {
     password: "",
     card: {},
   },
+  favorites: [],
+  bookings: [],
 };

@@ -1,5 +1,8 @@
 @keyframes spinning {
   0% {
+    opacity: 0.5;
+  }
+  20% {
     opacity: 1;
   }
   100% {
