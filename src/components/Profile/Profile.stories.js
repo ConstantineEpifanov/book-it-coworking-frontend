@@ -1,4 +1,5 @@
 import { Profile } from "./Profile";
+import SpotPhoto from "../../images/dummy-spot2.jpg";
 
 export default {
   title: "Pages/Profile",
@@ -32,5 +33,48 @@ export const ProfileDemo = {
         type: "mastercard",
       },
     },
+    favorites: [
+      {
+        id: "1",
+        street: "г. Санкт-Петербург, ул. Льва Толстого, 1-3",
+        name: "Особняк",
+        rating: 4.8,
+        image: SpotPhoto,
+      },
+      {
+        id: "2",
+        street: "г. Санкт-Петербург, ул. Льва Толстого, 1-3",
+        name: "У моря",
+        rating: 4.9,
+        image: SpotPhoto,
+      },
+    ],
+    bookings: [
+      {
+        id: "1",
+        spot: {
+          name: "Парк",
+          image: SpotPhoto,
+        },
+        date: "6 сентября 2023",
+        start_time: "12:00",
+        end_time: "13:00",
+        bill: 200,
+        isFinished: true,
+      },
+      {
+        id: "1",
+        spot: {
+          name: "Особняк",
+          image: SpotPhoto,
+        },
+        date: "8 сентября 2023",
+        start_time: "08:00",
+        end_time: "10:00",
+        bill: 200,
+        isFinished: false,
+        status: "Processing",
+      },
+    ],
   },
 };

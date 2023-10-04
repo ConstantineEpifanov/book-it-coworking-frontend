@@ -1,7 +1,7 @@
 import { ProfileDataTab } from "./ProfileDataTab";
 
 export default {
-  title: "Profile/ProfileDataTab",
+  title: "Pages/Profile/Tabs/ProfileDataTab",
   component: ProfileDataTab,
   tags: ["autodocs"],
   parameters: {
@@ -9,7 +9,7 @@ export default {
   },
 };
 
-export const Example = {
+export const ProfileDataTabDemo = {
   args: {
     user: {
       first_name: "Иван",

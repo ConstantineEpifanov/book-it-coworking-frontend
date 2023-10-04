@@ -1,7 +1,7 @@
 import { PaymentTab } from "./PaymentTab";
 
 export default {
-  title: "Profile/PaymentTab",
+  title: "Pages/Profile/Tabs/PaymentTab",
   component: PaymentTab,
   tags: ["autodocs"],
   parameters: {
