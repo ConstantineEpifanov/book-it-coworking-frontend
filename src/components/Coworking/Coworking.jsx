@@ -12,17 +12,7 @@ export const Coworking = ({ coworking, equipment, reviews }) => (
   <main className="coworking" aria-label="страница коворкинга">
     <SectionTitle titleText={coworking.title} />
     <h2 className="coworking__subtitle">{coworking.subtitle} </h2>
-    <PointsItem
-      rating={coworking.rating}
-      time={coworking.time}
-      generalQuantity={coworking.generalQuantity}
-      meetingQuantity={coworking.meetingQuantity}
-      mainPhoto={coworking.mainPhoto}
-      extraPhoto={coworking.extraPhoto}
-      address={coworking.address}
-      metro={coworking.metro}
-      cost={coworking.cost}
-    />
+    <PointsItem {...coworking} />
     <section className="coworking__section">
       <h3 className="coworking__section-title">Описание</h3>
       <p className="coworking__section-text">{coworking.about}</p>
