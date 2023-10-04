@@ -17,6 +17,12 @@
     &_reviews {
       align-items: start;
     }
+    &_select {
+      flex-direction: row;
+      gap: 20px;
+      padding-top: 32px;
+      align-items: flex-start;
+    }
   }
 
   &__box {
@@ -102,6 +108,20 @@
     }
     &-error {
       @include error-input;
+    }
+  }
+
+  &__search {
+    position: relative;
+
+    &-img {
+      display: block;
+      width: 24px;
+      height: 24px;
+      position: absolute;
+      top: 17px;
+      left: 15px;
+      z-index: 1;
     }
   }
 }

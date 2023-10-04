@@ -8,6 +8,7 @@ import RegisterForm from "../RegisterForm/RegisterForm";
 import PasswordInput from "../../UI-kit/PasswordInput/PasswordInput";
 import ChangePassForm from "../ChangePassForm/ChangePassForm";
 import ReviewsForm from "../ReviewsForm/ReviewsForm";
+import SearchForm from "../SearchForm/SearchForm";
 
 export default {
   title: "Components/Form",
@@ -67,3 +68,4 @@ export const TypeRegister = () => <RegisterForm />;
 export const TypeConfirmRegister = () => <ConfirmRegisterForm />;
 export const TypeChangePass = () => <ChangePassForm />;
 export const TypeReviews = () => <ReviewsForm />;
+export const TypeSearchForm = () => <SearchForm />;
