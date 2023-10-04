@@ -4,7 +4,7 @@ import "./EquipmentItem.scss";
 
 export const EquipmentItem = ({ title, data }) => (
   <div className="equipment-item">
-    <h3 className="equipment-item__title">{title}</h3>
+    <h4 className="equipment-item__title">{title}</h4>
     <ul className="equipment-item__list">
       {data?.map((item) => (
         <li className="equipment-item__list-item">

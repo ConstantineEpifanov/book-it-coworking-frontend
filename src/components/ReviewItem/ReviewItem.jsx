@@ -6,7 +6,7 @@ import { PointRating } from "../UI-kit/PointRating/PointRating";
 export const ReviewItem = ({ author, date, text, rating }) => (
   <div className="review-item">
     <div className="review-item__container">
-      <h3 className="review-item__author">{author}</h3>
+      <h4 className="review-item__author">{author}</h4>
       <p className="review-item__date">{date}</p>
       <p className="review-item__text">{text}</p>
     </div>

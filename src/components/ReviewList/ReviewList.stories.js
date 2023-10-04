@@ -12,7 +12,7 @@ export default {
 export const Example = {
   args: {
     pointRating: 4.5,
-    data: [
+    reviews: [
       {
         author: "Грета Гарбо",
         date: "01.12.1989",

@@ -11,7 +11,7 @@ export default {
 
 export const Example = {
   args: {
-    array: [
+    equipment: [
       {
         title: "В общей зоне",
         data: [

@@ -25,7 +25,7 @@ export const Points = ({ data }) => (
 );
 
 Points.propTypes = {
-  data: PropTypes.node,
+  data: PropTypes.arrayOf,
 };
 
 Points.defaultProps = {

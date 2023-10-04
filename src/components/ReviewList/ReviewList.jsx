@@ -5,17 +5,17 @@ import { PointRating } from "../UI-kit/PointRating/PointRating";
 import { ReviewItem } from "../ReviewItem/ReviewItem";
 import Button from "../UI-kit/Button/Button";
 
-export const ReviewList = ({ data, pointRating }) => (
+export const ReviewList = ({ reviews, pointRating }) => (
   <div className="review-list">
     <div className="review-list__container">
       <PointRating rating={pointRating} />
       <div className="review-list__length-container">
         <p className="review-list__text">Отзывов:&nbsp;</p>
-        <p className="review-list__length">{data?.length}</p>
+        <p className="review-list__length">{reviews?.length}</p>
       </div>
     </div>
     <ul className="review-list__items">
-      {data?.map((item) => (
+      {reviews?.map((item) => (
         <li>
           <ReviewItem
             author={item.author}
@@ -34,11 +34,11 @@ export const ReviewList = ({ data, pointRating }) => (
 );
 
 ReviewList.propTypes = {
-  data: PropTypes.arrayOf,
+  reviews: PropTypes.arrayOf,
   pointRating: PropTypes.number,
 };
 
 ReviewList.defaultProps = {
-  data: undefined,
+  reviews: undefined,
   pointRating: undefined,
 };

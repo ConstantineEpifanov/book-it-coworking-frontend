@@ -3,9 +3,9 @@ import PropTypes from "prop-types";
 import "./EquipmentList.scss";
 import { EquipmentItem } from "../EquipmentItem/EquipmentItem";
 
-export const EquipmentList = ({ array }) => (
+export const EquipmentList = ({ equipment }) => (
   <ul className="equipment-list">
-    {array?.map((item) => (
+    {equipment?.map((item) => (
       <li>
         <EquipmentItem title={item.title} data={item.data} />
       </li>
@@ -13,9 +13,9 @@ export const EquipmentList = ({ array }) => (
   </ul>
 );
 EquipmentList.propTypes = {
-  array: PropTypes.arrayOf,
+  equipment: PropTypes.arrayOf,
 };
 
 EquipmentList.defaultProps = {
-  array: undefined,
+  equipment: undefined,
 };

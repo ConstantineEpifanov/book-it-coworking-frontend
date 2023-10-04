@@ -27,9 +27,10 @@ export const PointsItem = ({
   title,
   subtitle,
   time,
+  cost,
   generalQuantity,
   meetingQuantity,
-  info,
+  about,
   photoArray,
   address,
   metro,
@@ -48,7 +49,7 @@ export const PointsItem = ({
     <div className="point">
       <div className="point__image-container">
         <img src={photoArray[0].url} alt={title} className="point__image" />
-        <p className="point__cost">От 200&#8381;/час</p>
+        <p className="point__cost">От {cost}&#8381;/час</p>
         <PointRating rating={rating} optionalClass="point-rating_on-image" />
       </div>
       <div className="point__info-container">
@@ -118,7 +119,7 @@ export const PointsItem = ({
             !isListed && "point__cost_own-page"
           }`}
         >
-          От 200&#8381;/час
+          От {cost}&#8381;/час
         </p>
 
         <PointRating
@@ -178,7 +179,7 @@ export const PointsItem = ({
                 <Share />
               </button>
             </div>
-            <p className="point__about">{info}</p>
+            <p className="point__about">{about}</p>
           </div>
         )}
         <ul className="point__info point__info_large">
@@ -232,7 +233,8 @@ PointsItem.propTypes = {
   rating: PropTypes.number,
   title: PropTypes.string,
   subtitle: PropTypes.string,
-  info: PropTypes.string,
+  about: PropTypes.string,
+  cost: PropTypes.number,
   photoArray: PropTypes.arrayOf(
     PropTypes.shape({
       id: PropTypes.number.isRequired,
@@ -250,7 +252,8 @@ PointsItem.defaultProps = {
   rating: undefined,
   title: undefined,
   subtitle: undefined,
-  info: undefined,
+  about: undefined,
+  cost: undefined,
   photoArray: [{ id: undefined, url: undefined }],
   address: undefined,
   metro: undefined,
@@ -258,5 +261,5 @@ PointsItem.defaultProps = {
   generalQuantity: undefined,
   meetingQuantity: undefined,
   isCompact: false,
-  isListed: true,
+  isListed: false,
 };
