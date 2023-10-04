@@ -1,0 +1,84 @@
+@import "./../../scss/variables.scss";
+@import "./../../scss/mixins.scss";
+
+.favorites {
+  font-family: $font-family;
+  color: $black;
+  width: 600px;
+  text-align: center;
+  &__title {
+    @include mp-null;
+    text-align: left;
+    font-size: 28px;
+    font-style: normal;
+    font-weight: 300;
+    line-height: 42px;
+  }
+  &__card-list {
+    @include mp-null;
+    list-style-type: none;
+    margin-top: 30px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+  }
+  &__card {
+    border-radius: 40px;
+    border: 2px solid $black;
+    width: 266px;
+    overflow: hidden;
+    &-image {
+      display: block;
+      height: 200px;
+      width: 100%;
+      object-fit: cover;
+    }
+    &-text-container {
+      padding: 20px;
+    }
+    &-name {
+      text-transform: uppercase;
+      font-size: 20px;
+      font-style: normal;
+      font-weight: 500;
+      line-height: 30px;
+    }
+    &-name-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    &-address-row,
+    &-rating-row {
+      margin-top: 16px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    &-rating-row {
+      margin-bottom: 16px;
+    }
+    &-like {
+      display: block;
+      cursor: pointer;
+      &:hover {
+        opacity: 0.7;
+      }
+    }
+    &-address {
+      @include mp-null;
+      text-align: left;
+      font-size: 14px;
+      font-style: normal;
+      font-weight: 300;
+      line-height: 22px;
+    }
+    &-rating {
+      @include mp-null;
+      font-size: 16px;
+      font-style: normal;
+      font-weight: 300;
+      line-height: 22px;
+    }
+  }
+}

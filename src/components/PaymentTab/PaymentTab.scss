@@ -3,7 +3,8 @@
 
 .payment {
   font-family: $font-family;
-  width: 100%;
+  width: 600px;
+
   &__title {
     @include mp-null;
     font-size: 28px;
