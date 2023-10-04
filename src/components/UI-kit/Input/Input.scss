@@ -43,8 +43,11 @@
   // стили для ошибки импута
   &-error {
     @include error-input;
+    font-family: $font-family;
   }
+  
   &__label {
+    font-family: $font-family;
     font-size: 10px;
     font-style: normal;
     font-weight: 400;
@@ -110,5 +113,13 @@
   }
   &__items {
     position: relative;
+  }
+  &__search {
+    font-family: $font-family;
+    width: 265px;
+    position: relative;
+    padding-left: 46px;
+    background-color: $main-white;
+    border: 2px solid $black; 
   }
 }

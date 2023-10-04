@@ -72,7 +72,11 @@
     font-style: normal;
     font-weight: 400;
     line-height: 1.22;
-
+    &-select {
+      width: 170px;
+      @include text-font-select;
+      padding: 16px 32px;
+    }
     &:hover {
       opacity: 0.7;
     }
@@ -104,7 +108,10 @@
     font-style: normal;
     font-weight: 400;
     line-height: 22px;
-
+    &-select {
+      width: 170px;
+      @include text-font-select;
+    }
     &:hover {
       border: 2px solid $pink;
       color: $pink;

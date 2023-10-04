@@ -1,0 +1,90 @@
+@import "../../../scss/variables.scss";
+@import "../../../scss/mixins.scss";
+
+.sort {
+  position: relative;
+  &_size-min {
+    width: 170px;
+  }
+  &_size-max {
+    width: 265px;
+  }
+
+  &__label {
+    display: flex;
+    align-items: center;
+    padding: 12px 16px;
+    border-radius: 40px;
+    background: $main-white;
+    text-align: center;
+    justify-content: space-between;
+    cursor: pointer;
+
+    &_button {
+      width: 24px;
+      height: 24px;
+      border: 0;
+      padding: 15px;
+      cursor: pointer;
+      background: url("../../../images/drowdown-icon.svg") no-repeat center;
+      &-active {
+        transform: rotate(
+          180deg
+        ); /* Поворачиваем на 180 градусов при активации (нажатии) */
+      }
+    }
+
+    &_text {
+      @include mp-null;
+      @include text-font-select;
+      font-weight: 400;
+    }
+  }
+  &__items {
+    position: absolute; /* Всплывающее меню */
+    left: 0;
+    top: 0;
+    border: 2px $black solid;
+    border-radius: 40px;
+    background: $main-white;
+    overflow: hidden;
+    z-index: 1;
+    &_size-min {
+      width: 170px;
+    }
+    &_size-max {
+      width: 265px;
+    }
+    &_active {
+      border-radius: 28px;
+    }
+  }
+  &__popup {
+    background: $main-white;
+    box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.09);
+    overflow: hidden;
+
+    &_list {
+      @include mp-null;
+      overflow: hidden;
+
+      &-active {
+        width: 100%;
+        @include text-font-select;
+        color: $black;
+        display: flex;
+        gap: 10px;
+        overflow: hidden;
+        padding: 12px 20px;
+        cursor: pointer;
+        @include text-font-select;
+        border: 0;
+        background-color: inherit;
+
+        &:hover {
+          background-color: $green;
+        }
+      }
+    }
+  }
+}
