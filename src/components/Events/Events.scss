@@ -4,6 +4,7 @@
 .events {
   font-family: $font-family;
   color: $black;
+  max-width: 1120px;
   &__subheader {
     @include mp-null;
     margin: 14px 0 32px;
@@ -25,7 +26,7 @@
 .swiper {
   &-container {
     margin-left: 0;
-    width: 1120px;
+
     height: calc(100% + 20px);
   }
   &-pagination-bullet {

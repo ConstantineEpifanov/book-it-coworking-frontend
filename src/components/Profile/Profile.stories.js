@@ -63,7 +63,7 @@ export const ProfileDemo = {
         isFinished: true,
       },
       {
-        id: "1",
+        id: "2",
         spot: {
           name: "Особняк",
           image: SpotPhoto,
@@ -74,6 +74,19 @@ export const ProfileDemo = {
         bill: 200,
         isFinished: false,
         status: "Processing",
+      },
+      {
+        id: "3",
+        spot: {
+          name: "Парк",
+          image: SpotPhoto,
+        },
+        date: "11 сентября 2023",
+        start_time: "08:00",
+        end_time: "10:00",
+        bill: 200,
+        isFinished: false,
+        status: "Confirmed",
       },
     ],
   },

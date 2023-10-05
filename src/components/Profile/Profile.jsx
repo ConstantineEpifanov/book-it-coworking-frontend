@@ -104,7 +104,7 @@ Profile.propTypes = {
       street: PropTypes.string,
       name: PropTypes.string,
       rating: PropTypes.number,
-      image: PropTypes.number,
+      image: PropTypes.string,
     }),
   ),
   bookings: PropTypes.arrayOf(
