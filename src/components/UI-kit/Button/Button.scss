@@ -69,6 +69,29 @@
     margin-top: 32px;
   }
 
+  &_type_tertiary {
+    color: $black;
+    background-color: transparent;
+    padding: 16px 12px;
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 1.22;
+    width: 220px;
+    align-self: flex-end;
+
+    &:hover {
+      opacity: 0.7;
+      color: $pink;
+      stroke: $pink;
+    }
+
+    &:active {
+      color: $green;
+      stroke: $green;
+    }
+  }
+
   &_type_form {
     background-color: $green;
     color: $black;

@@ -9,4 +9,4 @@ export default {
   },
 };
 
-export const MapDemo = () => <MainMap />;
+export const MapDemo = () => <MainMap isActive />;
