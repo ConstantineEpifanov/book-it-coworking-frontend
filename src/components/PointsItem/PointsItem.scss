@@ -20,6 +20,10 @@
     border-color: $pink;
   }
 
+  &:active {
+    border-color: $green;
+  }
+
   &__span {
     font-family: $font-family;
     color: $black;

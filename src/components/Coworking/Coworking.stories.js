@@ -11,16 +11,15 @@ export default {
 export const Example = {
   args: {
     coworking: {
-      title: "У моря",
-      subtitle: "На самом берегу с видом на Финский залив",
+      title: "Коворкинг",
+      subtitle: "Рядом находится прекрасная набережная для прогулок",
       about:
-        "Просторный коворкинг с авторским дизайном на берегу Финского залива. Это место для работы компаний, креативных команд, стартапов, предпринимателей и удалённых сотрудников. Мы продумали все до мелочей, чтобы вам ни пришлось думать ни о чем кроме ваших задач.",
-      rating: "4.0",
-      photoArray: [
-        {
-          id: 1,
-          url: "https://upload.wikimedia.org/wikipedia/commons/7/7d/Polarography_workplace.jpg",
-        },
+        "Просторный коворкинг с авторским дизайном на берегу реки Карповки. Это место для работы компаний, креативных команд, стартапов, предпринимателей и удалённых сотрудников. Мы продумали все до мелочей, чтобы вам ни пришлось думать ни о чем кроме ваших задач.",
+      rating: "5.0",
+      lowPrice: 400,
+      mainPhoto:
+        "https://upload.wikimedia.org/wikipedia/commons/7/7d/Polarography_workplace.jpg",
+      extraPhoto: [
         {
           id: 2,
           url: "https://upload.wikimedia.org/wikipedia/commons/thumb/6/61/Inside_Kenworth_conventional.jpg/1024px-Inside_Kenworth_conventional.jpg",
@@ -36,10 +35,10 @@ export const Example = {
       ],
       address: "г. Санкт-Петербург, Кантемировская улица, 22",
       metro: "м. Лесная 200м",
-      time: "Пн-Вс с 7:00 – 22:00",
+      openTime: 7,
+      closeTime: 20,
       generalQuantity: 2,
       meetingQuantity: 30,
-      cost: 300,
     },
     equipment: [
       {
