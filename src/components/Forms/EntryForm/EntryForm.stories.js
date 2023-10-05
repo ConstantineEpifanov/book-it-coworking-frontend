@@ -9,6 +9,8 @@ import PasswordInput from "../../UI-kit/PasswordInput/PasswordInput";
 import ChangePassForm from "../ChangePassForm/ChangePassForm";
 import ReviewsForm from "../ReviewsForm/ReviewsForm";
 import SearchForm from "../SearchForm/SearchForm";
+import { SectionTitle } from "../../SectionTitle/SectionTitle";
+import { SectionSubtitle } from "../../SectionSubtitle/SectionSubtitle";
 
 export default {
   title: "Components/Form",
@@ -68,4 +70,17 @@ export const TypeRegister = () => <RegisterForm />;
 export const TypeConfirmRegister = () => <ConfirmRegisterForm />;
 export const TypeChangePass = () => <ChangePassForm />;
 export const TypeReviews = () => <ReviewsForm />;
-export const TypeSearchForm = () => <SearchForm />;
+
+export const TypeSearchForm = () => (
+  <div className="entry-form__inner_search">
+    <SectionTitle
+      titleText="Поиск по коворкингам Санкт-Петербурга"
+      titleClass="section-title_search"
+    />
+    <SectionSubtitle
+      titleText="Вы можете снять рабочее место в одном из 10 коворкингов Сакнт-Петербурга, представленых в нашем катологе"
+      titleClass="section-subtitle_search"
+    />
+    <SearchForm />
+  </div>
+);

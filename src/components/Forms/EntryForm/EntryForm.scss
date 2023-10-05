@@ -23,6 +23,12 @@
       padding-top: 32px;
       align-items: flex-start;
     }
+    &_search {
+      display: flex;
+      flex-direction: column;
+      padding-top: 40px;
+      align-items: flex-start;
+    }
   }
 
   &__box {
