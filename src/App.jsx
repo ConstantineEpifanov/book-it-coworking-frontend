@@ -7,13 +7,17 @@ import EntryForm from "./components/Forms/EntryForm/EntryForm";
 import Popup from "./components/Popup/Popup";
 import Button from "./components/UI-kit/Button/Button";
 import Input from "./components/UI-kit/Input/Input";
-import { SectionTitle } from "./components/SectionTitle/SectionTitle";
+
 import { Footer } from "./components/Footer/Footer";
 import Header from "./components/Header/Header";
 import PageNotFound from "./components/PageNotFound/PageNotFound";
 import PasswordInput from "./components/UI-kit/PasswordInput/PasswordInput";
 import { MainMap } from "./components/Map/Map";
 import Contacts from "./components/Contacts/Contacts";
+import { Main } from "./components/Main/Main";
+import { CoworkingList } from "./components/CoworkingList/CoworkingList";
+import { RulesQuestions } from "./components/RulesQuestions/RulesQuestions";
+import { Profile } from "./components/Profile/Profile";
 
 function App() {
   // временно выставлено true, далее нужно поменять значение на false
@@ -34,12 +38,10 @@ function App() {
       <Header onOpenPopup={handleOpenPopup} />
       <MainMap />
       <Routes>
-        <Route
-          path="/"
-          element={
-            <SectionTitle titleText="Здесь могла бы быть ваша реклама" />
-          }
-        />
+        <Route path="/" element={<Main />} />
+        <Route path="/points" element={<CoworkingList />} />
+        <Route path="/faq" element={<RulesQuestions />} />
+        <Route path="/profile" element={<Profile />} />
         <Route path="/contacts" element={<Contacts />} />
         <Route path="*" element={<PageNotFound />} />
       </Routes>

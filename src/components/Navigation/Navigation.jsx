@@ -12,7 +12,7 @@ function Navigation() {
     <nav className="navigation">
       <div className="navigation__item">
         <NavLink
-          to="/t"
+          to="/points"
           className={({ isActive }) =>
             isActive ? activeLinkClass : inativeLinkClass
           }
@@ -20,7 +20,7 @@ function Navigation() {
           Коворкинги
         </NavLink>
         <NavLink
-          to="/tr"
+          to="/faq"
           className={({ isActive }) =>
             isActive ? activeLinkClass : inativeLinkClass
           }

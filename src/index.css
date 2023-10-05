@@ -15,3 +15,8 @@ body {
   -moz-text-size-adjust: 100%;
   background-color: #fdf8f1;
 }
+
+#root {
+  max-width: 1440px;
+  margin: auto;
+}
