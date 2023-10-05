@@ -15,7 +15,10 @@ SwiperCore.use([Pagination]);
 
 export const Events = ({ eventsArray }) => (
   <section className="events">
-    <SectionTitle titleText="Мероприятия" />
+    <SectionTitle
+      titleClass="section-title_margin-to-subtitle"
+      titleText="Мероприятия"
+    />
     <p className="events__subheader">
       Здесь собраны все анонсы о предстоящих мероприятиях
       на&nbsp;базе&nbsp;наших коворкингов

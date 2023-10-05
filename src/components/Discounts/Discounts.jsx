@@ -9,7 +9,10 @@ const data = [img1, img2, img3];
 
 export const Discounts = () => (
   <section className="discounts">
-    <SectionTitle titleText="Акции" />
+    <SectionTitle
+      titleClass="section-title_margin-to-block"
+      titleText="Акции"
+    />
     <ul className="discounts__list">
       {data.map((item) => (
         <li>

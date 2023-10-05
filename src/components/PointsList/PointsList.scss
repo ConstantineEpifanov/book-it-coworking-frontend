@@ -9,6 +9,7 @@
   list-style: none;
   gap: 20px;
   width: 100%;
+  box-sizing: border-box;
 
   &_compact {
     flex-direction: row;
