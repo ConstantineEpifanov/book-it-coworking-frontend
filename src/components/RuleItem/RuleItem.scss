@@ -4,11 +4,12 @@
 .rule {
   @include mp-null;
   display: flex;
-  width: 550px;
+  max-width: 550px;
   padding: 20px;
   flex-direction: column;
   border-radius: 40px;
   background-color: $black;
+  box-sizing: border-box;
 
   &__img {
     width: 170px;
