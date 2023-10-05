@@ -1,0 +1,8 @@
+@import "./../../scss/variables.scss";
+@import "./../../scss/mixins.scss";
+
+.coworking-list {
+  margin: $main-margin;
+  display: flex;
+  flex-direction: column;
+}
