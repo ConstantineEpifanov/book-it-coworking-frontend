@@ -60,9 +60,8 @@ export const BookingsCard = ({ item }) => {
 
   // для демонстрационных целей
 
-  const handleReviewSubmit = () => {
-    console.log(`Рейтинг: ${reviewRating}`, `Текст: ${reviewText}`);
-  };
+  const handleReviewSubmit = () =>
+    `Рейтинг: ${reviewRating} Текст: ${reviewText}`;
 
   const getPopupText = (booking) => {
     if (booking.status === "Confirmed") {

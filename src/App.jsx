@@ -12,12 +12,13 @@ import { Footer } from "./components/Footer/Footer";
 import Header from "./components/Header/Header";
 import PageNotFound from "./components/PageNotFound/PageNotFound";
 import PasswordInput from "./components/UI-kit/PasswordInput/PasswordInput";
-import { MainMap } from "./components/Map/Map";
 import Contacts from "./components/Contacts/Contacts";
 import { Main } from "./components/Main/Main";
 import { CoworkingList } from "./components/CoworkingList/CoworkingList";
 import { RulesQuestions } from "./components/RulesQuestions/RulesQuestions";
 import { Profile } from "./components/Profile/Profile";
+
+import { exampleEventsData } from "./config/exampleEventsData";
 
 function App() {
   // временно выставлено true, далее нужно поменять значение на false
@@ -36,9 +37,8 @@ function App() {
   return (
     <div className="App">
       <Header onOpenPopup={handleOpenPopup} />
-      <MainMap />
       <Routes>
-        <Route path="/" element={<Main />} />
+        <Route path="/" element={<Main eventsArray={exampleEventsData} />} />
         <Route path="/points" element={<CoworkingList />} />
         <Route path="/faq" element={<RulesQuestions />} />
         <Route path="/profile" element={<Profile />} />
@@ -73,7 +73,7 @@ function App() {
           />
         </EntryForm>
       </Popup>
-      <Footer />
+      <Footer onSubmit={() => {}} />
     </div>
   );
 }
