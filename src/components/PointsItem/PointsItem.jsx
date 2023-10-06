@@ -38,7 +38,7 @@ export const PointsItem = ({
   metro,
 }) => {
   const [isLiked, setLiked] = useState(false);
-  const photos = [{ url: mainPhoto }, ...extraPhoto];
+  const photos = [{ url: mainPhoto, id: 1 }, ...extraPhoto];
   const time = `с ${openTime} до ${closeTime}`;
 
   const handleLike = () => {
@@ -107,7 +107,7 @@ export const PointsItem = ({
           observeParents
         >
           {photos.map((item) => (
-            <SwiperSlide>
+            <SwiperSlide key={item.id}>
               <img
                 src={item.url}
                 alt={title}

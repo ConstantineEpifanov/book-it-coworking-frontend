@@ -48,7 +48,10 @@ function App() {
           }
         />
 
-        <Route path="/points" element={<CoworkingList />} />
+        <Route
+          path="/points"
+          element={<CoworkingList data={exampleCoworkingsData} />}
+        />
         <Route path="/faq" element={<RulesQuestions />} />
         <Route path="/profile" element={<Profile />} />
         <Route path="/contacts" element={<Contacts />} />

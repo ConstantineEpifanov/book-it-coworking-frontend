@@ -8,6 +8,8 @@ import { MainMap } from "../Map/Map";
 import SearchForm from "../Forms/SearchForm/SearchForm";
 import Button from "../UI-kit/Button/Button";
 
+import { points, defaultState } from "../../config/mapOptions";
+
 export const CoworkingList = ({ data }) => {
   const [isMap, setMap] = useState(false);
 
@@ -31,7 +33,7 @@ export const CoworkingList = ({ data }) => {
         btnClass="button_type_tertiary"
         btnText="Показать на карте"
       />
-      <MainMap isActive={isMap} />
+      <MainMap isActive={isMap} points={points} defaultState={defaultState} />
       <PointsList isListed isCompact={false} data={data} />
     </main>
   );

@@ -1,14 +1,4 @@
-import { MainMap } from "./Map";
-import spotImage from "../../images/dummy-spot.jpg";
-
-export default {
-  title: "Components/Map",
-  component: MainMap,
-  tags: ["autodocs"],
-  parameters: {
-    layout: "fullscreen",
-  },
-};
+import spotImage from "../images/dummy-spot.jpg";
 
 const points = [
   {
@@ -23,19 +13,18 @@ const points = [
   {
     coordinates: [59.91, 30.31],
     id: 2,
-    rating: "5",
+    rating: "4",
     name: "Питерский",
     link: "/",
     image: spotImage,
     address: "г. Санкт-Петербург, Невская 1",
   },
 ];
+
 const defaultState = {
   center: [59.9, 30.3],
   zoom: 13,
   controls: ["zoomControl", "fullscreenControl"],
 };
 
-export const MapDemo = () => (
-  <MainMap isActive points={points} defaultState={defaultState} />
-);
+export { points, defaultState };
