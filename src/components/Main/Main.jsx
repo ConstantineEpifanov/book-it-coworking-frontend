@@ -26,8 +26,41 @@ export const Main = ({ coworkingsArray, eventsArray }) => (
 );
 
 Main.propTypes = {
-  coworkingsArray: PropTypes.arrayOf,
-  eventsArray: PropTypes.arrayOf,
+  coworkingsArray: PropTypes.arrayOf(
+    PropTypes.shape({
+      isCompact: PropTypes.bool,
+      isListed: PropTypes.bool,
+      rating: PropTypes.number,
+      title: PropTypes.string,
+      subtitle: PropTypes.string,
+      about: PropTypes.string,
+      openTime: PropTypes.number,
+      closeTime: PropTypes.number,
+      lowPrice: PropTypes.number,
+      mainPhoto: PropTypes.string,
+      extraPhoto: PropTypes.arrayOf(
+        PropTypes.shape({
+          id: PropTypes.number.isRequired,
+          url: PropTypes.string,
+        }),
+      ),
+      address: PropTypes.string,
+      metro: PropTypes.string,
+      generalQuantity: PropTypes.number,
+      meetingQuantity: PropTypes.number,
+    }),
+  ),
+  eventsArray: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.number.isRequired,
+      name: PropTypes.string.isRequired,
+      image: PropTypes.string,
+      address: PropTypes.string,
+      meetingQuantity: PropTypes.number,
+      url: PropTypes.string,
+      date: PropTypes.string.isRequired,
+    }),
+  ),
 };
 
 Main.defaultProps = {

@@ -24,7 +24,28 @@ export const PointsList = ({ isCompact, isListed, data }) => (
 );
 
 PointsList.propTypes = {
-  data: PropTypes.arrayOf,
+  data: PropTypes.arrayOf({
+    isCompact: PropTypes.bool,
+    isListed: PropTypes.bool,
+    rating: PropTypes.number,
+    title: PropTypes.string,
+    subtitle: PropTypes.string,
+    about: PropTypes.string,
+    openTime: PropTypes.number,
+    closeTime: PropTypes.number,
+    lowPrice: PropTypes.number,
+    mainPhoto: PropTypes.string,
+    extraPhoto: PropTypes.arrayOf(
+      PropTypes.shape({
+        id: PropTypes.number.isRequired,
+        url: PropTypes.string,
+      }),
+    ),
+    address: PropTypes.string,
+    metro: PropTypes.string,
+    generalQuantity: PropTypes.number,
+    meetingQuantity: PropTypes.number,
+  }),
   isCompact: PropTypes.bool,
   isListed: PropTypes.bool,
 };

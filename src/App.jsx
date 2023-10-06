@@ -49,28 +49,30 @@ function App() {
       {/* пример формы */}
       <Popup isOpen={isOpenPopup} onClickClose={handleClosePopup}>
         <EntryForm title="Войдите на сайт">
-          <Input
-            inputType="email"
-            inputPlaceholder="Email"
-            inputName="emailLogin"
-          />
-          <PasswordInput
-            inputName="passwordLogin"
-            inputPlaceholder="Пароль"
-            inputInfo="Забыли пароль?"
-          />
-          <Button
-            btnClass="button_type_form"
-            btnType="button"
-            btnText="Войти"
-            onClick={() => {}}
-          />
-          <Button
-            btnClass="button_type_link"
-            btnType="button"
-            btnText="Зарегистрироваться"
-            onClick={() => {}}
-          />
+          <>
+            <Input
+              inputType="email"
+              inputPlaceholder="Email"
+              inputName="emailLogin"
+            />
+            <PasswordInput
+              inputName="passwordLogin"
+              inputPlaceholder="Пароль"
+              inputInfo="Забыли пароль?"
+            />
+            <Button
+              btnClass="button_type_form"
+              btnType="button"
+              btnText="Войти"
+              onClick={() => {}}
+            />
+            <Button
+              btnClass="button_type_link"
+              btnType="button"
+              btnText="Зарегистрироваться"
+              onClick={() => {}}
+            />
+          </>
         </EntryForm>
       </Popup>
       <Footer onSubmit={() => {}} />

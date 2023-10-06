@@ -93,9 +93,9 @@ Profile.propTypes = {
     occupation: PropTypes.string,
     password: PropTypes.string,
     card: PropTypes.shape({
-      number: PropTypes.string.isRequired,
-      valid: PropTypes.string.isRequired,
-      type: PropTypes.string.isRequired,
+      number: PropTypes.string,
+      valid: PropTypes.string,
+      type: PropTypes.string,
     }),
   }),
   favorites: PropTypes.arrayOf(

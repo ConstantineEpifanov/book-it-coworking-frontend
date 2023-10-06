@@ -33,7 +33,7 @@ const SubscriptionForm = ({ onSubmit }) => {
             btnClass="button__subscription button_type_form"
             btnText="Подписаться"
             btnType="submit"
-            onClick=""
+            onClick={handleSubmit}
             isValidBtn
           />
         </fieldset>
