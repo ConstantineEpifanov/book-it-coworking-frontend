@@ -25,7 +25,7 @@ EntryForm.propTypes = {
   title: PropTypes.string,
   formClass: PropTypes.string,
   onSubmit: PropTypes.func,
-  children: PropTypes.element.isRequired,
+  children: PropTypes.node.isRequired,
 };
 
 EntryForm.defaultProps = {

@@ -30,7 +30,7 @@ Main.propTypes = {
     PropTypes.shape({
       isCompact: PropTypes.bool,
       isListed: PropTypes.bool,
-      rating: PropTypes.number,
+      rating: PropTypes.string,
       title: PropTypes.string,
       subtitle: PropTypes.string,
       about: PropTypes.string,

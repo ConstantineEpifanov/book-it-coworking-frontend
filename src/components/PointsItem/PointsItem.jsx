@@ -234,7 +234,7 @@ export const PointsItem = ({
 PointsItem.propTypes = {
   isCompact: PropTypes.bool,
   isListed: PropTypes.bool,
-  rating: PropTypes.number,
+  rating: PropTypes.string,
   title: PropTypes.string,
   subtitle: PropTypes.string,
   about: PropTypes.string,

@@ -17,7 +17,7 @@ import { Main } from "./components/Main/Main";
 import { CoworkingList } from "./components/CoworkingList/CoworkingList";
 import { RulesQuestions } from "./components/RulesQuestions/RulesQuestions";
 import { Profile } from "./components/Profile/Profile";
-
+import { exampleCoworkingsData } from "./config/exampleCoworkingsData";
 import { exampleEventsData } from "./config/exampleEventsData";
 
 function App() {
@@ -38,7 +38,16 @@ function App() {
     <div className="App">
       <Header onOpenPopup={handleOpenPopup} />
       <Routes>
-        <Route path="/" element={<Main eventsArray={exampleEventsData} />} />
+        <Route
+          path="/"
+          element={
+            <Main
+              coworkingsArray={exampleCoworkingsData}
+              eventsArray={exampleEventsData}
+            />
+          }
+        />
+
         <Route path="/points" element={<CoworkingList />} />
         <Route path="/faq" element={<RulesQuestions />} />
         <Route path="/profile" element={<Profile />} />

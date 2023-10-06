@@ -24,7 +24,7 @@ export const PointRating = ({ rating, optionalClass }) => (
 );
 
 PointRating.propTypes = {
-  rating: PropTypes.number,
+  rating: PropTypes.string,
   optionalClass: PropTypes.string,
 };
 
