@@ -3,6 +3,7 @@ import React from "react";
 
 import "./Booking.scss";
 import { SectionTitle } from "../SectionTitle/SectionTitle";
+import { Calendar } from "../Calendar/Calendar";
 
 export const Booking = () => (
   <main className="booking" aria-label="Страница бронирования">
@@ -12,6 +13,7 @@ export const Booking = () => (
       aria-label="Секция выбора даты и времени"
     >
       <h2 className="booking__section-title">1. Выберите дату и время</h2>
+      <Calendar />
     </section>
 
     <section
