@@ -8,16 +8,19 @@ import Button from "../UI-kit/Button/Button";
 
 const data = [
   {
+    id: 1,
     title: "01",
-    subtitle: "Уникальные локации и комфортная обстановка",
+    subtitle: "Уникальные локации и комфортная обстановка",
   },
   {
+    id: 2,
     title: "02",
     subtitle: "Разнообразие дополнительных услуг",
   },
   {
+    id: 3,
     title: "03",
-    subtitle: "Гибкие тарифы и индивидуальный подход",
+    subtitle: "Гибкие тарифы и индивидуальный подход",
   },
 ];
 
@@ -59,7 +62,7 @@ export const Promo = () => {
 
       <ul className="promo__list">
         {data.map((item) => (
-          <li>
+          <li key={item.id}>
             <PromoItem title={item.title} subtitle={item.subtitle} />
           </li>
         ))}

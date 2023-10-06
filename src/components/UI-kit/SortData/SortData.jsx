@@ -75,7 +75,7 @@ SortData.propTypes = {
     PropTypes.shape({
       id: PropTypes.number.isRequired,
       text: PropTypes.string.isRequired,
-      icon: PropTypes.string,
+      icon: PropTypes.shape({}),
     }),
   ),
   size: PropTypes.string,
@@ -83,7 +83,7 @@ SortData.propTypes = {
 
 SortData.defaultProps = {
   size: "",
-  array: [{ icon: undefined }],
+  array: [{ icon: {} }],
 };
 
 export default SortData;

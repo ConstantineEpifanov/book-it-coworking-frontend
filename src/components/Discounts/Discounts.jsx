@@ -5,7 +5,11 @@ import img1 from "../../images/Discount_10.svg";
 import img2 from "../../images/Discount_20.svg";
 import img3 from "../../images/Discount_invite_friend.svg";
 
-const data = [img1, img2, img3];
+const data = [
+  { id: 1, imageUrl: img1 },
+  { id: 2, imageUrl: img2 },
+  { id: 3, imageUrl: img3 },
+];
 
 export const Discounts = () => (
   <section className="discounts">
@@ -15,7 +19,7 @@ export const Discounts = () => (
     />
     <ul className="discounts__list">
       {data.map((item) => (
-        <li>
+        <li key={item.id}>
           <img className="discounts__img" src={item} alt="" />
         </li>
       ))}
