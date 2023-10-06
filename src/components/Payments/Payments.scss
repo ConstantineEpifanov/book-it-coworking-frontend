@@ -16,7 +16,7 @@
     padding: 40px 20px 56px 40px;
     box-sizing: border-box;
     margin-top: 144px;
-    
+
     &__header {
       @include mp-null;
       font-family: $font-family;
@@ -44,7 +44,6 @@
       display: flex;
       gap: 5px;
       justify-content: space-between;
-  
     }
     &__bill {
       font-family: $font-family;
