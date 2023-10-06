@@ -20,7 +20,7 @@ export const Discounts = () => (
     <ul className="discounts__list">
       {data.map((item) => (
         <li key={item.id}>
-          <img className="discounts__img" src={item} alt="" />
+          <img className="discounts__img" src={item.imageUrl} alt="" />
         </li>
       ))}
     </ul>
