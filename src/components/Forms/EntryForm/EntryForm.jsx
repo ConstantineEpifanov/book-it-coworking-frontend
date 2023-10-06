@@ -1,12 +1,11 @@
 import React from "react";
-// eslint-disable-next-line import/no-extraneous-dependencies
 import PropTypes from "prop-types";
 
 import "./EntryForm.scss";
 
-function EntryForm({ title, onSubmit, children }) {
+function EntryForm({ title, formClass, onSubmit, children }) {
   return (
-    <section className="entry-form" aria-label={title}>
+    <section className={`'entry-form' ${formClass}`} aria-label={title}>
       <div className="entry-form__container">
         <h3 className="entry-form__title">{title}</h3>
         <form
@@ -24,12 +23,14 @@ function EntryForm({ title, onSubmit, children }) {
 
 EntryForm.propTypes = {
   title: PropTypes.string,
+  formClass: PropTypes.string,
   onSubmit: PropTypes.func,
   children: PropTypes.element.isRequired,
 };
 
 EntryForm.defaultProps = {
   title: "",
+  formClass: "",
   onSubmit: () => {},
 };
 

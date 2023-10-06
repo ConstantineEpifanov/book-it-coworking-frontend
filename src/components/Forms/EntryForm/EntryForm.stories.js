@@ -11,6 +11,7 @@ import ReviewsForm from "../ReviewsForm/ReviewsForm";
 import SearchForm from "../SearchForm/SearchForm";
 import { SectionTitle } from "../../SectionTitle/SectionTitle";
 import { SectionSubtitle } from "../../SectionSubtitle/SectionSubtitle";
+import PaymentsForm from "../PaymentsForm/PaymentsForm";
 
 export default {
   title: "Components/Form",
@@ -84,3 +85,5 @@ export const TypeSearchForm = () => (
     <SearchForm />
   </div>
 );
+
+export const TypePaymentsForm = () => <PaymentsForm />;

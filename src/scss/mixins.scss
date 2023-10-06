@@ -6,6 +6,23 @@
   padding: 0;
 }
 
+// -------------- CONTAINERS -----------------
+@mixin main-box-centered {
+  width: 100%;
+  max-width: 1440px;
+  margin: 0 auto;
+}
+
+@mixin flex-box-row {
+  display: flex;
+  gap: 20px;
+}
+@mixin flex-box-column {
+  display: flex;
+  gap: 20px;
+  flex-direction: column;
+}
+
 //  -------------- FONTS -----------------
 @mixin text-font-normal {
   font-family: $font-family;
@@ -15,12 +32,20 @@
   line-height: 30px;
 }
 
-// для выпадающего списка
+// для выпадающего списка и информации в блоке оплаты
 @mixin text-font-select {
   font-family: $font-family;
   font-size: 16px;
   font-style: normal;
   line-height: 22px;
+}
+// для информации под импутами, текст с маленьким шрифтом.
+@mixin text-info {
+  font-family: $font-family;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 300;
+  line-height: 14px;
 }
 
 //  -------------- INPUT -----------------

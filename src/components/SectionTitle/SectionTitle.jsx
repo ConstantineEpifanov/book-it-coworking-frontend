@@ -11,6 +11,6 @@ SectionTitle.propTypes = {
 };
 
 SectionTitle.defaultProps = {
-  titleText: undefined,
-  titleClass: undefined,
+  titleText: "",
+  titleClass: "",
 };
