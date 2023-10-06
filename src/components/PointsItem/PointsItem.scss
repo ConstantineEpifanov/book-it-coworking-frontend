@@ -10,6 +10,7 @@
   border: 2px solid $black;
   background-color: $white;
   overflow: hidden;
+  box-sizing: border-box;
 
   &_own-page {
     border: none;
@@ -64,8 +65,7 @@
   }
 
   &__image {
-    width: 404px;
-    height: 268px;
+    width: 360px;
     object-fit: cover;
     object-position: center;
 

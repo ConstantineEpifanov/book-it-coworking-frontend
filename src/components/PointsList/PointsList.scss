@@ -8,9 +8,18 @@
   flex-wrap: wrap;
   list-style: none;
   gap: 20px;
-  align-items: center;
+  width: 100%;
+  box-sizing: border-box;
 
   &_compact {
     flex-direction: row;
   }
+}
+
+.points-list-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-width: 100%;
+  box-sizing: border-box;
 }

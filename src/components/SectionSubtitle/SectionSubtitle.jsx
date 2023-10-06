@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import "./SectionSubtitle.scss";
 
 export const SectionSubtitle = ({ titleText, titleClass }) => (
-  <h3 className={`section-subtitle ${titleClass}`}>{titleText}</h3>
+  <p className={`section-subtitle ${titleClass}`}>{titleText}</p>
 );
 SectionSubtitle.propTypes = {
   titleText: PropTypes.string,

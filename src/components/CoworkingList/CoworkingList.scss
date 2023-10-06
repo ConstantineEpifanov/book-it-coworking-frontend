@@ -1,9 +1,8 @@
 @import "./../../scss/variables.scss";
 @import "./../../scss/mixins.scss";
 
-.rules-questions {
+.coworking-list {
   margin: $main-margin;
   display: flex;
   flex-direction: column;
-  gap: 140px;
 }

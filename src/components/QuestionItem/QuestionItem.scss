@@ -7,6 +7,7 @@
   border-radius: 20px;
   padding: 12px 20px;
   box-sizing: border-box;
+  cursor: pointer;
 
   &__container {
     display: flex;
@@ -38,6 +39,7 @@
     border-radius: 50%;
     transition: all 0.3s;
     overflow: hidden;
+    cursor: pointer;
 
     &_active {
       transform: rotate(45deg);

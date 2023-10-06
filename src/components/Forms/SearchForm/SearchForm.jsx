@@ -4,6 +4,8 @@ import logoSearch from "../../../images/search-icon.svg";
 import SortData from "../../UI-kit/SortData/SortData";
 import { coWorkingOptions, metroOptions } from "../../../config/dataOptions";
 
+import "../EntryForm/EntryForm";
+
 const SearchForm = () => (
   <div className="entry-form__container">
     <form

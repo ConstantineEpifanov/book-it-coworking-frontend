@@ -10,7 +10,7 @@ export function QuestionItem({ title, text }) {
   };
 
   return (
-    <div className="question">
+    <div className="question" onClick={handleToggle} role="presentation">
       <div className="question__container">
         <h2 className="question__title">{title}</h2>
         <button
@@ -20,7 +20,6 @@ export function QuestionItem({ title, text }) {
               ? "question__button question__button_active"
               : "question__button"
           }
-          onClick={handleToggle}
         >
           <svg xmlns="http://www.w3.org/2000/svg">
             <path

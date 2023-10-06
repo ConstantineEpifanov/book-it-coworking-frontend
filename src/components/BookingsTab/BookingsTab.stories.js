@@ -27,7 +27,20 @@ export const BookingsTabDemo = {
         status: "Confirmed",
       },
       {
-        id: "1",
+        id: "2",
+        spot: {
+          name: "У моря",
+          image: SpotPhoto,
+        },
+        date: "7 сентября 2023",
+        start_time: "12:00",
+        end_time: "13:00",
+        bill: 200,
+        isFinished: false,
+        status: "Processing",
+      },
+      {
+        id: "3",
         spot: {
           name: "Особняк",
           image: SpotPhoto,

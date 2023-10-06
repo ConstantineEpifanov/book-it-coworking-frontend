@@ -22,62 +22,7 @@
     flex-direction: column;
     gap: 20px;
   }
-  &__card {
-    box-sizing: border-box;
-    border-radius: 40px;
-    border: 2px solid $black;
-    height: 200px;
-    overflow: hidden;
-    display: flex;
-    gap: 15px;
-    &-image {
-      display: block;
-      height: 100%;
-      width: 235px;
-      object-fit: cover;
-    }
-    &-text-container {
-      padding: 14px 0 15px;
-      min-width: 247px;
-    }
-    &-name {
-      @include mp-null;
-      text-transform: uppercase;
-      font-size: 20px;
-      font-style: normal;
-      font-weight: 500;
-      line-height: 30px;
-    }
 
-    &-date-row {
-      margin-bottom: 8px;
-      display: flex;
-      align-items: flex-start;
-      gap: 8px;
-      &_isfinished {
-        margin-top: 31px;
-      }
-    }
-    &-price-container {
-      display: flex;
-      gap: 8px;
-    }
-    &-price {
-      font-size: 16px;
-      font-style: normal;
-      font-weight: 300;
-      line-height: 22px;
-    }
-
-    &-date {
-      @include mp-null;
-      text-align: left;
-      font-size: 16px;
-      font-style: normal;
-      font-weight: 300;
-      line-height: 22px;
-    }
-  }
   &__tabs {
     margin-top: 30px;
     border-radius: 28px;
@@ -99,16 +44,6 @@
       border-radius: 20px;
       background-color: $black;
       color: $main-white;
-    }
-  }
-  &__status {
-    margin: 9px 0;
-    font-size: 12px;
-    font-style: normal;
-    font-weight: 300;
-    line-height: 14px;
-    &_processing {
-      color: #ffc329;
     }
   }
 }

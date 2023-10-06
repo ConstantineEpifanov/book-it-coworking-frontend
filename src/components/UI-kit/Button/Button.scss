@@ -67,7 +67,29 @@
 
   &_more {
     margin-top: 32px;
-    align-self: center;
+  }
+
+  &_type_tertiary {
+    color: $black;
+    background-color: transparent;
+    padding: 16px 12px;
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 1.22;
+    width: 220px;
+    align-self: flex-end;
+
+    &:hover {
+      opacity: 0.7;
+      color: $pink;
+      stroke: $pink;
+    }
+
+    &:active {
+      color: $green;
+      stroke: $green;
+    }
   }
 
   &_type_form {
@@ -182,6 +204,7 @@
   }
 
   &__profile-edit,
+  &__profile-transparent,
   &__profile-bookings {
     width: 170px;
     height: 54px;
@@ -198,6 +221,11 @@
 
   &__profile-bookings {
     width: 226px;
+  }
+  &__profile-transparent {
+    background-color: transparent;
+    border-radius: 32px;
+    border: 2px solid $black;
   }
 
   //стили кнопок меню на странице профиля

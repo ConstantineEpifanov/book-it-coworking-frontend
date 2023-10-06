@@ -32,6 +32,7 @@ export default {
         "button_size_mini",
         "button_active",
         "button_type_link",
+        "button_type_tertiary",
       ],
     },
   },
@@ -72,6 +73,11 @@ export function Type(args) {
       <Button
         btnClass="button_type_link button_size_middle"
         btnText="Уже есть аккаунт?"
+        {...args}
+      />
+      <Button
+        btnClass="button_type_tertiary"
+        btnText="Показать на карте"
         {...args}
       />
     </div>

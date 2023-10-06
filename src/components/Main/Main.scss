@@ -1,9 +1,8 @@
 @import "./../../scss/variables.scss";
-@import "./../../scss/mixins.scss";
 
-.rules-questions {
-  margin: $main-margin;
+.main {
   display: flex;
   flex-direction: column;
   gap: 140px;
+  margin: $main-margin;
 }

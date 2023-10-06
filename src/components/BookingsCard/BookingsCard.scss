@@ -1,0 +1,95 @@
+@import "./../../scss/variables.scss";
+@import "./../../scss/mixins.scss";
+
+.bookings-card {
+  font-family: $font-family;
+  color: $black;
+  box-sizing: border-box;
+  border-radius: 40px;
+  border: 2px solid $black;
+  height: 200px;
+  overflow: hidden;
+  display: flex;
+  gap: 15px;
+  width: 600px;
+  &__image {
+    display: block;
+    height: 100%;
+    width: 235px;
+    object-fit: cover;
+  }
+  &__text-container {
+    padding: 14px 0 15px;
+    min-width: 247px;
+  }
+  &__name {
+    @include mp-null;
+    text-transform: uppercase;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 30px;
+  }
+
+  &__date-row {
+    margin-bottom: 8px;
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    &_isfinished {
+      margin-top: 31px;
+    }
+  }
+  &__price-container {
+    display: flex;
+    gap: 8px;
+  }
+  &__price {
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 300;
+    line-height: 22px;
+  }
+
+  &__date {
+    @include mp-null;
+    text-align: left;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 300;
+    line-height: 22px;
+  }
+  &__status {
+    margin: 9px 0;
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 300;
+    line-height: 14px;
+    &_processing {
+      color: #ffc329;
+    }
+  }
+  &__popup {
+    min-width: 740px;
+    min-height: 276px;
+    text-align: center;
+  }
+  &__popup-text {
+    @include mp-null;
+    max-width: 641px;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 30px;
+    margin-bottom: 24px;
+    &_type_long {
+      min-width: 641px;
+    }
+  }
+  &__button-container {
+    margin: 24px auto 0;
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+  }
+}

@@ -9,7 +9,7 @@ import StarIcon from "../../images/star.svg";
 import LikeIcon from "../../images/profile-icons/heart-filled.svg";
 
 const FavoriteCard = ({ item }) => (
-  <li className="favorites__card" key={item.id}>
+  <li className="favorites__card">
     <img className="favorites__card-image" src={item.image} alt={item.name} />
     <div className="favorites__card-text-container">
       <div className="favorites__card-name-row">
@@ -46,7 +46,7 @@ export const FavoritesTab = ({ favorites }) => (
     <h2 className="favorites__title">Избранное</h2>
     <ul className="favorites__card-list">
       {favorites.map((item) => (
-        <FavoriteCard item={item} />
+        <FavoriteCard item={item} key={item.id} />
       ))}
     </ul>
   </section>
