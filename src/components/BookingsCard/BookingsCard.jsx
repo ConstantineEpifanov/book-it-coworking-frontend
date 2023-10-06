@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 
 import Button from "../UI-kit/Button/Button";
 import Popup from "../Popup/Popup";
+import StarRating from "../UI-kit/StarRating/StarRating";
 
 import ClockIcon from "../../images/profile-icons/time.svg";
 import CardIcon from "../../images/profile-icons/card.svg";
@@ -26,6 +27,9 @@ export const BookingsCard = ({ item }) => {
   const [isPopupOpen, setIsPopupOpen] = useState(false);
   const [isCancellationConfirmed, setIsCancellationConfirmed] = useState(false);
   const [isReviewFormOpen, setIsReviewFormOpen] = useState(false);
+  const [reviewText, setReviewText] = useState("");
+  const [reviewRating, setReviewRating] = useState(0);
+  const maxCharacters = 300;
   const handleOpenPopup = () => {
     setIsPopupOpen(true);
   };
@@ -45,6 +49,21 @@ export const BookingsCard = ({ item }) => {
     setIsPopupOpen(true);
   };
 
+  const handleReviewTextChange = (e) => {
+    const newText = e.target.value;
+    setReviewText(newText);
+  };
+
+  const handleRatingChange = (rating) => {
+    setReviewRating(rating);
+  };
+
+  // для демонстрационных целей
+
+  const handleReviewSubmit = () => {
+    console.log(`Рейтинг: ${reviewRating}`, `Текст: ${reviewText}`);
+  };
+
   const getPopupText = (booking) => {
     if (booking.status === "Confirmed") {
       return `Бронирование уже подтверждено.`;
@@ -60,7 +79,7 @@ export const BookingsCard = ({ item }) => {
     content = (
       <>
         <p className="bookings-card__popup-text bookings-card__popup-text_type_long">
-          Бронирование «{item.spot.name} с {item.start_time} до
+          Бронирование «{item.spot.name.toUpperCase()} с {item.start_time} до{" "}
           {item.end_time}» отменено.
           <br /> Мы отправим вам подтверждение на почту и вернем предоплату.
         </p>
@@ -82,7 +101,31 @@ export const BookingsCard = ({ item }) => {
       </>
     );
   } else if (isReviewFormOpen) {
-    content = <p className="bookings-card__popup-text">To be continued</p>;
+    content = (
+      <div className="bookings-card__popup-content">
+        <p className="bookings-card__popup-text bookings-card__popup-text_type_review">
+          Поставьте оценку и оставьте отзыв
+        </p>
+        <StarRating rating={reviewRating} onRatingChange={handleRatingChange} />
+        <textarea
+          id="review"
+          name="review"
+          className="bookings-card__review-text"
+          maxLength={maxCharacters}
+          placeholder="Текст"
+          value={reviewText}
+          onChange={handleReviewTextChange}
+        />
+        <p className="bookings-card__character-count">
+          {reviewText.length}/{maxCharacters}
+        </p>
+        <Button
+          btnText="Отправить"
+          btnClass="button__profile-review"
+          onClick={handleReviewSubmit}
+        />
+      </div>
+    );
   } else {
     content = (
       <>
