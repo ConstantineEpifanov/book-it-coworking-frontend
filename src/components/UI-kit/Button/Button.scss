@@ -205,7 +205,8 @@
 
   &__profile-edit,
   &__profile-transparent,
-  &__profile-bookings {
+  &__profile-bookings,
+  &__profile-review {
     width: 170px;
     height: 54px;
     background-color: $green;
@@ -221,6 +222,9 @@
 
   &__profile-bookings {
     width: 226px;
+  }
+  &__profile-review {
+    width: 265px;
   }
   &__profile-transparent {
     background-color: transparent;
