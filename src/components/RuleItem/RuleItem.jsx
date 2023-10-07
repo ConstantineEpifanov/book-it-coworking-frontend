@@ -23,7 +23,7 @@ export const RuleItem = ({ titleText, articleText, path }) => (
 RuleItem.propTypes = {
   titleText: PropTypes.string,
   articleText: PropTypes.string,
-  path: PropTypes.string,
+  path: PropTypes.node,
 };
 
 RuleItem.defaultProps = {
