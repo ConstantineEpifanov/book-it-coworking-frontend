@@ -23,6 +23,12 @@ export default {
         type: "date",
       },
     },
+    maxDatesRange: {
+      description: "Доступный промежуток дат",
+      control: {
+        type: "number",
+      },
+    },
   },
 };
 

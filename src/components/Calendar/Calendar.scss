@@ -10,10 +10,13 @@
   border-radius: 40px;
 
   &__header {
-    padding: 27px 53px 19px;
+    min-height: 80px;
+    padding: 6px 48px 4px;
     border: 2px solid $main-black;
     border-radius: 40px;
+    box-sizing: border-box;
     display: flex;
+    align-items: center;
     justify-content: space-between;
     background-color: $green;
 
@@ -40,10 +43,10 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    user-select: none;
 
     &_type_header {
       cursor: auto;
-      user-select: none;
     }
   }
 
@@ -63,6 +66,50 @@
     &_highlighted {
       color: $dark-gray;
       background-color: $main-black;
+    }
+
+    &_previous-month {
+      color: $light-gray;
+    }
+
+    &_inaccessible-days {
+      color: $gray;
+      pointer-events: none;
+    }
+
+    &_next-month {
+      color: $dark-gray;
+    }
+  }
+
+  &__navigation {
+    display: flex;
+    gap: 20px;
+
+    &-button {
+      @include mp-null;
+      min-width: 58px;
+      min-height: 58px;
+      border: 0;
+      background-color: transparent;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: 0.3s ease;
+      cursor: pointer;
+
+      &_type_previous {
+        background-image: url("../../images/Calendar-button-chevron.svg");
+      }
+
+      &_type_next {
+        background-image: url("../../images/Calendar-button-chevron.svg");
+        transform: scale(-1, 1);
+      }
+
+      &:hover {
+        opacity: 0.7;
+      }
     }
   }
 }
