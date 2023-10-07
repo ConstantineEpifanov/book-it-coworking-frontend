@@ -48,6 +48,17 @@
   line-height: 14px;
 }
 
+// крупный шрифт заголовков
+// Используется в макетах: List_of_cowrking_spaces, book PLAN, payment2
+@mixin text-font-large {
+  font-family: $font-family;
+  color: $black;
+  font-size: 40px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 48px;
+}
+
 //  -------------- INPUT -----------------
 @mixin error-input {
   border: 2px solid $alert-red;
