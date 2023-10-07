@@ -7,6 +7,10 @@ import "./PaymentTab.scss";
 import MasterCardIcon from "../../images/profile-icons/mastercard.svg";
 
 export const PaymentTab = ({ user }) => {
+  if (!user) {
+    return null; // Если user не передан, не рендерим компонент
+  }
+
   function getCardImage(cardType) {
     switch (cardType) {
       case "mastercard":
@@ -23,7 +27,7 @@ export const PaymentTab = ({ user }) => {
   }
 
   function maskCardNumber(cardNumber) {
-    return `••••${cardNumber.slice(12)}`;
+    return cardNumber ? `••••${cardNumber.slice(12)}` : "";
   }
   return (
     <section className="payment">
@@ -36,11 +40,13 @@ export const PaymentTab = ({ user }) => {
         <li className="payment__board-row">
           <div className="payment__card-container">
             <span className="payment__feature-name">Платежные карты</span>
-            <span>{getCardImage(user.card.type)}</span>
+            <span>{getCardImage(user && user.card.type)}</span>
             <span className="payment__card-data">
-              {maskCardNumber(user.card.number)}
+              {user && maskCardNumber(user.card && user.card.number)}
             </span>
-            <span className="payment__card-data">{user.card.valid}</span>
+            <span className="payment__card-data">
+              {user && user.card.valid}
+            </span>
           </div>
           <Button btnText="Изменить" btnClass="button__profile-edit" />
         </li>
