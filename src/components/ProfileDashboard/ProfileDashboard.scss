@@ -1,6 +1,7 @@
 .profile-dashboard {
   max-width: 930px;
   margin: 0 auto;
+
   &__card-list {
     display: flex;
     flex-direction: column;
@@ -21,5 +22,8 @@
     flex-basis: 100%;
     display: flex;
     justify-content: center;
+  }
+  &__link {
+    text-decoration: none;
   }
 }
