@@ -1,0 +1,25 @@
+.profile-dashboard {
+  max-width: 930px;
+  margin: 0 auto;
+  &__card-list {
+    display: flex;
+    flex-direction: column;
+    margin-top: 30px;
+    margin-bottom: 140px;
+    gap: 20px;
+    flex-wrap: wrap;
+  }
+
+  &__card-row {
+    flex: 1;
+    display: flex;
+    gap: 20px;
+  }
+
+  &__card-center {
+    max-width: 930px;
+    flex-basis: 100%;
+    display: flex;
+    justify-content: center;
+  }
+}

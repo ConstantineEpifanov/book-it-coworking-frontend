@@ -16,7 +16,7 @@ import Contacts from "./components/Contacts/Contacts";
 import { Main } from "./components/Main/Main";
 import { CoworkingList } from "./components/CoworkingList/CoworkingList";
 import { RulesQuestions } from "./components/RulesQuestions/RulesQuestions";
-import { Profile } from "./components/Profile/Profile";
+import { ProfileDashboard } from "./components/ProfileDashboard/ProfileDashboard";
 import { exampleCoworkingsData } from "./config/exampleCoworkingsData";
 import { exampleEventsData } from "./config/exampleEventsData";
 
@@ -53,7 +53,7 @@ function App() {
           element={<CoworkingList data={exampleCoworkingsData} />}
         />
         <Route path="/faq" element={<RulesQuestions />} />
-        <Route path="/profile" element={<Profile />} />
+        <Route path="/profile" element={<ProfileDashboard />} />
         <Route path="/contacts" element={<Contacts />} />
         <Route path="*" element={<PageNotFound />} />
       </Routes>

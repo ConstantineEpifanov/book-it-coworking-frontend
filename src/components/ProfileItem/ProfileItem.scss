@@ -4,12 +4,18 @@
 
 .profile-item {
   box-sizing: border-box;
-  max-width: 455px;
+  width: 455px;
+  height: 225px;
   padding: 40px 58px;
   border-radius: 40px;
   color: $white;
   background-color: $black;
   font-family: $font-family;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+  &:hover {
+    opacity: 0.9;
+  }
 
   &__row {
     display: flex;
