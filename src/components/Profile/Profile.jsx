@@ -1,5 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
+import { Link, useLocation } from "react-router-dom";
 
 import Button from "../UI-kit/Button/Button";
 
@@ -11,12 +12,24 @@ import { PaymentTab } from "../PaymentTab/PaymentTab";
 import { BookingsTab } from "../BookingsTab/BookingsTab";
 import { FavoritesTab } from "../FavoritesTab/FavoritesTab";
 
-export const Profile = ({ user, favorites, bookings }) => {
-  const [activeTab, setActiveTab] = useState("personalData");
+const validTabs = [
+  "personalData",
+  "security",
+  "payment",
+  "bookings",
+  "favorites",
+];
 
-  const handleTabClick = (tab) => {
-    setActiveTab(tab);
-  };
+export const Profile = ({ user, favorites, bookings }) => {
+  const location = useLocation();
+
+  const [activeTab, setActiveTab] = useState(null);
+
+  useEffect(() => {
+    const pathParts = location.pathname.split("/");
+    const tabFromURL = pathParts[pathParts.length - 1];
+    setActiveTab(validTabs.includes(tabFromURL) ? tabFromURL : "personalData");
+  }, [location.pathname]);
 
   const renderTabContent = () => {
     switch (activeTab) {
@@ -38,45 +51,52 @@ export const Profile = ({ user, favorites, bookings }) => {
   return (
     <section className="profile">
       <div className="profile__menu">
-        <Button
-          btnClass={`button__profile button__profile_data ${
-            activeTab === "personalData" ? "button__profile_data-active" : ""
-          }`}
-          btnText="Персональные данные"
-          onClick={() => handleTabClick("personalData")}
-        />
-        <Button
-          btnClass={`button__profile button__profile_security ${
-            activeTab === "security" ? "button__profile_security-active" : ""
-          }`}
-          btnText="Безопасность и конфиденциальность"
-          onClick={() => handleTabClick("security")}
-          isActive={activeTab === "security"}
-        />
-        <Button
-          btnClass={`button__profile button__profile_payment ${
-            activeTab === "payment" ? "button__profile_payment-active" : ""
-          }`}
-          btnText="Платежные данные"
-          onClick={() => handleTabClick("payment")}
-          isActive={activeTab === "payment"}
-        />
-        <Button
-          btnClass={`button__profile button__profile_bookings ${
-            activeTab === "bookings" ? "button__profile_bookings-active" : ""
-          }`}
-          btnText="Бронирования"
-          onClick={() => handleTabClick("bookings")}
-          isActive={activeTab === "bookings"}
-        />
-        <Button
-          btnClass={`button__profile button__profile_favorites ${
-            activeTab === "favorites" ? "button__profile_favorites-active" : ""
-          }`}
-          btnText="Избранное"
-          onClick={() => handleTabClick("favorites")}
-          isActive={activeTab === "favorites"}
-        />
+        <Link to="/profile/personalData">
+          <Button
+            btnClass={`button__profile button__profile_data ${
+              activeTab === "personalData" ? "button__profile_data-active" : ""
+            }`}
+            btnText="Персональные данные"
+          />
+        </Link>
+        <Link to="/profile/security">
+          <Button
+            btnClass={`button__profile button__profile_security ${
+              activeTab === "security" ? "button__profile_security-active" : ""
+            }`}
+            btnText="Безопасность и конфиденциальность"
+            isActive={activeTab === "security"}
+          />
+        </Link>
+        <Link to="/profile/payment">
+          <Button
+            btnClass={`button__profile button__profile_payment ${
+              activeTab === "payment" ? "button__profile_payment-active" : ""
+            }`}
+            btnText="Платежные данные"
+            isActive={activeTab === "payment"}
+          />
+        </Link>
+        <Link to="/profile/bookings">
+          <Button
+            btnClass={`button__profile button__profile_bookings ${
+              activeTab === "bookings" ? "button__profile_bookings-active" : ""
+            }`}
+            btnText="Бронирования"
+            isActive={activeTab === "bookings"}
+          />
+        </Link>
+        <Link to="/profile/favorites">
+          <Button
+            btnClass={`button__profile button__profile_favorites ${
+              activeTab === "favorites"
+                ? "button__profile_favorites-active"
+                : ""
+            }`}
+            btnText="Избранное"
+            isActive={activeTab === "favorites"}
+          />
+        </Link>
       </div>
       <div className="profile__tab">{renderTabContent()}</div>
     </section>

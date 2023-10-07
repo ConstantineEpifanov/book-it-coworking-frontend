@@ -17,8 +17,10 @@ import { Main } from "./components/Main/Main";
 import { CoworkingList } from "./components/CoworkingList/CoworkingList";
 import { RulesQuestions } from "./components/RulesQuestions/RulesQuestions";
 import { ProfileDashboard } from "./components/ProfileDashboard/ProfileDashboard";
+import { Profile } from "./components/Profile/Profile";
 import { exampleCoworkingsData } from "./config/exampleCoworkingsData";
 import { exampleEventsData } from "./config/exampleEventsData";
+import { user, favorites, bookings } from "./config/exampleProfileData";
 
 function App() {
   // временно выставлено true, далее нужно поменять значение на false
@@ -54,6 +56,12 @@ function App() {
         />
         <Route path="/faq" element={<RulesQuestions />} />
         <Route path="/profile" element={<ProfileDashboard />} />
+        <Route
+          path="/profile/*"
+          element={
+            <Profile user={user} bookings={bookings} favorites={favorites} />
+          }
+        />
         <Route path="/contacts" element={<Contacts />} />
         <Route path="*" element={<PageNotFound />} />
       </Routes>

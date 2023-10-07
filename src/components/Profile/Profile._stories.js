@@ -1,3 +1,5 @@
+import { BrowserRouter as Router } from "react-router-dom";
+
 import { Profile } from "./Profile";
 import SpotPhoto from "../../images/dummy-spot2.jpg";
 
@@ -15,6 +17,8 @@ export default {
       },
     },
   },
+  assets: ["/static"],
+  decorators: [(Story) => <Router>{Story()}</Router>],
 };
 
 export const ProfileDemo = {
