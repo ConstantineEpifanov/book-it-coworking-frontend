@@ -72,21 +72,37 @@
   &_type_tertiary {
     color: $black;
     background-color: transparent;
-    padding: 16px 12px;
+    padding: 16px 12px 16px 36px;
+    margin-bottom: 12px;
     font-size: 18px;
+    text-align: right;
     font-style: normal;
     font-weight: 400;
     line-height: 1.22;
     width: 220px;
     align-self: flex-end;
+    background: url("../../../images/tertiary-icon.svg");
+    background-repeat: no-repeat;
+    background-position: 16px 12px;
+    transition: none;
+
+    &-shown {
+      width: 177px;
+    }
 
     &:hover {
+      background: url("../../../images/tertiary-icon-hover.svg");
+      background-repeat: no-repeat;
+      background-position: 16px 12px;
       opacity: 0.7;
       color: $pink;
       stroke: $pink;
     }
 
     &:active {
+      background: url("../../../images/tertiary-icon-active.svg");
+      background-repeat: no-repeat;
+      background-position: 16px 12px;
       color: $green;
       stroke: $green;
     }

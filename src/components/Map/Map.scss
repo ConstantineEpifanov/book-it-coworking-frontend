@@ -1,4 +1,5 @@
 @import "./../../scss/variables.scss";
+@import "./../../scss/mixins.scss";
 
 [class*="ymaps-2-1"][class*="-ground-pane"] {
   filter: grayscale(1);
@@ -14,8 +15,8 @@
 }
 
 .map {
-  margin: 0;
-  padding: 0;
+  @include mp-null;
+  margin-bottom: 20px;
   width: 100%;
   height: 100%;
   background-color: grey;
@@ -23,6 +24,15 @@
   overflow: hidden;
   font-family: $font-family;
   color: $black;
+  &_active {
+    display: block;
+  }
+  &_inactive {
+    display: none;
+  }
+  &__container {
+    text-align: right;
+  }
 
   &__name {
     color: $black;
