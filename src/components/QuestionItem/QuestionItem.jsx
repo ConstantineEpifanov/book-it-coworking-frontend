@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import PropTypes from "prop-types";
 import "./QuestionItem.scss";
 
-export function QuestionItem({ title, text }) {
+export function QuestionItem({ question, answer }) {
   const [isActive, setActive] = useState("false");
 
   const handleToggle = () => {
@@ -12,7 +12,7 @@ export function QuestionItem({ title, text }) {
   return (
     <div className="question" onClick={handleToggle} role="presentation">
       <div className="question__container">
-        <h2 className="question__title">{title}</h2>
+        <h2 className="question__title">{question}</h2>
         <button
           type="button"
           className={
@@ -42,18 +42,18 @@ export function QuestionItem({ title, text }) {
           !isActive ? "question__text question__text_active" : "question__text"
         }
       >
-        {text}
+        {answer}
       </p>
     </div>
   );
 }
 
 QuestionItem.propTypes = {
-  title: PropTypes.string,
-  text: PropTypes.string,
+  question: PropTypes.string,
+  answer: PropTypes.string,
 };
 
 QuestionItem.defaultProps = {
-  title: undefined,
-  text: undefined,
+  question: undefined,
+  answer: undefined,
 };
