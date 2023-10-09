@@ -4,10 +4,12 @@
   display: flex;
   justify-content: space-between;
   font-family: $font-family;
+
   &__item {
     display: flex;
     gap: 20px;
   }
+
   &__link {
     padding: 20px 10px;
     box-sizing: border-box;
@@ -16,10 +18,13 @@
     font-style: normal;
     font-weight: 400;
     line-height: 22px;
+    color: $black;
+
     &:hover {
       color: $pink;
     }
   }
+
   &__link_active {
     border-bottom: 2px solid $green;
   }

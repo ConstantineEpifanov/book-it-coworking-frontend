@@ -12,8 +12,15 @@ function request(url, options) {
 
 function setHeaders() {
   const token = localStorage.getItem("token");
+
+  if (token) {
+    return {
+      Authorization: `Token ${token}`,
+      "Content-Type": "application/json",
+    };
+  }
+
   return {
-    Authorization: `Token ${token}`,
     "Content-Type": "application/json",
   };
 }
@@ -21,7 +28,7 @@ function setHeaders() {
 // Регистрация в два этапа и логин
 
 export function register({ email, password, firstName, lastName, rePassword }) {
-  return request("/users", {
+  return request("/users/", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({
@@ -35,7 +42,7 @@ export function register({ email, password, firstName, lastName, rePassword }) {
 }
 
 export function confirmRegister({ email, confirmationCode }) {
-  return request("/users/activation", {
+  return request("/users/activation/", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({
@@ -59,28 +66,28 @@ export function login({ email, password }) {
 // Получение основных данных
 
 export function getLocations() {
-  return request("/locations", {
+  return request("/locations/", {
     method: "GET",
     headers: setHeaders(),
   });
 }
 
 export function getEvents() {
-  return request("/events", {
+  return request("/events/", {
     method: "GET",
     headers: setHeaders(),
   });
 }
 
 export function getQuestions() {
-  return request("/questions", {
+  return request("/questions/", {
     method: "GET",
     headers: setHeaders(),
   });
 }
 
 export function getRules() {
-  return request("/rules", {
+  return request("/rules/", {
     method: "GET",
     headers: setHeaders(),
   });
@@ -89,7 +96,7 @@ export function getRules() {
 // Профиль
 
 export function getUserInfo() {
-  return request("/users/me", {
+  return request("/users/me/", {
     method: "GET",
     headers: setHeaders(),
   });
