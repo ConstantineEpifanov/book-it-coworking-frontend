@@ -5,53 +5,62 @@ import { PointsItem } from "../PointsItem/PointsItem";
 import Button from "../UI-kit/Button/Button";
 import "./PointsList.scss";
 
-export const PointsList = ({ isCompact, isListed, data }) => (
+export const PointsList = ({
+  isCompact,
+  isListed,
+  pointsRender,
+  handleMoreClick,
+}) => (
   <div className="points-list-container">
     <ul className={`points-list ${isCompact && "points-list_compact"}`}>
-      {data?.map((item) => (
+      {pointsRender?.map((item) => (
         <li key={item.id}>
           <PointsItem isListed={isListed} isCompact={isCompact} {...item} />
         </li>
       ))}
     </ul>
-    {data && (
+    {pointsRender && (
       <Button
         btnClass="button_more button_type_transparent button_size_large"
         btnText="Больше локаций"
+        onClick={handleMoreClick}
       />
     )}
   </div>
 );
 
 PointsList.propTypes = {
-  data: PropTypes.arrayOf(
+  pointsRender: PropTypes.arrayOf(
     PropTypes.shape({
-      title: PropTypes.string,
-      subtitle: PropTypes.string,
-      about: PropTypes.string,
-      rating: PropTypes.string,
-      lowPrice: PropTypes.number,
-      mainPhoto: PropTypes.string,
-      extraPhoto: PropTypes.arrayOf(
+      rating: PropTypes.number,
+      name: PropTypes.string,
+      short_annotation: PropTypes.string,
+      description: PropTypes.string,
+      days_open: PropTypes.string,
+      open_time: PropTypes.string,
+      close_time: PropTypes.string,
+      low_price: PropTypes.number,
+      main_photo: PropTypes.string,
+      extra_photo: PropTypes.arrayOf(
         PropTypes.shape({
           id: PropTypes.number.isRequired,
-          url: PropTypes.string,
+          image: PropTypes.string,
         }),
       ),
-      address: PropTypes.string,
+      get_full_address_str: PropTypes.string,
       metro: PropTypes.string,
-      openTime: PropTypes.number,
-      closeTime: PropTypes.number,
-      generalQuantity: PropTypes.number,
-      meetingQuantity: PropTypes.number,
+      count_workspace: PropTypes.number,
+      count_meeting_room: PropTypes.number,
     }),
   ),
   isCompact: PropTypes.bool,
   isListed: PropTypes.bool,
+  handleMoreClick: PropTypes.func,
 };
 
 PointsList.defaultProps = {
-  data: undefined,
+  pointsRender: undefined,
   isCompact: false,
   isListed: false,
+  handleMoreClick: () => {},
 };

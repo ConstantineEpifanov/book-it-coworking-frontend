@@ -15,16 +15,12 @@ export const RulesQuestions = () => {
       .then((res) => {
         setQuestions(res);
       })
-      .catch((err) => {
-        console.log(err);
-      });
+      .catch(() => {});
     getRules()
       .then((res) => {
         setRules(res);
       })
-      .catch((err) => {
-        console.log(err);
-      });
+      .catch(() => {});
   }, []);
 
   return (

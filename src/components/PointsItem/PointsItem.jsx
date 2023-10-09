@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 import React, { useState } from "react";
 import PropTypes from "prop-types";
 
@@ -24,22 +25,23 @@ export const PointsItem = ({
   isCompact,
   isListed,
   rating,
-  title,
-  subtitle,
-  openTime,
-  closeTime,
-  lowPrice,
-  generalQuantity,
-  meetingQuantity,
-  about,
-  mainPhoto,
-  extraPhoto,
-  address,
+  name,
+  short_annotation,
+  open_time,
+  close_time,
+  low_price,
+  count_workspace,
+  count_meeting_room,
+  description,
+  main_photo,
+  extra_photo,
+  get_full_address_str,
   metro,
+  days_open,
 }) => {
   const [isLiked, setLiked] = useState(false);
-  const photos = [{ url: mainPhoto, id: 1 }, ...extraPhoto];
-  const time = `с ${openTime} до ${closeTime}`;
+  const photos = [{ image: main_photo, id: 0 }, ...extra_photo];
+  const time = `${days_open} с ${open_time} до ${close_time}`;
 
   const handleLike = () => {
     setLiked(!isLiked);
@@ -52,13 +54,13 @@ export const PointsItem = ({
 
     <div className="point">
       <div className="point__image-container">
-        <img src={mainPhoto} alt={title} className="point__image" />
-        <p className="point__cost">От {lowPrice}&#8381;/час</p>
+        <img src={main_photo} alt={name} className="point__image" />
+        <p className="point__cost">От {low_price}&#8381;/час</p>
         <PointRating rating={rating} optionalClass="point-rating_on-image" />
       </div>
       <div className="point__info-container">
         <div className="point__title-container">
-          <h3 className="point__title">{title}</h3>
+          <h3 className="point__title">{name}</h3>
           <button
             type="button"
             className="point__action-button"
@@ -71,7 +73,7 @@ export const PointsItem = ({
         <ul className="point__info">
           <li className="point__list-item">
             <Address />
-            <p className="point__info-text">{address}</p>
+            <p className="point__info-text">{get_full_address_str}</p>
           </li>
           <li className="point__list-item">
             <Metro />
@@ -100,17 +102,14 @@ export const PointsItem = ({
           pagination={{
             el: ".swiper-pagination-points",
             type: "bullets",
-            dynamicBullets: true,
-            dynamicMainBullets: 2,
             clickable: true,
           }}
-          observeParents
         >
           {photos.map((item) => (
             <SwiperSlide key={item.id}>
               <img
-                src={item.url}
-                alt={title}
+                src={item.image}
+                alt={name}
                 className={`point__image point__image_large ${
                   !isListed && "point__image_own-page"
                 }`}
@@ -123,7 +122,7 @@ export const PointsItem = ({
             !isListed && "point__cost_own-page"
           }`}
         >
-          От {lowPrice}&#8381;/час
+          От {low_price}&#8381;/час
         </p>
 
         <PointRating
@@ -162,7 +161,7 @@ export const PointsItem = ({
         {isListed && (
           <div>
             <div className="point__title-container">
-              <h3 className="point__title">{title}</h3>
+              <h3 className="point__title">{name}</h3>
               <button
                 type="button"
                 className="point__action-button"
@@ -173,7 +172,7 @@ export const PointsItem = ({
               </button>
             </div>
             <div className="point__subtitle-container">
-              <h4 className="point__subtitle">{subtitle}</h4>
+              <h4 className="point__subtitle">{short_annotation}</h4>
               <button
                 type="button"
                 className="point__action-button"
@@ -183,13 +182,13 @@ export const PointsItem = ({
                 <Share />
               </button>
             </div>
-            <p className="point__about">{about}</p>
+            <p className="point__about">{description}</p>
           </div>
         )}
         <ul className="point__info point__info_large">
           <li className="point__list-item">
             <Address />
-            <p className="point__info-text">{address}</p>
+            <p className="point__info-text">{get_full_address_str}</p>
           </li>
           <li className="point__list-item">
             <Metro />
@@ -203,14 +202,14 @@ export const PointsItem = ({
             <GeneralRoom />
             <p className="point__info-text">
               Мест в общей зоне:
-              <span className="point__span"> {generalQuantity}</span>
+              <span className="point__span"> {count_workspace}</span>
             </p>
           </li>
           <li className="point__list-item">
             <MeetingRoom />
             <p className="point__info-text">
               Переговорных:
-              <span className="point__span"> {meetingQuantity}</span>
+              <span className="point__span"> {count_meeting_room}</span>
             </p>
           </li>
         </ul>
@@ -234,40 +233,42 @@ export const PointsItem = ({
 PointsItem.propTypes = {
   isCompact: PropTypes.bool,
   isListed: PropTypes.bool,
-  rating: PropTypes.string,
-  title: PropTypes.string,
-  subtitle: PropTypes.string,
-  about: PropTypes.string,
-  openTime: PropTypes.number,
-  closeTime: PropTypes.number,
-  lowPrice: PropTypes.number,
-  mainPhoto: PropTypes.string,
-  extraPhoto: PropTypes.arrayOf(
+  rating: PropTypes.number,
+  name: PropTypes.string,
+  short_annotation: PropTypes.string,
+  description: PropTypes.string,
+  days_open: PropTypes.string,
+  open_time: PropTypes.string,
+  close_time: PropTypes.string,
+  low_price: PropTypes.number,
+  main_photo: PropTypes.string,
+  extra_photo: PropTypes.arrayOf(
     PropTypes.shape({
       id: PropTypes.number.isRequired,
-      url: PropTypes.string,
+      image: PropTypes.string,
     }),
   ),
-  address: PropTypes.string,
+  get_full_address_str: PropTypes.string,
   metro: PropTypes.string,
-  generalQuantity: PropTypes.number,
-  meetingQuantity: PropTypes.number,
+  count_workspace: PropTypes.number,
+  count_meeting_room: PropTypes.number,
 };
 
 PointsItem.defaultProps = {
   rating: undefined,
-  title: undefined,
-  subtitle: undefined,
-  about: undefined,
-  mainPhoto: undefined,
-  extraPhoto: [{ id: undefined, url: undefined }],
-  address: undefined,
+  name: undefined,
+  short_annotation: undefined,
+  description: undefined,
+  main_photo: undefined,
+  extra_photo: [{ id: undefined, image: undefined }],
+  get_full_address_str: undefined,
   metro: undefined,
-  openTime: undefined,
-  closeTime: undefined,
-  lowPrice: undefined,
-  generalQuantity: undefined,
-  meetingQuantity: undefined,
+  days_open: undefined,
+  open_time: undefined,
+  close_time: undefined,
+  low_price: undefined,
+  count_workspace: undefined,
+  count_meeting_room: undefined,
   isCompact: false,
   isListed: false,
 };

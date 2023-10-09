@@ -10,7 +10,7 @@ import Star from "../../images/star.svg";
 import Tag from "../../images/tag.svg";
 
 export const MainMap = ({ points, defaultState }) => {
-  const [isMap, setMap] = useState(true);
+  const [isMap, setMap] = useState(false);
 
   const handleMapButtonClick = () => {
     setMap(!isMap);
