@@ -21,6 +21,7 @@ function setHeaders() {
   }
 
   return {
+    Authorization: `Token 930409b4e1c2238901b3a7ea7a7f4a3fb0503de5`,
     "Content-Type": "application/json",
   };
 }
@@ -98,6 +99,22 @@ export function getRules() {
 export function getUserInfo() {
   return request("/users/me/", {
     method: "GET",
+    headers: setHeaders(),
+  });
+}
+
+// Лайк-дислайк
+
+export function addFavorite(id) {
+  return request(`/locations/${id}/favorite/`, {
+    method: "POST",
+    headers: setHeaders(),
+  });
+}
+
+export function deleteFavorite(id) {
+  return request(`/locations/${id}/favorite/`, {
+    method: "DELETE",
     headers: setHeaders(),
   });
 }
