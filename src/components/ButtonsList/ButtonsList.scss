@@ -1,0 +1,28 @@
+@import "../../scss/mixins.scss";
+
+.buttons-list {
+  &__container {
+    @include mp-null;
+    display: grid;
+
+    list-style-type: none;
+
+    // TODO: Вынести стили ниже в Booking, как и display: grid
+    // Не забыть про построчный вывод или по-столбцовый
+    &_type_time-ranges {
+      grid-template-columns: repeat(auto-fill, minmax(170px, max-content));
+      gap: 20px;
+    }
+
+    &_type_spots {
+      grid-template-columns: repeat(auto-fill, minmax(75px, max-content));
+      gap: 20px;
+    }
+
+    &_type_meeting-rooms {
+      grid-template-columns: minmax(265px, max-content);
+      grid-auto-flow: row;
+      gap: 17px;
+    }
+  }
+}
