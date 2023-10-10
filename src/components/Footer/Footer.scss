@@ -1,17 +1,15 @@
 @import "./../../scss/variables.scss";
-@import url("./../../vendor/fonts/fonts.css");
-@import url("./../../vendor/normalize.css");
+@import "./../../scss/mixins.scss";
 
 .footer {
   margin: 0 auto;
-  padding: 60px 0 186px;
+  padding: 60px 0 120px 0;
   display: flex;
-  width: 100%;
   background-color: $black;
 
   &__container {
     margin: 0 auto;
-    max-width: 1120px;
+    max-width: calc(100% - 40px);
     display: flex;
     gap: 74px;
   }
@@ -19,6 +17,14 @@
   &__info {
     display: flex;
     gap: 29px;
+    flex: 1;
+    order: 1;
+  }
+
+  &__subscription {
+    flex: 1;
+    order: 2;
+    flex-shrink: 2;
   }
 
   &__column {
@@ -28,6 +34,23 @@
   &__icons {
     display: flex;
     gap: 12px;
+  }
+
+  &__icon {
+    display: block;
+    width: 32px;
+    height: 32px;
+    stroke: $white;
+    @include svg-color-transition;
+    &_type_fill {
+      fill: $white;
+      &:hover {
+        fill: $pink;
+      }
+      &:active {
+        fill: $green;
+      }
+    }
   }
 
   &__link {
@@ -41,10 +64,8 @@
     font-style: normal;
     font-weight: 500;
     line-height: 22px;
-    transition: opacity 0.3s;
-  }
-  &__link:hover {
-    opacity: 0.7;
+    transition: color 0.3s;
+    @include link-color-transition;
   }
 
   &__contacts {
@@ -57,9 +78,30 @@
     font-style: normal;
     font-weight: 400;
     line-height: 30px;
-    transition: opacity 0.3s;
+    @include link-color-transition;
   }
-  &__constacts:hover {
-    opacity: 0.7;
+}
+
+@include tablet {
+  .footer {
+    padding-bottom: 60px;
+    &__container {
+      flex-direction: column;
+      gap: 28px;
+    }
+    &__subscription {
+      order: 1;
+    }
+    &__info {
+      order: 2;
+      gap: 20px;
+    }
+    &__contacts,
+    &__link {
+      font-size: 16px;
+    }
+    &__column {
+      flex-basis: 50%;
+    }
   }
 }

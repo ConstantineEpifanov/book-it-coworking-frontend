@@ -1,7 +1,14 @@
 import * as React from "react";
 import PropTypes from "prop-types";
 
-const Logo = ({ mode = "blue", width = "100%", height = "100%" }) => (
+import "./Logo.scss";
+
+const Logo = ({
+  mode = "blue",
+  width = "100%",
+  height = "100%",
+  className = "",
+}) => (
   <svg
     width={width}
     height={height}
@@ -10,6 +17,7 @@ const Logo = ({ mode = "blue", width = "100%", height = "100%" }) => (
     xmlns="http://www.w3.org/2000/svg"
     xmlnsXlink="http://www.w3.org/1999/xlink"
     xmlSpace="preserve"
+    className={`logo ${className}`}
     style={{
       fillRule: "evenodd",
       clipRule: "evenodd",
@@ -33,12 +41,14 @@ Logo.propTypes = {
   mode: PropTypes.oneOf(["blue", "green"]),
   width: PropTypes.string,
   height: PropTypes.string,
+  className: PropTypes.string,
 };
 
 Logo.defaultProps = {
   mode: "blue",
   width: "100%",
   height: "100%",
+  className: "",
 };
 
 export { Logo };
