@@ -7,7 +7,7 @@ import { PointsList } from "../PointsList/PointsList";
 import { MainMap } from "../Map/Map";
 import SearchForm from "../Forms/SearchForm/SearchForm";
 
-import { points, defaultState } from "../../config/mapOptions";
+import { defaultState } from "../../config/mapOptions";
 import { getLocations } from "../../utils/Api";
 
 export const CoworkingList = () => {
@@ -32,7 +32,7 @@ export const CoworkingList = () => {
         titleClass="section-subtitle_search"
       />
       <SearchForm />
-      <MainMap points={points} defaultState={defaultState} />
+      <MainMap points={coworkingsArray} defaultState={defaultState} />
       <PointsList isListed isCompact={false} pointsRender={coworkingsArray} />
     </main>
   );

@@ -43,6 +43,7 @@
     stroke: $white;
     @include svg-color-transition;
     &_type_fill {
+      transition: fill 0.3s ease-in-out;
       fill: $white;
       &:hover {
         fill: $pink;

@@ -97,7 +97,8 @@
   }
 }
 
-@mixin svg-color-transition($color1: $pink, $color2: $green) {
+@mixin svg-color-transition($color1: $pink, $color2: $green, $duration: 0.3s) {
+  transition: stroke $duration ease-in-out;
   &:hover {
     stroke: $color1;
   }
