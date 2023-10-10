@@ -8,6 +8,7 @@
     list-style-type: none;
 
     // TODO: Вынести стили ниже в Booking, как и display: grid
+    // Не забыть про построчный вывод или по-столбцовый
     &_type_time-ranges {
       grid-template-columns: repeat(auto-fill, minmax(170px, max-content));
       gap: 20px;

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import PropTypes from "prop-types";
 
 import "./ButtonsList.scss";
@@ -8,12 +8,63 @@ export const ButtonsList = ({
   listType = "time-ranges",
   itemsList = [],
   isEnabled = true,
-  disabledItemsList = [],
+  allowedRanges = [],
   ariaLabel = "Список кнопок",
   listClassName = "",
   itemsClassName = "",
 }) => {
+  const selectedItems = useRef([]);
   const [itemsStatesList, setItemsStatesList] = useState([]);
+
+  const followAllowedRules = (id) => {
+    const sharedRanges = allowedRanges.filter((range) => range.includes(id));
+
+    setItemsStatesList(
+      itemsStatesList.map((item) => {
+        let isEnabledStatus = true;
+
+        if (selectedItems.current.length > 0) {
+          isEnabledStatus =
+            selectedItems.current.includes(item.id) ||
+            selectedItems.current.every((selectedItem) =>
+              sharedRanges.some(
+                (range) =>
+                  range.includes(item.id) && range.includes(selectedItem),
+              ),
+            );
+        }
+        return {
+          ...item,
+          isEnabled: isEnabledStatus,
+        };
+      }),
+    );
+  };
+
+  const getClassName = (id) => {
+    let resultClass = `buttons-list__button button_type_buttons-list button_type_transparent${
+      itemsClassName ? ` ${itemsClassName}` : ""
+    }`;
+
+    if (selectedItems.current.includes(id)) {
+      resultClass += " button_type_buttons-list-selected";
+    }
+
+    return resultClass;
+  };
+
+  const handleClick = (id, onClick) => {
+    if (selectedItems.current.includes(id)) {
+      selectedItems.current = selectedItems.current.filter(
+        (itemId) => itemId !== id,
+      );
+    } else {
+      selectedItems.current.push(id);
+    }
+
+    followAllowedRules(id);
+    onClick(selectedItems);
+  };
 
   useEffect(() => {
     if (isEnabled) {
@@ -26,19 +77,6 @@ export const ButtonsList = ({
     );
   }, [itemsList, isEnabled]);
 
-  useEffect(() => {
-    if (disabledItemsList.length > 0) {
-      setItemsStatesList(
-        itemsStatesList.map(
-          (item) =>
-            !disabledItemsList.some(
-              (disabledItem) => item.id === disabledItem.id,
-            ),
-        ),
-      );
-    }
-  }, [disabledItemsList, itemsStatesList]);
-
   return (
     <section className="buttons-list" aria-label={ariaLabel}>
       <ul
@@ -48,15 +86,13 @@ export const ButtonsList = ({
       >
         {itemsStatesList.map(
           ({ id, name, onClick, isEnabled: isButtonEnabled }) => (
-            <li key={`item${id}`} className="buttons-list__item">
+            <li key={`${name}-item-${id}`} className="buttons-list__item">
               <Button
-                key={`button${id}`}
-                btnClass={`buttons-list__button button_type_buttons-list button_type_transparent${
-                  itemsClassName ? ` ${itemsClassName}` : ""
-                }`}
+                key={`${name}-button-${id}`}
+                btnClass={getClassName(id)}
                 btnType="button"
                 btnText={name}
-                onClick={() => onClick(id)}
+                onClick={() => handleClick(id, onClick)}
                 isValidBtn={isButtonEnabled}
               />
             </li>
@@ -78,11 +114,7 @@ ButtonsList.propTypes = {
     }),
   ),
   isEnabled: PropTypes.bool,
-  disabledItemsList: PropTypes.arrayOf(
-    PropTypes.shape({
-      id: PropTypes.number,
-    }),
-  ),
+  allowedRanges: PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.number)),
   ariaLabel: PropTypes.string,
   listClassName: PropTypes.string,
   itemsClassName: PropTypes.string,
@@ -92,7 +124,7 @@ ButtonsList.defaultProps = {
   listType: "time-ranges",
   itemsList: [],
   isEnabled: true,
-  disabledItemsList: [],
+  allowedRanges: [],
   ariaLabel: "Список кнопок",
   listClassName: "",
   itemsClassName: "",

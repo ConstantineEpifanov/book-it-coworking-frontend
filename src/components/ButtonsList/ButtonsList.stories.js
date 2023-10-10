@@ -28,6 +28,12 @@ export default {
         type: "boolean",
       },
     },
+    allowedRanges: {
+      description: "Допустимые диапазоны элементов для множественного выбора",
+      control: {
+        type: "object",
+      },
+    },
     ariaLabel: {
       description: "Текстовое описание секции",
       control: {
@@ -51,6 +57,7 @@ export default {
 
 export const Times = {
   args: {
+    allowedRanges: [[2, 3, 4]],
     listType: "time-ranges",
     itemsList: timesButtonsList,
   },

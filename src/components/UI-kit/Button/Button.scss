@@ -317,4 +317,8 @@
   &_type_buttons-list {
     width: 100%;
   }
+
+  &_type_buttons-list-selected {
+    background-color: $pink;
+  }
 }
