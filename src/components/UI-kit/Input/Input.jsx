@@ -3,23 +3,26 @@ import PropTypes from "prop-types";
 import "./Input.scss";
 
 function Input({
+  inputValue,
+  inputError,
   inputClass,
   inputType,
   inputName,
   inputPlaceholder,
   inputInfo,
+  handleChange,
 }) {
-  const [value, setValue] = React.useState("");
-  const [inputError, setInputError] = React.useState("");
+  // const [value, setValue] = React.useState("");
+  // const [inputError, setInputError] = React.useState("");
 
-  const handleChange = (event) => {
-    setValue(event.target.value);
-    setInputError(event.target.validationMessage);
-  };
+  // const handleChange = (event) => {
+  //   setValue(event.target.value);
+  //   setInputError(event.target.validationMessage);
+  // };
 
   return (
     <div className="input__items">
-      {value && (
+      {inputValue && (
         <label
           htmlFor={inputName}
           className={`input__label ${inputError ? "input__label-error" : ""}}`}
@@ -32,7 +35,7 @@ function Input({
         type={inputType}
         name={inputName}
         placeholder={inputPlaceholder}
-        value={value || ""}
+        value={inputValue || ""}
         onChange={handleChange}
         required
       />
@@ -47,19 +50,24 @@ function Input({
 }
 
 Input.propTypes = {
+  inputValue: PropTypes.string,
+  inputError: PropTypes.string,
   inputClass: PropTypes.string,
   inputType: PropTypes.string.isRequired,
   inputName: PropTypes.string,
   inputInfo: PropTypes.string,
   inputPlaceholder: PropTypes.string,
+  handleChange: () => {},
 };
 
 Input.defaultProps = {
   inputClass: "",
+  inputValue: null,
+  inputError: null,
   inputName: "",
   inputPlaceholder: "",
   inputInfo: "",
-  // onChangeInput: () => {},
+  handleChange: () => {},
 };
 
 export default Input;
