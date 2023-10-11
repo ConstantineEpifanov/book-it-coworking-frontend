@@ -1,5 +1,6 @@
 @import "./variables.scss";
 // Миксины
+
 //  -------------- BASIC -----------------
 @mixin mp-null {
   margin: 0;
@@ -81,4 +82,46 @@
 @mixin button-active {
   color: $green;
   background-color: black;
+}
+
+// -------------EFFECTS---------------
+
+@mixin link-color-transition($color1: $pink, $color2: $green, $duration: 0.3s) {
+  transition: color $duration ease-in-out;
+
+  &:hover {
+    color: $color1;
+  }
+  &:active {
+    color: $color2;
+  }
+}
+
+@mixin svg-color-transition($color1: $pink, $color2: $green, $duration: 0.3s) {
+  transition: stroke $duration ease-in-out;
+  &:hover {
+    stroke: $color1;
+  }
+  &:active {
+    stroke: $color2;
+  }
+}
+
+// ------------MEDIA QUERIES------------
+@mixin mobile {
+  @media screen and (max-width: $mobile-breakpoint) {
+    @content;
+  }
+}
+
+@mixin tablet {
+  @media screen and (max-width: #{$tablet-breakpoint}) {
+    @content;
+  }
+}
+
+@mixin desktop {
+  @media screen and (min-width: #{$tablet-breakpoint + 1}) {
+    @content;
+  }
 }

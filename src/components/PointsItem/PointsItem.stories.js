@@ -19,33 +19,31 @@ export default {
 
 export const Example = {
   args: {
-    title: "Коворкинг",
-    subtitle: "Рядом находится прекрасная набережная для прогулок",
-    about:
-      "Просторный коворкинг с авторским дизайном на берегу реки Карповки. Это место для работы компаний, креативных команд, стартапов, предпринимателей и удалённых сотрудников. Мы продумали все до мелочей, чтобы вам ни пришлось думать ни о чем кроме ваших задач.",
-    rating: "5.0",
-    lowPrice: 400,
-    mainPhoto:
-      "https://upload.wikimedia.org/wikipedia/commons/7/7d/Polarography_workplace.jpg",
-    extraPhoto: [
-      {
-        id: 2,
-        url: "https://upload.wikimedia.org/wikipedia/commons/thumb/6/61/Inside_Kenworth_conventional.jpg/1024px-Inside_Kenworth_conventional.jpg",
-      },
+    id: 3,
+    name: "Линии",
+    get_full_address_str:
+      "г. Санкт-Петербург, ул. 8-я линия Васильевского острова, 25",
+    metro: "Василеостровская",
+    open_time: "07:00",
+    close_time: "22:00",
+    rating: null,
+    low_price: null,
+    main_photo:
+      "http://185.41.160.27/media/images/main_photo/guide_76_118da141db66068583073d8dfded7bc3.jpg",
+    extra_photo: [
       {
         id: 3,
-        url: "https://upload.wikimedia.org/wikipedia/commons/thumb/e/ec/Sewing_machines.JPG/1024px-Sewing_machines.JPG",
-      },
-      {
-        id: 4,
-        url: "https://i.pinimg.com/1200x/6b/05/91/6b0591eaf61d1962182e85737e97001d.jpg",
+        image:
+          "http://185.41.160.27/media/images/thumb_WhatsApp_Image_2018-06-07_at_21.00.54.jpeg",
       },
     ],
-    address: "г. Санкт-Петербург, Кантемировская улица, 22",
-    metro: "м. Лесная 200м",
-    openTime: 7,
-    closeTime: 20,
-    generalQuantity: 2,
-    meetingQuantity: 30,
+    short_annotation: "Есть спешелти кофейня на первом этаже",
+    description:
+      "Просторный коворкинг с авторским дизайном внутри большого бизнес. Это место для работы компаний, креативных команд, стартапов, предпринимателей и удалённых сотрудников. Мы продумали все до мелочей, чтобы вам ни пришлось думать ни о чем кроме ваших задач.",
+    is_favorited: false,
+    count_workspace: 0,
+    count_meeting_room: 0,
+    coordinates: [59.93, 30.28],
+    days_open: "пн-вс",
   },
 };

@@ -17,7 +17,7 @@ export const EventsItemDemo = {
       name: "класс по сторителлингу и еще немного текста",
       image: EventsOne,
       address: "г. Санкт-Петербург, Набережная реки Карповки, 5АК",
-      meetingQuantity: 30,
+      meeting_quantity: 30,
       url: "https://ya.ru",
       date: "30/09/23",
     },

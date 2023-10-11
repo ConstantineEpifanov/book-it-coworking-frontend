@@ -18,10 +18,10 @@ import { GeneralRoom } from "./icons/GeneralRoom";
 import { Time } from "./icons/Time";
 import { MeetingRoom } from "./icons/MeetingRoom";
 import { Share } from "./icons/Share";
-
-SwiperCore.use([Pagination]);
+import { addFavorite, deleteFavorite } from "../../utils/Api";
 
 export const PointsItem = ({
+  id,
   isCompact,
   isListed,
   rating,
@@ -38,14 +38,41 @@ export const PointsItem = ({
   get_full_address_str,
   metro,
   days_open,
+  is_favorited,
 }) => {
-  const [isLiked, setLiked] = useState(false);
+  const [isLiked, setLiked] = useState(is_favorited);
   const photos = [{ image: main_photo, id: 0 }, ...extra_photo];
   const time = `${days_open} с ${open_time} до ${close_time}`;
 
-  const handleLike = () => {
-    setLiked(!isLiked);
-  };
+  function handleAddFavorite() {
+    addFavorite(id)
+      .then(() => {
+        setLiked(!isLiked);
+      })
+      .catch((err) => new Error(err));
+  }
+
+  function handleDeleteFavorite() {
+    deleteFavorite(id)
+      .then(() => {
+        setLiked(!isLiked);
+      })
+      .catch((err) => new Error(err));
+  }
+
+  function onLikeClick() {
+    if (isLiked) {
+      handleDeleteFavorite();
+    } else {
+      handleAddFavorite();
+    }
+  }
+
+  SwiperCore.use([Pagination]);
+
+  // const handleLike = () => {
+  //   setLiked(!isLiked);
+  // };
 
   const handleShare = () => {};
 
@@ -64,7 +91,7 @@ export const PointsItem = ({
           <button
             type="button"
             className="point__action-button"
-            onClick={handleLike}
+            onClick={onLikeClick}
             aria-labelledby="Добавить в избранное"
           >
             <LikeButton isLiked={isLiked} />
@@ -99,10 +126,13 @@ export const PointsItem = ({
         <Swiper
           slidesPerView={1}
           spaceBetween={20}
+          loop
           pagination={{
             el: ".swiper-pagination-points",
             type: "bullets",
             clickable: true,
+            dynamicBullets: true,
+            dynamicMainBullets: 3,
           }}
         >
           {photos.map((item) => (
@@ -124,21 +154,19 @@ export const PointsItem = ({
         >
           От {low_price}&#8381;/час
         </p>
-
         <PointRating
           rating={rating}
           optionalClass={`point-rating_on-image ${
             !isListed && "point__rating-container_own-page"
           }`}
         />
-
         {/* блок кнопок для страницы коворкинга */}
         {!isListed && (
           <div className="point__info-buttons z-index-2">
             <button
               type="button"
               className="point__action-button"
-              onClick={handleLike}
+              onClick={onLikeClick}
               aria-labelledby="Добавить в избранное"
             >
               <LikeButton isLiked={isLiked} />
@@ -153,7 +181,6 @@ export const PointsItem = ({
             </button>
           </div>
         )}
-
         <div className="swiper-pagination-points" />
       </div>
 
@@ -165,7 +192,7 @@ export const PointsItem = ({
               <button
                 type="button"
                 className="point__action-button"
-                onClick={handleLike}
+                onClick={onLikeClick}
                 aria-labelledby="Добавить в избранное"
               >
                 <LikeButton isLiked={isLiked} />
@@ -231,6 +258,7 @@ export const PointsItem = ({
 };
 
 PointsItem.propTypes = {
+  id: PropTypes.number,
   isCompact: PropTypes.bool,
   isListed: PropTypes.bool,
   rating: PropTypes.number,
@@ -252,9 +280,11 @@ PointsItem.propTypes = {
   metro: PropTypes.string,
   count_workspace: PropTypes.number,
   count_meeting_room: PropTypes.number,
+  is_favorited: PropTypes.bool,
 };
 
 PointsItem.defaultProps = {
+  id: undefined,
   rating: undefined,
   name: undefined,
   short_annotation: undefined,
@@ -271,4 +301,5 @@ PointsItem.defaultProps = {
   count_meeting_room: undefined,
   isCompact: false,
   isListed: false,
+  is_favorited: false,
 };

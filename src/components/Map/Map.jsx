@@ -42,12 +42,20 @@ export const MainMap = ({ points, defaultState }) => {
                 key={point.id}
                 defaultGeometry={point.coordinates}
                 properties={{
-                  balloonContentHeader: `<img src="${point.image}" alt="${point.name}" class="map__image" height="150" width="200">`,
+                  balloonContentHeader: `<img src="${point.extra_photo[0].image}" alt="${point.name}" class="map__image" height="150" width="200">`,
                   balloonContentBody: `
               <div class='map__body-wrapper'>
               <div class ="map__row">
-              <span class="map__name">${point.name}</span><div class="map__rating-container"><span class="map__rating">${point.rating}</span><img src="${Star}" class="map__icon" alt="Рейтинг" /></div></div>
-              <div class ="map__address-container"><img src="${Tag}" alt="Тег" /><span class="map__address">${point.address}</span></div><a href = "${point.link}" class="map__button">Подробнее</a>
+              <span class="map__name">${
+                point.name
+              }</span><div class="map__rating-container"><span class="map__rating">${
+                point.rating ?? ""
+              }</span><img src="${Star}" class="map__icon" alt="Рейтинг" /></div></div>
+              <div class ="map__address-container"><img src="${Tag}" alt="Тег" /><span class="map__address">${
+                point.get_full_address_str
+              }</span></div><a href = "/point/${
+                point.id
+              }" class="map__button">Подробнее</a>
               </div> `,
 
                   balloonContentFooter: "",
@@ -72,11 +80,14 @@ MainMap.propTypes = {
     PropTypes.shape({
       coordinates: PropTypes.arrayOf(PropTypes.number),
       id: PropTypes.number,
-      rating: PropTypes.string,
+      rating: PropTypes.number,
       name: PropTypes.string,
-      link: PropTypes.string,
-      image: PropTypes.string,
-      address: PropTypes.string,
+      extra_photo: PropTypes.arrayOf(
+        PropTypes.shape({
+          image: PropTypes.string,
+        }),
+      ),
+      get_full_address_str: PropTypes.string,
     }),
   ),
   defaultState: PropTypes.shape({
