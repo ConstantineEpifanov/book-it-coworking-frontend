@@ -17,6 +17,9 @@ const LoginForm = ({ isOpenPopup, onClosePopup, onAuthorization }) => {
     onAuthorization(values);
   }
 
+  console.log(values, "values");
+  console.log(errors, "errors");
+
   return (
     <Popup isOpen={isOpenPopup} onClickClose={onClosePopup}>
       {/* eslint-disable-next-line react/jsx-no-bind */}

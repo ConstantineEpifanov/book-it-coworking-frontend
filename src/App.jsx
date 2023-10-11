@@ -1,17 +1,11 @@
-/* eslint-disable import/no-extraneous-dependencies */
+/* eslint-disable camelcase */
 import React from "react";
-import { Route, Routes } from "react-router-dom";
-// import logo from "./logo.svg";
+import { Route, Routes, useLocation, useNavigate } from "react-router-dom";
 import "./App.css";
-import EntryForm from "./components/Forms/EntryForm/EntryForm";
-import Popup from "./components/Popup/Popup";
-import Button from "./components/UI-kit/Button/Button";
-import Input from "./components/UI-kit/Input/Input";
 
 import { Footer } from "./components/Footer/Footer";
 import Header from "./components/Header/Header";
 import PageNotFound from "./components/PageNotFound/PageNotFound";
-import PasswordInput from "./components/UI-kit/PasswordInput/PasswordInput";
 import Contacts from "./components/Contacts/Contacts";
 import { Main } from "./components/Main/Main";
 import { CoworkingList } from "./components/CoworkingList/CoworkingList";
@@ -21,25 +15,66 @@ import { Profile } from "./components/Profile/Profile";
 import { exampleCoworkingsData } from "./config/exampleCoworkingsData";
 import { exampleEventsData } from "./config/exampleEventsData";
 import { user, favorites, bookings } from "./config/exampleProfileData";
+import RegisterForm from "./components/Forms/RegisterForm/RegisterForm";
+import LoginForm from "./components/Forms/LoginForm/LoginForm";
+import RestorePassForm from "./components/Forms/RestorePassForm/RestorePassForm";
+
+import * as apiData from "./utils/Api";
+import usePopupOpen from "./hooks/usePopupOpen";
 
 function App() {
-  // временно выставлено true, далее нужно поменять значение на false
-  const [isOpenPopup, setIsOpenPopup] = React.useState(false);
+  const navigate = useNavigate();
+  const location = useLocation();
+  const { isOpenPopup, handleOpenPopup, handleClosePopup } = usePopupOpen();
 
-  // для открытия попапа
-  const handleOpenPopup = () => {
-    setIsOpenPopup(true);
+  const [isLoggedIn, setIsLoggedIn] = React.useState(false);
+  const previousLocation = location.state?.previousLocation;
+
+  //  ---------- AUTH FUNC ---------
+
+  const handleRegister = ({
+    email,
+    password,
+    first_name,
+    last_name,
+    re_password,
+  }) => {
+    console.log(
+      { email, password, first_name, last_name, re_password },
+      "register",
+    );
+    apiData
+      .register({ email, password, first_name, last_name, re_password })
+      .then((res) => {
+        console.log(res, "registration");
+      })
+      .catch((err) => {
+        console.log(
+          `Что-то пошло не так: ошибка запроса ${err.status} , сообщение:${err.message} 😔`,
+        );
+      });
   };
 
-  // для закрытия попапа
-  const handleClosePopup = () => {
-    setIsOpenPopup(false);
+  const handleAuthorization = ({ email, password }) => {
+    console.log({ email, password });
+    apiData
+      .login({ email, password })
+      .then((data) => {
+        localStorage.setItem("jwt", data.token);
+        setIsLoggedIn(true);
+        navigate("/");
+      })
+      .catch((err) => {
+        console.log(
+          `Что-то пошло не так: ошибка запроса ${err.status} , сообщение:${err.message} 😔`,
+        );
+      });
   };
 
   return (
     <div className="App">
-      <Header onOpenPopup={handleOpenPopup} />
-      <Routes>
+      <Header onOpenPopup={handleOpenPopup} isLoggedIn={isLoggedIn} />
+      <Routes location={previousLocation || location}>
         <Route
           path="/"
           element={
@@ -63,38 +98,53 @@ function App() {
           }
         />
         <Route path="/contacts" element={<Contacts />} />
+        {/* для фонового заполнения и дальнейшего рероутинга попапов */}
+        <Route
+          path="/popup/*"
+          element={
+            <Main
+              coworkingsArray={exampleCoworkingsData}
+              eventsArray={exampleEventsData}
+            />
+          }
+        />
         <Route path="*" element={<PageNotFound />} />
       </Routes>
 
-      {/* пример формы */}
-      <Popup isOpen={isOpenPopup} onClickClose={handleClosePopup}>
-        <EntryForm title="Войдите на сайт">
-          <>
-            <Input
-              inputType="email"
-              inputPlaceholder="Email"
-              inputName="emailLogin"
-            />
-            <PasswordInput
-              inputName="passwordLogin"
-              inputPlaceholder="Пароль"
-              inputInfo="Забыли пароль?"
-            />
-            <Button
-              btnClass="button_type_form"
-              btnType="button"
-              btnText="Войти"
-              onClick={() => {}}
-            />
-            <Button
-              btnClass="button_type_link"
-              btnType="button"
-              btnText="Зарегистрироваться"
-              onClick={() => {}}
-            />
-          </>
-        </EntryForm>
-      </Popup>
+      {previousLocation && (
+        <Routes>
+          <Route
+            path="/popup/login"
+            element={
+              <LoginForm
+                isOpenPopup={isOpenPopup}
+                onClosePopup={handleClosePopup}
+                onAuthorization={handleAuthorization}
+              />
+            }
+          />
+          <Route
+            path="/popup/register"
+            element={
+              <RegisterForm
+                isOpenPopup={isOpenPopup}
+                onClosePopup={handleClosePopup}
+                onRegistration={handleRegister}
+              />
+            }
+          />
+          <Route
+            path="/popup/reset_password"
+            element={
+              <RestorePassForm
+                isOpenPopup={isOpenPopup}
+                onClosePopup={handleClosePopup}
+              />
+            }
+          />
+        </Routes>
+      )}
+
       <Footer onSubmit={() => {}} />
     </div>
   );

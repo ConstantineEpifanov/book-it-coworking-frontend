@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 export function checkResponse(res) {
   return res.ok
     ? res.json()
@@ -20,16 +21,22 @@ function setHeaders() {
 
 // Регистрация в два этапа и логин
 
-export function register({ email, password, firstName, lastName, rePassword }) {
-  return request("/users", {
+export function register({
+  email,
+  password,
+  first_name,
+  last_name,
+  re_password,
+}) {
+  return request("/users/", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({
       email,
       password,
-      firstName,
-      lastName,
-      rePassword,
+      first_name,
+      last_name,
+      re_password,
     }),
   });
 }
