@@ -28,6 +28,12 @@ export default {
         type: "boolean",
       },
     },
+    isMultiselect: {
+      description: "Возможность множественного выбора",
+      control: {
+        type: "boolean",
+      },
+    },
     allowedRanges: {
       description: "Допустимые диапазоны элементов для множественного выбора",
       control: {

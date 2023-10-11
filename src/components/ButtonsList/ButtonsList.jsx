@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 
 import "./ButtonsList.scss";
@@ -8,25 +8,26 @@ export const ButtonsList = ({
   listType = "time-ranges",
   itemsList = [],
   isEnabled = true,
+  isMultiselect = true,
   allowedRanges = [],
   ariaLabel = "Список кнопок",
   listClassName = "",
   itemsClassName = "",
 }) => {
-  const selectedItems = useRef([]);
+  const [selectedItems, setSelectedItems] = useState([]);
   const [itemsStatesList, setItemsStatesList] = useState([]);
 
-  const followAllowedRules = (id) => {
+  const followAllowedRules = (id, currentSelected) => {
     const sharedRanges = allowedRanges.filter((range) => range.includes(id));
 
     setItemsStatesList(
       itemsStatesList.map((item) => {
         let isEnabledStatus = true;
 
-        if (selectedItems.current.length > 0) {
+        if (currentSelected.length > 0) {
           isEnabledStatus =
-            selectedItems.current.includes(item.id) ||
-            selectedItems.current.every((selectedItem) =>
+            currentSelected.includes(item.id) ||
+            currentSelected.every((selectedItem) =>
               sharedRanges.some(
                 (range) =>
                   range.includes(item.id) && range.includes(selectedItem),
@@ -46,7 +47,7 @@ export const ButtonsList = ({
       itemsClassName ? ` ${itemsClassName}` : ""
     }`;
 
-    if (selectedItems.current.includes(id)) {
+    if (selectedItems.includes(id)) {
       resultClass += " button_type_buttons-list-selected";
     }
 
@@ -54,15 +55,17 @@ export const ButtonsList = ({
   };
 
   const handleClick = (id, onClick) => {
-    if (selectedItems.current.includes(id)) {
-      selectedItems.current = selectedItems.current.filter(
-        (itemId) => itemId !== id,
-      );
+    let resultSelected = [];
+    if (selectedItems.includes(id)) {
+      resultSelected = selectedItems.filter((itemId) => itemId !== id);
     } else {
-      selectedItems.current.push(id);
+      resultSelected = [...selectedItems, id];
     }
+    setSelectedItems(resultSelected);
 
-    followAllowedRules(id);
+    if (allowedRanges.length > 0 || !isMultiselect) {
+      followAllowedRules(id, resultSelected);
+    }
     onClick(selectedItems);
   };
 
@@ -114,6 +117,7 @@ ButtonsList.propTypes = {
     }),
   ),
   isEnabled: PropTypes.bool,
+  isMultiselect: PropTypes.bool,
   allowedRanges: PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.number)),
   ariaLabel: PropTypes.string,
   listClassName: PropTypes.string,
@@ -124,6 +128,7 @@ ButtonsList.defaultProps = {
   listType: "time-ranges",
   itemsList: [],
   isEnabled: true,
+  isMultiselect: true,
   allowedRanges: [],
   ariaLabel: "Список кнопок",
   listClassName: "",
