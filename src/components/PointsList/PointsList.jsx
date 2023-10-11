@@ -5,7 +5,13 @@ import { PointsItem } from "../PointsItem/PointsItem";
 import Button from "../UI-kit/Button/Button";
 import "./PointsList.scss";
 
-export const PointsList = ({ isCompact, isListed, coworkingsArray }) => (
+export const PointsList = ({
+  isCompact,
+  isListed,
+  coworkingsArray,
+  handleMoreClick,
+  isMoreButtonVisible,
+}) => (
   <div className="points-list-container">
     <ul className={`points-list ${isCompact && "points-list_compact"}`}>
       {coworkingsArray?.map((item) => (
@@ -14,10 +20,11 @@ export const PointsList = ({ isCompact, isListed, coworkingsArray }) => (
         </li>
       ))}
     </ul>
-    {coworkingsArray && (
+    {isMoreButtonVisible && (
       <Button
         btnClass="button_more button_type_transparent button_size_large"
         btnText="Больше локаций"
+        onClick={handleMoreClick}
       />
     )}
   </div>
@@ -49,10 +56,14 @@ PointsList.propTypes = {
   ),
   isCompact: PropTypes.bool,
   isListed: PropTypes.bool,
+  handleMoreClick: PropTypes.func,
+  isMoreButtonVisible: PropTypes.bool,
 };
 
 PointsList.defaultProps = {
   coworkingsArray: undefined,
   isCompact: false,
   isListed: false,
+  handleMoreClick: () => {},
+  isMoreButtonVisible: true,
 };

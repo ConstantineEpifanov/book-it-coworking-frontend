@@ -21,6 +21,8 @@ export const CoworkingList = () => {
       .catch(() => {});
   }, []);
 
+  const handleMoreClick = () => {};
+
   return (
     <main className="coworking-list">
       <SectionTitle
@@ -33,7 +35,11 @@ export const CoworkingList = () => {
       />
       <SearchForm />
       {/* <MainMap points={coworkingsArray} defaultState={defaultState} /> */}
-      <PointsList isListed coworkingsArray={coworkingsArray} />
+      <PointsList
+        isListed
+        coworkingsArray={coworkingsArray}
+        handleMoreClick={handleMoreClick}
+      />
     </main>
   );
 };
