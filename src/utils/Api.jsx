@@ -73,8 +73,8 @@ export function getLocations() {
   });
 }
 
-export function getShortLocations() {
-  return request("/short_locations/", {
+export function getShortLocations(limit, start) {
+  return request(`/short_locations/?limit=${limit}&offset=${start}`, {
     method: "GET",
     headers: setHeaders(),
   });

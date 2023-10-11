@@ -5,32 +5,26 @@ import { PointsItem } from "../PointsItem/PointsItem";
 import Button from "../UI-kit/Button/Button";
 import "./PointsList.scss";
 
-export const PointsList = ({
-  isCompact,
-  isListed,
-  pointsRender,
-  handleMoreClick,
-}) => (
+export const PointsList = ({ isCompact, isListed, coworkingsArray }) => (
   <div className="points-list-container">
     <ul className={`points-list ${isCompact && "points-list_compact"}`}>
-      {pointsRender?.map((item) => (
+      {coworkingsArray?.map((item) => (
         <li key={item.id}>
-          <PointsItem isListed={isListed} isCompact={isCompact} {...item} />
+          <PointsItem isListed={isListed} isCompact={isCompact} data={item} />
         </li>
       ))}
     </ul>
-    {pointsRender && (
+    {coworkingsArray && (
       <Button
         btnClass="button_more button_type_transparent button_size_large"
         btnText="Больше локаций"
-        onClick={handleMoreClick}
       />
     )}
   </div>
 );
 
 PointsList.propTypes = {
-  pointsRender: PropTypes.arrayOf(
+  coworkingsArray: PropTypes.arrayOf(
     PropTypes.shape({
       rating: PropTypes.number,
       name: PropTypes.string,
@@ -55,12 +49,10 @@ PointsList.propTypes = {
   ),
   isCompact: PropTypes.bool,
   isListed: PropTypes.bool,
-  handleMoreClick: PropTypes.func,
 };
 
 PointsList.defaultProps = {
-  pointsRender: undefined,
+  coworkingsArray: undefined,
   isCompact: false,
   isListed: false,
-  handleMoreClick: () => {},
 };

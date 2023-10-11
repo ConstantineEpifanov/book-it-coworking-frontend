@@ -8,7 +8,7 @@
   flex-direction: column;
   border-radius: 40px;
   border: 2px solid $black;
-  background-color: $white;
+  background-color: $main-white;
   overflow: hidden;
   box-sizing: border-box;
 
@@ -228,17 +228,19 @@
 
 .swiper-pagination-points {
   position: absolute;
-  bottom: 15px;
-  left: 50%;
+  bottom: 35px;
+  left: 60%;
   z-index: 10;
   display: flex;
   gap: 6px;
+  max-width: 100%;
 
-  & .swiper-pagination-bullet {
+  .swiper-pagination-bullet {
     background-color: $light-gray;
     width: 9px;
     height: 9px;
     opacity: 1;
+    z-index: 10;
 
     &-active {
       background-color: $dark-gray;

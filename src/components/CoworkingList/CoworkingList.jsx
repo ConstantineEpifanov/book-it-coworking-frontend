@@ -4,10 +4,10 @@ import "./CoworkingList.scss";
 import { SectionTitle } from "../SectionTitle/SectionTitle";
 import { SectionSubtitle } from "../SectionSubtitle/SectionSubtitle";
 import { PointsList } from "../PointsList/PointsList";
-import { MainMap } from "../Map/Map";
+// import { MainMap } from "../Map/Map";
 import SearchForm from "../Forms/SearchForm/SearchForm";
 
-import { defaultState } from "../../config/mapOptions";
+// import { defaultState } from "../../config/mapOptions";
 import { getLocations } from "../../utils/Api";
 
 export const CoworkingList = () => {
@@ -32,8 +32,8 @@ export const CoworkingList = () => {
         titleClass="section-subtitle_search"
       />
       <SearchForm />
-      <MainMap points={coworkingsArray} defaultState={defaultState} />
-      <PointsList isListed isCompact={false} pointsRender={coworkingsArray} />
+      {/* <MainMap points={coworkingsArray} defaultState={defaultState} /> */}
+      <PointsList isListed coworkingsArray={coworkingsArray} />
     </main>
   );
 };
