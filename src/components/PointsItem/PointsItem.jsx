@@ -83,7 +83,10 @@ export const PointsItem = ({
       <div className="point__image-container">
         <img src={main_photo} alt={name} className="point__image" />
         <p className="point__cost">От {low_price}&#8381;/час</p>
-        <PointRating rating={rating} optionalClass="point-rating_on-image" />
+        <PointRating
+          rating={rating?.toFixed(1)}
+          optionalClass="point-rating_on-image"
+        />
       </div>
       <div className="point__info-container">
         <div className="point__title-container">

@@ -8,6 +8,7 @@
   box-sizing: border-box;
   border-radius: 40px;
   border: 2px solid $black;
+  @include card-border-color;
   overflow: hidden;
   width: 360px;
   &__image-container {

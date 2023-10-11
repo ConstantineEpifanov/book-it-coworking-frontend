@@ -16,7 +16,7 @@ export const CoworkingList = () => {
   useEffect(() => {
     getLocations()
       .then((res) => {
-        setCoworkingsArray(res);
+        setCoworkingsArray(res.results);
       })
       .catch(() => {});
   }, []);

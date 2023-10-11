@@ -1,8 +1,8 @@
 @import "./../../scss/variables.scss";
+@import "./../../scss/mixins.scss";
 
 .section-title {
-  margin: 0;
-  padding: 0;
+  @include mp-null;
   color: $black;
   font-size: 60px;
   font-style: normal;
@@ -23,5 +23,12 @@
 
   &_margin-to-block {
     margin-bottom: 32px;
+  }
+}
+
+@include mobile {
+  .section-title {
+    font-size: 36px;
+    line-height: 44px;
   }
 }

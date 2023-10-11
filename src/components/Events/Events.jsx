@@ -27,11 +27,24 @@ export const Events = ({ eventsArray }) => (
     <div className="events__list">
       <Swiper
         spaceBetween={20}
-        slidesPerView={3}
+        slidesPerView={1}
         pagination={{
           el: ".swiper-pagination",
           type: "bullets",
           clickable: true,
+        }}
+        breakpoints={{
+          768: {
+            slidesPerView: 1,
+          },
+          1060: {
+            slidesPerView: 2,
+            spaceBetween: 20,
+          },
+          1440: {
+            slidesPerView: 3,
+            spaceBetween: 20,
+          },
         }}
       >
         {eventsArray.map((event) => (

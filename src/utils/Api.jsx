@@ -73,6 +73,13 @@ export function getLocations() {
   });
 }
 
+export function getShortLocations() {
+  return request("/short_locations/", {
+    method: "GET",
+    headers: setHeaders(),
+  });
+}
+
 export function getEvents() {
   return request("/events/", {
     method: "GET",

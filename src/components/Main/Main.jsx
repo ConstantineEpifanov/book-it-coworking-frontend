@@ -8,7 +8,7 @@ import { PointsList } from "../PointsList/PointsList";
 import { Promo } from "../Promo/Promo";
 import { Discounts } from "../Discounts/Discounts";
 import { Events } from "../Events/Events";
-import { getEvents, getLocations } from "../../utils/Api";
+import { getEvents, getShortLocations } from "../../utils/Api";
 import { useResize } from "../../hooks/useResize";
 // import SearchForm from "../Forms/SearchForm/SearchForm";
 // import Button from "../UI-kit/Button/Button";
@@ -26,7 +26,7 @@ export const Main = () => {
   const [pointsAddCount, setPointsAddCount] = useState(0);
 
   useEffect(() => {
-    getLocations()
+    getShortLocations()
       .then((res) => {
         setCoworkingsArray(res);
       })
@@ -34,7 +34,7 @@ export const Main = () => {
 
     getEvents()
       .then((res) => {
-        setEventsArray(res.results);
+        setEventsArray(res);
       })
       .catch(() => {});
   }, []);
