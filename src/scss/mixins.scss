@@ -125,3 +125,9 @@
     @content;
   }
 }
+
+// ------------LIST------------
+@mixin mp-null-list {
+  @include mp-null;
+  list-style-type: none;
+}

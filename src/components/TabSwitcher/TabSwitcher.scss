@@ -1,0 +1,50 @@
+@import "../../scss/mixins.scss";
+@import "../../scss/variables.scss";
+
+.tab-switcher {
+  @include mp-null-list;
+  box-sizing: border-box;
+  max-width: 590px;
+  padding: 15px 0 12px;
+  border: 2px solid $main-black;
+  border-radius: 100vmax;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  position: relative;
+
+  &::before {
+    content: "";
+    position: absolute;
+    left: 8px;
+    top: 5px;
+    width: 50.34%;
+    height: calc(100% - 10px);
+    background-color: $main-black;
+    border-radius: 100vmax;
+    z-index: -1;
+    transition: 0.3s ease;
+  }
+
+  &_second-selected::before {
+    transform: translateX(276px);
+  }
+
+  &__item {
+    @include mp-null;
+    @include text-font-normal;
+    max-width: 170px;
+    font-weight: 500;
+    text-transform: uppercase;
+    overflow-wrap: break-word;
+    color: $main-black;
+    background: transparent;
+    border: 0;
+    transition: 0.3s ease;
+    cursor: pointer;
+
+    &_active {
+      color: $white;
+    }
+  }
+}
