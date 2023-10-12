@@ -109,9 +109,11 @@
     position: absolute;
     top: 40px;
     right: 17px;
-    background-color: $white;
+    background-color: $main-white;
     border-radius: 20px;
     padding: 8px 12px;
+    box-sizing: border-box;
+    max-height: 38px;
   }
 
   &__list-item {
@@ -169,7 +171,7 @@
     border: none;
     background-color: transparent;
     cursor: pointer;
-    transition: all 0.3 ease;
+    transition: all 0.3s ease;
 
     &:hover {
       opacity: 0.7;
@@ -212,6 +214,7 @@
     font-style: normal;
     font-weight: 300;
     line-height: 1.37;
+    text-transform: capitalize;
   }
 
   &__buttons {

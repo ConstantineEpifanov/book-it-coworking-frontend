@@ -24,6 +24,10 @@
   &_margin-to-block {
     margin-bottom: 32px;
   }
+
+  &_own-page {
+    text-transform: capitalize;
+  }
 }
 
 @include mobile {

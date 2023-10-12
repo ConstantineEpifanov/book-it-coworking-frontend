@@ -4,6 +4,9 @@
   width: 100%;
   padding: 20px 0 192px;
   background-color: $main-white;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 
   &__inner {
     max-width: 550px;
@@ -11,7 +14,7 @@
     flex-direction: column;
     gap: 40px;
     padding-bottom: 32px;
-    margin: 0 auto;
+    align-items: center;
   }
 
   &_image {
