@@ -7,7 +7,7 @@ export const EquipmentList = ({ equipment }) => (
   <ul className="equipment-list">
     {equipment?.map((item) => (
       <li>
-        <EquipmentItem title={item.title} data={item.data} />
+        <EquipmentItem name={item.name} img={item.icon} />
       </li>
     ))}
   </ul>

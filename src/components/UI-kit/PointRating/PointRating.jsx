@@ -24,7 +24,7 @@ export const PointRating = ({ rating, optionalClass }) => (
 );
 
 PointRating.propTypes = {
-  rating: PropTypes.number,
+  rating: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   optionalClass: PropTypes.string,
 };
 

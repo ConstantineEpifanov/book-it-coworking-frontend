@@ -1,6 +1,7 @@
 /* eslint-disable camelcase */
 import React, { useState } from "react";
 import PropTypes from "prop-types";
+import { useNavigate } from "react-router-dom";
 
 import "./PointsItem.scss";
 import "swiper/swiper-bundle.min.css";
@@ -24,8 +25,11 @@ SwiperCore.use([Pagination]);
 
 export const PointsItem = ({ isCompact, isListed, data }) => {
   const [isLiked, setLiked] = useState(data.is_favorited);
-  const time = `${data.days_open} с ${data.open_time} до ${data.close_time}`;
 
+  const navigate = useNavigate();
+  const time = `${data.days_open} ${data.open_time}–${data.close_time}`;
+
+  // Добавить в избранное
   function handleAddFavorite() {
     addFavorite(data.id)
       .then(() => {
@@ -34,6 +38,7 @@ export const PointsItem = ({ isCompact, isListed, data }) => {
       .catch((err) => new Error(err));
   }
 
+  // Удалить из избранного
   function handleDeleteFavorite() {
     deleteFavorite(data.id)
       .then(() => {
@@ -51,8 +56,15 @@ export const PointsItem = ({ isCompact, isListed, data }) => {
     }
   }
 
+  // Поделиться страницей коворкинга
   const handleShare = () => {};
 
+  // Переход на страницу коворкинга
+  const handleDetailsButton = () => {
+    navigate(`/points/${data.id}`, { replace: false });
+  };
+
+  // Компактная карточка для главной страницы
   const compactCard = () => (
     <div className="point">
       <div className="point__image-container">
@@ -89,11 +101,13 @@ export const PointsItem = ({ isCompact, isListed, data }) => {
         <Button
           btnClass="button_type_transparent button_size_postmiddle"
           btnText="Подробнее"
+          onClick={handleDetailsButton}
         />
       </div>
     </div>
   );
 
+  // Большая карточка для страницы коворкингов и страницы с подробностями
   const largeCard = () => {
     const photos = [{ image: data.main_photo, id: 0 }, ...data.extra_photo];
 
@@ -235,6 +249,7 @@ export const PointsItem = ({ isCompact, isListed, data }) => {
               <Button
                 btnClass="button_type_transparent button_size_middle"
                 btnText="Подробнее"
+                onClick={handleDetailsButton}
               />
             )}
           </div>
@@ -251,7 +266,7 @@ PointsItem.propTypes = {
   isListed: PropTypes.bool,
   data: PropTypes.shape({
     id: PropTypes.number,
-    rating: PropTypes.number,
+    rating: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
     name: PropTypes.string,
     short_annotation: PropTypes.string,
     description: PropTypes.string,

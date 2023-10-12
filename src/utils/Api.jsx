@@ -101,6 +101,27 @@ export function getRules() {
   });
 }
 
+export function getCoworkingInfo(id) {
+  return request(`/locations/${id}/`, {
+    method: "GET",
+    headers: setHeaders(),
+  });
+}
+
+export function getEquipment(id) {
+  return request(`/locations/${id}/equipments/`, {
+    method: "GET",
+    headers: setHeaders(),
+  });
+}
+
+export function getReviews(id) {
+  return request(`/locations/${id}/reviews/`, {
+    method: "GET",
+    headers: setHeaders(),
+  });
+}
+
 // Профиль
 
 export function getUserInfo() {

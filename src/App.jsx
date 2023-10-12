@@ -19,9 +19,10 @@ import { CoworkingList } from "./components/CoworkingList/CoworkingList";
 import { RulesQuestions } from "./components/RulesQuestions/RulesQuestions";
 import { ProfileDashboard } from "./components/ProfileDashboard/ProfileDashboard";
 import { Profile } from "./components/Profile/Profile";
-import { exampleCoworkingsData } from "./config/exampleCoworkingsData";
-import { exampleEventsData } from "./config/exampleEventsData";
+// import { exampleCoworkingsData } from "./config/exampleCoworkingsData";
+// import { exampleEventsData } from "./config/exampleEventsData";
 import { user, favorites, bookings } from "./config/exampleProfileData";
+import { Coworking } from "./components/Coworking/Coworking";
 
 function App() {
   // временно выставлено true, далее нужно поменять значение на false
@@ -41,20 +42,9 @@ function App() {
     <div className="App">
       <Header onOpenPopup={handleOpenPopup} />
       <Routes>
-        <Route
-          path="/"
-          element={
-            <Main
-              coworkingsArray={exampleCoworkingsData}
-              eventsArray={exampleEventsData}
-            />
-          }
-        />
+        <Route path="/" element={<Main />} />
 
-        <Route
-          path="/points"
-          element={<CoworkingList data={exampleCoworkingsData} />}
-        />
+        <Route path="/points" element={<CoworkingList />} />
         <Route path="/faq" element={<RulesQuestions />} />
         <Route path="/profile" element={<ProfileDashboard />} />
         <Route
@@ -64,6 +54,7 @@ function App() {
           }
         />
         <Route path="/contacts" element={<Contacts />} />
+        <Route path="/points/:id" element={<Coworking />} />
         <Route path="*" element={<PageNotFound />} />
       </Routes>
 

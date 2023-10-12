@@ -4,6 +4,7 @@ import "./CoworkingList.scss";
 import { SectionTitle } from "../SectionTitle/SectionTitle";
 import { SectionSubtitle } from "../SectionSubtitle/SectionSubtitle";
 import { PointsList } from "../PointsList/PointsList";
+import { Loader } from "../Loader/Loader";
 // import { MainMap } from "../Map/Map";
 import SearchForm from "../Forms/SearchForm/SearchForm";
 
@@ -12,11 +13,13 @@ import { getLocations } from "../../utils/Api";
 
 export const CoworkingList = () => {
   const [coworkingsArray, setCoworkingsArray] = useState([]);
+  const [isLoading, setLoading] = useState(true);
 
   useEffect(() => {
     getLocations()
       .then((res) => {
         setCoworkingsArray(res.results);
+        setLoading(false);
       })
       .catch(() => {});
   }, []);
@@ -35,11 +38,15 @@ export const CoworkingList = () => {
       />
       <SearchForm />
       {/* <MainMap points={coworkingsArray} defaultState={defaultState} /> */}
-      <PointsList
-        isListed
-        coworkingsArray={coworkingsArray}
-        handleMoreClick={handleMoreClick}
-      />
+      {isLoading ? (
+        <Loader />
+      ) : (
+        <PointsList
+          isListed
+          coworkingsArray={coworkingsArray}
+          handleMoreClick={handleMoreClick}
+        />
+      )}
     </main>
   );
 };
