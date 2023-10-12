@@ -11,9 +11,10 @@ function request(url, options) {
   );
 }
 
-function setHeaders() {
+export function setHeaders() {
   const token = localStorage.getItem("token");
   return {
+    token,
     Authorization: `Token ${token}`,
     "Content-Type": "application/json",
   };
@@ -41,13 +42,13 @@ export function register({
   });
 }
 
-export function confirmRegister({ email, confirmationCode }) {
-  return request("/users/activation", {
+export function confirmRegister({ email, confirmation_code }) {
+  return request("/users/activation/", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({
       email,
-      confirmationCode,
+      confirmation_code,
     }),
   });
 }

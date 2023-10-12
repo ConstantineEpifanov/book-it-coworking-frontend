@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-no-bind */
 import PropTypes from "prop-types";
 
 import { Link, useLocation } from "react-router-dom";
@@ -10,19 +11,15 @@ import PasswordInput from "../../UI-kit/PasswordInput/PasswordInput";
 
 const LoginForm = ({ isOpenPopup, onClosePopup, onAuthorization }) => {
   const location = useLocation();
-  const { values, errors, handleChange } = useFormAndValidation();
+  const { values, errors, handleChange, isValid } = useFormAndValidation();
 
   function handleSubmit(evt) {
     evt.preventDefault();
     onAuthorization(values);
   }
 
-  console.log(values, "values");
-  console.log(errors, "errors");
-
   return (
     <Popup isOpen={isOpenPopup} onClickClose={onClosePopup}>
-      {/* eslint-disable-next-line react/jsx-no-bind */}
       <EntryForm title="Войдите на сайт" onSubmit={handleSubmit}>
         <Input
           inputValue={values.email}
@@ -31,6 +28,7 @@ const LoginForm = ({ isOpenPopup, onClosePopup, onAuthorization }) => {
           inputName="email"
           inputType="email"
           inputPlaceholder="Email"
+          inputRequired
         />
         <PasswordInput
           inputValue={values.password}
@@ -39,6 +37,7 @@ const LoginForm = ({ isOpenPopup, onClosePopup, onAuthorization }) => {
           inputName="password"
           inputType="password"
           inputPlaceholder="Пароль"
+          inputRequired
         />
 
         <Button
@@ -46,6 +45,7 @@ const LoginForm = ({ isOpenPopup, onClosePopup, onAuthorization }) => {
           btnType="submit"
           btnText="Войти"
           onClick={() => {}}
+          isValidBtn={isValid}
         />
 
         <Link to="/popup/register" state={{ previousLocation: location }}>

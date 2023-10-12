@@ -10,15 +10,10 @@ function PasswordInput({
   inputPlaceholder,
   inputInfo,
   handleChange,
+  inputRequired,
+  inputDisabled,
 }) {
-  // const [value, setValue] = React.useState("");
   const [passwordVisible, setPasswordVisible] = React.useState(false);
-  // const [inputError, setInputError] = React.useState("");
-
-  // const handleChange = (event) => {
-  //   setValue(event.target.value);
-  //   setInputError(event.target.validationMessage);
-  // };
 
   return (
     <>
@@ -41,7 +36,8 @@ function PasswordInput({
           placeholder={inputPlaceholder}
           value={inputValue || ""}
           onChange={handleChange}
-          required
+          required={inputRequired}
+          disabled={inputDisabled}
         />
         {/* если данные введены, покажи кнопку */}
         {inputValue && (
@@ -72,6 +68,8 @@ PasswordInput.propTypes = {
   inputName: PropTypes.string,
   inputInfo: PropTypes.string,
   inputPlaceholder: PropTypes.string,
+  inputRequired: PropTypes.bool,
+  inputDisabled: PropTypes.bool,
   handleChange: () => {},
 };
 
@@ -82,6 +80,8 @@ PasswordInput.defaultProps = {
   inputName: "",
   inputPlaceholder: "",
   inputInfo: "",
+  inputRequired: null,
+  inputDisabled: null,
   handleChange: () => {},
 };
 

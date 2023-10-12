@@ -1,7 +1,8 @@
 import React from "react";
 
 const validationPatterns = {
-  name: /^[a-zA-Zа-яА-Я\sё.-]+$/,
+  first_name: /^[a-zA-Zа-яА-Я\sё.-]+$/,
+  last_name: /^[a-zA-Zа-яА-Я\sё.-]+$/,
   email:
     /^[-!#$%&'*+/0-9=?A-Z^_a-z`{|}~](\.?[-!#$%&'*+/0-9=?A-Z^_a-z`{|}~])*@[a-zA-Z0-9](-?[a-zA-Z0-9])*.[a-zA-Z](-?[a-zA-Z0-9])+$/,
   phoneNumber: /^\+7\d{10}$/,
@@ -9,7 +10,8 @@ const validationPatterns = {
 };
 
 const validationMessages = {
-  name: "Может содержать только буквы, дефисы и точки",
+  first_name: "Может содержать только буквы, дефисы и точки",
+  last_name: "Может содержать только буквы, дефисы и точки",
   email: "Введите корректный email",
   phoneNumber: "Введите номер телефона в формате +7XXXXXXXXXX",
   date: "Введите дату в формате дд.мм.гггг",

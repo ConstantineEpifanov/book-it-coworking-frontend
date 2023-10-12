@@ -31,49 +31,54 @@ function App() {
   const previousLocation = location.state?.previousLocation;
 
   //  ---------- AUTH FUNC ---------
+  // проверка токена
+  React.useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const headers = apiData.setHeaders();
+        navigate(location.pathname);
+        if (headers.token) {
+          setIsLoggedIn(true);
+          navigate(location.pathname);
+        }
+      } catch (err) {
+        setIsLoggedIn(false);
+        console.log(`Что-то пошло не так: ошибка запроса ${err.message} 😔`);
+      }
+    };
 
-  const handleRegister = ({
-    email,
-    password,
-    first_name,
-    last_name,
-    re_password,
-  }) => {
-    console.log(
-      { email, password, first_name, last_name, re_password },
-      "register",
-    );
-    apiData
-      .register({ email, password, first_name, last_name, re_password })
-      .then((res) => {
-        console.log(res, "registration");
-      })
-      .catch((err) => {
-        console.log(
-          `Что-то пошло не так: ошибка запроса ${err.status} , сообщение:${err.message} 😔`,
-        );
-      });
-  };
+    fetchData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const handleAuthorization = ({ email, password }) => {
-    console.log({ email, password });
     apiData
       .login({ email, password })
       .then((data) => {
-        localStorage.setItem("jwt", data.token);
+        console.log(data);
+        localStorage.setItem("token", data.auth_token);
         setIsLoggedIn(true);
         navigate("/");
       })
       .catch((err) => {
-        console.log(
-          `Что-то пошло не так: ошибка запроса ${err.status} , сообщение:${err.message} 😔`,
-        );
+        console.log(`Что-то пошло не так: ошибка запроса ${err.message} 😔`);
       });
+  };
+
+  const handleLogout = () => {
+    localStorage.removeItem("jwt");
+    setIsLoggedIn(false);
+    // для очистки локального хранилища после выхода из приложения
+    localStorage.clear();
   };
 
   return (
     <div className="App">
-      <Header onOpenPopup={handleOpenPopup} isLoggedIn={isLoggedIn} />
+      <Header
+        onOpenPopup={handleOpenPopup}
+        isLoggedIn={isLoggedIn}
+        onLogout={handleLogout}
+      />
       <Routes location={previousLocation || location}>
         <Route
           path="/"
@@ -129,7 +134,7 @@ function App() {
               <RegisterForm
                 isOpenPopup={isOpenPopup}
                 onClosePopup={handleClosePopup}
-                onRegistration={handleRegister}
+                // onRegistration={handleRegister}
               />
             }
           />
