@@ -37,8 +37,6 @@
   &:disabled {
     opacity: 0.8;
     pointer-events: none;
-    border: 2px solid $gray;
-    background: $light-gray;
   }
 
   &_active {
@@ -123,7 +121,12 @@
     &:hover {
       opacity: 0.7;
     }
-
+    &:disabled {
+      opacity: 0.8;
+      pointer-events: none;
+      border: 2px solid $gray;
+      background: $light-gray;
+    }
     &:active {
       background-color: $black;
       color: $green;

@@ -11,15 +11,9 @@ function Input({
   inputPlaceholder,
   inputInfo,
   handleChange,
+  inputRequired,
+  inputDisabled,
 }) {
-  // const [value, setValue] = React.useState("");
-  // const [inputError, setInputError] = React.useState("");
-
-  // const handleChange = (event) => {
-  //   setValue(event.target.value);
-  //   setInputError(event.target.validationMessage);
-  // };
-
   return (
     <div className="input__items">
       {inputValue && (
@@ -37,7 +31,8 @@ function Input({
         placeholder={inputPlaceholder}
         value={inputValue || ""}
         onChange={handleChange}
-        required
+        required={inputRequired}
+        disabled={inputDisabled}
       />
       {/* если нет ошибки ввода, то покажи информацию */}
       {inputError ? (
@@ -57,6 +52,8 @@ Input.propTypes = {
   inputName: PropTypes.string,
   inputInfo: PropTypes.string,
   inputPlaceholder: PropTypes.string,
+  inputRequired: PropTypes.bool,
+  inputDisabled: PropTypes.bool,
   handleChange: () => {},
 };
 
@@ -67,6 +64,8 @@ Input.defaultProps = {
   inputName: "",
   inputPlaceholder: "",
   inputInfo: "",
+  inputRequired: null,
+  inputDisabled: null,
   handleChange: () => {},
 };
 

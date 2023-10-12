@@ -1,15 +1,19 @@
 import React from "react";
 
-// Регулярное выражение для проверки имени
-export const regExpName = /^[a-zA-Zа-яА-Я\sё.-]+$/;
+const validationPatterns = {
+  name: /^[a-zA-Zа-яА-Я\sё.-]+$/,
+  email:
+    /^[-!#$%&'*+/0-9=?A-Z^_a-z`{|}~](\.?[-!#$%&'*+/0-9=?A-Z^_a-z`{|}~])*@[a-zA-Z0-9](-?[a-zA-Z0-9])*.[a-zA-Z](-?[a-zA-Z0-9])+$/,
+  phoneNumber: /^\+7\d{10}$/,
+  date: /^(0[1-9]|[12][0-9]|3[01])\.(0[1-9]|1[0-2])\.\d{4}$/,
+};
 
-// Регулярное выражение для проверки адреса электронной почты
-export const regExpEmail =
-  /^[-!#$%&'*+/0-9=?A-Z^_a-z`{|}~](\.?[-!#$%&'*+/0-9=?A-Z^_a-z`{|}~])*@[a-zA-Z0-9](-?[a-zA-Z0-9])*.[a-zA-Z](-?[a-zA-Z0-9])+$/;
-// Регулярное выражение для проверки телефона
-export const regExpPhoneNumber = /^\+7\d{10}$/;
-// Регулярное выражение для проверки даты
-export const regExpDate = /^(0[1-9]|[12][0-9]|3[01])\.(0[1-9]|1[0-2])\.\d{4}$/;
+const validationMessages = {
+  name: "Может содержать только буквы, дефисы и точки",
+  email: "Введите корректный email",
+  phoneNumber: "Введите номер телефона в формате +7XXXXXXXXXX",
+  date: "Введите дату в формате дд.мм.гггг",
+};
 
 export default function useFormAndValidation() {
   const [values, setValues] = React.useState({});
@@ -21,47 +25,23 @@ export default function useFormAndValidation() {
     setValues({ ...values, [name]: value });
     setIsValid(e.target.closest("form").checkValidity());
 
-    // проверка валидности только при активном вводе
     if (value) {
-      // Валидация поля "Имя" и "Фамилия"
-      if (name === "last_name" || name === "first_name") {
-        const isValidName = regExpName.test(value);
+      if (validationPatterns[name]) {
+        const isValidField = validationPatterns[name].test(value);
         setErrors({
           ...errors,
-          [name]: isValidName
-            ? ""
-            : "Может сдержать в себе только буквы, дефисы и точки",
+          [name]: isValidField ? "" : validationMessages[name],
         });
-        if (!isValidName) {
+        if (!isValidField) {
           setIsValid(false);
         }
-      }
-
-      // Валидация поля "Email"
-      else if (name === "email") {
-        const isValidEmail = regExpEmail.test(
-          String(value).toLowerCase().trim(),
-        );
-        setErrors({
-          ...errors,
-          [name]: isValidEmail ? "" : "Введите корректный email",
-        });
-        if (!isValidEmail) {
-          setIsValid(false);
-        }
-      }
-
-      // Валидация поля "Password"
-      else if (name === "password" || name === "re_password") {
+      } else if (name === "password" || name === "re_password") {
         setErrors({ ...errors, [name]: e.target.validationMessage });
       }
-    }
-
-    // если поле обязательно и нет данных в импуте
-    else if (required && !value) {
+    } else if (required && !value) {
       setErrors({
         ...errors,
-        [name]: "Поле обязательно для заполнения",
+        [name]: "Поле обязательно для заполнения",
       });
       setIsValid(false);
     } else {
