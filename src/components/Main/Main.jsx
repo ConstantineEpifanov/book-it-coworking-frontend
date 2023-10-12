@@ -1,6 +1,7 @@
 /* eslint-disable no-nested-ternary */
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useContext, useState } from "react";
 // import PropTypes from "prop-types";
+import { CurrentUserContext } from "../../contexts/currentUserContext";
 import "./Main.scss";
 import { SectionTitle } from "../SectionTitle/SectionTitle";
 // import { SectionSubtitle } from "../SectionSubtitle/SectionSubtitle";
@@ -25,16 +26,18 @@ export const Main = () => {
   const [eventsArray, setEventsArray] = useState([]);
   const [pointsAddCount, setPointsAddCount] = useState(0);
   const [isMoreButtonVisible, setMoreButtonVisible] = useState(true);
-
+  const { setIsLoading } = useContext(CurrentUserContext);
   //  const size = useResize();
 
   useEffect(() => {
+    setIsLoading(true);
     getShortLocations(LAPTOP_POINTS_QUANTITY, pointsAddCount)
       .then((res) => {
         setCoworkingsArray(res.results);
         setPointsAddCount((prev) => prev + LAPTOP_POINTS_QUANTITY);
       })
-      .catch(() => {});
+      .catch(() => {})
+      .finally(() => setIsLoading(false));
 
     getEvents()
       .then((res) => {

@@ -27,7 +27,7 @@ export const Events = ({ eventsArray }) => (
     <div className="events__list">
       <Swiper
         spaceBetween={20}
-        slidesPerView={1}
+        slidesPerView={1.2}
         pagination={{
           el: ".swiper-pagination",
           type: "bullets",
@@ -35,7 +35,7 @@ export const Events = ({ eventsArray }) => (
         }}
         breakpoints={{
           768: {
-            slidesPerView: 1,
+            slidesPerView: 1.2,
           },
           1060: {
             slidesPerView: 2,

@@ -10,21 +10,23 @@ export const Loader = ({ animationDelay = 1, itemColor = "#b0ff1a" }) => {
   ];
 
   return (
-    <div className="loader">
-      <div className="loader__view">
-        {delaysList.map((delay, index) => {
-          const key = `loader-item${index}`;
-          return (
-            <div
-              key={key}
-              style={{
-                animationDelay: `${animationDelay * delay}s`,
-                animationDuration: `${animationDelay}s`,
-                backgroundColor: itemColor,
-              }}
-            />
-          );
-        })}
+    <div className="loader-container">
+      <div className="loader">
+        <div className="loader__view">
+          {delaysList.map((delay, index) => {
+            const key = `loader-item${index}`;
+            return (
+              <div
+                key={key}
+                style={{
+                  animationDelay: `${animationDelay * delay}s`,
+                  animationDuration: `${animationDelay}s`,
+                  backgroundColor: itemColor,
+                }}
+              />
+            );
+          })}
+        </div>
       </div>
     </div>
   );

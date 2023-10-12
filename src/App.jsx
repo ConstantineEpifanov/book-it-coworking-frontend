@@ -1,7 +1,10 @@
 /* eslint-disable import/no-extraneous-dependencies */
 import React from "react";
 import { Route, Routes } from "react-router-dom";
+import { CurrentUserContext } from "./contexts/currentUserContext";
+
 // import logo from "./logo.svg";
+
 import "./App.css";
 import EntryForm from "./components/Forms/EntryForm/EntryForm";
 import Popup from "./components/Popup/Popup";
@@ -27,6 +30,7 @@ import { Coworking } from "./components/Coworking/Coworking";
 function App() {
   // временно выставлено true, далее нужно поменять значение на false
   const [isOpenPopup, setIsOpenPopup] = React.useState(false);
+  const [isLoading, setIsLoading] = React.useState(false);
 
   // для открытия попапа
   const handleOpenPopup = () => {
@@ -38,57 +42,62 @@ function App() {
     setIsOpenPopup(false);
   };
 
+  const contextValue = React.useMemo(
+    () => ({ isLoading, setIsLoading }),
+    [isLoading, setIsLoading],
+  );
+
   return (
-    <div className="App">
-      <Header onOpenPopup={handleOpenPopup} />
-      <Routes>
-        <Route path="/" element={<Main />} />
-
-        <Route path="/points" element={<CoworkingList />} />
-        <Route path="/faq" element={<RulesQuestions />} />
-        <Route path="/profile" element={<ProfileDashboard />} />
-        <Route
-          path="/profile/*"
-          element={
-            <Profile user={user} bookings={bookings} favorites={favorites} />
-          }
-        />
-        <Route path="/contacts" element={<Contacts />} />
-        <Route path="/points/:id" element={<Coworking />} />
-        <Route path="*" element={<PageNotFound />} />
-      </Routes>
-
-      {/* пример формы */}
-      <Popup isOpen={isOpenPopup} onClickClose={handleClosePopup}>
-        <EntryForm title="Войдите на сайт">
-          <>
-            <Input
-              inputType="email"
-              inputPlaceholder="Email"
-              inputName="emailLogin"
-            />
-            <PasswordInput
-              inputName="passwordLogin"
-              inputPlaceholder="Пароль"
-              inputInfo="Забыли пароль?"
-            />
-            <Button
-              btnClass="button_type_form"
-              btnType="button"
-              btnText="Войти"
-              onClick={() => {}}
-            />
-            <Button
-              btnClass="button_type_link"
-              btnType="button"
-              btnText="Зарегистрироваться"
-              onClick={() => {}}
-            />
-          </>
-        </EntryForm>
-      </Popup>
-      <Footer onSubmit={() => {}} />
-    </div>
+    <CurrentUserContext.Provider value={contextValue}>
+      <div className="App">
+        <Header onOpenPopup={handleOpenPopup} />
+        <Routes>
+          <Route path="/" element={<Main />} />
+          <Route path="/points" element={<CoworkingList />} />
+          <Route path="/faq" element={<RulesQuestions />} />
+          <Route path="/profile" element={<ProfileDashboard />} />
+          <Route
+            path="/profile/*"
+            element={
+              <Profile user={user} bookings={bookings} favorites={favorites} />
+            }
+          />
+          <Route path="/contacts" element={<Contacts />} />
+          <Route path="/points/:id" element={<Coworking />} />
+          <Route path="*" element={<PageNotFound />} />
+        </Routes>
+        {/* пример формы */}
+        <Popup isOpen={isOpenPopup} onClickClose={handleClosePopup}>
+          <EntryForm title="Войдите на сайт">
+            <>
+              <Input
+                inputType="email"
+                inputPlaceholder="Email"
+                inputName="emailLogin"
+              />
+              <PasswordInput
+                inputName="passwordLogin"
+                inputPlaceholder="Пароль"
+                inputInfo="Забыли пароль?"
+              />
+              <Button
+                btnClass="button_type_form"
+                btnType="button"
+                btnText="Войти"
+                onClick={() => {}}
+              />
+              <Button
+                btnClass="button_type_link"
+                btnType="button"
+                btnText="Зарегистрироваться"
+                onClick={() => {}}
+              />
+            </>
+          </EntryForm>
+        </Popup>
+        <Footer onSubmit={() => {}} />
+      </div>
+    </CurrentUserContext.Provider>
   );
 }
 

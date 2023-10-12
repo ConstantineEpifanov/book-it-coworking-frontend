@@ -1,10 +1,11 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
+import { CurrentUserContext } from "../../contexts/currentUserContext";
 // import PropTypes from "prop-types";
 import "./CoworkingList.scss";
+import { Loader } from "../Loader/Loader";
 import { SectionTitle } from "../SectionTitle/SectionTitle";
 import { SectionSubtitle } from "../SectionSubtitle/SectionSubtitle";
 import { PointsList } from "../PointsList/PointsList";
-import { Loader } from "../Loader/Loader";
 // import { MainMap } from "../Map/Map";
 import SearchForm from "../Forms/SearchForm/SearchForm";
 
@@ -13,39 +14,43 @@ import { getLocations } from "../../utils/Api";
 
 export const CoworkingList = () => {
   const [coworkingsArray, setCoworkingsArray] = useState([]);
-  const [isLoading, setLoading] = useState(true);
+  const { isLoading, setIsLoading } = useContext(CurrentUserContext);
 
   useEffect(() => {
+    setIsLoading(true);
     getLocations()
       .then((res) => {
-        setCoworkingsArray(res.results);
-        setLoading(false);
+        setCoworkingsArray(res);
       })
-      .catch(() => {});
+      .catch(() => {})
+      .finally(() => setIsLoading(false));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const handleMoreClick = () => {};
 
   return (
     <main className="coworking-list">
-      <SectionTitle
-        titleText="Поиск по коворкингам Санкт-Петербурга"
-        titleClass="section-title_search"
-      />
-      <SectionSubtitle
-        titleText="Вы можете снять рабочее место в одном из коворкингов Санкт-Петербурга, представленых в нашем каталоге"
-        titleClass="section-subtitle_search"
-      />
-      <SearchForm />
-      {/* <MainMap points={coworkingsArray} defaultState={defaultState} /> */}
       {isLoading ? (
         <Loader />
       ) : (
-        <PointsList
-          isListed
-          coworkingsArray={coworkingsArray}
-          handleMoreClick={handleMoreClick}
-        />
+        <>
+          <SectionTitle
+            titleText="Поиск по коворкингам Санкт-Петербурга"
+            titleClass="section-title_search"
+          />
+          <SectionSubtitle
+            titleText="Вы можете снять рабочее место в одном из коворкингов Санкт-Петербурга, представленных в нашем каталоге"
+            titleClass="section-subtitle_search"
+          />
+          <SearchForm />{" "}
+          {/* <MainMap points={coworkingsArray} defaultState={defaultState} /> */}
+          <PointsList
+            isListed
+            coworkingsArray={coworkingsArray}
+            handleMoreClick={handleMoreClick}
+          />
+        </>
       )}
     </main>
   );

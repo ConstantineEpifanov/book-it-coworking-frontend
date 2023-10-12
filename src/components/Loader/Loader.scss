@@ -1,3 +1,5 @@
+@import "./../../scss/variables.scss";
+
 @keyframes spinning {
   0% {
     opacity: 0.5;
@@ -8,6 +10,18 @@
   100% {
     opacity: 0;
   }
+}
+
+.loader-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+  align-items: center;
+  z-index: 10;
+  background-color: $main-white;
 }
 
 .loader {
