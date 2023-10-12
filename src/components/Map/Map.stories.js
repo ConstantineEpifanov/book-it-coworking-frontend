@@ -16,7 +16,7 @@ const points = [
     id: 1,
     rating: 4,
     name: "Московский",
-    extra_photo: [{ image: spotImage }],
+    main_photo: spotImage,
     get_full_address_str: "г. Санкт-Петербург, Кантемировская улица, 22",
   },
   {
@@ -24,16 +24,9 @@ const points = [
     id: 2,
     rating: 5,
     name: "Питерский",
-    extra_photo: [{ image: spotImage }],
+    main_photo: spotImage,
     get_full_address_str: "г. Санкт-Петербург, Невская 1",
   },
 ];
-const defaultState = {
-  center: [59.9, 30.3],
-  zoom: 13,
-  controls: ["zoomControl", "fullscreenControl"],
-};
 
-export const MapDemo = () => (
-  <MainMap isActive points={points} defaultState={defaultState} />
-);
+export const MapDemo = () => <MainMap isActive points={points} />;

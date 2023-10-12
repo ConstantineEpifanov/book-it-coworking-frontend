@@ -6,24 +6,44 @@ import { Loader } from "../Loader/Loader";
 import { SectionTitle } from "../SectionTitle/SectionTitle";
 import { SectionSubtitle } from "../SectionSubtitle/SectionSubtitle";
 import { PointsList } from "../PointsList/PointsList";
-// import { MainMap } from "../Map/Map";
+import { MainMap } from "../Map/Map";
 import SearchForm from "../Forms/SearchForm/SearchForm";
 
-// import { defaultState } from "../../config/mapOptions";
-import { getLocations } from "../../utils/Api";
+import { defaultState } from "../../config/mapOptions";
+
+import { getLocations, getMapLocations } from "../../utils/Api";
 
 export const CoworkingList = () => {
   const [coworkingsArray, setCoworkingsArray] = useState([]);
+  const [mapPoints, setMapPoints] = useState([]);
   const { isLoading, setIsLoading } = useContext(CurrentUserContext);
 
   useEffect(() => {
     setIsLoading(true);
-    getLocations()
-      .then((res) => {
-        setCoworkingsArray(res);
-      })
-      .catch(() => {})
-      .finally(() => setIsLoading(false));
+
+    const fetchData = () => {
+      const locationsPromise = getLocations()
+        .then((res) => {
+          setCoworkingsArray(res);
+        })
+        .catch(() => {});
+
+      const mapLocationsPromise = getMapLocations()
+        .then((res) => {
+          setMapPoints(res);
+        })
+        .catch(() => {});
+
+      Promise.all([locationsPromise, mapLocationsPromise])
+        .then(() => {
+          setIsLoading(false);
+        })
+        .catch(() => {
+          setIsLoading(false);
+        });
+    };
+
+    fetchData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -43,8 +63,8 @@ export const CoworkingList = () => {
             titleText="Вы можете снять рабочее место в одном из коворкингов Санкт-Петербурга, представленных в нашем каталоге"
             titleClass="section-subtitle_search"
           />
-          <SearchForm />{" "}
-          {/* <MainMap points={coworkingsArray} defaultState={defaultState} /> */}
+          <SearchForm />
+          <MainMap points={mapPoints} defaultState={defaultState} />
           <PointsList
             isListed
             coworkingsArray={coworkingsArray}

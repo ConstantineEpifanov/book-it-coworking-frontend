@@ -80,6 +80,13 @@ export function getShortLocations(limit, start) {
   });
 }
 
+export function getMapLocations() {
+  return request("/map_locations/", {
+    method: "GET",
+    headers: setHeaders(),
+  });
+}
+
 export function getEvents() {
   return request("/events/", {
     method: "GET",

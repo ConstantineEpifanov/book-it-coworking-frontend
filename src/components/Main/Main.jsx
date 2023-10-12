@@ -9,6 +9,8 @@ import { PointsList } from "../PointsList/PointsList";
 import { Promo } from "../Promo/Promo";
 import { Discounts } from "../Discounts/Discounts";
 import { Events } from "../Events/Events";
+import { Loader } from "../Loader/Loader";
+
 import { getEvents, getShortLocations } from "../../utils/Api";
 // import { useResize } from "../../hooks/useResize";
 // import SearchForm from "../Forms/SearchForm/SearchForm";
@@ -26,28 +28,41 @@ export const Main = () => {
   const [eventsArray, setEventsArray] = useState([]);
   const [pointsAddCount, setPointsAddCount] = useState(0);
   const [isMoreButtonVisible, setMoreButtonVisible] = useState(true);
-  const { setIsLoading } = useContext(CurrentUserContext);
+  const { isLoading, setIsLoading } = useContext(CurrentUserContext);
   //  const size = useResize();
 
   useEffect(() => {
     setIsLoading(true);
-    getShortLocations(LAPTOP_POINTS_QUANTITY, pointsAddCount)
-      .then((res) => {
-        setCoworkingsArray(res.results);
-        setPointsAddCount((prev) => prev + LAPTOP_POINTS_QUANTITY);
-      })
-      .catch(() => {})
-      .finally(() => setIsLoading(false));
 
-    getEvents()
-      .then((res) => {
-        setEventsArray(res);
-      })
-      .catch(() => {});
+    const fetchData = () => {
+      const shortLocationsPromise = getShortLocations(
+        LAPTOP_POINTS_QUANTITY,
+        pointsAddCount,
+      )
+        .then((res) => {
+          setCoworkingsArray(res.results);
+          setPointsAddCount((prev) => prev + LAPTOP_POINTS_QUANTITY);
+        })
+        .catch(() => {});
 
+      const eventsPromise = getEvents()
+        .then((res) => {
+          setEventsArray(res);
+        })
+        .catch(() => {});
+
+      Promise.all([shortLocationsPromise, eventsPromise])
+        .then(() => {
+          setIsLoading(false);
+        })
+        .catch(() => {
+          setIsLoading(false);
+        });
+    };
+
+    fetchData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-
   // Кнопка еще, пока только для десктопа
   const handleMoreClick = () => {
     setPointsAddCount((prev) => prev + LAPTOP_MORE_POINTS_QUANTITY);
@@ -76,21 +91,27 @@ export const Main = () => {
 
   return (
     <main className="main">
-      <Promo />
-      <section className="main__coworkings">
-        <SectionTitle
-          titleClass="section-title_margin-to-block"
-          titleText="Наши коворкинги"
-        />
-        <PointsList
-          isCompact
-          coworkingsArray={coworkingsArray}
-          handleMoreClick={handleMoreClick}
-          isMoreButtonVisible={isMoreButtonVisible}
-        />
-      </section>
-      <Discounts />
-      <Events eventsArray={eventsArray} />
+      {isLoading ? (
+        <Loader />
+      ) : (
+        <>
+          <Promo />
+          <section className="main__coworkings">
+            <SectionTitle
+              titleClass="section-title_margin-to-block"
+              titleText="Наши коворкинги"
+            />
+            <PointsList
+              isCompact
+              coworkingsArray={coworkingsArray}
+              handleMoreClick={handleMoreClick}
+              isMoreButtonVisible={isMoreButtonVisible}
+            />
+          </section>
+          <Discounts />
+          <Events eventsArray={eventsArray} />
+        </>
+      )}
     </main>
   );
 };
