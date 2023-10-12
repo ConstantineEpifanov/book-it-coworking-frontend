@@ -16,8 +16,8 @@ import { getEvents, getShortLocations } from "../../utils/Api";
 // import SearchForm from "../Forms/SearchForm/SearchForm";
 // import Button from "../UI-kit/Button/Button";
 import {
-  LAPTOP_POINTS_QUANTITY,
-  LAPTOP_MORE_POINTS_QUANTITY,
+  LAPTOP_SHORT_POINTS_QUANTITY,
+  LAPTOP_MORE_SHORT_POINTS_QUANTITY,
   // MOBILE_POINTS_QUANTITY,
   // TABLET_POINTS_QUANTITY,
   // TABLET_MORE_POINTS_QUANTITY,
@@ -36,12 +36,12 @@ export const Main = () => {
 
     const fetchData = () => {
       const shortLocationsPromise = getShortLocations(
-        LAPTOP_POINTS_QUANTITY,
+        LAPTOP_SHORT_POINTS_QUANTITY,
         pointsAddCount,
       )
         .then((res) => {
           setCoworkingsArray(res.results);
-          setPointsAddCount((prev) => prev + LAPTOP_POINTS_QUANTITY);
+          setPointsAddCount((prev) => prev + LAPTOP_SHORT_POINTS_QUANTITY);
         })
         .catch(() => {});
 
@@ -63,13 +63,14 @@ export const Main = () => {
     fetchData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-  // Кнопка еще, пока только для десктопа
+
+  // Кнопка еще для десктопа
   const handleMoreClick = () => {
-    setPointsAddCount((prev) => prev + LAPTOP_MORE_POINTS_QUANTITY);
-    getShortLocations(LAPTOP_MORE_POINTS_QUANTITY, pointsAddCount).then(
+    setPointsAddCount((prev) => prev + LAPTOP_MORE_SHORT_POINTS_QUANTITY);
+    getShortLocations(LAPTOP_MORE_SHORT_POINTS_QUANTITY, pointsAddCount).then(
       (res) => {
         setCoworkingsArray(coworkingsArray.concat(res.results));
-        if (res.results.length < LAPTOP_MORE_POINTS_QUANTITY)
+        if (res.results.length < LAPTOP_MORE_SHORT_POINTS_QUANTITY)
           setMoreButtonVisible(false);
       },
     );
@@ -79,7 +80,7 @@ export const Main = () => {
   //   // Стартовое кол-во карточек для отображения на разных разрешениях
   //   const pointsStartQuantity = () =>
   //     size.isScreenLarge
-  //       ? LAPTOP_POINTS_QUANTITY
+  //       ? LAPTOP_SHORT_POINTS_QUANTITY
   //       : size.isScreenMedium
   //       ? TABLET_POINTS_QUANTITY
   //       : MOBILE_POINTS_QUANTITY;

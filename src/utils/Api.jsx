@@ -66,8 +66,8 @@ export function login({ email, password }) {
 
 // Получение основных данных
 
-export function getLocations() {
-  return request("/locations/", {
+export function getLocations(limit, start) {
+  return request(`/locations/?limit=${limit}&offset=${start}`, {
     method: "GET",
     headers: setHeaders(),
   });
@@ -115,8 +115,8 @@ export function getCoworkingInfo(id) {
   });
 }
 
-export function getEquipment(id) {
-  return request(`/locations/${id}/equipments/`, {
+export function getEquipment(id, category) {
+  return request(`/locations/${id}/equipments/?category=${category}`, {
     method: "GET",
     headers: setHeaders(),
   });

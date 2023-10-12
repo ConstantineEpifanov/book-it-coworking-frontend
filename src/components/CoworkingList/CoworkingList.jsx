@@ -12,9 +12,16 @@ import SearchForm from "../Forms/SearchForm/SearchForm";
 import { defaultState } from "../../config/mapOptions";
 
 import { getLocations, getMapLocations } from "../../utils/Api";
+import {
+  LAPTOP_POINTS_QUANTITY,
+  LAPTOP_MORE_POINTS_QUANTITY,
+} from "../../utils/constants";
 
 export const CoworkingList = () => {
   const [coworkingsArray, setCoworkingsArray] = useState([]);
+  const [pointsAddCount, setPointsAddCount] = useState(0);
+  const [isMoreButtonVisible, setMoreButtonVisible] = useState(true);
+
   const [mapPoints, setMapPoints] = useState([]);
   const { isLoading, setIsLoading } = useContext(CurrentUserContext);
 
@@ -22,9 +29,13 @@ export const CoworkingList = () => {
     setIsLoading(true);
 
     const fetchData = () => {
-      const locationsPromise = getLocations()
+      const locationsPromise = getLocations(
+        LAPTOP_POINTS_QUANTITY,
+        pointsAddCount,
+      )
         .then((res) => {
-          setCoworkingsArray(res);
+          setCoworkingsArray(res.results);
+          setPointsAddCount((prev) => prev + LAPTOP_POINTS_QUANTITY);
         })
         .catch(() => {});
 
@@ -44,10 +55,18 @@ export const CoworkingList = () => {
     };
 
     fetchData();
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const handleMoreClick = () => {};
+  const handleMoreClick = () => {
+    setPointsAddCount((prev) => prev + LAPTOP_MORE_POINTS_QUANTITY);
+    getLocations(LAPTOP_MORE_POINTS_QUANTITY, pointsAddCount).then((res) => {
+      setCoworkingsArray(coworkingsArray.concat(res.results));
+      if (res.results.length < LAPTOP_MORE_POINTS_QUANTITY)
+        setMoreButtonVisible(false);
+    });
+  };
 
   return (
     <main className="coworking-list">
@@ -69,6 +88,7 @@ export const CoworkingList = () => {
             isListed
             coworkingsArray={coworkingsArray}
             handleMoreClick={handleMoreClick}
+            isMoreButtonVisible={isMoreButtonVisible}
           />
         </>
       )}

@@ -12,6 +12,7 @@
   border-radius: 40px;
   border: 2px solid $black;
   max-width: 835px;
+  background-color: $white;
 
   &__title {
     @include mp-null;
@@ -27,12 +28,15 @@
     width: 100%;
     list-style: none;
     display: grid;
-    grid-template-columns: 4fr 1fr;
+    grid-template-columns: 1fr 1fr;
+    gap: 22px;
   }
 
   &__list-item {
     display: flex;
     gap: 12px;
+    max-height: 30px;
+    text-wrap: nowrap;
   }
 
   &__text {

@@ -4,6 +4,7 @@ import "./ReviewList.scss";
 import { PointRating } from "../UI-kit/PointRating/PointRating";
 import { ReviewItem } from "../ReviewItem/ReviewItem";
 import Button from "../UI-kit/Button/Button";
+// import { REVIEWS_QUANTITY } from "../../utils/constants";
 
 export const ReviewList = ({ reviews, pointRating }) => (
   <div className="review-list">
