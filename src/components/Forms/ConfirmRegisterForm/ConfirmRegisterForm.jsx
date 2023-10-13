@@ -12,7 +12,7 @@ import useFormAndValidation from "../../../hooks/useFormAndValidation";
 
 const ConfirmRegisterForm = ({ data, isOpenPopup, handleClosePopup }) => {
   const navigate = useNavigate();
-  const { values, errors, handleChange } = useFormAndValidation();
+  const { values, errors, handleChange, isValid } = useFormAndValidation();
 
   const handleConfirm = async ({ email, confirmation_code }) => {
     try {
@@ -44,11 +44,13 @@ const ConfirmRegisterForm = ({ data, isOpenPopup, handleClosePopup }) => {
           inputError={errors.confirmation_code}
           handleChange={handleChange}
           inputName="confirmation_code"
+          inputRequired
         />
         <Button
           btnClass="button_type_form button_type_form_margin-top"
           btnType="submit"
           btnText="Отправить"
+          isValidBtn={isValid}
           onClick={() => {}}
         />
         <Button

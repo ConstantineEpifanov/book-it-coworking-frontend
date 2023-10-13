@@ -7,6 +7,7 @@ const validationPatterns = {
     /^[-!#$%&'*+/0-9=?A-Z^_a-z`{|}~](\.?[-!#$%&'*+/0-9=?A-Z^_a-z`{|}~])*@[a-zA-Z0-9](-?[a-zA-Z0-9])*.[a-zA-Z](-?[a-zA-Z0-9])+$/,
   phoneNumber: /^\+7\d{10}$/,
   date: /^(0[1-9]|[12][0-9]|3[01])\.(0[1-9]|1[0-2])\.\d{4}$/,
+  confirmation_code: /^\d{6}$/,
 };
 
 const validationMessages = {
@@ -15,6 +16,7 @@ const validationMessages = {
   email: "Введите корректный email",
   phoneNumber: "Введите номер телефона в формате +7XXXXXXXXXX",
   date: "Введите дату в формате дд.мм.гггг",
+  confirmation_code: "Некорректный код",
 };
 
 export default function useFormAndValidation() {
