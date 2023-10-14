@@ -7,4 +7,21 @@
   &__section-title {
     @include text-font-large;
   }
+
+  &__section {
+    padding-bottom: 100px;
+    display: flex;
+    flex-direction: column;
+  }
+
+  &__plan-photo {
+    width: 100%;
+    max-width: 1120px;
+    margin-bottom: 30px;
+    display: block;
+  }
+
+  &__spot-switcher {
+    align-self: center;
+  }
 }

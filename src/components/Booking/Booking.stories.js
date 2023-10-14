@@ -1,7 +1,7 @@
 import { Booking } from "./Booking";
 
 export default {
-  title: "Components/Booking",
+  title: "Pages/Booking",
   component: Booking,
   tags: ["autodocs"],
   parameters: {
