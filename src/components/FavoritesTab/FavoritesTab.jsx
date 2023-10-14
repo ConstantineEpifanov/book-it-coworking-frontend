@@ -1,83 +1,144 @@
-import React from "react";
+import React, { useEffect, useState, useContext } from "react";
 import PropTypes from "prop-types";
+import { Link } from "react-router-dom";
+import { CurrentUserContext } from "../../contexts/currentUserContext";
+
 import "./FavoritesTab.scss";
 
 import Button from "../UI-kit/Button/Button";
+import { LikeIcon } from "../../images/profile-icons/LikeIcon";
+import { Loader } from "../Loader/Loader";
 
 import TagIcon from "../../images/tag.svg";
 import StarIcon from "../../images/star.svg";
-import LikeIcon from "../../images/profile-icons/heart-filled.svg";
+import { getFavorites, deleteFavorite } from "../../utils/Api";
 
-const FavoriteCard = ({ item }) => (
-  <li className="favorites__card">
-    <img className="favorites__card-image" src={item.image} alt={item.name} />
-    <div className="favorites__card-text-container">
-      <div className="favorites__card-name-row">
-        <span className="favorites__card-name">{item.name}</span>
-        <img
-          src={LikeIcon}
-          className="favorites__card-like"
-          alt="Убрать из Избранного"
-        />
-      </div>
-      <div className="favorites__card-address-row">
-        <img
-          src={TagIcon}
-          className="favorites__card-like"
-          alt="Метка адреса"
-        />
-        <p className="favorites__card-address">{item.street}</p>
-      </div>
-      <div className="favorites__card-rating-row">
-        <img
-          src={StarIcon}
-          className="favorites__card-like"
-          alt="Иконка рейтинга"
-        />
-        <span className="favorites__card-rating">{item.rating}</span>
-      </div>
-      <Button btnText="Посмотреть" btnClass="button__profile-edit" />
-    </div>
-  </li>
-);
+const FavoriteCard = ({ item, onFavoriteDeleted }) => {
+  function handleDeleteFavorite() {
+    deleteFavorite(item.id)
+      .then(() => {
+        onFavoriteDeleted(item.id);
+      })
+      .catch(() => {});
+  }
 
-export const FavoritesTab = ({ favorites }) => (
-  <section className="favorites">
-    <h2 className="favorites__title">Избранное</h2>
-    <ul className="favorites__card-list">
-      {favorites.map((item) => (
-        <FavoriteCard item={item} key={item.id} />
-      ))}
-    </ul>
-  </section>
-);
+  return (
+    <li className="favorites__card">
+      <div className="favorites__card-image-container">
+        <img
+          className="favorites__card-image"
+          src={item.main_photo}
+          alt={item.name}
+        />
+        <button
+          className="favorites__card-button"
+          title="Убрать из Избранного"
+          onClick={handleDeleteFavorite}
+        >
+          <LikeIcon />
+        </button>
+      </div>
+      <div className="favorites__card-text-container">
+        <div className="favorites__card-name-row">
+          <span className="favorites__card-name">{item.name}</span>
+        </div>
+        <div className="favorites__card-rating-row">
+          <img
+            src={StarIcon}
+            className="favorites__card-like"
+            alt="Иконка рейтинга"
+          />
+          <span className="favorites__card-rating">{item.rating}</span>
+        </div>
+        <div className="favorites__card-address-row">
+          <img
+            src={TagIcon}
+            className="favorites__card-like"
+            alt="Метка адреса"
+          />
+          <p className="favorites__card-address">{item.get_full_address_str}</p>
+        </div>
+        <Link to={`/points/${item.id}`} target="_blank">
+          <Button btnText="Посмотреть" btnClass="button__profile-edit" />
+        </Link>
+      </div>
+    </li>
+  );
+};
+
+export const FavoritesTab = () => {
+  const [favoritesArray, setFavoritesArray] = useState([]);
+  const { isLoading, setIsLoading } = useContext(CurrentUserContext);
+
+  const handleFavoriteDeleted = (deletedId) => {
+    setFavoritesArray((prev) => prev.filter((item) => item.id !== deletedId));
+  };
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
+  useEffect(() => {
+    setIsLoading(true);
+    getFavorites()
+      .then((res) => setFavoritesArray(res))
+      .catch(() => {})
+      .finally(() => setIsLoading(false));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  return (
+    <section className="favorites">
+      {!isLoading ? (
+        <>
+          <h2 className="favorites__title">Избранное</h2>
+          <ul className="favorites__card-list">
+            {favoritesArray.length !== 0
+              ? favoritesArray.map((item) => (
+                  <FavoriteCard
+                    item={item}
+                    key={item.id}
+                    onFavoriteDeleted={handleFavoriteDeleted}
+                  />
+                ))
+              : "Пока ничего не добавлено"}
+          </ul>
+        </>
+      ) : (
+        <Loader />
+      )}
+    </section>
+  );
+};
 
 FavoriteCard.propTypes = {
   item: PropTypes.shape({
-    id: PropTypes.string,
+    id: PropTypes.number,
     name: PropTypes.string,
     rating: PropTypes.number,
-    street: PropTypes.string,
-    image: PropTypes.string,
+    get_full_address_str: PropTypes.string,
+    main_photo: PropTypes.string,
   }),
+  onFavoriteDeleted: PropTypes.func,
 };
 
 FavoriteCard.defaultProps = {
   item: PropTypes.shape({}),
+  onFavoriteDeleted: () => {},
 };
 
-FavoritesTab.propTypes = {
-  favorites: PropTypes.arrayOf(
-    PropTypes.shape({
-      id: PropTypes.string,
-      name: PropTypes.string,
-      rating: PropTypes.number,
-      street: PropTypes.string,
-      image: PropTypes.string,
-    }),
-  ),
-};
+// FavoritesTab.propTypes = {
+//   favorites: PropTypes.arrayOf(
+//     PropTypes.shape({
+//       id: PropTypes.string,
+//       name: PropTypes.string,
+//       rating: PropTypes.number,
+//       street: PropTypes.string,
+//       image: PropTypes.string,
+//     }),
+//   ),
+// };
 
-FavoritesTab.defaultProps = {
-  favorites: [],
-};
+// FavoritesTab.defaultProps = {
+//   favorites: [],
+// };

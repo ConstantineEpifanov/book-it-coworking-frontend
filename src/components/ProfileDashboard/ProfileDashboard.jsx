@@ -36,7 +36,11 @@ export const ProfileDashboard = () => (
         </Link>
       </div>
       <div className="profile-dashboard__card-center">
-        <Link className="profile-dashboard__link" to="/profile/favorites">
+        <Link
+          className="profile-dashboard__link"
+          to="/profile/favorites"
+          state={null}
+        >
           <ProfileItem title="Избранное" svgElement={<HeartIcon />} />
         </Link>
       </div>

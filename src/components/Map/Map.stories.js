@@ -16,7 +16,7 @@ const points = [
     id: 1,
     rating: 4,
     name: "Московский",
-    main_photo: spotImage,
+    small_photo: spotImage,
     get_full_address_str: "г. Санкт-Петербург, Кантемировская улица, 22",
   },
   {
@@ -24,7 +24,7 @@ const points = [
     id: 2,
     rating: 5,
     name: "Питерский",
-    main_photo: spotImage,
+    small_photo: spotImage,
     get_full_address_str: "г. Санкт-Петербург, Невская 1",
   },
 ];

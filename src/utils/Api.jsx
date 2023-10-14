@@ -129,6 +129,13 @@ export function getReviews(id) {
   });
 }
 
+export function getFavorites() {
+  return request(`/short_locations/?is_favorited=true`, {
+    method: "GET",
+    headers: setHeaders(),
+  });
+}
+
 // Профиль
 
 export function getUserInfo() {

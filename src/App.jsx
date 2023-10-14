@@ -55,9 +55,11 @@ function App() {
           <Route path="/" element={<Main />} />
           <Route path="/points" element={<CoworkingList />} />
           <Route path="/faq" element={<RulesQuestions />} />
-          <Route path="/profile" element={<ProfileDashboard />} />
+          <Route path="/profile" exact element={<ProfileDashboard />} />
           <Route
             path="/profile/*"
+            exact
+            state={null}
             element={
               <Profile user={user} bookings={bookings} favorites={favorites} />
             }

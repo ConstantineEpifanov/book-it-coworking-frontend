@@ -54,7 +54,7 @@ export const MainMap = ({ points }) => {
                 key={point.id}
                 defaultGeometry={point.coordinates}
                 properties={{
-                  balloonContentHeader: `<img src="${point.main_photo}" alt="${point.name}" class="map__image" height="150" width="200">`,
+                  balloonContentHeader: `<img src="${point.small_photo}" alt="${point.name}" class="map__image" height="150" width="200">`,
                   balloonContentBody: `
               <div class='map__body-wrapper'>
               <div class ="map__row">
@@ -94,7 +94,7 @@ MainMap.propTypes = {
       id: PropTypes.number,
       rating: PropTypes.number,
       name: PropTypes.string,
-      main_photo: PropTypes.string,
+      small_photo: PropTypes.string,
       get_full_address_str: PropTypes.string,
     }),
   ),
