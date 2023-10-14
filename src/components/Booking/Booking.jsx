@@ -7,20 +7,28 @@ import Button from "../UI-kit/Button/Button";
 import { SectionTitle } from "../SectionTitle/SectionTitle";
 import { Calendar } from "../Calendar/Calendar";
 import { TabSwitcher } from "../TabSwitcher/TabSwitcher";
+import { WORKING_DAYS_COUNTS } from "../../utils/constants";
 
-// Функции-заглушки вместо обращений к API
+// Блок функций-заглушек, используются вместо обращений к API
 const getLocationPlanPhoto = () =>
   Promise.resolve({
     image:
       "http://185.41.160.27/media/images/plans/workplace_plan2_MyVLYSU.png",
   });
+// - окончание блока функций заглушек
+
+const getNormalizedDayNumber = (date) => {
+  const dayNumber = date.getDay();
+  const resultNumber = dayNumber === 0 ? 7 : dayNumber;
+  return resultNumber;
+};
 
 export const Booking = ({
   location: {
     id,
     // open_time,
     // close_time,
-    // days_open,
+    days_open: daysOpen,
   },
 }) => {
   const FIRST_SPOT_TYPE = "Общая зона";
@@ -28,6 +36,12 @@ export const Booking = ({
   const [planPhoto, setPlanPhoto] = useState("");
   const [isWorkplacesEnabled, setWorkplacesEnabled] = useState(true);
   const [isMeetingRoomsEnabled, setMeetingRoomsEnabled] = useState(false);
+
+  // Дполнительные правила-функции для проверки дат календаря
+  // Если функция возвращает true - дата календаря будет недоступной
+  const calendarExtraRules = [
+    (date) => getNormalizedDayNumber(date) > WORKING_DAYS_COUNTS[daysOpen],
+  ];
 
   const handleSwitcherClick = (selectedSpotType) => {
     if (selectedSpotType === FIRST_SPOT_TYPE) {
@@ -60,7 +74,7 @@ export const Booking = ({
         aria-label="Секция выбора даты и времени"
       >
         <h2 className="booking__section-title">1. Выберите дату и время</h2>
-        <Calendar />
+        <Calendar extraRules={calendarExtraRules} />
       </section>
 
       <section

@@ -34,3 +34,10 @@ export const meetingRoomsButtonsList = [
       isEnabled: true,
     })),
 ];
+
+export const locationData = {
+  id: 1,
+  open_time: "07:00",
+  close_time: "21:00",
+  days_open: "пн-сб",
+};

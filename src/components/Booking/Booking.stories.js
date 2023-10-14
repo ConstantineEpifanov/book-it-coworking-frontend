@@ -1,4 +1,5 @@
 import { Booking } from "./Booking";
+import { locationData } from "../../config/exampleBookingData";
 
 export default {
   title: "Pages/Booking",
@@ -7,24 +8,11 @@ export default {
   parameters: {
     layout: "fullscreen",
   },
-  // argTypes: {
-  //   animationDelay: {
-  //     description: "Время задержки",
-  //   },
-  //   itemColor: {
-  //     description: "Цвет заливки",
-  //     control: {
-  //       type: "color",
-  //     },
-  //   },
-  // },
+  argTypes: {
+    location: {
+      description: "Данные коворкинга",
+    },
+  },
 };
 
-// export const Example = {
-//   args: {
-//     animationDelay: 1,
-//     itemColor: "#b0ff1a",
-//   },
-// };
-
-export const Example = () => <Booking />;
+export const Example = () => <Booking location={locationData} />;
