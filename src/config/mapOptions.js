@@ -23,7 +23,7 @@ const points = [
 
 const defaultState = {
   center: [59.9, 30.3],
-  zoom: 13,
+  zoom: 11,
   controls: ["zoomControl", "fullscreenControl"],
 };
 

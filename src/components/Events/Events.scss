@@ -20,13 +20,13 @@
     justify-content: flex-start;
     gap: 20px;
     list-style-type: none;
+    margin: 0 auto;
   }
 }
 
 .swiper {
   &-container {
     margin-left: 0;
-
     height: calc(100% + 20px);
   }
   &-pagination-bullet {
@@ -45,6 +45,8 @@
   }
 
   &-slide {
-    width: 360px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
   }
 }

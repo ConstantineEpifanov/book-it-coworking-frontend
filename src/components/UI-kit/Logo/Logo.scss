@@ -1,0 +1,9 @@
+@import "../../../scss/variables.scss";
+@import "../../../scss/mixins.scss";
+
+@include mobile {
+  .logo_type_responsive {
+    width: 60px;
+    height: 20px;
+  }
+}

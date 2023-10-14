@@ -4,6 +4,7 @@ import "./ReviewList.scss";
 import { PointRating } from "../UI-kit/PointRating/PointRating";
 import { ReviewItem } from "../ReviewItem/ReviewItem";
 import Button from "../UI-kit/Button/Button";
+// import { REVIEWS_QUANTITY } from "../../utils/constants";
 
 export const ReviewList = ({ reviews, pointRating }) => (
   <div className="review-list">
@@ -15,12 +16,12 @@ export const ReviewList = ({ reviews, pointRating }) => (
       </div>
     </div>
     <ul className="review-list__items">
-      {reviews?.map((item) => (
-        <li>
+      {reviews.map((item) => (
+        <li key={item.id}>
           <ReviewItem
-            author={item.author}
-            date={item.date}
-            text={item.text}
+            author={`${item.first_name} ${item.last_name}`}
+            date={item.pub_date}
+            text={item.description}
             rating={item.rating}
           />
         </li>
@@ -34,7 +35,16 @@ export const ReviewList = ({ reviews, pointRating }) => (
 );
 
 ReviewList.propTypes = {
-  reviews: PropTypes.arrayOf,
+  reviews: PropTypes.arrayOf(
+    PropTypes.shape({
+      description: PropTypes.string,
+      first_name: PropTypes.string,
+      id: PropTypes.number,
+      last_name: PropTypes.string,
+      pub_date: PropTypes.string,
+      rating: PropTypes.number,
+    }),
+  ),
   pointRating: PropTypes.number,
 };
 

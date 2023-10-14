@@ -4,7 +4,7 @@
 .favorites {
   font-family: $font-family;
   color: $black;
-  width: 600px;
+  width: 660px;
   text-align: center;
   &__title {
     @include mp-null;
@@ -20,19 +20,38 @@
     margin-top: 30px;
     display: flex;
     flex-wrap: wrap;
+    justify-content: space-between;
     gap: 20px;
   }
   &__card {
+    box-sizing: border-box;
     border-radius: 40px;
     border: 2px solid $black;
-    width: 266px;
+    width: 320px;
     overflow: hidden;
+
     &-image {
       display: block;
-      height: 200px;
+      height: 230px;
       width: 100%;
       object-fit: cover;
+      &-container {
+        position: relative;
+      }
     }
+
+    &-button {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      border: none;
+      background-color: transparent;
+      cursor: pointer;
+      &:hover {
+        opacity: 0.9;
+      }
+    }
+
     &-text-container {
       padding: 20px;
     }
@@ -52,11 +71,11 @@
     &-rating-row {
       margin-top: 16px;
       display: flex;
-      align-items: center;
+      align-items: flex-start;
       gap: 8px;
     }
     &-rating-row {
-      margin-bottom: 16px;
+      margin-bottom: 13px;
     }
     &-like {
       display: block;
@@ -67,6 +86,7 @@
     }
     &-address {
       @include mp-null;
+      margin-bottom: 16px;
       text-align: left;
       font-size: 14px;
       font-style: normal;

@@ -13,8 +13,16 @@ function request(url, options) {
 
 export function setHeaders() {
   const token = localStorage.getItem("token");
+
+  if (token) {
+    return {
+      Authorization: `Token ${token}`,
+      "Content-Type": "application/json",
+    };
+  }
+
   return {
-    Authorization: `Token ${token}`,
+    Authorization: `Token 930409b4e1c2238901b3a7ea7a7f4a3fb0503de5`,
     "Content-Type": "application/json",
   };
 }
@@ -65,29 +73,71 @@ export function login({ email, password }) {
 
 // Получение основных данных
 
-export function getLocations() {
-  return request("/locations", {
+export function getLocations(limit, start) {
+  return request(`/locations/?limit=${limit}&offset=${start}`, {
+    method: "GET",
+    headers: setHeaders(),
+  });
+}
+
+export function getShortLocations(limit, start) {
+  return request(`/short_locations/?limit=${limit}&offset=${start}`, {
+    method: "GET",
+    headers: setHeaders(),
+  });
+}
+
+export function getMapLocations() {
+  return request("/map_locations/", {
     method: "GET",
     headers: setHeaders(),
   });
 }
 
 export function getEvents() {
-  return request("/events", {
+  return request("/events/", {
     method: "GET",
     headers: setHeaders(),
   });
 }
 
 export function getQuestions() {
-  return request("/questions", {
+  return request("/questions/", {
     method: "GET",
     headers: setHeaders(),
   });
 }
 
 export function getRules() {
-  return request("/rules", {
+  return request("/rules/", {
+    method: "GET",
+    headers: setHeaders(),
+  });
+}
+
+export function getCoworkingInfo(id) {
+  return request(`/locations/${id}/`, {
+    method: "GET",
+    headers: setHeaders(),
+  });
+}
+
+export function getEquipment(id, category) {
+  return request(`/locations/${id}/equipments/?category=${category}`, {
+    method: "GET",
+    headers: setHeaders(),
+  });
+}
+
+export function getReviews(id) {
+  return request(`/locations/${id}/reviews/`, {
+    method: "GET",
+    headers: setHeaders(),
+  });
+}
+
+export function getFavorites() {
+  return request(`/short_locations/?is_favorited=true`, {
     method: "GET",
     headers: setHeaders(),
   });
@@ -98,6 +148,22 @@ export function getRules() {
 export function getUserInfo() {
   return request("/users/me/", {
     method: "GET",
+    headers: setHeaders(),
+  });
+}
+
+// Лайк-дислайк
+
+export function addFavorite(id) {
+  return request(`/locations/${id}/favorite/`, {
+    method: "POST",
+    headers: setHeaders(),
+  });
+}
+
+export function deleteFavorite(id) {
+  return request(`/locations/${id}/favorite/`, {
+    method: "DELETE",
     headers: setHeaders(),
   });
 }

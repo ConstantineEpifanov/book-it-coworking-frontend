@@ -136,7 +136,6 @@
   &_type_link {
     border: none;
     background: none;
-
     padding: 16px 12px;
     margin-top: 12px;
 
@@ -191,6 +190,21 @@
     background: none;
     padding: 0;
     display: contents;
+  }
+
+  // Кнопка назад на странице коворкинга
+  &_type_back {
+    width: 125px;
+    background: url("../../../images/back-button.svg");
+    background-repeat: no-repeat;
+    box-sizing: border-box;
+    background-position: 0 45%;
+
+    &:hover {
+      opacity: 0.7;
+      color: $pink;
+      fill: $pink;
+    }
   }
 
   &_size_mini {
@@ -314,5 +328,13 @@
       );
       @include button-active;
     }
+  }
+
+  &_type_buttons-list {
+    width: 100%;
+  }
+
+  &_type_buttons-list-selected {
+    background-color: $pink;
   }
 }

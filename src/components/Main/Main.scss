@@ -1,8 +1,15 @@
 @import "./../../scss/variables.scss";
+@import "./../../scss/mixins.scss";
 
 .main {
   display: flex;
   flex-direction: column;
   gap: 140px;
   margin: $main-margin;
+}
+
+@include mobile {
+  .main {
+    margin: $main-margin-mobile;
+  }
 }
