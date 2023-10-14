@@ -18,6 +18,7 @@ const ConfirmRegisterForm = ({ data, isOpenPopup, handleClosePopup }) => {
     try {
       const res = await confirmRegister({ email, confirmation_code });
       if (res) {
+        isOpenPopup();
         navigate("/popup/login");
       }
     } catch (err) {

@@ -19,8 +19,8 @@ import RegisterForm from "./components/Forms/RegisterForm/RegisterForm";
 import LoginForm from "./components/Forms/LoginForm/LoginForm";
 import RestorePassForm from "./components/Forms/RestorePassForm/RestorePassForm";
 
-import * as apiData from "./utils/Api";
 import usePopupOpen from "./hooks/usePopupOpen";
+import { getUserInfo, login, setHeaders } from "./utils/Api";
 
 function App() {
   const navigate = useNavigate();
@@ -28,46 +28,58 @@ function App() {
   const { isOpenPopup, handleOpenPopup, handleClosePopup } = usePopupOpen();
 
   const [isLoggedIn, setIsLoggedIn] = React.useState(false);
+  const [userData, setUserData] = React.useState({});
   const previousLocation = location.state?.previousLocation;
+
+  const handleGetUserInfo = async () => {
+    try {
+      const data = await getUserInfo();
+      setUserData(data);
+    } catch (err) {
+      console.log(`Что-то пошло не так: ошибка запроса ${err.message} 😔`);
+    }
+  };
 
   //  ---------- AUTH FUNC ---------
   // проверка токена
   React.useEffect(() => {
-    const fetchData = async () => {
+    const token = localStorage.getItem("token");
+    if (token) {
       try {
-        const headers = apiData.setHeaders();
+        const headers = setHeaders();
         navigate(location.pathname);
-        if (headers.token) {
+        if (headers.Authorization) {
           setIsLoggedIn(true);
+          handleGetUserInfo();
           navigate(location.pathname);
         }
       } catch (err) {
         setIsLoggedIn(false);
         console.log(`Что-то пошло не так: ошибка запроса ${err.message} 😔`);
       }
-    };
-
-    fetchData();
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const handleAuthorization = ({ email, password }) => {
-    apiData
-      .login({ email, password })
-      .then((data) => {
-        console.log(data);
-        localStorage.setItem("token", data.auth_token);
-        setIsLoggedIn(true);
-        navigate("/");
-      })
-      .catch((err) => {
-        console.log(`Что-то пошло не так: ошибка запроса ${err.message} 😔`);
-      });
+  const handleAuthorization = async ({ email, password }) => {
+    try {
+      const data = await login({ email, password });
+      localStorage.setItem("token", data.auth_token);
+
+      if (localStorage.getItem("token")) {
+        handleGetUserInfo();
+      }
+      setIsLoggedIn(true);
+      navigate("/");
+    } catch (err) {
+      console.log(`Что-то пошло не так: ошибка запроса ${err.message} 😔`);
+    }
   };
 
   const handleLogout = () => {
     localStorage.removeItem("jwt");
     setIsLoggedIn(false);
+    setUserData({});
     // для очистки локального хранилища после выхода из приложения
     localStorage.clear();
   };
@@ -75,6 +87,7 @@ function App() {
   return (
     <div className="App">
       <Header
+        profileInfo={userData}
         onOpenPopup={handleOpenPopup}
         isLoggedIn={isLoggedIn}
         onLogout={handleLogout}

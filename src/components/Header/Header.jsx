@@ -18,7 +18,13 @@ const Header = ({ isLoggedIn, profileInfo, onOpenPopup, onLogout }) => {
       {isLoggedIn ? (
         <>
           {" "}
-          <p className="header__profile-info">{profileInfo}</p>
+          <Link className="header__profile" to="/profile">
+            {profileInfo && profileInfo.last_name && (
+              <p className="header__profile-info">{`${
+                profileInfo.first_name
+              } ${profileInfo.last_name.substring(0, 1)}.`}</p>
+            )}
+          </Link>
           {/* TODO удалить после реализации  */}
           <Button
             btnClass="button_size_small-s button_type_transparent"
@@ -40,14 +46,19 @@ const Header = ({ isLoggedIn, profileInfo, onOpenPopup, onLogout }) => {
 };
 
 Header.propTypes = {
+  profileInfo: PropTypes.shape({
+    id: PropTypes.number,
+    email: PropTypes.string,
+    first_name: PropTypes.string,
+    last_name: PropTypes.string,
+  }),
   isLoggedIn: PropTypes.bool,
-  profileInfo: PropTypes.string,
   onOpenPopup: PropTypes.func,
   onLogout: PropTypes.func,
 };
 Header.defaultProps = {
+  profileInfo: undefined,
   isLoggedIn: false,
-  profileInfo: "Жак-Ив Кусто",
   onOpenPopup: () => {},
   onLogout: () => {},
 };

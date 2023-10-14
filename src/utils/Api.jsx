@@ -14,7 +14,6 @@ function request(url, options) {
 export function setHeaders() {
   const token = localStorage.getItem("token");
   return {
-    token,
     Authorization: `Token ${token}`,
     "Content-Type": "application/json",
   };
@@ -97,7 +96,7 @@ export function getRules() {
 // Профиль
 
 export function getUserInfo() {
-  return request("/users/me", {
+  return request("/users/me/", {
     method: "GET",
     headers: setHeaders(),
   });
