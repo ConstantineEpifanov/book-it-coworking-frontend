@@ -4,6 +4,7 @@
 .tab-switcher {
   @include mp-null-list;
   box-sizing: border-box;
+  width: 100%;
   max-width: 590px;
   padding: 15px 0 12px;
   border: 2px solid $main-black;
@@ -27,7 +28,7 @@
   }
 
   &_second-selected::before {
-    transform: translateX(276px);
+    transform: translateX(calc(99.4% - 16px));
   }
 
   &__item {
