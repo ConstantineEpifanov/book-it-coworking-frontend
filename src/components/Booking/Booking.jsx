@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 
 import "./Booking.scss";
 // import { getLocationPlanPhoto, getSpots } from '../../utils/Api';
+import Button from "../UI-kit/Button/Button";
 import { SectionTitle } from "../SectionTitle/SectionTitle";
 import { Calendar } from "../Calendar/Calendar";
 import { TabSwitcher } from "../TabSwitcher/TabSwitcher";
@@ -22,7 +23,21 @@ export const Booking = ({
     // days_open,
   },
 }) => {
+  const FIRST_SPOT_TYPE = "Общая зона";
+  const SECOND_SPOT_TYPE = "Переговорная";
   const [planPhoto, setPlanPhoto] = useState("");
+  const [isWorkplacesEnabled, setWorkplacesEnabled] = useState(true);
+  const [isMeetingRoomsEnabled, setMeetingRoomsEnabled] = useState(false);
+
+  const handleSwitcherClick = (selectedSpotType) => {
+    if (selectedSpotType === FIRST_SPOT_TYPE) {
+      setWorkplacesEnabled(true);
+      setMeetingRoomsEnabled(false);
+      return;
+    }
+    setWorkplacesEnabled(false);
+    setMeetingRoomsEnabled(true);
+  };
 
   const loadPlanPhoto = useCallback(async () => {
     try {
@@ -61,16 +76,41 @@ export const Booking = ({
           alt="Схема коворкинга"
         />
         <TabSwitcher
-          firstCaption="Общая зона"
-          secondCaption="Переговорная"
+          firstCaption={FIRST_SPOT_TYPE}
+          secondCaption={SECOND_SPOT_TYPE}
           containerClassName="booking__spot-switcher"
+          onClick={handleSwitcherClick}
         />
+        <div className="booking__tabs-container">
+          <section
+            className={`booking__tab${
+              !isWorkplacesEnabled ? " booking__text-disabled" : ""
+            }`}
+          >
+            <h3 className="booking__tab-title">
+              Одна цифра - одно рабочее место
+            </h3>
+            <p className="booking__spot-price">200 &#8381;/час</p>
+          </section>
+          <section
+            className={`booking__tab${
+              !isMeetingRoomsEnabled ? " booking__text-disabled" : ""
+            }`}
+          >
+            <h3 className="booking__tab-title">В одной переговорной 8 мест</h3>
+            <p className="booking__spot-price">600 &#8381;/час</p>
+          </section>
+        </div>
       </section>
       <section
         className="booking__section"
         aria-label="Секция итоговой суммы к оплате"
       >
         <h2 className="booking__section-title">Сумма к оплате: 1200</h2>
+        <Button
+          btnClass="button_type_form button_size_middle"
+          btnText="Перейти к оплате"
+        />
       </section>
     </main>
   );

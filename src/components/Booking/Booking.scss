@@ -2,10 +2,14 @@
 @import "../../scss/mixins.scss";
 
 .booking {
+  font-family: $font-family;
+  color: $main-black;
   margin: $main-margin;
 
   &__section-title {
+    @include mp-null;
     @include text-font-large;
+    margin-bottom: 30px;
   }
 
   &__section {
@@ -23,5 +27,39 @@
 
   &__spot-switcher {
     align-self: center;
+  }
+
+  &__tabs-container {
+    padding-top: 20px;
+    margin-bottom: 100px;
+    display: flex;
+    gap: 190px;
+  }
+
+  &__tab {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    transition: color 0.3s ease;
+  }
+
+  &__text-disabled {
+    color: $gray;
+  }
+
+  &__tab-title {
+    @include mp-null;
+    font-size: 28px;
+    font-style: normal;
+    font-weight: 300;
+    line-height: 42px;
+  }
+
+  &__spot-price {
+    @include mp-null;
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 22px;
   }
 }
