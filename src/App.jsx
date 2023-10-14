@@ -19,17 +19,20 @@ import { Profile } from "./components/Profile/Profile";
 // import { exampleCoworkingsData } from "./config/exampleCoworkingsData";
 // import { exampleEventsData } from "./config/exampleEventsData";
 import { user, favorites, bookings } from "./config/exampleProfileData";
-import RegisterForm from "./components/Forms/RegisterForm/RegisterForm";
-import LoginForm from "./components/Forms/LoginForm/LoginForm";
-import RestorePassForm from "./components/Forms/RestorePassForm/RestorePassForm";
+// import RegisterForm from "./components/Forms/RegisterForm/RegisterForm";
+// import LoginForm from "./components/Forms/LoginForm/LoginForm";
+// import RestorePassForm from "./components/Forms/RestorePassForm/RestorePassForm";
 import { Coworking } from "./components/Coworking/Coworking";
 
 import usePopupOpen from "./hooks/usePopupOpen";
-import { getUserInfo, login, setHeaders } from "./utils/Api";
+import { getUserInfo, setHeaders } from "./utils/Api";
+import { PopupTabs } from "./components/Popup/PopupTabs";
 
 function App() {
   const navigate = useNavigate();
   const location = useLocation();
+
+  console.log(location);
   const { isOpenPopup, handleOpenPopup, handleClosePopup } = usePopupOpen();
 
   const [isLoading, setIsLoading] = React.useState(false);
@@ -68,20 +71,20 @@ function App() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const handleAuthorization = async ({ email, password }) => {
-    try {
-      const data = await login({ email, password });
-      localStorage.setItem("token", data.auth_token);
+  // const handleAuthorization = async ({ email, password }) => {
+  //   try {
+  //     const data = await login({ email, password });
+  //     localStorage.setItem("token", data.auth_token);
 
-      if (localStorage.getItem("token")) {
-        handleGetUserInfo();
-      }
-      setIsLoggedIn(true);
-      navigate("/");
-    } catch (err) {
-      console.log(`Что-то пошло не так: ошибка запроса ${err.message} 😔`);
-    }
-  };
+  //     if (localStorage.getItem("token")) {
+  //       handleGetUserInfo();
+  //     }
+  //     setIsLoggedIn(true);
+  //     navigate("/");
+  //   } catch (err) {
+  //     console.log(`Что-то пошло не так: ошибка запроса ${err.message} 😔`);
+  //   }
+  // };
 
   const handleLogout = () => {
     localStorage.removeItem("jwt");
@@ -105,7 +108,7 @@ function App() {
           isLoggedIn={isLoggedIn}
           onLogout={handleLogout}
         />
-        <Routes>
+        <Routes location={previousLocation || location}>
           <Route path="/" element={<Main />} />
           <Route path="/points" element={<CoworkingList />} />
           <Route path="/faq" element={<RulesQuestions />} />
@@ -124,32 +127,13 @@ function App() {
         </Routes>
         {previousLocation && (
           <Routes>
+            <Route path="/popup/*" element={<Main />} />
             <Route
-              path="/popup/login"
+              path="/popup/:popupType"
               element={
-                <LoginForm
-                  isOpenPopup={isOpenPopup}
-                  onClosePopup={handleClosePopup}
-                  onAuthorization={handleAuthorization}
-                />
-              }
-            />
-            <Route
-              path="/popup/register"
-              element={
-                <RegisterForm
-                  isOpenPopup={isOpenPopup}
-                  onClosePopup={handleClosePopup}
-                  // onRegistration={handleRegister}
-                />
-              }
-            />
-            <Route
-              path="/popup/reset_password"
-              element={
-                <RestorePassForm
-                  isOpenPopup={isOpenPopup}
-                  onClosePopup={handleClosePopup}
+                <PopupTabs
+                  isOpen={isOpenPopup}
+                  onClickClose={handleClosePopup}
                 />
               }
             />
