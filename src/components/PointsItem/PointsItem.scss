@@ -1,9 +1,6 @@
 @import "./../../scss/variables.scss";
 @import "./../../scss/mixins.scss";
 
-
-
-
 .point {
   max-width: 360px;
   max-height: 500px;
@@ -255,8 +252,11 @@
   }
 }
 
-
 @keyframes ani {
-  0% {transform: translateX(70%);}
-  100% {transform: translateX(0);}
+  0% {
+    transform: translateX(70%);
+  }
+  100% {
+    transform: translateX(0);
+  }
 }
