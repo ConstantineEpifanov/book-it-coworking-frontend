@@ -1,6 +1,9 @@
 @import "./../../scss/variables.scss";
 @import "./../../scss/mixins.scss";
 
+
+
+
 .point {
   max-width: 360px;
   max-height: 500px;
@@ -11,6 +14,8 @@
   background-color: $main-white;
   overflow: hidden;
   box-sizing: border-box;
+  transform: translateX(70%);
+  animation: ani 1s forwards;
 
   &_own-page {
     border: none;
@@ -248,4 +253,10 @@
       background-color: $dark-gray;
     }
   }
+}
+
+
+@keyframes ani {
+  0% {transform: translateX(70%);}
+  100% {transform: translateX(0);}
 }
