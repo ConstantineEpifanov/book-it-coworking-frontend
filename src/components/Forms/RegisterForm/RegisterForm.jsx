@@ -37,7 +37,6 @@ const RegisterForm = ({ isOpenPopup, handleClosePopup }) => {
       });
       setIsSuccessReg(true);
       setUserData(res);
-      console.log(res, "registration");
     } catch (err) {
       setIsSuccessReg(false);
       console.log(`Что-то пошло не так: ошибка запроса ${err.message} 😔`);
@@ -52,7 +51,7 @@ const RegisterForm = ({ isOpenPopup, handleClosePopup }) => {
   return (
     <Popup isOpen={isOpenPopup} onClickClose={handleClosePopup}>
       {isSuccessReg ? (
-        <ConfirmRegisterForm data={userData} />
+        <ConfirmRegisterForm data={userData}  />
       ) : (
         <EntryForm title="зарегистрируйтесь" onSubmit={handleSubmit}>
           <Input
@@ -129,11 +128,9 @@ const RegisterForm = ({ isOpenPopup, handleClosePopup }) => {
 RegisterForm.propTypes = {
   isOpenPopup: PropTypes.bool,
   handleClosePopup: PropTypes.func,
-  // onRegistration: PropTypes.func,
 };
 RegisterForm.defaultProps = {
   isOpenPopup: true,
   handleClosePopup: () => {},
-  // onRegistration: () => {},
 };
 export default RegisterForm;

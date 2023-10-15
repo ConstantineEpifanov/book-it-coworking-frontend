@@ -19,31 +19,30 @@ import { Profile } from "./components/Profile/Profile";
 // import { exampleCoworkingsData } from "./config/exampleCoworkingsData";
 // import { exampleEventsData } from "./config/exampleEventsData";
 import { user, favorites, bookings } from "./config/exampleProfileData";
-// import RegisterForm from "./components/Forms/RegisterForm/RegisterForm";
-// import LoginForm from "./components/Forms/LoginForm/LoginForm";
-// import RestorePassForm from "./components/Forms/RestorePassForm/RestorePassForm";
+import RegisterForm from "./components/Forms/RegisterForm/RegisterForm";
+import LoginForm from "./components/Forms/LoginForm/LoginForm";
+import RestorePassForm from "./components/Forms/RestorePassForm/RestorePassForm";
 import { Coworking } from "./components/Coworking/Coworking";
 
 import usePopupOpen from "./hooks/usePopupOpen";
-import { getUserInfo, setHeaders } from "./utils/Api";
-import { PopupTabs } from "./components/Popup/PopupTabs";
+import { getUserInfo, setHeaders,login } from "./utils/Api";
+
 
 function App() {
   const navigate = useNavigate();
   const location = useLocation();
 
-  console.log(location);
   const { isOpenPopup, handleOpenPopup, handleClosePopup } = usePopupOpen();
 
   const [isLoading, setIsLoading] = React.useState(false);
-
   const [isLoggedIn, setIsLoggedIn] = React.useState(false);
   const [userData, setUserData] = React.useState({});
   const previousLocation = location.state?.previousLocation;
-
+  
   const handleGetUserInfo = async () => {
     try {
       const data = await getUserInfo();
+      handleOpenPopup()
       setUserData(data);
     } catch (err) {
       console.log(`Что-то пошло не так: ошибка запроса ${err.message} 😔`);
@@ -71,20 +70,20 @@ function App() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  // const handleAuthorization = async ({ email, password }) => {
-  //   try {
-  //     const data = await login({ email, password });
-  //     localStorage.setItem("token", data.auth_token);
+  const handleAuthorization = async ({ email, password }) => {
+    try {
+      const data = await login({ email, password });
+      localStorage.setItem("token", data.auth_token);
 
-  //     if (localStorage.getItem("token")) {
-  //       handleGetUserInfo();
-  //     }
-  //     setIsLoggedIn(true);
-  //     navigate("/");
-  //   } catch (err) {
-  //     console.log(`Что-то пошло не так: ошибка запроса ${err.message} 😔`);
-  //   }
-  // };
+      if (localStorage.getItem("token")) {
+        handleGetUserInfo();
+      }
+      setIsLoggedIn(true);
+      navigate("/");
+    } catch (err) {
+      console.log(`Что-то пошло не так: ошибка запроса ${err.message} 😔`);
+    }
+  };
 
   const handleLogout = () => {
     localStorage.removeItem("jwt");
@@ -95,12 +94,12 @@ function App() {
   };
 
   const contextValue = React.useMemo(
-    () => ({ isLoading, setIsLoading }),
-    [isLoading, setIsLoading],
+    () => ({ isLoading, setIsLoading, isLoggedIn, setIsLoggedIn,userData }),
+    [isLoading, setIsLoading, isLoggedIn, setIsLoggedIn,userData]
   );
 
   return (
-    <CurrentUserContext.Provider value={contextValue}>
+    <CurrentUserContext.Provider value={contextValue }>
       <div className="App">
         <Header
           profileInfo={userData}
@@ -121,24 +120,45 @@ function App() {
               <Profile user={user} bookings={bookings} favorites={favorites} />
             }
           />
+         
           <Route path="/contacts" element={<Contacts />} />
           <Route path="/points/:id" element={<Coworking />} />
           <Route path="*" element={<PageNotFound />} />
+{/* для рероутинга попапов, чтобы при переключении не бил в 404 */}
+          <Route path="/popup/*" element={<Main />} />
         </Routes>
         {previousLocation && (
-          <Routes>
-            <Route path="/popup/*" element={<Main />} />
-            <Route
-              path="/popup/:popupType"
-              element={
-                <PopupTabs
-                  isOpen={isOpenPopup}
-                  onClickClose={handleClosePopup}
-                />
-              }
-            />
-          </Routes>
-        )}
+        <Routes>
+          <Route
+            path="/popup/login"
+            element={
+              <LoginForm
+                isOpenPopup={isOpenPopup}
+                onClosePopup={handleClosePopup}
+                onAuthorization={handleAuthorization}
+              />
+            }
+          />
+          <Route
+            path="/popup/register"
+            element={
+              <RegisterForm
+                isOpenPopup={isOpenPopup}
+                onClosePopup={handleClosePopup}
+              />
+            }
+          />
+          <Route
+            path="/popup/reset_password"
+            element={
+              <RestorePassForm
+                isOpenPopup={isOpenPopup}
+                onClosePopup={handleClosePopup}
+              />
+            }
+          />
+        </Routes>
+      )}
         <Footer onSubmit={() => {}} />
       </div>
     </CurrentUserContext.Provider>

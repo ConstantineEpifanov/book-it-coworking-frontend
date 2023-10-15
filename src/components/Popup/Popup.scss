@@ -13,16 +13,12 @@
   backdrop-filter: blur(5px);
   align-items: center;
   justify-content: center;
-  visibility: visible;
-  opacity: 1;
-  z-index: 1;
-  transition:
-    visibility 0.5s,
-    opacity 0.5s ease;
+  z-index: 4;
   font-family: $font-family;
-
+  overflow: scroll;
+  
   &__container {
-    max-height: 100vh;
+    height: fit-content;
     min-width: 200px;
     max-width: 520px;
     width: calc(100% - 160px);

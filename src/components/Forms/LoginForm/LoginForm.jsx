@@ -5,11 +5,11 @@ import { Link, useLocation } from "react-router-dom";
 import EntryForm from "../EntryForm/EntryForm";
 import Input from "../../UI-kit/Input/Input";
 import Button from "../../UI-kit/Button/Button";
-// import Popup from "../../Popup/Popup";
+import Popup from "../../Popup/Popup";
 import useFormAndValidation from "../../../hooks/useFormAndValidation";
 import PasswordInput from "../../UI-kit/PasswordInput/PasswordInput";
 
-const LoginForm = ({ onAuthorization }) => {
+const LoginForm = ({ isOpenPopup, onClosePopup, onAuthorization }) => {
   const location = useLocation();
   const { values, errors, handleChange, isValid } = useFormAndValidation();
 
@@ -19,8 +19,7 @@ const LoginForm = ({ onAuthorization }) => {
   }
 
   return (
-    <>
-      {" "}
+    <Popup isOpen={isOpenPopup} onClickClose={onClosePopup}>
       <EntryForm title="Войдите на сайт" onSubmit={handleSubmit}>
         <Input
           inputValue={values.email}
@@ -66,18 +65,18 @@ const LoginForm = ({ onAuthorization }) => {
           />
         </Link>
       </EntryForm>
-    </>
+    </Popup>
   );
 };
 
 LoginForm.propTypes = {
-  // isOpenPopup: PropTypes.bool,
-  // onClosePopup: PropTypes.func,
+  isOpenPopup: PropTypes.bool,
+  onClosePopup: PropTypes.func,
   onAuthorization: PropTypes.func,
 };
 LoginForm.defaultProps = {
-  // isOpenPopup: true,
+  isOpenPopup: true,
   onAuthorization: () => {},
-  // onClosePopup: () => { },
+  onClosePopup: () => {},
 };
 export default LoginForm;

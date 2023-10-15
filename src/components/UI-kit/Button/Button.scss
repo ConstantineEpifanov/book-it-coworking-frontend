@@ -118,6 +118,9 @@
       @include text-font-select;
       padding: 16px 32px;
     }
+    &_margin-top{
+      margin-top:32px
+    }
     &:hover {
       opacity: 0.7;
     }

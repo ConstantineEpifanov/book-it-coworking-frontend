@@ -1,7 +1,7 @@
 /* eslint-disable react/jsx-no-bind */
 /* eslint-disable camelcase */
 import PropTypes from "prop-types";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 import Popup from "../../Popup/Popup";
 import EntryForm from "../EntryForm/EntryForm";
@@ -12,14 +12,14 @@ import useFormAndValidation from "../../../hooks/useFormAndValidation";
 
 const ConfirmRegisterForm = ({ data, isOpenPopup, handleClosePopup }) => {
   const navigate = useNavigate();
+  const location = useLocation();
   const { values, errors, handleChange, isValid } = useFormAndValidation();
 
   const handleConfirm = async ({ email, confirmation_code }) => {
     try {
       const res = await confirmRegister({ email, confirmation_code });
       if (res) {
-        isOpenPopup();
-        navigate("/popup/login");
+        navigate("/popup/login", { state: { previousLocation: location } });
       }
     } catch (err) {
       console.log(`Что-то пошло не так: ошибка запроса ${err.message} 😔`);
@@ -52,13 +52,13 @@ const ConfirmRegisterForm = ({ data, isOpenPopup, handleClosePopup }) => {
           btnType="submit"
           btnText="Отправить"
           isValidBtn={isValid}
-          onClick={() => {}}
+          onClick={() => { }}
         />
         <Button
           btnClass="button_type_link"
           btnType="button"
           btnText="Новый код"
-          onClick={() => {}}
+          onClick={() => { }}
         />
       </EntryForm>
     </Popup>
@@ -79,7 +79,7 @@ ConfirmRegisterForm.propTypes = {
 ConfirmRegisterForm.defaultProps = {
   data: undefined,
   isOpenPopup: true,
-  handleClosePopup: () => {},
+  handleClosePopup: () => { },
 };
 
 export default ConfirmRegisterForm;

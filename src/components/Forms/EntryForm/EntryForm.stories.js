@@ -1,3 +1,5 @@
+import { BrowserRouter as Router } from "react-router-dom";
+
 import EntryForm from "./EntryForm";
 import Popup from "../../Popup/Popup";
 import Button from "../../UI-kit/Button/Button";
@@ -25,6 +27,7 @@ export default {
       description: "Заголовок",
     },
   },
+  decorators: [(Story) => <Router>{Story()}</Router>],
 };
 
 // Истории компонента EntryForm
