@@ -37,7 +37,7 @@ export const Booking = ({
   const [isWorkplacesEnabled, setWorkplacesEnabled] = useState(true);
   const [isMeetingRoomsEnabled, setMeetingRoomsEnabled] = useState(false);
 
-  // Дполнительные правила-функции для проверки дат календаря
+  // Дополнительные правила-функции для проверки дат календаря
   // Если функция возвращает true - дата календаря будет недоступной
   const calendarExtraRules = [
     (date) => getNormalizedDayNumber(date) > WORKING_DAYS_COUNTS[daysOpen],
