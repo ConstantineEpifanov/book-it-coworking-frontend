@@ -20,7 +20,7 @@ export const TABLET_MORE_POINTS_QUANTITY = 2;
 export const MOBILE_MORE_POINTS_QUANTITY = 2;
 
 // кол-во отзывов для рендера
-export const REVIEWS_QUANTITY = 5;
+export const LAPTOP_REVIEWS_QUANTITY = 5;
 
 // для фильтра оборудования на сервере и вывода на страницу коворкинга
 export const EQUIPMENT_GENERAL_CATEGORY = "Рабочее место";

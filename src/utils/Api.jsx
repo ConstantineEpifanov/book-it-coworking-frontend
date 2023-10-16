@@ -122,8 +122,8 @@ export function getEquipment(id, category) {
   });
 }
 
-export function getReviews(id) {
-  return request(`/locations/${id}/reviews/`, {
+export function getReviews(id, limit, start) {
+  return request(`/locations/${id}/reviews/?limit=${limit}&offset=${start}`, {
     method: "GET",
     headers: setHeaders(),
   });
