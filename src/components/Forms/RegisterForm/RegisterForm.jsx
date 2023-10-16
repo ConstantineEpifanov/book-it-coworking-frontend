@@ -12,6 +12,7 @@ import Popup from "../../Popup/Popup";
 import ConfirmRegisterForm from "../ConfirmRegisterForm/ConfirmRegisterForm";
 import PasswordInput from "../../UI-kit/PasswordInput/PasswordInput";
 import useFormAndValidation from "../../../hooks/useFormAndValidation";
+
 import { register } from "../../../utils/Api";
 
 const RegisterForm = ({ isOpenPopup, handleClosePopup }) => {
@@ -49,9 +50,9 @@ const RegisterForm = ({ isOpenPopup, handleClosePopup }) => {
   }
 
   return (
-    <Popup isOpen={isOpenPopup} onClickClose={handleClosePopup}>
+    <Popup isOpen={isOpenPopup} onClickClose={handleClosePopup} popupClass='popup__container_register-form'>
       {isSuccessReg ? (
-        <ConfirmRegisterForm data={userData}  />
+        <ConfirmRegisterForm data={userData} />
       ) : (
         <EntryForm title="зарегистрируйтесь" onSubmit={handleSubmit}>
           <Input
@@ -109,7 +110,7 @@ const RegisterForm = ({ isOpenPopup, handleClosePopup }) => {
             btnClass="button_type_form button_type_form_margin-top"
             btnType="submit"
             btnText="Зарегистрироваться"
-            onClick={() => {}}
+            onClick={() => { }}
             isValidBtn={isValid}
           />
           <Link to="/popup/login" state={{ previousLocation: location }}>
@@ -131,6 +132,6 @@ RegisterForm.propTypes = {
 };
 RegisterForm.defaultProps = {
   isOpenPopup: true,
-  handleClosePopup: () => {},
+  handleClosePopup: () => { },
 };
 export default RegisterForm;

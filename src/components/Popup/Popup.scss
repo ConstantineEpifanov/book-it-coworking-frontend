@@ -33,6 +33,9 @@
       width: calc(100% - 190px);
       padding: 60px 95px 92px;
     }
+    &_register-form{
+      transform: translateY(15%);
+    }
   }
   &__title {
     font-size: 40px;
