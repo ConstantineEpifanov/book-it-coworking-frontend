@@ -23,7 +23,10 @@ const getLocationPlanPhoto = () =>
   });
 
 const getWorkplaces = ({
-  /* locationId, */ type /* date, startTime, endTime */,
+  /* locationId, */ type,
+  date,
+  startTime,
+  endTime,
 }) => {
   if (
     type !== EQUIPMENT_GENERAL_CATEGORY &&
@@ -32,7 +35,7 @@ const getWorkplaces = ({
     throw new Error("Unknown workplace type");
   }
 
-  return Promise.resolve(locationData.spots[type]);
+  return Promise.resolve(locationData.getSpots(type, date, startTime, endTime));
 };
 // - окончание блока функций заглушек
 
@@ -173,15 +176,25 @@ export const Booking = ({
             startTime,
             endTime,
           })
-        ).map((item) => ({ ...item, onClick: handleSpotSelect }));
+        ).map((item) => ({
+          ...item,
+          isEnabled: !item.isOrdered,
+          onClick: handleSpotSelect,
+        }));
 
-        const meetingRoomsData = await getWorkplaces({
-          locationId,
-          type: EQUIPMENT_MEETING_CATEGORY,
-          date,
-          startTime,
-          endTime,
-        });
+        const meetingRoomsData = (
+          await getWorkplaces({
+            locationId,
+            type: EQUIPMENT_MEETING_CATEGORY,
+            date,
+            startTime,
+            endTime,
+          })
+        ).map((item) => ({
+          ...item,
+          isEnabled: !item.isOrdered,
+          onClick: handleSpotSelect,
+        }));
         result = {
           spots: spotsData,
           meetingRooms: meetingRoomsData,
@@ -207,45 +220,56 @@ export const Booking = ({
       const secondItem = secondSpots.find((item) => firtsItem.id === item.id);
       return {
         ...firtsItem,
-        isEnabled: firtsItem.isEnabled && secondItem.isEnabled,
+        isOrdered: firtsItem.isOrdered && secondItem.isOrdered,
       };
     });
   };
 
+  //
   const loadWorkplaces = useCallback(async () => {
-    const resultSpots = await datesSelected.reduce(async (dateResult, date) => {
-      const dateSpots = await timeRangesSelected.reduce(
-        async (timeResult, timeRange) => {
-          const timeItem = timeRangeItems.find((item) => item.id === timeRange);
-          if (!timeItem) {
-            return timeResult;
-          }
-          const preparedDate = `${date.getFullYear()}-${date.getMonth()}-${date.getDate()}`;
-          const receivedWorkplaces = await getWorkplacesData(
-            id,
-            preparedDate,
-            timeItem.startTime,
-            timeItem.endTime,
-          );
-          console.log(receivedWorkplaces);
-          return {
-            spots: mergeSpotsStates(timeResult.spots, receivedWorkplaces.spots),
-            meetingRooms: mergeSpotsStates(
-              timeResult.meetingRooms,
-              receivedWorkplaces.meetingRooms,
-            ),
-          };
-        },
-        {},
-      );
-      return {
-        spots: mergeSpotsStates(dateResult.spots, dateSpots.spots),
-        meetingRooms: mergeSpotsStates(
-          dateResult.meetingRooms,
-          dateSpots.meetingRooms,
-        ),
-      };
-    }, {});
+    const resultSpots = await datesSelected.reduce(
+      async (dateResult, selectedDate) => {
+        const dateSpots = await timeRangesSelected.reduce(
+          async (timeResult, timeRange) => {
+            const timeItem = timeRangeItems.find(
+              (item) => item.id === timeRange,
+            );
+            if (!timeItem) {
+              return timeResult;
+            }
+            const preparedDate = `${selectedDate.getFullYear()}-${
+              selectedDate.getMonth() + 1
+            }-${selectedDate.getDate()}`;
+            const receivedWorkplaces = await getWorkplacesData({
+              id,
+              date: preparedDate,
+              startTime: timeItem.startTime,
+              endTime: timeItem.endTime,
+            });
+
+            return {
+              spots: mergeSpotsStates(
+                timeResult.spots,
+                receivedWorkplaces.spots,
+              ),
+              meetingRooms: mergeSpotsStates(
+                timeResult.meetingRooms,
+                receivedWorkplaces.meetingRooms,
+              ),
+            };
+          },
+          {},
+        );
+        return {
+          spots: mergeSpotsStates(dateResult.spots, dateSpots.spots),
+          meetingRooms: mergeSpotsStates(
+            dateResult.meetingRooms,
+            dateSpots.meetingRooms,
+          ),
+        };
+      },
+      {},
+    );
 
     if (resultSpots.spots) {
       setSpots(resultSpots.spots);
@@ -259,6 +283,28 @@ export const Booking = ({
     getWorkplacesData,
   ]);
 
+  // Начальная загрузка рабочих мест
+  // Получаем количество рабочих мест на завтрашний день. Из-за ограничений бэка
+  const loadWorkplacesInitial = useCallback(async () => {
+    const date = new Date();
+    const tomorrowDate = new Date(
+      date.getFullYear(),
+      date.getMonth(),
+      date.getDate() + 1,
+    );
+    const preparedDate = `${tomorrowDate.getFullYear()}-${
+      tomorrowDate.getMonth() + 1
+    }-${tomorrowDate.getDate()}`;
+    const resultSpots = await getWorkplacesData({
+      id,
+      date: preparedDate,
+      startTime: openTime,
+      endTime: closeTime,
+    });
+    setSpots(resultSpots.spots);
+    setMeetingRooms(resultSpots.meetingRooms);
+  }, [id, getWorkplacesData, openTime, closeTime]);
+
   // Загрузка изображения плана помещения
   const loadPlanPhoto = useCallback(async () => {
     try {
@@ -269,6 +315,7 @@ export const Booking = ({
     }
   }, [id]);
 
+  // Реакция на изменение выбранных промежутков времени
   useEffect(() => {
     if (timeRangesSelected) {
       loadWorkplaces();
@@ -280,7 +327,8 @@ export const Booking = ({
 
   useEffect(() => {
     loadPlanPhoto(id);
-  }, [id, loadPlanPhoto]);
+    loadWorkplacesInitial();
+  }, [id, loadPlanPhoto, loadWorkplacesInitial]);
 
   return (
     <main className="booking" aria-label="Страница бронирования">

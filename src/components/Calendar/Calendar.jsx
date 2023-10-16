@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import "./Calendar.scss";
+import { CALENDAR_MAX_ALLOWED_DAYS } from "../../utils/constants";
 
 const getStartDayOfWeek = (date) => {
   const dayNumber = new Date(date.getFullYear(), date.getMonth(), 1).getDay();
@@ -43,7 +44,7 @@ export const Calendar = ({
   selectCallback = null,
   isMultiSelect = false,
   initialDate = null,
-  maxDatesRange = 60,
+  maxDatesRange = CALENDAR_MAX_ALLOWED_DAYS,
   extraRules = null,
 }) => {
   const DAYS_NAMES = ["пн", "вт", "ср", "чт", "пт", "сб", "вс"];
@@ -294,6 +295,6 @@ Calendar.defaultProps = {
   selectCallback: null,
   isMultiSelect: false,
   initialDate: null,
-  maxDatesRange: 60,
+  maxDatesRange: CALENDAR_MAX_ALLOWED_DAYS,
   extraRules: null,
 };

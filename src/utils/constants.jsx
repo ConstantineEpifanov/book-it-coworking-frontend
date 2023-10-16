@@ -39,3 +39,6 @@ export const WORKING_DAYS_COUNTS = {
   "пн-сб": 6,
   "пн-пт": 5,
 };
+
+// Количество доступных дней в календаре для бронирования
+export const CALENDAR_MAX_ALLOWED_DAYS = 60;
