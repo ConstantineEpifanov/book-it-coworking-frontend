@@ -5,9 +5,10 @@ export function checkResponse(res) {
 }
 
 function request(url, options) {
-  return fetch(`http://185.41.160.27/api/v1${url}`, options).then(
-    checkResponse,
-  );
+  return fetch(
+    `http://spotit.acceleratorpracticum.ru/api/v1${url}`,
+    options,
+  ).then(checkResponse);
 }
 
 function setHeaders() {
