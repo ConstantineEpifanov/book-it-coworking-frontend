@@ -6,9 +6,11 @@ export function checkResponse(res) {
 }
 
 function request(url, options) {
-  return fetch(`https://185.41.160.27/api/v1${url}`, options).then(
-    checkResponse,
-  );
+
+  return fetch(
+    `https://spotit.acceleratorpracticum.ru/api/v1${url}`,
+    options,
+  ).then(checkResponse);
 }
 
 export function setHeaders() {
@@ -139,8 +141,8 @@ export function getEquipment(id, category) {
   });
 }
 
-export function getReviews(id) {
-  return request(`/locations/${id}/reviews/`, {
+export function getReviews(id, limit, start) {
+  return request(`/locations/${id}/reviews/?limit=${limit}&offset=${start}`, {
     method: "GET",
     headers: setHeaders(),
   });
@@ -174,6 +176,22 @@ export function addFavorite(id) {
 export function deleteFavorite(id) {
   return request(`/locations/${id}/favorite/`, {
     method: "DELETE",
+    headers: setHeaders(),
+  });
+}
+
+// Booking
+
+export function getLocationPlanPhoto(id) {
+  return request(`/locations/${id}/plan_photo`, {
+    method: "GET",
+    headers: setHeaders(),
+  });
+}
+
+export function getSpots(id) {
+  return request(`/locations/${id}/spots`, {
+    method: "GET",
     headers: setHeaders(),
   });
 }

@@ -339,5 +339,9 @@
 
   &_type_buttons-list-selected {
     background-color: $pink;
+
+    &:hover {
+      background-color: $main-white;
+    }
   }
 }

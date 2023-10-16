@@ -20,7 +20,7 @@ export const TABLET_MORE_POINTS_QUANTITY = 2;
 export const MOBILE_MORE_POINTS_QUANTITY = 2;
 
 // кол-во отзывов для рендера
-export const REVIEWS_QUANTITY = 5;
+export const LAPTOP_REVIEWS_QUANTITY = 5;
 
 // для фильтра оборудования на сервере и вывода на страницу коворкинга
 export const EQUIPMENT_GENERAL_CATEGORY = "Рабочее место";
@@ -31,3 +31,14 @@ export const EQUIPMENT_MEETING_CATEGORY = "Переговорная";
 export const DEFAULT_LATITUDE = 59.9;
 export const DEFAULT_LONGITUDE = 30.3;
 export const DEFAULT_ZOOM = 11;
+
+// Booking
+// Количество рабочих дней для локации
+export const WORKING_DAYS_COUNTS = {
+  "пн-вс": 7,
+  "пн-сб": 6,
+  "пн-пт": 5,
+};
+
+// Количество доступных дней в календаре для бронирования
+export const CALENDAR_MAX_ALLOWED_DAYS = 60;
