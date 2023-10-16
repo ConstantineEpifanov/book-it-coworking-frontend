@@ -25,25 +25,23 @@ import RestorePassForm from "./components/Forms/RestorePassForm/RestorePassForm"
 import { Coworking } from "./components/Coworking/Coworking";
 
 import usePopupOpen from "./hooks/usePopupOpen";
-import { getUserInfo, setHeaders,login } from "./utils/Api";
-
+import { getUserInfo, setHeaders, login } from "./utils/Api";
 
 function App() {
   const navigate = useNavigate();
   const location = useLocation();
 
-  const { isOpenPopup, handleOpenPopup, handleClosePopup } = usePopupOpen();
+  const { isOpenPopup, handleOpenPopup, handleClosePopup, previousLocation } = usePopupOpen();
 
   const [isLoading, setIsLoading] = React.useState(false);
   const [isLoggedIn, setIsLoggedIn] = React.useState(false);
-  const [userData, setUserData] = React.useState({});
-  const previousLocation = location.state?.previousLocation;
-  
+  const [currentUser, setСurrentUser] = React.useState({});
+
   const handleGetUserInfo = async () => {
     try {
       const data = await getUserInfo();
       handleOpenPopup()
-      setUserData(data);
+      setСurrentUser(data);
     } catch (err) {
       console.log(`Что-то пошло не так: ошибка запроса ${err.message} 😔`);
     }
@@ -88,21 +86,21 @@ function App() {
   const handleLogout = () => {
     localStorage.removeItem("jwt");
     setIsLoggedIn(false);
-    setUserData({});
+    setСurrentUser({});
     // для очистки локального хранилища после выхода из приложения
     localStorage.clear();
   };
 
   const contextValue = React.useMemo(
-    () => ({ isLoading, setIsLoading, isLoggedIn, setIsLoggedIn,userData }),
-    [isLoading, setIsLoading, isLoggedIn, setIsLoggedIn,userData]
+    () => ({ isLoading, setIsLoading, isLoggedIn, setIsLoggedIn, currentUser }),
+    [isLoading, setIsLoading, isLoggedIn, setIsLoggedIn, currentUser]
   );
 
   return (
-    <CurrentUserContext.Provider value={contextValue }>
+    <CurrentUserContext.Provider value={contextValue}>
       <div className="App">
         <Header
-          profileInfo={userData}
+          profileInfo={currentUser}
           onOpenPopup={handleOpenPopup}
           isLoggedIn={isLoggedIn}
           onLogout={handleLogout}
@@ -120,46 +118,46 @@ function App() {
               <Profile user={user} bookings={bookings} favorites={favorites} />
             }
           />
-         
+
           <Route path="/contacts" element={<Contacts />} />
           <Route path="/points/:id" element={<Coworking />} />
           <Route path="*" element={<PageNotFound />} />
-{/* для рероутинга попапов, чтобы при переключении не бил в 404 */}
+          {/* для рероутинга попапов, чтобы при переключении не бил в 404 */}
           <Route path="/popup/*" element={<Main />} />
         </Routes>
         {previousLocation && (
-        <Routes>
-          <Route
-            path="/popup/login"
-            element={
-              <LoginForm
-                isOpenPopup={isOpenPopup}
-                onClosePopup={handleClosePopup}
-                onAuthorization={handleAuthorization}
-              />
-            }
-          />
-          <Route
-            path="/popup/register"
-            element={
-              <RegisterForm
-                isOpenPopup={isOpenPopup}
-                onClosePopup={handleClosePopup}
-              />
-            }
-          />
-          <Route
-            path="/popup/reset_password"
-            element={
-              <RestorePassForm
-                isOpenPopup={isOpenPopup}
-                onClosePopup={handleClosePopup}
-              />
-            }
-          />
-        </Routes>
-      )}
-        <Footer onSubmit={() => {}} />
+          <Routes>
+            <Route
+              path="/popup/login"
+              element={
+                <LoginForm
+                  isOpenPopup={isOpenPopup}
+                  onClosePopup={handleClosePopup}
+                  onAuthorization={handleAuthorization}
+                />
+              }
+            />
+            <Route
+              path="/popup/register"
+              element={
+                <RegisterForm
+                  isOpenPopup={isOpenPopup}
+                  onClosePopup={handleClosePopup}
+                />
+              }
+            />
+            <Route
+              path="/popup/reset_password"
+              element={
+                <RestorePassForm
+                  isOpenPopup={isOpenPopup}
+                  onClosePopup={handleClosePopup}
+                />
+              }
+            />
+          </Routes>
+        )}
+        <Footer onSubmit={() => { }} />
       </div>
     </CurrentUserContext.Provider>
   );

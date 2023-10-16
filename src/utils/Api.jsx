@@ -6,7 +6,7 @@ export function checkResponse(res) {
 }
 
 function request(url, options) {
-  return fetch(`http://185.41.160.27/api/v1${url}`, options).then(
+  return fetch(`https://185.41.160.27/api/v1${url}`, options).then(
     checkResponse,
   );
 }
@@ -67,6 +67,16 @@ export function login({ email, password }) {
     body: JSON.stringify({
       email,
       password,
+    }),
+  });
+}
+
+export function resetPassConfirmCode({ email }) {
+  return request("/users/reset_password_confirmation_code", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      email,
     }),
   });
 }
