@@ -9,19 +9,24 @@
   &__section-title {
     @include mp-null;
     @include text-font-large;
-    margin-bottom: 30px;
   }
 
   &__section {
     padding-bottom: 100px;
     display: flex;
     flex-direction: column;
+    gap: 30px;
+  }
+
+  &__flex-container {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
   }
 
   &__plan-photo {
     width: 100%;
     max-width: 1120px;
-    margin-bottom: 30px;
     display: block;
   }
 
@@ -30,7 +35,6 @@
   }
 
   &__tabs-container {
-    padding-top: 20px;
     margin-bottom: 100px;
     display: flex;
     gap: 190px;
