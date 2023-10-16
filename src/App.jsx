@@ -31,7 +31,8 @@ function App() {
   const navigate = useNavigate();
   const location = useLocation();
 
-  const { isOpenPopup, handleOpenPopup, handleClosePopup, previousLocation } = usePopupOpen();
+  const { isOpenPopup, handleOpenPopup, handleClosePopup, previousLocation } =
+    usePopupOpen();
 
   const [isLoading, setIsLoading] = React.useState(false);
   const [isLoggedIn, setIsLoggedIn] = React.useState(false);
@@ -40,10 +41,10 @@ function App() {
   const handleGetUserInfo = async () => {
     try {
       const data = await getUserInfo();
-      handleOpenPopup()
+      handleOpenPopup();
       setСurrentUser(data);
     } catch (err) {
-      console.log(`Что-то пошло не так: ошибка запроса ${err.message} 😔`);
+      console.log(`Что-то пошло не так: ошибка запроса ${err} 😔`);
     }
   };
 
@@ -93,7 +94,7 @@ function App() {
 
   const contextValue = React.useMemo(
     () => ({ isLoading, setIsLoading, isLoggedIn, setIsLoggedIn, currentUser }),
-    [isLoading, setIsLoading, isLoggedIn, setIsLoggedIn, currentUser]
+    [isLoading, setIsLoading, isLoggedIn, setIsLoggedIn, currentUser],
   );
 
   return (
@@ -157,7 +158,7 @@ function App() {
             />
           </Routes>
         )}
-        <Footer onSubmit={() => { }} />
+        <Footer onSubmit={() => {}} />
       </div>
     </CurrentUserContext.Provider>
   );

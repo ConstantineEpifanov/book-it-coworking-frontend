@@ -16,7 +16,7 @@
   z-index: 4;
   font-family: $font-family;
   overflow: scroll;
-  
+
   &__container {
     height: fit-content;
     min-width: 200px;
@@ -33,7 +33,7 @@
       width: calc(100% - 190px);
       padding: 60px 95px 92px;
     }
-    &_register-form{
+    &_register-form {
       transform: translateY(15%);
     }
   }

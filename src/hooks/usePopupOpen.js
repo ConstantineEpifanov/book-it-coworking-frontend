@@ -4,18 +4,20 @@ import { useLocation } from "react-router-dom";
 export default function usePopupOpen() {
   const location = useLocation();
   const [isOpenPopup, setIsOpenPopup] = React.useState(false);
-  const [previousLocation, setPreviousLocation] = React.useState(location?.state?.previousLocation);
+  const [previousLocation, setPreviousLocation] = React.useState(
+    location?.state?.previousLocation,
+  );
 
   const handleOpenPopup = () => {
     setIsOpenPopup(true);
-    setPreviousLocation(location)
+    setPreviousLocation(location);
   };
 
   const handleClosePopup = React.useCallback(() => {
     setIsOpenPopup(false);
     if (previousLocation) {
-      setPreviousLocation(null); // обнуляем стейт предыдущей локации 
-      window.history.replaceState(null, null, "/"); // обнуляем url 
+      setPreviousLocation(null); // обнуляем стейт предыдущей локации
+      window.history.replaceState(null, null, "/"); // обнуляем url
     }
   }, [previousLocation]);
 
@@ -44,12 +46,12 @@ export default function usePopupOpen() {
       document.removeEventListener("keydown", closeByEscape);
       document.removeEventListener("click", closeByOverlayClick);
     };
-  }, [isOpenPopup,handleClosePopup]);
+  }, [isOpenPopup, handleClosePopup]);
 
   return {
     isOpenPopup,
     handleOpenPopup,
     handleClosePopup,
-    previousLocation
+    previousLocation,
   };
 }

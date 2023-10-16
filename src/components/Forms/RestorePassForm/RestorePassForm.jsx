@@ -20,7 +20,7 @@ const RestorePassForm = ({ isOpenPopup, handleClosePopup }) => {
       const res = await resetPassConfirmCode({
         email,
       });
-      console.log(res)
+      console.log(res);
     } catch (err) {
       console.log(`Что-то пошло не так: ошибка запроса ${err.message} 😔`);
     }
@@ -28,7 +28,7 @@ const RestorePassForm = ({ isOpenPopup, handleClosePopup }) => {
 
   function handleSubmit(evt) {
     evt.preventDefault();
-    handleResetPassConfirmCode(values)
+    handleResetPassConfirmCode(values);
   }
   return (
     <Popup isOpen={isOpenPopup} onClickClose={handleClosePopup}>

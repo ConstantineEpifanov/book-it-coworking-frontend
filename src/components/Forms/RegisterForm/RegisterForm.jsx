@@ -50,7 +50,11 @@ const RegisterForm = ({ isOpenPopup, handleClosePopup }) => {
   }
 
   return (
-    <Popup isOpen={isOpenPopup} onClickClose={handleClosePopup} popupClass='popup__container_register-form'>
+    <Popup
+      isOpen={isOpenPopup}
+      onClickClose={handleClosePopup}
+      popupClass="popup__container_register-form"
+    >
       {isSuccessReg ? (
         <ConfirmRegisterForm data={userData} />
       ) : (
@@ -110,7 +114,7 @@ const RegisterForm = ({ isOpenPopup, handleClosePopup }) => {
             btnClass="button_type_form button_type_form_margin-top"
             btnType="submit"
             btnText="Зарегистрироваться"
-            onClick={() => { }}
+            onClick={() => {}}
             isValidBtn={isValid}
           />
           <Link to="/popup/login" state={{ previousLocation: location }}>
@@ -132,6 +136,6 @@ RegisterForm.propTypes = {
 };
 RegisterForm.defaultProps = {
   isOpenPopup: true,
-  handleClosePopup: () => { },
+  handleClosePopup: () => {},
 };
 export default RegisterForm;

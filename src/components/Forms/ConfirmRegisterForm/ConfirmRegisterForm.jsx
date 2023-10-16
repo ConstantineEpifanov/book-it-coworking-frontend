@@ -52,13 +52,13 @@ const ConfirmRegisterForm = ({ data, isOpenPopup, handleClosePopup }) => {
           btnType="submit"
           btnText="Отправить"
           isValidBtn={isValid}
-          onClick={() => { }}
+          onClick={() => {}}
         />
         <Button
           btnClass="button_type_link"
           btnType="button"
           btnText="Новый код"
-          onClick={() => { }}
+          onClick={() => {}}
         />
       </EntryForm>
     </Popup>
@@ -79,7 +79,7 @@ ConfirmRegisterForm.propTypes = {
 ConfirmRegisterForm.defaultProps = {
   data: undefined,
   isOpenPopup: true,
-  handleClosePopup: () => { },
+  handleClosePopup: () => {},
 };
 
 export default ConfirmRegisterForm;

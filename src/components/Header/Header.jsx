@@ -1,5 +1,3 @@
-
-
 import React from "react";
 import PropTypes from "prop-types";
 import { Link, useLocation } from "react-router-dom";
@@ -10,7 +8,6 @@ import { Logo } from "../UI-kit/Logo/Logo";
 import Button from "../UI-kit/Button/Button";
 
 const Header = ({ isLoggedIn, onOpenPopup, onLogout, profileInfo }) => {
-
   const location = useLocation();
   return (
     <header className="header">
@@ -24,8 +21,9 @@ const Header = ({ isLoggedIn, onOpenPopup, onLogout, profileInfo }) => {
           {" "}
           <Link className="header__profile" to="/profile">
             {profileInfo && profileInfo.last_name && (
-              <p className="header__profile-info">{`${profileInfo.first_name
-                } ${profileInfo.last_name.substring(0, 1)}.`}</p>
+              <p className="header__profile-info">{`${
+                profileInfo.first_name
+              } ${profileInfo.last_name.substring(0, 1)}.`}</p>
             )}
           </Link>
           {/* TODO удалить после реализации  */}
@@ -60,14 +58,14 @@ Header.propTypes = {
   onLogout: PropTypes.func,
 };
 Header.defaultProps = {
-  profileInfo:{
+  profileInfo: {
     id: null,
-    email: '',
-    first_name: 'Spot',
-    last_name: 'Spot',
+    email: "",
+    first_name: "Spot",
+    last_name: "Spot",
   },
   isLoggedIn: false,
-  onOpenPopup: () => { },
-  onLogout: () => { },
+  onOpenPopup: () => {},
+  onLogout: () => {},
 };
 export default Header;
