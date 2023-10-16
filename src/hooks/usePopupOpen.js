@@ -8,6 +8,9 @@ export default function usePopupOpen() {
     location?.state?.previousLocation,
   );
 
+  console.log(previousLocation, "pre");
+  console.log(location, "lov");
+
   const handleOpenPopup = () => {
     setIsOpenPopup(true);
     setPreviousLocation(location);

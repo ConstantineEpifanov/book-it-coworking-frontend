@@ -41,7 +41,6 @@ function App() {
   const handleGetUserInfo = async () => {
     try {
       const data = await getUserInfo();
-      handleOpenPopup();
       setСurrentUser(data);
     } catch (err) {
       console.log(`Что-то пошло не так: ошибка запроса ${err} 😔`);
@@ -78,7 +77,7 @@ function App() {
         handleGetUserInfo();
       }
       setIsLoggedIn(true);
-      navigate("/");
+      handleClosePopup();
     } catch (err) {
       console.log(`Что-то пошло не так: ошибка запроса ${err.message} 😔`);
     }

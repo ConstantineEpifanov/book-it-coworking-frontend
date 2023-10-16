@@ -53,7 +53,7 @@ const RegisterForm = ({ isOpenPopup, handleClosePopup }) => {
     <Popup
       isOpen={isOpenPopup}
       onClickClose={handleClosePopup}
-      popupClass="popup__container_register-form"
+      popupClass={`${isSuccessReg ? "" : "popup__container_register-form"}`}
     >
       {isSuccessReg ? (
         <ConfirmRegisterForm data={userData} />
