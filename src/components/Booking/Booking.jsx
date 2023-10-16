@@ -19,7 +19,7 @@ import {
 const getLocationPlanPhoto = () =>
   Promise.resolve({
     image:
-      "http://185.41.160.27/media/images/plans/workplace_plan2_MyVLYSU.png",
+      "https://spotit.acceleratorpracticum.ru/media/images/plans/workplace_plan2_MyVLYSU.png",
   });
 
 const getWorkplaces = ({

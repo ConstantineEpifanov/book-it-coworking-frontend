@@ -6,7 +6,7 @@ export function checkResponse(res) {
 
 function request(url, options) {
   return fetch(
-    `http://spotit.acceleratorpracticum.ru/api/v1${url}`,
+    `https://spotit.acceleratorpracticum.ru/api/v1${url}`,
     options,
   ).then(checkResponse);
 }

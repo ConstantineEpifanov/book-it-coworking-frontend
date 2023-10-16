@@ -23,12 +23,12 @@ export const Example = {
         rating: null,
         low_price: null,
         main_photo:
-          "http://185.41.160.27/media/images/main_photo/guide_76_118da141db66068583073d8dfded7bc3.jpg",
+          "https://spotit.acceleratorpracticum.ru/media/images/main_photo/guide_76_118da141db66068583073d8dfded7bc3.jpg",
         extra_photo: [
           {
             id: 3,
             image:
-              "http://185.41.160.27/media/images/thumb_WhatsApp_Image_2018-06-07_at_21.00.54.jpeg",
+              "https://spotit.acceleratorpracticum.ru/media/images/thumb_WhatsApp_Image_2018-06-07_at_21.00.54.jpeg",
           },
         ],
         short_annotation: "Есть спешелти кофейня на первом этаже",
@@ -51,12 +51,12 @@ export const Example = {
         rating: null,
         low_price: null,
         main_photo:
-          "http://185.41.160.27/media/images/main_photo/istockphoto-1317893331-612x612.jpg",
+          "https://spotit.acceleratorpracticum.ru/media/images/main_photo/istockphoto-1317893331-612x612.jpg",
         extra_photo: [
           {
             id: 7,
             image:
-              "http://185.41.160.27/media/images/istockphoto-1149706618-612x612.jpg",
+              "https://spotit.acceleratorpracticum.ru/media/images/istockphoto-1149706618-612x612.jpg",
           },
         ],
         short_annotation: "Рядом находится прекрасная набережная для прогулок",
@@ -79,12 +79,12 @@ export const Example = {
         rating: null,
         low_price: null,
         main_photo:
-          "http://185.41.160.27/media/images/main_photo/istockphoto-1412875217-612x612.jpg",
+          "https://spotit.acceleratorpracticum.ru/media/images/main_photo/istockphoto-1412875217-612x612.jpg",
         extra_photo: [
           {
             id: 9,
             image:
-              "http://185.41.160.27/media/images/istockphoto-1253082915-612x612.jpg",
+              "https://spotit.acceleratorpracticum.ru/media/images/istockphoto-1253082915-612x612.jpg",
           },
         ],
         short_annotation: "С видом на Удельный парк",
@@ -106,12 +106,12 @@ export const Example = {
         rating: 5,
         low_price: 100,
         main_photo:
-          "http://185.41.160.27/media/images/main_photo/istockphoto-958518456-612x612.jpg",
+          "https://spotit.acceleratorpracticum.ru/media/images/main_photo/istockphoto-958518456-612x612.jpg",
         extra_photo: [
           {
             id: 1,
             image:
-              "http://185.41.160.27/media/images/istockphoto-1464415303-612x612.jpg",
+              "https://spotit.acceleratorpracticum.ru/media/images/istockphoto-1464415303-612x612.jpg",
           },
         ],
         short_annotation: "",
@@ -132,17 +132,17 @@ export const Example = {
         rating: null,
         low_price: null,
         main_photo:
-          "http://185.41.160.27/media/images/main_photo/istockphoto-1135599101-612x612.jpg",
+          "https://spotit.acceleratorpracticum.ru/media/images/main_photo/istockphoto-1135599101-612x612.jpg",
         extra_photo: [
           {
             id: 10,
             image:
-              "http://185.41.160.27/media/images/istockphoto-896403186-612x612.jpg",
+              "https://spotit.acceleratorpracticum.ru/media/images/istockphoto-896403186-612x612.jpg",
           },
           {
             id: 11,
             image:
-              "http://185.41.160.27/media/images/istockphoto-1341392178-612x612.jpg",
+              "https://spotit.acceleratorpracticum.ru/media/images/istockphoto-1341392178-612x612.jpg",
           },
         ],
         short_annotation: "Коворкинг находится в самом центре Санкт-Петербурга",
@@ -165,11 +165,12 @@ export const Example = {
         rating: null,
         low_price: 100,
         main_photo:
-          "http://185.41.160.27/media/images/main_photo/a-obraznyi-dom-v-minesote-pufikhomes-1a.jpg",
+          "https://spotit.acceleratorpracticum.ru/media/images/main_photo/a-obraznyi-dom-v-minesote-pufikhomes-1a.jpg",
         extra_photo: [
           {
             id: 2,
-            image: "http://185.41.160.27/media/images/62063c78b0e63.jpg",
+            image:
+              "https://spotit.acceleratorpracticum.ru/media/images/62063c78b0e63.jpg",
           },
         ],
         short_annotation:
@@ -192,12 +193,12 @@ export const Example = {
         rating: null,
         low_price: null,
         main_photo:
-          "http://185.41.160.27/media/images/main_photo/3265-kovorking-centr-teplica-d8e1d1af8874.jpg",
+          "https://spotit.acceleratorpracticum.ru/media/images/main_photo/3265-kovorking-centr-teplica-d8e1d1af8874.jpg",
         extra_photo: [
           {
             id: 4,
             image:
-              "http://185.41.160.27/media/images/guide_76_118da141db66068583073d8dfded7bc3.jpg",
+              "https://spotit.acceleratorpracticum.ru/media/images/guide_76_118da141db66068583073d8dfded7bc3.jpg",
           },
         ],
         short_annotation: "Рядом находится магазин «Подписные издания»",
@@ -220,12 +221,12 @@ export const Example = {
         rating: null,
         low_price: null,
         main_photo:
-          "http://185.41.160.27/media/images/main_photo/istockphoto-1323020583-612x612.jpg",
+          "https://spotit.acceleratorpracticum.ru/media/images/main_photo/istockphoto-1323020583-612x612.jpg",
         extra_photo: [
           {
             id: 6,
             image:
-              "http://185.41.160.27/media/images/istockphoto-1329940971-612x612.jpg",
+              "https://spotit.acceleratorpracticum.ru/media/images/istockphoto-1329940971-612x612.jpg",
           },
         ],
         short_annotation:
@@ -249,12 +250,12 @@ export const Example = {
         rating: null,
         low_price: null,
         main_photo:
-          "http://185.41.160.27/media/images/main_photo/istockphoto-1321363500-612x612.jpg",
+          "https://spotit.acceleratorpracticum.ru/media/images/main_photo/istockphoto-1321363500-612x612.jpg",
         extra_photo: [
           {
             id: 8,
             image:
-              "http://185.41.160.27/media/images/istockphoto-1201021076-612x612.jpg",
+              "https://spotit.acceleratorpracticum.ru/media/images/istockphoto-1201021076-612x612.jpg",
           },
         ],
         short_annotation:
@@ -277,12 +278,12 @@ export const Example = {
         rating: null,
         low_price: null,
         main_photo:
-          "http://185.41.160.27/media/images/main_photo/istockphoto-1124783373-612x612.jpg",
+          "https://spotit.acceleratorpracticum.ru/media/images/main_photo/istockphoto-1124783373-612x612.jpg",
         extra_photo: [
           {
             id: 5,
             image:
-              "http://185.41.160.27/media/images/istockphoto-1124783373-612x612.jpg",
+              "https://spotit.acceleratorpracticum.ru/media/images/istockphoto-1124783373-612x612.jpg",
           },
         ],
         short_annotation: "На самом берегу с видом на Финский залив",
@@ -305,17 +306,17 @@ export const Example = {
         rating: null,
         low_price: null,
         main_photo:
-          "http://185.41.160.27/media/images/main_photo/istockphoto-1412875095-612x612.jpg",
+          "https://spotit.acceleratorpracticum.ru/media/images/main_photo/istockphoto-1412875095-612x612.jpg",
         extra_photo: [
           {
             id: 12,
             image:
-              "http://185.41.160.27/media/images/istockphoto-1425103374-612x612.jpg",
+              "https://spotit.acceleratorpracticum.ru/media/images/istockphoto-1425103374-612x612.jpg",
           },
           {
             id: 13,
             image:
-              "http://185.41.160.27/media/images/istockphoto-1425175269-612x612.jpg",
+              "https://spotit.acceleratorpracticum.ru/media/images/istockphoto-1425175269-612x612.jpg",
           },
         ],
         short_annotation:

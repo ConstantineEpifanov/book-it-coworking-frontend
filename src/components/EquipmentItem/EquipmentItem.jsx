@@ -11,7 +11,7 @@ export const EquipmentItem = ({ title, data }) =>
           <li key={item.id} className="equipment-item__list-item">
             <img
               className="equipment-item__img"
-              src={`http://spotit.acceleratorpracticum.ru/media/${item.icon}`}
+              src={`https://spotit.acceleratorpracticum.ru/media/${item.icon}`}
               alt=""
             />
             <p className="equipment-item__text">{item.name}</p>
