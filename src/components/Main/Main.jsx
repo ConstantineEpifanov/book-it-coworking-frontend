@@ -10,6 +10,7 @@ import { Promo } from "../Promo/Promo";
 import { Discounts } from "../Discounts/Discounts";
 import { Events } from "../Events/Events";
 import { Loader } from "../Loader/Loader";
+import { NotFoundError } from "../NotFoundError/NotFoundError";
 
 import { getEvents, getShortLocations } from "../../utils/Api";
 // import { useResize } from "../../hooks/useResize";
@@ -42,8 +43,11 @@ export const Main = () => {
         .then((res) => {
           setCoworkingsArray(res.results);
           setPointsAddCount((prev) => prev + LAPTOP_SHORT_POINTS_QUANTITY);
+          if (res.results.length === 0) setMoreButtonVisible(false);
         })
-        .catch(() => {});
+        .catch(() => {
+          setMoreButtonVisible(false);
+        });
 
       const eventsPromise = getEvents()
         .then((res) => {
@@ -67,13 +71,13 @@ export const Main = () => {
   // Кнопка еще для десктопа
   const handleMoreClick = () => {
     setPointsAddCount((prev) => prev + LAPTOP_MORE_SHORT_POINTS_QUANTITY);
-    getShortLocations(LAPTOP_MORE_SHORT_POINTS_QUANTITY, pointsAddCount).then(
-      (res) => {
+    getShortLocations(LAPTOP_MORE_SHORT_POINTS_QUANTITY, pointsAddCount)
+      .then((res) => {
         setCoworkingsArray(coworkingsArray.concat(res.results));
         if (res.results.length < LAPTOP_MORE_SHORT_POINTS_QUANTITY)
           setMoreButtonVisible(false);
-      },
-    );
+      })
+      .catch(() => {});
   };
 
   // const pointsRender = useMemo(() => {
@@ -102,12 +106,19 @@ export const Main = () => {
               titleClass="section-title_margin-to-block"
               titleText="Наши коворкинги"
             />
-            <PointsList
-              isCompact
-              coworkingsArray={coworkingsArray}
-              handleMoreClick={handleMoreClick}
-              isMoreButtonVisible={isMoreButtonVisible}
-            />
+            {!coworkingsArray ? (
+              <NotFoundError
+                titleText="Данные с сервера не получены"
+                subtitleText="Попробуйте чуть позже"
+              />
+            ) : (
+              <PointsList
+                isCompact
+                coworkingsArray={coworkingsArray}
+                handleMoreClick={handleMoreClick}
+                isMoreButtonVisible={isMoreButtonVisible}
+              />
+            )}
           </section>
           <Discounts />
           <Events eventsArray={eventsArray} />

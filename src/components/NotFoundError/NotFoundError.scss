@@ -1,0 +1,15 @@
+.error-info {
+  display: flex;
+  flex-direction: row;
+  max-width: 100%;
+
+  &__img {
+    max-width: 30%;
+  }
+
+  &__container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+  }
+}
