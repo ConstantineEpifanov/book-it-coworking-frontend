@@ -161,3 +161,19 @@ export function deleteFavorite(id) {
     headers: setHeaders(),
   });
 }
+
+// Booking
+
+export function getLocationPlanPhoto(id) {
+  return request(`/locations/${id}/plan_photo`, {
+    method: "GET",
+    headers: setHeaders(),
+  });
+}
+
+export function getSpots(id) {
+  return request(`/locations/${id}/spots`, {
+    method: "GET",
+    headers: setHeaders(),
+  });
+}
