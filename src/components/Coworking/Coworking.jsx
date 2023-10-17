@@ -25,7 +25,7 @@ export const Coworking = () => {
   const [equipmentMeeting, setEquipmentMeeting] = useState([]);
   const [equipmentGeneral, setEquipmentGeneral] = useState([]);
   const [reviews, setReviews] = useState([]);
-  const [reviewsLength, setReviewsLength] = useState([]);
+  const [reviewsLength, setReviewsLength] = useState(0);
   const [isLoading, setLoading] = useState(true);
   const [isPresent, setPresent] = useState(true);
   const [reviewsAddCount, setReviewsAddCount] = useState(0);

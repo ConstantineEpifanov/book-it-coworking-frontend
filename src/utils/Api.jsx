@@ -23,7 +23,6 @@ export function setHeaders() {
   }
 
   return {
-    Authorization: `Token 930409b4e1c2238901b3a7ea7a7f4a3fb0503de5`,
     "Content-Type": "application/json",
   };
 }

@@ -84,7 +84,7 @@ function App() {
   };
 
   const handleLogout = () => {
-    localStorage.removeItem("jwt");
+    localStorage.removeItem("token");
     setIsLoggedIn(false);
     setСurrentUser({});
     // для очистки локального хранилища после выхода из приложения
