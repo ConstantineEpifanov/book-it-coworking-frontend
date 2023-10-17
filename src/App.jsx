@@ -25,6 +25,7 @@ import RegisterForm from "./components/Forms/RegisterForm/RegisterForm";
 import LoginForm from "./components/Forms/LoginForm/LoginForm";
 import RestorePassForm from "./components/Forms/RestorePassForm/RestorePassForm";
 import { Coworking } from "./components/Coworking/Coworking";
+import { Booking } from "./components/Booking/Booking";
 
 import usePopupOpen from "./hooks/usePopupOpen";
 import { getUserInfo, setHeaders, login } from "./utils/Api";
@@ -139,6 +140,19 @@ function App() {
 
           <Route path="/contacts" element={<Contacts />} />
           <Route path="/points/:id" element={<Coworking />} />
+          <Route
+            path="/booking"
+            element={
+              <Booking
+                location={{
+                  id: 1,
+                  openTime: "07:00",
+                  closeTime: "22:00",
+                  daysOpen: "пн-сб",
+                }}
+              />
+            }
+          />
           <Route path="*" element={<PageNotFound />} />
           {/* для рероутинга попапов, чтобы при переключении не бил в 404 */}
           <Route path="/popup/*" element={<Main />} />

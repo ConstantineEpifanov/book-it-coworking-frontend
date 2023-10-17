@@ -114,12 +114,7 @@ const getTimeRangeItems = (startTime, endTime, onItemClick) => {
 };
 
 export const Booking = ({
-  location: {
-    id,
-    open_time: openTime,
-    close_time: closeTime,
-    days_open: daysOpen,
-  },
+  location: { id, openTime, closeTime, daysOpen },
 }) => {
   const FIRST_SPOT_TYPE = "Общая зона";
   const SECOND_SPOT_TYPE = "Переговорная";
@@ -431,21 +426,17 @@ export const Booking = ({
 Booking.propTypes = {
   location: PropTypes.shape({
     id: PropTypes.number,
-    open_time: PropTypes.string,
-    close_time: PropTypes.string,
-    count_workspace: PropTypes.number,
-    count_meeting_room: PropTypes.number,
-    days_open: PropTypes.string,
+    openTime: PropTypes.string,
+    closeTime: PropTypes.string,
+    daysOpen: PropTypes.string,
   }),
 };
 
 Booking.defaultProps = {
   location: {
     id: null,
-    open_time: null,
-    close_time: null,
-    count_workspace: null,
-    count_meeting_room: null,
-    days_open: null,
+    openTime: null,
+    closeTime: null,
+    daysOpen: null,
   },
 };
