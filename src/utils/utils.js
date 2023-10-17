@@ -22,3 +22,9 @@ export const generateCenterFromPoints = (points) => {
 };
 
 export const checkPath = (el, location) => el.includes(location.pathname);
+
+export function formatPhone(phoneNumber) {
+  return phoneNumber
+    .replace(/\D/g, "")
+    .replace(/(\d{1})(\d{3})(\d{3})(\d{2})(\d{2})/, "+$1 $2 $3 $4 $5");
+}

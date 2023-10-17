@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import React from "react";
 import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
@@ -20,72 +21,63 @@ import {
   TELEGRAM_LINK,
 } from "../../config/contactsItems";
 
-export const Footer = ({ onSubmit }) => (
-  <footer className="footer">
-    <div className="footer__container">
-      <div className="footer__info">
-        <div className="footer__column">
-          <Link to="/">
-            <Logo
-              mode="green"
-              width="70px"
-              height="22px"
-              className="logo_type_responsive"
-            />
-          </Link>
-          <a href="/" className="footer__link">
-            Политика конфиденциальности
-          </a>
-        </div>
-        <div className="footer__column">
-          <a href={`tel:${MAIN_PHONE_NUMBER}`} className="footer__contacts">
-            {MAIN_PHONE_NUMBER}
-          </a>
-          <a href={`mailto:${MAIN_EMAIL}`} className="footer__contacts">
-            {MAIN_EMAIL}
-          </a>
-          <div className="footer__icons">
-            <a
-              href={INSTAGRAM_LINK}
-              className="footer__icon"
-              target="_blank"
-              rel="noreferrer"
-            >
-              <InstagramIcon />
-            </a>
-            <a
-              href={TWITTER_LINK}
-              className="footer__icon"
-              target="_blank"
-              rel="noreferrer"
-            >
-              <TwitterIcon />
-            </a>
-            <a
-              href={YOUTUBE_LINK}
-              className="footer__icon"
-              target="_blank"
-              rel="noreferrer"
-            >
-              <YoutubeIcon />
-            </a>
-            <a
-              href={TELEGRAM_LINK}
-              className="footer__icon footer__icon_type_fill"
-              target="_blank"
-              rel="noreferrer"
-            >
-              <TelegramIcon />
+function generateLinks(links) {
+  return links.map((link) => (
+    <a
+      href={link.url}
+      className={`footer__icon ${link.isFill ? "footer__icon_type_fill" : ""}`}
+      target="_blank"
+      rel="noreferrer"
+    >
+      {link.icon}
+    </a>
+  ));
+}
+
+const linksData = [
+  { url: INSTAGRAM_LINK, icon: <InstagramIcon />, isFill: false },
+  { url: TWITTER_LINK, icon: <TwitterIcon />, isFill: false },
+  { url: YOUTUBE_LINK, icon: <YoutubeIcon />, isFill: false },
+  { url: TELEGRAM_LINK, icon: <TelegramIcon />, isFill: true },
+];
+
+export const Footer = ({ onSubmit }) => {
+  const links = generateLinks(linksData);
+  return (
+    <footer className="footer">
+      <div className="footer__container">
+        <div className="footer__info">
+          <div className="footer__column">
+            <Link to="/">
+              <Logo
+                mode="green"
+                width="70px"
+                height="22px"
+                className="logo_type_responsive"
+              />
+            </Link>
+            <a href="/" className="footer__link">
+              Политика конфиденциальности
             </a>
           </div>
+          <div className="footer__column">
+            <a href={`tel:${MAIN_PHONE_NUMBER}`} className="footer__contacts">
+              {MAIN_PHONE_NUMBER}
+            </a>
+            <a href={`mailto:${MAIN_EMAIL}`} className="footer__contacts">
+              {MAIN_EMAIL}
+            </a>
+            <div className="footer__icons">{links}</div>
+          </div>
+        </div>
+        <div className="footer__icons_mobile">{links}</div>
+        <div className="footer__subscription">
+          <SubscriptionForm onSubmit={onSubmit} />
         </div>
       </div>
-      <div className="footer__subscription">
-        <SubscriptionForm onSubmit={onSubmit} />
-      </div>
-    </div>
-  </footer>
-);
+    </footer>
+  );
+};
 
 Footer.propTypes = {
   onSubmit: PropTypes.func,

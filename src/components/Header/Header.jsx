@@ -12,7 +12,7 @@ const Header = ({ isLoggedIn, onOpenPopup, onLogout, profileInfo }) => {
   return (
     <header className="header">
       <Link to="/">
-        <Logo width="90px" height="62px" />
+        <Logo width="102px" height="20px" />
       </Link>
 
       <Navigation />

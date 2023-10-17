@@ -68,7 +68,7 @@ export const Profile = ({ user, favorites, bookings }) => {
             isActive={activeTab === "security"}
           />
         </Link>
-        <Link to="/profile/payment">
+        {/* <Link to="/profile/payment">
           <Button
             btnClass={`button__profile button__profile_payment ${
               activeTab === "payment" ? "button__profile_payment-active" : ""
@@ -76,7 +76,7 @@ export const Profile = ({ user, favorites, bookings }) => {
             btnText="Платежные данные"
             isActive={activeTab === "payment"}
           />
-        </Link>
+        </Link> */}
         <Link to="/profile/bookings">
           <Button
             btnClass={`button__profile button__profile_bookings ${
