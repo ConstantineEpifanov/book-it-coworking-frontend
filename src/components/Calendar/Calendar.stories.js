@@ -29,6 +29,9 @@ export default {
         type: "number",
       },
     },
+    extraRules: {
+      description: "Массив доволнительных функций проверки",
+    },
   },
 };
 

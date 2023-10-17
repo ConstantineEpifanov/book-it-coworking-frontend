@@ -17,6 +17,7 @@ import { getCoworkingInfo, getEquipment, getReviews } from "../../utils/Api";
 import {
   EQUIPMENT_GENERAL_CATEGORY,
   EQUIPMENT_MEETING_CATEGORY,
+  LAPTOP_REVIEWS_QUANTITY,
 } from "../../utils/constants";
 
 export const Coworking = () => {
@@ -24,8 +25,11 @@ export const Coworking = () => {
   const [equipmentMeeting, setEquipmentMeeting] = useState([]);
   const [equipmentGeneral, setEquipmentGeneral] = useState([]);
   const [reviews, setReviews] = useState([]);
+  const [reviewsLength, setReviewsLength] = useState([]);
   const [isLoading, setLoading] = useState(true);
   const [isPresent, setPresent] = useState(true);
+  const [reviewsAddCount, setReviewsAddCount] = useState(0);
+  const [isMoreButtonVisible, setMoreButtonVisible] = useState(true);
 
   const location = useLocation();
   const navigate = useNavigate();
@@ -61,15 +65,31 @@ export const Coworking = () => {
   }, []);
 
   useEffect(() => {
-    getReviews(pathId)
+    getReviews(pathId, LAPTOP_REVIEWS_QUANTITY, reviewsAddCount)
       .then((res) => {
-        setReviews(res);
+        setReviews(res.results);
+        setReviewsLength(res.count);
+        setReviewsAddCount((prev) => prev + LAPTOP_REVIEWS_QUANTITY);
+        if (res.results.length < LAPTOP_REVIEWS_QUANTITY) {
+          setMoreButtonVisible(false);
+        }
+        return reviewsLength;
       })
       .catch(() => {});
   }, []);
 
   const handleBackButton = () => {
     navigate("/points/", { replace: false });
+  };
+
+  const handleMoreReviewsButton = () => {
+    setReviewsAddCount((prev) => prev + LAPTOP_REVIEWS_QUANTITY);
+
+    getReviews(pathId, LAPTOP_REVIEWS_QUANTITY, reviewsAddCount).then((res) => {
+      setReviews(reviews.concat(res.results));
+      if (res.results.length < LAPTOP_REVIEWS_QUANTITY)
+        setMoreButtonVisible(false);
+    });
   };
 
   return isLoading ? (
@@ -102,7 +122,13 @@ export const Coworking = () => {
       </section>
       <section className="coworking__section">
         <h3 className="coworking__section-title">Отзывы</h3>
-        <ReviewList reviews={reviews} pointRating={coworking.rating} />
+        <ReviewList
+          reviews={reviews}
+          pointRating={coworking.rating}
+          isMoreButtonVisible={isMoreButtonVisible}
+          handleMoreReviewsButton={handleMoreReviewsButton}
+          reviewsLength={reviewsLength}
+        />
       </section>
     </main>
   );

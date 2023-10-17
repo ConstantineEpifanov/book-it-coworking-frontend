@@ -13,11 +13,7 @@ export const Rules = ({ rules }) => (
     <ul className="rules__list">
       {rules.map((item) => (
         <li key={item.id}>
-          <RuleItem
-            titleText={item.title}
-            articleText={item.text}
-            img={item.img}
-          />
+          <RuleItem title={item.title} text={item.text} icon={item.icon} />
         </li>
       ))}
     </ul>

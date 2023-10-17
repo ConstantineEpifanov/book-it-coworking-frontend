@@ -6,13 +6,19 @@ import { ReviewItem } from "../ReviewItem/ReviewItem";
 import Button from "../UI-kit/Button/Button";
 // import { REVIEWS_QUANTITY } from "../../utils/constants";
 
-export const ReviewList = ({ reviews, pointRating }) => (
+export const ReviewList = ({
+  reviews,
+  reviewsLength,
+  pointRating,
+  handleMoreReviewsButton,
+  isMoreButtonVisible,
+}) => (
   <div className="review-list">
     <div className="review-list__container">
       <PointRating rating={pointRating} />
       <div className="review-list__length-container">
         <p className="review-list__text">Отзывов:&nbsp;</p>
-        <p className="review-list__length">{reviews?.length}</p>
+        <p className="review-list__length">{reviewsLength}</p>
       </div>
     </div>
     <ul className="review-list__items">
@@ -27,10 +33,13 @@ export const ReviewList = ({ reviews, pointRating }) => (
         </li>
       ))}
     </ul>
-    <Button
-      btnClass="button_type_transparent button_size_medium"
-      btnText="Ещё"
-    />
+    {isMoreButtonVisible && (
+      <Button
+        btnClass="button_type_transparent button_size_medium"
+        btnText="Ещё"
+        onClick={handleMoreReviewsButton}
+      />
+    )}
   </div>
 );
 
@@ -46,9 +55,15 @@ ReviewList.propTypes = {
     }),
   ),
   pointRating: PropTypes.number,
+  handleMoreReviewsButton: PropTypes.func,
+  isMoreButtonVisible: PropTypes.bool,
+  reviewsLength: PropTypes.number,
 };
 
 ReviewList.defaultProps = {
   reviews: undefined,
   pointRating: undefined,
+  handleMoreReviewsButton: () => {},
+  isMoreButtonVisible: false,
+  reviewsLength: undefined,
 };

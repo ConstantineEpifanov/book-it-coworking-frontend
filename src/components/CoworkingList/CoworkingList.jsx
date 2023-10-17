@@ -61,6 +61,7 @@ export const CoworkingList = () => {
 
   const handleMoreClick = () => {
     setPointsAddCount((prev) => prev + LAPTOP_MORE_POINTS_QUANTITY);
+
     getLocations(LAPTOP_MORE_POINTS_QUANTITY, pointsAddCount).then((res) => {
       setCoworkingsArray(coworkingsArray.concat(res.results));
       if (res.results.length < LAPTOP_MORE_POINTS_QUANTITY)
@@ -95,32 +96,3 @@ export const CoworkingList = () => {
     </main>
   );
 };
-
-// CoworkingList.propTypes = {
-//   data: PropTypes.arrayOf(
-//     PropTypes.shape({
-//       title: PropTypes.string,
-//       subtitle: PropTypes.string,
-//       about: PropTypes.string,
-//       rating: PropTypes.string,
-//       lowPrice: PropTypes.number,
-//       mainPhoto: PropTypes.string,
-//       extraPhoto: PropTypes.arrayOf(
-//         PropTypes.shape({
-//           id: PropTypes.number.isRequired,
-//           url: PropTypes.string,
-//         }),
-//       ),
-//       address: PropTypes.string,
-//       metro: PropTypes.string,
-//       openTime: PropTypes.number,
-//       closeTime: PropTypes.number,
-//       generalQuantity: PropTypes.number,
-//       meetingQuantity: PropTypes.number,
-//     }),
-//   ),
-// };
-
-// CoworkingList.defaultProps = {
-//   data: [],
-// };

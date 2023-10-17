@@ -8,7 +8,7 @@ export const ButtonsList = ({
   listType = "time-ranges",
   itemsList = [],
   isEnabled = true,
-  isMultiselect = true,
+  isMultiselect = false,
   allowedRanges = [],
   ariaLabel = "Список кнопок",
   listClassName = "",
@@ -21,8 +21,8 @@ export const ButtonsList = ({
     const sharedRanges = allowedRanges.filter((range) => range.includes(id));
 
     setItemsStatesList(
-      itemsStatesList.map((item) => {
-        let isEnabledStatus = true;
+      itemsList.map((item) => {
+        let isEnabledStatus = item.isEnabled;
 
         if (currentSelected.length > 0) {
           isEnabledStatus =
@@ -66,7 +66,7 @@ export const ButtonsList = ({
     if (allowedRanges.length > 0 || !isMultiselect) {
       followAllowedRules(id, resultSelected);
     }
-    onClick(selectedItems);
+    onClick(resultSelected);
   };
 
   useEffect(() => {
@@ -78,6 +78,7 @@ export const ButtonsList = ({
     setItemsStatesList(
       itemsList.map((item) => ({ ...item, isEnabled: false })),
     );
+    setSelectedItems([]);
   }, [itemsList, isEnabled]);
 
   return (
@@ -128,7 +129,7 @@ ButtonsList.defaultProps = {
   listType: "time-ranges",
   itemsList: [],
   isEnabled: true,
-  isMultiselect: true,
+  isMultiselect: false,
   allowedRanges: [],
   ariaLabel: "Список кнопок",
   listClassName: "",

@@ -21,6 +21,8 @@ export const generateCenterFromPoints = (points) => {
   return [avgLat, avgLng];
 };
 
+export const checkPath = (el, location) => el.includes(location.pathname);
+
 export function formatPhone(phoneNumber) {
   return phoneNumber
     .replace(/\D/g, "")

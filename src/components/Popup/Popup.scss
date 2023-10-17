@@ -8,20 +8,17 @@
   right: 0;
   left: 0;
   top: 0;
-  height: 100%;
+  height: 100vh;
   width: 100%;
   backdrop-filter: blur(5px);
   align-items: center;
   justify-content: center;
-  visibility: visible;
-  opacity: 1;
-  z-index: 1;
-  transition:
-    visibility 0.5s,
-    opacity 0.5s ease;
+  z-index: 4;
   font-family: $font-family;
+  overflow: scroll;
 
   &__container {
+    height: fit-content;
     min-width: 200px;
     max-width: 520px;
     width: calc(100% - 160px);
@@ -35,6 +32,9 @@
       max-width: 740px;
       width: calc(100% - 190px);
       padding: 60px 95px 92px;
+    }
+    &_register-form {
+      transform: translateY(15%);
     }
   }
   &__title {

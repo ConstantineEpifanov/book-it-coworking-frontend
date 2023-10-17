@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import "./Calendar.scss";
+import { CALENDAR_MAX_ALLOWED_DAYS } from "../../utils/constants";
 
 const getStartDayOfWeek = (date) => {
   const dayNumber = new Date(date.getFullYear(), date.getMonth(), 1).getDay();
@@ -43,7 +44,8 @@ export const Calendar = ({
   selectCallback = null,
   isMultiSelect = false,
   initialDate = null,
-  maxDatesRange = 60,
+  maxDatesRange = CALENDAR_MAX_ALLOWED_DAYS,
+  extraRules = null,
 }) => {
   const DAYS_NAMES = ["пн", "вт", "ср", "чт", "пт", "сб", "вс"];
   const MONTHS_NAMES = [
@@ -122,6 +124,15 @@ export const Calendar = ({
     return resultDay.toString();
   };
 
+  // Проверка дополнительных правил для даты
+  // Если хотя бы одна функция из массива extraRules вернет true - число месяца будет недоступным
+  const isDateAllowed = (currentDate) => {
+    if (Array.isArray(extraRules)) {
+      return !extraRules.some((checkFunc) => checkFunc(currentDate));
+    }
+    return null;
+  };
+
   // Получить подходящий css-класс
   const getCellContentClass = (nowDate, cellDay, currentDate, monthDays) => {
     const cellDate = new Date(
@@ -147,6 +158,10 @@ export const Calendar = ({
     }
 
     if (isDayDateLater(cellDate, lastPermitedDate)) {
+      return " calendar__button_inaccessible-days";
+    }
+
+    if (extraRules && !isDateAllowed(cellDate)) {
       return " calendar__button_inaccessible-days";
     }
 
@@ -273,11 +288,13 @@ Calendar.propTypes = {
   isMultiSelect: PropTypes.bool,
   initialDate: PropTypes.string,
   maxDatesRange: PropTypes.number,
+  extraRules: PropTypes.arrayOf(PropTypes.func),
 };
 
 Calendar.defaultProps = {
   selectCallback: null,
   isMultiSelect: false,
   initialDate: null,
-  maxDatesRange: 60,
+  maxDatesRange: CALENDAR_MAX_ALLOWED_DAYS,
+  extraRules: null,
 };

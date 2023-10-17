@@ -29,12 +29,12 @@ export const Example = {
     rating: null,
     low_price: null,
     main_photo:
-      "http://185.41.160.27/media/images/main_photo/guide_76_118da141db66068583073d8dfded7bc3.jpg",
+      "https://spotit.acceleratorpracticum.ru/media/images/main_photo/guide_76_118da141db66068583073d8dfded7bc3.jpg",
     extra_photo: [
       {
         id: 3,
         image:
-          "http://185.41.160.27/media/images/thumb_WhatsApp_Image_2018-06-07_at_21.00.54.jpeg",
+          "https://spotit.acceleratorpracticum.ru/media/images/thumb_WhatsApp_Image_2018-06-07_at_21.00.54.jpeg",
       },
     ],
     short_annotation: "Есть спешелти кофейня на первом этаже",
