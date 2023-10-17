@@ -156,6 +156,7 @@
     flex-direction: row;
     align-items: flex-start;
     justify-content: space-between;
+    gap: 50px;
   }
 
   // &__subtitle {
@@ -256,6 +257,7 @@
   0% {
     transform: translateX(70%);
   }
+
   100% {
     transform: translateX(0);
   }

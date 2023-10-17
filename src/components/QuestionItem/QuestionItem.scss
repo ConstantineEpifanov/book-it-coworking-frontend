@@ -34,25 +34,22 @@
     margin: 0;
     border: none;
     background-color: transparent;
-    stroke: $green;
-    fill: $green;
+    stroke: $white;
+    fill: $white;
     border-radius: 50%;
     transition: all 0.3s;
     overflow: hidden;
     cursor: pointer;
+    transform: rotate(45deg);
 
     &_active {
-      transform: rotate(45deg);
+      transform: rotate(90deg);
     }
 
     &:hover {
-      background-color: $green;
+      background-color: $white;
       stroke: $black;
       fill: $black;
-    }
-
-    &:active {
-      transform: rotate(90);
     }
   }
 

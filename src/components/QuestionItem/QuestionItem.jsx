@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import "./QuestionItem.scss";
 
 export function QuestionItem({ question, answer }) {
-  const [isActive, setActive] = useState("false");
+  const [isActive, setActive] = useState(false);
 
   const handleToggle = () => {
     setActive(!isActive);
@@ -23,13 +23,13 @@ export function QuestionItem({ question, answer }) {
         >
           <svg xmlns="http://www.w3.org/2000/svg">
             <path
-              d="M18 6L6 18"
+              d="M6 6L18 18"
               strokeWidth="2"
               strokeLinecap="round"
               strokeLinejoin="round"
             />
             <path
-              d="M6 6L18 18"
+              d="M18 6L6 18"
               strokeWidth="2"
               strokeLinecap="round"
               strokeLinejoin="round"
@@ -39,7 +39,7 @@ export function QuestionItem({ question, answer }) {
       </div>
       <p
         className={
-          !isActive ? "question__text question__text_active" : "question__text"
+          isActive ? "question__text question__text_active" : "question__text"
         }
       >
         {answer}
