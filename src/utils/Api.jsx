@@ -177,6 +177,14 @@ export function getFinishedOrders() {
   });
 }
 
+export function editUserData(data) {
+  return request("/users/me/", {
+    method: "PATCH",
+    headers: setHeaders(),
+    body: JSON.stringify(data),
+  });
+}
+
 // Лайк-дислайк
 
 export function addFavorite(id) {

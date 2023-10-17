@@ -9,11 +9,4 @@ export default {
   },
 };
 
-export const SecurityTabDemo = {
-  args: {
-    user: {
-      password: "qwerty12345",
-      sessions: [],
-    },
-  },
-};
+export const SecurityTabDemo = () => <SecurityTab />;

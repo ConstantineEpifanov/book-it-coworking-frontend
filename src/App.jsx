@@ -4,6 +4,8 @@ import React from "react";
 import { Route, Routes, useLocation, useNavigate } from "react-router-dom";
 import { CurrentUserContext } from "./contexts/currentUserContext";
 
+import { ProtectedRouteElement } from "./HOC/ProtectedRoute";
+
 import "./App.css";
 
 import { Footer } from "./components/Footer/Footer";
@@ -18,7 +20,7 @@ import { ProfileDashboard } from "./components/ProfileDashboard/ProfileDashboard
 import { Profile } from "./components/Profile/Profile";
 // import { exampleCoworkingsData } from "./config/exampleCoworkingsData";
 // import { exampleEventsData } from "./config/exampleEventsData";
-import { user, favorites, bookings } from "./config/exampleProfileData";
+// import { user, favorites, bookings } from "./config/exampleProfileData";
 import RegisterForm from "./components/Forms/RegisterForm/RegisterForm";
 import LoginForm from "./components/Forms/LoginForm/LoginForm";
 import RestorePassForm from "./components/Forms/RestorePassForm/RestorePassForm";
@@ -92,8 +94,22 @@ function App() {
   };
 
   const contextValue = React.useMemo(
-    () => ({ isLoading, setIsLoading, isLoggedIn, setIsLoggedIn, currentUser }),
-    [isLoading, setIsLoading, isLoggedIn, setIsLoggedIn, currentUser],
+    () => ({
+      isLoading,
+      setIsLoading,
+      isLoggedIn,
+      setIsLoggedIn,
+      currentUser,
+      setСurrentUser,
+    }),
+    [
+      isLoading,
+      setIsLoading,
+      isLoggedIn,
+      setIsLoggedIn,
+      currentUser,
+      setСurrentUser,
+    ],
   );
 
   return (
@@ -109,14 +125,16 @@ function App() {
           <Route path="/" element={<Main />} />
           <Route path="/points" element={<CoworkingList />} />
           <Route path="/faq" element={<RulesQuestions />} />
-          <Route path="/profile" exact element={<ProfileDashboard />} />
+          <Route
+            path="/profile"
+            exact
+            element={<ProtectedRouteElement element={ProfileDashboard} />}
+          />
           <Route
             path="/profile/*"
             exact
             state={null}
-            element={
-              <Profile user={user} bookings={bookings} favorites={favorites} />
-            }
+            element={<ProtectedRouteElement element={Profile} />}
           />
 
           <Route path="/contacts" element={<Contacts />} />

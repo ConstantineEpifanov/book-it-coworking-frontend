@@ -1,75 +1,73 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useContext, useEffect } from "react";
+import { CurrentUserContext } from "../../contexts/currentUserContext";
+
+import useFormAndValidation from "../../hooks/useFormAndValidation";
+import { editUserData } from "../../utils/Api";
 // import PropTypes from "prop-types";
 import Button from "../UI-kit/Button/Button";
-// import Input from "../UI-kit/Input/Input";
+import Input from "../UI-kit/Input/Input";
+import ProfileDataForm from "../Forms/ProfileDataForm/ProfileDataForm";
 
 import "./ProfileDataTab.scss";
 
 import ProfilePhoto from "../../images/ProfilePhoto.png";
 
-import { getUserInfo } from "../../utils/Api";
-
 import { formatPhone } from "../../utils/utils";
 
 export const ProfileDataTab = () => {
-  // eslint-disable-next-line no-unused-vars
+  const { currentUser } = useContext(CurrentUserContext);
   const [isEdited, setIsEdited] = useState(false);
   const [editedUser, setEditedUser] = useState(null);
 
-  useEffect(() => {
-    const fetchUserInfo = () => {
-      getUserInfo()
-        .then((response) => {
-          if (response.status === 200) {
-            return response.json();
-          }
-          throw new Error("Ошибка при получении данных пользователя");
-        })
-        .then((userData) => {
-          setEditedUser(userData);
-        })
-        .catch((error) => {
-          // Обработка ошибок
-          console.error(error);
-        });
-    };
+  const { values, handleChange, errors, isValid } = useFormAndValidation();
 
-    fetchUserInfo();
-  }, []);
+  useEffect(() => {
+    setEditedUser(currentUser);
+  }, [currentUser]);
 
   const handleEditClick = () => {
     setIsEdited(true);
   };
 
-  const handleSaveClick = () => {
-    // Отправка запроса
-    setIsEdited(false);
-  };
+  const handleSubmit = (e) => {
+    e.preventDefault();
 
-  // eslint-disable-next-line no-unused-vars
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setEditedUser({
-      ...editedUser,
-      [name]: value,
-    });
+    const changedFields = {};
+
+    // eslint-disable-next-line no-restricted-syntax
+    for (const key in values) {
+      if (values[key] !== editedUser[key]) {
+        changedFields[key] = values[key];
+      }
+    }
+
+    setEditedUser((prev) => ({
+      ...prev,
+      ...changedFields,
+    }));
+    editUserData(changedFields);
+    setIsEdited(false);
   };
 
   return (
     <section className="profile-data">
+      {" "}
       <div className="profile-data__header-container">
         <h2 className="profile-data__title">Персональные данные</h2>
         {isEdited ? (
           <Button
             btnText="Сохранить"
             btnClass="button__profile-edit"
-            onClick={handleSaveClick}
+            onClick={handleSubmit}
+            btnType="submit"
+            isValidBtn={isValid && currentUser !== editUserData}
           />
         ) : (
           <Button
             btnText="Редактировать"
             btnClass="button__profile-edit"
             onClick={handleEditClick}
+            btnType="button"
           />
         )}
       </div>
@@ -78,86 +76,94 @@ export const ProfileDataTab = () => {
         className="profile-data__image"
         alt="Фото профиля"
       />
-      <ul className="profile-data__list">
-        <li className="profile-data__list-item">
-          <span>Имя</span>
-          {isEdited ? (
-            <input
-              type="text"
-              name="first_name"
-              value={editedUser?.first_name}
-              onChange={handleInputChange}
-            />
-          ) : (
-            <span>{editedUser?.first_name}</span>
-          )}
-        </li>
-        <li className="profile-data__list-item">
-          <span>Фамилия</span>
-          {isEdited ? (
-            <input
-              type="text"
-              name="last_name"
-              value={editedUser?.last_name}
-              onChange={handleInputChange}
-            />
-          ) : (
-            <span>{editedUser?.last_name}</span>
-          )}
-        </li>
-        <li className="profile-data__list-item">
-          <span>Дата рождения</span>
-          {isEdited ? (
-            <input
-              type="text"
-              name="birth_date"
-              value={editedUser?.birth_date}
-              onChange={handleInputChange}
-            />
-          ) : (
-            <span>{editedUser?.birth_date}</span>
-          )}
-        </li>
-        <li className="profile-data__list-item">
-          <span>Номер телефона</span>
-          {isEdited ? (
-            <input
-              type="text"
-              name="phone"
-              value={editedUser?.phone}
-              onChange={handleInputChange}
-            />
-          ) : (
-            <span>{editedUser?.phone && formatPhone(editedUser?.phone)}</span>
-          )}
-        </li>
-        <li className="profile-data__list-item">
-          <span>Адрес эл. почты</span>
-          {isEdited ? (
-            <input
-              type="text"
-              name="email"
-              value={editedUser?.email}
-              onChange={handleInputChange}
-            />
-          ) : (
-            <span>{editedUser?.email}</span>
-          )}
-        </li>
-        <li className="profile-data__list-item">
-          <span>Род деятельности</span>
-          {isEdited ? (
-            <input
-              type="text"
-              name="occupation"
-              value={editedUser?.occupation}
-              onChange={handleInputChange}
-            />
-          ) : (
-            <span>{editedUser?.occupation}</span>
-          )}
-        </li>
-      </ul>
+      <ProfileDataForm title="Редактирование данных профиля">
+        <ul className="profile-data__list">
+          <li className="profile-data__list-item">
+            <span>Имя</span>
+            {isEdited ? (
+              <Input
+                inputType="text"
+                inputName="first_name"
+                inputValue={values.first_name ?? editedUser.first_name}
+                inputError={errors.first_name}
+                handleChange={handleChange}
+              />
+            ) : (
+              <span>{editedUser?.first_name}</span>
+            )}
+          </li>
+          <li className="profile-data__list-item">
+            <span>Фамилия</span>
+            {isEdited ? (
+              <Input
+                inputType="text"
+                inputName="last_name"
+                inputValue={values.last_name ?? editedUser.last_name}
+                inputError={errors.last_name}
+                handleChange={handleChange}
+              />
+            ) : (
+              <span>{editedUser?.last_name}</span>
+            )}
+          </li>
+          <li className="profile-data__list-item">
+            <span>Дата рождения</span>
+            {isEdited ? (
+              <Input
+                inputType="text"
+                inputName="birth_date"
+                inputValue={values.birth_date ?? editedUser.birth_date}
+                inputError={errors.birth_date}
+                handleChange={handleChange}
+              />
+            ) : (
+              <span>{editedUser?.birth_date}</span>
+            )}
+          </li>
+          <li className="profile-data__list-item">
+            <span>Номер телефона</span>
+            {isEdited ? (
+              <Input
+                inputType="text"
+                inputName="phone"
+                inputValue={values.phone ?? editedUser.phone}
+                inputError={errors.phone}
+                handleChange={handleChange}
+              />
+            ) : (
+              <span>{editedUser?.phone && formatPhone(editedUser?.phone)}</span>
+            )}
+          </li>
+          <li className="profile-data__list-item">
+            <span>Адрес эл. почты</span>
+            {isEdited ? (
+              <Input
+                inputType="text"
+                inputName="email"
+                inputValue={values.email ?? editedUser.email}
+                inputError={errors.email}
+                handleChange={handleChange}
+              />
+            ) : (
+              <span>{editedUser?.email}</span>
+            )}
+          </li>
+          <li className="profile-data__list-item">
+            <span>Род деятельности</span>
+            {isEdited ? (
+              <Input
+                inputType="text"
+                inputName="occupation"
+                inputValue={values.occupation ?? editedUser.occupation}
+                inputError={errors.occupation}
+                handleChange={handleChange}
+              />
+            ) : (
+              <span>{editedUser?.occupation}</span>
+            )}
+          </li>
+        </ul>{" "}
+      </ProfileDataForm>
       <p className="profile-data__info">
         мы запрашиваем информацию исключительно в целях рекламы и промо-акций
         для вас
@@ -165,25 +171,3 @@ export const ProfileDataTab = () => {
     </section>
   );
 };
-
-// ProfileDataTab.propTypes = {
-//   user: PropTypes.shape({
-//     first_name: PropTypes.string,
-//     last_name: PropTypes.string,
-//     birth_date: PropTypes.string,
-//     phone: PropTypes.string,
-//     email: PropTypes.string,
-//     occupation: PropTypes.string,
-//   }),
-// };
-
-// ProfileDataTab.defaultProps = {
-//   user: {
-//     first_name: "",
-//     last_name: "",
-//     birth_date: "",
-//     phone: "",
-//     email: "",
-//     occupation: "",
-//   },
-// };

@@ -78,8 +78,8 @@ export const BookingsCard = ({ item }) => {
     content = (
       <>
         <p className="bookings-card__popup-text bookings-card__popup-text_type_long">
-          Бронирование «{item.spot.name.toUpperCase()} с {item.start_time} до{" "}
-          {item.end_time}» отменено.
+          Бронирование «{item.location_name.toUpperCase()} с {item.start_time}{" "}
+          до {item.end_time}» отменено.
           <br /> Мы отправим вам подтверждение на почту и вернем предоплату.
         </p>
         <p className="bookings-card__popup-text">
@@ -154,11 +154,11 @@ export const BookingsCard = ({ item }) => {
       <li className="bookings-card" key={item.id}>
         <img
           className="bookings-card__image"
-          src={item.spot?.image}
-          alt={item.spot?.name}
+          src={item?.location_photo}
+          alt={item.location_name}
         />
         <div className="bookings-card__text-container">
-          <h3 className="bookings-card__name">{item.spot?.name}</h3>
+          <h3 className="bookings-card__name">{item.location_name}</h3>
           {!item.isFinished && (
             <div className="bookings-card__status">
               {statusLabels[item.status]}
@@ -211,10 +211,8 @@ export const BookingsCard = ({ item }) => {
 BookingsCard.propTypes = {
   item: PropTypes.shape({
     id: PropTypes.string,
-    spot: PropTypes.shape({
-      name: PropTypes.string,
-      image: PropTypes.string,
-    }),
+    location_photo: PropTypes.string,
+    location_name: PropTypes.string,
     date: PropTypes.string,
     start_time: PropTypes.string,
     end_time: PropTypes.string,
