@@ -163,6 +163,28 @@ export function getUserInfo() {
   });
 }
 
+export function getActiveOrders() {
+  return request("/orders/?finished=false", {
+    method: "GET",
+    headers: setHeaders(),
+  });
+}
+
+export function getFinishedOrders() {
+  return request("/orders/?finished=true", {
+    method: "GET",
+    headers: setHeaders(),
+  });
+}
+
+export function editUserData(data) {
+  return request("/users/me/", {
+    method: "PATCH",
+    headers: setHeaders(),
+    body: JSON.stringify(data),
+  });
+}
+
 // Лайк-дислайк
 
 export function addFavorite(id) {

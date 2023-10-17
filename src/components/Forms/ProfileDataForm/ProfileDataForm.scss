@@ -1,0 +1,11 @@
+@import "../../../scss/variables.scss";
+@import "../../../scss/mixins.scss";
+
+.profdata-form {
+  width: 100%;
+  font-family: $font-family;
+  &__fieldset {
+    border: 0;
+    @include mp-null;
+  }
+}

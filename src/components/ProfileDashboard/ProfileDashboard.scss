@@ -1,3 +1,6 @@
+@import "./../../scss/variables.scss";
+@import "./../../scss/mixins.scss";
+
 .profile-dashboard {
   max-width: 930px;
   margin: 0 auto;
@@ -25,5 +28,15 @@
   }
   &__link {
     text-decoration: none;
+    stroke: $green;
+    color: $green;
+    &:hover {
+      stroke: $pink;
+      color: $pink;
+    }
+    &:active {
+      stroke: $black;
+      color: $black;
+    }
   }
 }
