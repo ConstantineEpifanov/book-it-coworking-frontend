@@ -1,11 +1,13 @@
 import React from "react";
 import PropTypes from "prop-types";
 import "./PromoItem.scss";
+import { SectionTitle } from "../SectionTitle/SectionTitle";
+import { SectionSubtitle } from "../SectionSubtitle/SectionSubtitle";
 
 export const PromoItem = ({ title, subtitle }) => (
   <div className="promo-item">
-    <h2 className="promo-item__title">{title}</h2>
-    <h3 className="promo-item__subtitle">{subtitle}</h3>
+    <SectionTitle titleText={title} />
+    <SectionSubtitle titleClass="section-subtitle_promo" titleText={subtitle} />
   </div>
 );
 PromoItem.propTypes = {
