@@ -24,6 +24,7 @@ import {
 function generateLinks(links) {
   return links.map((link) => (
     <a
+      key={link.id}
       href={link.url}
       className={`footer__icon ${link.isFill ? "footer__icon_type_fill" : ""}`}
       target="_blank"
@@ -35,10 +36,10 @@ function generateLinks(links) {
 }
 
 const linksData = [
-  { url: INSTAGRAM_LINK, icon: <InstagramIcon />, isFill: false },
-  { url: TWITTER_LINK, icon: <TwitterIcon />, isFill: false },
-  { url: YOUTUBE_LINK, icon: <YoutubeIcon />, isFill: false },
-  { url: TELEGRAM_LINK, icon: <TelegramIcon />, isFill: true },
+  { id: 1, url: INSTAGRAM_LINK, icon: <InstagramIcon />, isFill: false },
+  { id: 2, url: TWITTER_LINK, icon: <TwitterIcon />, isFill: false },
+  { id: 3, url: YOUTUBE_LINK, icon: <YoutubeIcon />, isFill: false },
+  { id: 4, url: TELEGRAM_LINK, icon: <TelegramIcon />, isFill: true },
 ];
 
 export const Footer = ({ onSubmit }) => {
