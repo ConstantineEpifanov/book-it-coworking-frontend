@@ -1,20 +1,14 @@
-/* eslint-disable import/no-extraneous-dependencies */
+/* eslint-disable camelcase */
 import React from "react";
-import { Route, Routes } from "react-router-dom";
+
+import { Route, Routes, useLocation, useNavigate } from "react-router-dom";
 import { CurrentUserContext } from "./contexts/currentUserContext";
 
-// import logo from "./logo.svg";
-
 import "./App.css";
-import EntryForm from "./components/Forms/EntryForm/EntryForm";
-import Popup from "./components/Popup/Popup";
-import Button from "./components/UI-kit/Button/Button";
-import Input from "./components/UI-kit/Input/Input";
 
 import { Footer } from "./components/Footer/Footer";
 import Header from "./components/Header/Header";
 import PageNotFound from "./components/PageNotFound/PageNotFound";
-import PasswordInput from "./components/UI-kit/PasswordInput/PasswordInput";
 import Contacts from "./components/Contacts/Contacts";
 import { Main } from "./components/Main/Main";
 
@@ -25,33 +19,93 @@ import { Profile } from "./components/Profile/Profile";
 // import { exampleCoworkingsData } from "./config/exampleCoworkingsData";
 // import { exampleEventsData } from "./config/exampleEventsData";
 import { user, favorites, bookings } from "./config/exampleProfileData";
+import RegisterForm from "./components/Forms/RegisterForm/RegisterForm";
+import LoginForm from "./components/Forms/LoginForm/LoginForm";
+import RestorePassForm from "./components/Forms/RestorePassForm/RestorePassForm";
 import { Coworking } from "./components/Coworking/Coworking";
 
-function App() {
-  // временно выставлено true, далее нужно поменять значение на false
-  const [isOpenPopup, setIsOpenPopup] = React.useState(false);
-  const [isLoading, setIsLoading] = React.useState(false);
+import usePopupOpen from "./hooks/usePopupOpen";
+import { getUserInfo, setHeaders, login } from "./utils/Api";
 
-  // для открытия попапа
-  const handleOpenPopup = () => {
-    setIsOpenPopup(true);
+function App() {
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  const { isOpenPopup, handleOpenPopup, handleClosePopup, previousLocation } =
+    usePopupOpen();
+
+  const [isLoading, setIsLoading] = React.useState(false);
+  const [isLoggedIn, setIsLoggedIn] = React.useState(false);
+  const [currentUser, setСurrentUser] = React.useState({});
+
+  const handleGetUserInfo = async () => {
+    try {
+      const data = await getUserInfo();
+      setСurrentUser(data);
+    } catch (err) {
+      console.log(`Что-то пошло не так: ошибка запроса ${err} 😔`);
+    }
   };
 
-  // для закрытия попапа
-  const handleClosePopup = () => {
-    setIsOpenPopup(false);
+  //  ---------- AUTH FUNC ---------
+  // проверка токена
+  React.useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (token) {
+      try {
+        const headers = setHeaders();
+        navigate(location.pathname);
+        if (headers.Authorization) {
+          setIsLoggedIn(true);
+          handleGetUserInfo();
+          navigate(location.pathname);
+        }
+      } catch (err) {
+        setIsLoggedIn(false);
+        console.log(`Что-то пошло не так: ошибка запроса ${err.message} 😔`);
+      }
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  const handleAuthorization = async ({ email, password }) => {
+    try {
+      const data = await login({ email, password });
+      localStorage.setItem("token", data.auth_token);
+
+      if (localStorage.getItem("token")) {
+        handleGetUserInfo();
+      }
+      setIsLoggedIn(true);
+      handleClosePopup();
+    } catch (err) {
+      console.log(`Что-то пошло не так: ошибка запроса ${err.message} 😔`);
+    }
+  };
+
+  const handleLogout = () => {
+    localStorage.removeItem("jwt");
+    setIsLoggedIn(false);
+    setСurrentUser({});
+    // для очистки локального хранилища после выхода из приложения
+    localStorage.clear();
   };
 
   const contextValue = React.useMemo(
-    () => ({ isLoading, setIsLoading }),
-    [isLoading, setIsLoading],
+    () => ({ isLoading, setIsLoading, isLoggedIn, setIsLoggedIn, currentUser }),
+    [isLoading, setIsLoading, isLoggedIn, setIsLoggedIn, currentUser],
   );
 
   return (
     <CurrentUserContext.Provider value={contextValue}>
       <div className="App">
-        <Header onOpenPopup={handleOpenPopup} />
-        <Routes>
+        <Header
+          profileInfo={currentUser}
+          onOpenPopup={handleOpenPopup}
+          isLoggedIn={isLoggedIn}
+          onLogout={handleLogout}
+        />
+        <Routes location={previousLocation || location}>
           <Route path="/" element={<Main />} />
           <Route path="/points" element={<CoworkingList />} />
           <Route path="/faq" element={<RulesQuestions />} />
@@ -64,39 +118,45 @@ function App() {
               <Profile user={user} bookings={bookings} favorites={favorites} />
             }
           />
+
           <Route path="/contacts" element={<Contacts />} />
           <Route path="/points/:id" element={<Coworking />} />
           <Route path="*" element={<PageNotFound />} />
+          {/* для рероутинга попапов, чтобы при переключении не бил в 404 */}
+          <Route path="/popup/*" element={<Main />} />
         </Routes>
-        {/* пример формы */}
-        <Popup isOpen={isOpenPopup} onClickClose={handleClosePopup}>
-          <EntryForm title="Войдите на сайт">
-            <>
-              <Input
-                inputType="email"
-                inputPlaceholder="Email"
-                inputName="emailLogin"
-              />
-              <PasswordInput
-                inputName="passwordLogin"
-                inputPlaceholder="Пароль"
-                inputInfo="Забыли пароль?"
-              />
-              <Button
-                btnClass="button_type_form"
-                btnType="button"
-                btnText="Войти"
-                onClick={() => {}}
-              />
-              <Button
-                btnClass="button_type_link"
-                btnType="button"
-                btnText="Зарегистрироваться"
-                onClick={() => {}}
-              />
-            </>
-          </EntryForm>
-        </Popup>
+        {previousLocation && (
+          <Routes>
+            <Route
+              path="/popup/login"
+              element={
+                <LoginForm
+                  isOpenPopup={isOpenPopup}
+                  onClosePopup={handleClosePopup}
+                  onAuthorization={handleAuthorization}
+                />
+              }
+            />
+            <Route
+              path="/popup/register"
+              element={
+                <RegisterForm
+                  isOpenPopup={isOpenPopup}
+                  onClosePopup={handleClosePopup}
+                />
+              }
+            />
+            <Route
+              path="/popup/reset_password"
+              element={
+                <RestorePassForm
+                  isOpenPopup={isOpenPopup}
+                  onClosePopup={handleClosePopup}
+                />
+              }
+            />
+          </Routes>
+        )}
         <Footer onSubmit={() => {}} />
       </div>
     </CurrentUserContext.Provider>

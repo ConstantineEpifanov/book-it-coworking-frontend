@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 export function checkResponse(res) {
   return res.ok
     ? res.json()
@@ -11,7 +12,7 @@ function request(url, options) {
   ).then(checkResponse);
 }
 
-function setHeaders() {
+export function setHeaders() {
   const token = localStorage.getItem("token");
 
   if (token) {
@@ -29,27 +30,33 @@ function setHeaders() {
 
 // Регистрация в два этапа и логин
 
-export function register({ email, password, firstName, lastName, rePassword }) {
+export function register({
+  email,
+  password,
+  first_name,
+  last_name,
+  re_password,
+}) {
   return request("/users/", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({
       email,
       password,
-      firstName,
-      lastName,
-      rePassword,
+      first_name,
+      last_name,
+      re_password,
     }),
   });
 }
 
-export function confirmRegister({ email, confirmationCode }) {
+export function confirmRegister({ email, confirmation_code }) {
   return request("/users/activation/", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({
       email,
-      confirmationCode,
+      confirmation_code,
     }),
   });
 }
@@ -61,6 +68,16 @@ export function login({ email, password }) {
     body: JSON.stringify({
       email,
       password,
+    }),
+  });
+}
+
+export function resetPassConfirmCode({ email }) {
+  return request("/users/reset_password_confirmation_code", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      email,
     }),
   });
 }

@@ -37,8 +37,6 @@
   &:disabled {
     opacity: 0.8;
     pointer-events: none;
-    border: 2px solid $gray;
-    background: $light-gray;
   }
 
   &_active {
@@ -120,10 +118,17 @@
       @include text-font-select;
       padding: 16px 32px;
     }
+    &_margin-top {
+      margin-top: 32px;
+    }
     &:hover {
       opacity: 0.7;
     }
-
+    &:disabled {
+      opacity: 0.8;
+      pointer-events: none;
+      background: $light-gray;
+    }
     &:active {
       background-color: $black;
       color: $green;

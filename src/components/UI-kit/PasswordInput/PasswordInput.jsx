@@ -2,20 +2,23 @@ import React from "react";
 import PropTypes from "prop-types";
 import Button from "../Button/Button";
 
-function PasswordInput({ inputClass, inputName, inputPlaceholder, inputInfo }) {
-  const [value, setValue] = React.useState("");
+function PasswordInput({
+  inputValue,
+  inputError,
+  inputClass,
+  inputName,
+  inputPlaceholder,
+  inputInfo,
+  handleChange,
+  inputRequired,
+  inputDisabled,
+}) {
   const [passwordVisible, setPasswordVisible] = React.useState(false);
-  const [inputError, setInputError] = React.useState("");
-
-  const handleChange = (event) => {
-    setValue(event.target.value);
-    setInputError(event.target.validationMessage);
-  };
 
   return (
     <>
       <div className="input__items">
-        {value && (
+        {inputValue && (
           <label
             htmlFor={inputName}
             className={`input__label ${
@@ -31,12 +34,13 @@ function PasswordInput({ inputClass, inputName, inputPlaceholder, inputInfo }) {
           type={passwordVisible ? "text" : "password"}
           name={inputName}
           placeholder={inputPlaceholder}
-          value={value || ""}
+          value={inputValue || ""}
           onChange={handleChange}
-          required
+          required={inputRequired}
+          disabled={inputDisabled}
         />
         {/* если данные введены, покажи кнопку */}
-        {value && (
+        {inputValue && (
           <Button
             btnClass={`button__password-toggle ${
               passwordVisible
@@ -59,16 +63,26 @@ function PasswordInput({ inputClass, inputName, inputPlaceholder, inputInfo }) {
 
 PasswordInput.propTypes = {
   inputClass: PropTypes.string,
+  inputValue: PropTypes.string,
+  inputError: PropTypes.string,
   inputName: PropTypes.string,
   inputInfo: PropTypes.string,
   inputPlaceholder: PropTypes.string,
+  inputRequired: PropTypes.bool,
+  inputDisabled: PropTypes.bool,
+  handleChange: () => {},
 };
 
 PasswordInput.defaultProps = {
   inputClass: "",
+  inputValue: null,
+  inputError: null,
   inputName: "",
   inputPlaceholder: "",
   inputInfo: "",
+  inputRequired: null,
+  inputDisabled: null,
+  handleChange: () => {},
 };
 
 export default PasswordInput;
