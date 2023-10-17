@@ -18,7 +18,6 @@ import { getEvents, getShortLocations } from "../../utils/Api";
 // import Button from "../UI-kit/Button/Button";
 import {
   LAPTOP_SHORT_POINTS_QUANTITY,
-  LAPTOP_MORE_SHORT_POINTS_QUANTITY,
   // MOBILE_POINTS_QUANTITY,
   // TABLET_POINTS_QUANTITY,
   // TABLET_MORE_POINTS_QUANTITY,
@@ -27,8 +26,6 @@ import {
 export const Main = () => {
   const [coworkingsArray, setCoworkingsArray] = useState([]);
   const [eventsArray, setEventsArray] = useState([]);
-  const [pointsAddCount, setPointsAddCount] = useState(0);
-  const [isMoreButtonVisible, setMoreButtonVisible] = useState(true);
   const { isLoading, setIsLoading } = useContext(CurrentUserContext);
   //  const size = useResize();
 
@@ -38,16 +35,12 @@ export const Main = () => {
     const fetchData = () => {
       const shortLocationsPromise = getShortLocations(
         LAPTOP_SHORT_POINTS_QUANTITY,
-        pointsAddCount,
+        0,
       )
         .then((res) => {
           setCoworkingsArray(res.results);
-          setPointsAddCount((prev) => prev + LAPTOP_SHORT_POINTS_QUANTITY);
-          if (res.results.length === 0) setMoreButtonVisible(false);
         })
-        .catch(() => {
-          setMoreButtonVisible(false);
-        });
+        .catch(() => {});
 
       const eventsPromise = getEvents()
         .then((res) => {
@@ -69,16 +62,16 @@ export const Main = () => {
   }, []);
 
   // Кнопка еще для десктопа
-  const handleMoreClick = () => {
-    setPointsAddCount((prev) => prev + LAPTOP_MORE_SHORT_POINTS_QUANTITY);
-    getShortLocations(LAPTOP_MORE_SHORT_POINTS_QUANTITY, pointsAddCount)
-      .then((res) => {
-        setCoworkingsArray(coworkingsArray.concat(res.results));
-        if (res.results.length < LAPTOP_MORE_SHORT_POINTS_QUANTITY)
-          setMoreButtonVisible(false);
-      })
-      .catch(() => {});
-  };
+  // const handleMoreClick = () => {
+  //   setPointsAddCount((prev) => prev + LAPTOP_MORE_SHORT_POINTS_QUANTITY);
+  //   getShortLocations(LAPTOP_MORE_SHORT_POINTS_QUANTITY, pointsAddCount)
+  //     .then((res) => {
+  //       setCoworkingsArray(coworkingsArray.concat(res.results));
+  //       if (res.results.length < LAPTOP_MORE_SHORT_POINTS_QUANTITY)
+  //         setMoreButtonVisible(false);
+  //     })
+  //     .catch(() => {});
+  // };
 
   // const pointsRender = useMemo(() => {
   //   // Стартовое кол-во карточек для отображения на разных разрешениях
@@ -115,8 +108,7 @@ export const Main = () => {
               <PointsList
                 isCompact
                 coworkingsArray={coworkingsArray}
-                handleMoreClick={handleMoreClick}
-                isMoreButtonVisible={isMoreButtonVisible}
+                isMoreButtonVisible={false}
               />
             )}
           </section>

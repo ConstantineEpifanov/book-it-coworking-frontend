@@ -67,7 +67,7 @@
     margin-top: 32px;
   }
 
-  &_type_tertiary {
+  &_type_tertiary-map {
     color: $black;
     background-color: transparent;
     padding: 16px 12px 16px 36px;
@@ -103,6 +103,28 @@
       background-position: 16px 12px;
       color: $green;
       stroke: $green;
+    }
+  }
+
+  &_type_tertiary {
+    color: $black;
+    background-color: transparent;
+    padding: 16px 12px;
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 1.22;
+    width: 220px;
+    border: none;
+
+    &:hover {
+      color: $pink;
+      opacity: 0.7;
+    }
+
+    &:active {
+      color: $green;
+      opacity: 0.7;
     }
   }
 

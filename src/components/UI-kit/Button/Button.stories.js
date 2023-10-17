@@ -32,7 +32,7 @@ export default {
         "button_size_mini",
         "button_active",
         "button_type_link",
-        "button_type_tertiary",
+        "button_type_tertiary-map",
       ],
     },
   },
@@ -76,7 +76,7 @@ export function Type(args) {
         {...args}
       />
       <Button
-        btnClass="button_type_tertiary"
+        btnClass="button_type_tertiary-map"
         btnText="Показать на карте"
         {...args}
       />
