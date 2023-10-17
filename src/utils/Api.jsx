@@ -194,3 +194,20 @@ export function getSpots(id) {
     headers: setHeaders(),
   });
 }
+
+// search
+
+export function searchLocations(params = {}) {
+  const query = new URLSearchParams();
+
+  Object.keys(params).forEach((key) => {
+    if (params[key] !== undefined && params[key] !== null) {
+      query.append(key, params[key]);
+    }
+  });
+
+  return request(`/locations/?${query.toString()}`, {
+    method: "GET",
+    headers: setHeaders(),
+  });
+}

@@ -1,10 +1,14 @@
-import React from "react";
+import React, { useEffect } from "react";
+import PropTypes from "prop-types";
 
+import { useNavigate } from "react-router-dom";
 import img from "../../images/Promo.svg";
 import "./Promo.scss";
 import { PromoItem } from "../PromoItem/PromoItem";
 import Input from "../UI-kit/Input/Input";
 import Button from "../UI-kit/Button/Button";
+import { searchLocations } from "../../utils/Api";
+import useForm from "../../hooks/useForm";
 
 const data = [
   {
@@ -24,12 +28,33 @@ const data = [
   },
 ];
 
-export const Promo = () => {
-  const onChangeInput = () => {};
+export const Promo = ({ lastSearchRequest }) => {
+  const { form, handleChange } = useForm({
+    search: lastSearchRequest,
+    searchError: "",
+  });
+
+  const navigate = useNavigate();
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    navigate("points");
+    searchLocations({
+      name: form.search,
+    })
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+
+    console.log("submit");
   };
+
+  useEffect(() => {
+    console.log("form", form);
+  }, [form]);
 
   return (
     <section className="promo">
@@ -45,8 +70,11 @@ export const Promo = () => {
               inputType="text"
               inputName="search"
               inputPlaceholder="Найти рабочее место..."
-              inputValue=""
-              onChangeInput={onChangeInput}
+              // inputValue=""
+              inputValue={form.search}
+              // onChangeInput={onChangeInput}
+              handleChange={handleChange}
+              // onFocusInput={handleFocus}
             />
             <Button
               btnClass="button__promo"
@@ -69,4 +97,12 @@ export const Promo = () => {
       </ul>
     </section>
   );
+};
+
+Promo.propTypes = {
+  lastSearchRequest: PropTypes.string,
+};
+
+Promo.defaultProps = {
+  lastSearchRequest: "",
 };
