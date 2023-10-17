@@ -154,19 +154,19 @@
     padding: 12px 0 8px;
     display: flex;
     flex-direction: row;
-    align-items: center;
+    align-items: flex-start;
     justify-content: space-between;
   }
 
-  &__subtitle {
-    @include mp-null;
-    font-family: $font-family;
-    color: $black;
-    font-size: 16px;
-    font-style: normal;
-    font-weight: 400;
-    line-height: 1.37;
-  }
+  // &__subtitle {
+  //   @include mp-null;
+  //   font-family: $font-family;
+  //   color: $black;
+  //   font-size: 16px;
+  //   font-style: normal;
+  //   font-weight: 400;
+  //   line-height: 1.37;
+  // }
 
   &__action-button {
     @include mp-null;
