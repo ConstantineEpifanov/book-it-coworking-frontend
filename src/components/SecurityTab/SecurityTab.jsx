@@ -36,7 +36,11 @@ export const SecurityTab = () => {
             <span className="security__feature-name">Пароль</span>
             <span>{hidePassword(currentUser.password)}</span>
           </div>
-          <Button btnText="Сбросить" btnClass="button__profile-edit" />
+          <Button
+            btnText="Сбросить"
+            btnClass="button__profile-edit"
+            isValidBtn={false}
+          />
         </li>
         <li className="security__board-row">
           <div>
@@ -46,7 +50,11 @@ export const SecurityTab = () => {
               всех устройствах, кроме этого
             </p>
           </div>
-          <Button btnText="Изменить" btnClass="button__profile-edit" />
+          <Button
+            btnText="Изменить"
+            btnClass="button__profile-edit"
+            isValidBtn={false}
+          />
         </li>
         <li className="security__board-row">
           <div>
