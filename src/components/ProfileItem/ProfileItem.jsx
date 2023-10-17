@@ -5,7 +5,7 @@ import "./ProfileItem.scss";
 export const ProfileItem = ({ svgElement, title }) => (
   <div className="profile-item">
     <div className="profile-item__row">
-      {svgElement}
+      <span className="profile-item__svg">{svgElement}</span>
       <h2 className="profile-item__title">{title}</h2>
     </div>
     <p className="profile-item__link">Настроить</p>

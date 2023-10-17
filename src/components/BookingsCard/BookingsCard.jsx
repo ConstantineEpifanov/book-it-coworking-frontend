@@ -154,11 +154,11 @@ export const BookingsCard = ({ item }) => {
       <li className="bookings-card" key={item.id}>
         <img
           className="bookings-card__image"
-          src={item.spot.image}
-          alt={item.spot.name}
+          src={item.spot?.image}
+          alt={item.spot?.name}
         />
         <div className="bookings-card__text-container">
-          <h3 className="bookings-card__name">{item.spot.name}</h3>
+          <h3 className="bookings-card__name">{item.spot?.name}</h3>
           {!item.isFinished && (
             <div className="bookings-card__status">
               {statusLabels[item.status]}

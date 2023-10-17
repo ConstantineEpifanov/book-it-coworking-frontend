@@ -1,6 +1,5 @@
 @import "./../../scss/variables.scss";
-@import url("./../../vendor/fonts/fonts.css");
-@import url("./../../vendor/normalize.css");
+@import "./../../scss/mixins.scss";
 
 .profile-item {
   box-sizing: border-box;
@@ -8,13 +7,24 @@
   height: 225px;
   padding: 40px 58px;
   border-radius: 40px;
-  color: $white;
+
   background-color: $black;
+  border: 2px solid $black;
   font-family: $font-family;
   cursor: pointer;
   transition: all 0.2s ease-in-out;
   &:hover {
     opacity: 0.9;
+    .profile-item__title {
+      color: $pink;
+    }
+  }
+  &:active {
+    background-color: white;
+    .profile-item__title,
+    .profile-item__link {
+      color: $black;
+    }
   }
 
   &__row {
@@ -36,6 +46,7 @@
   }
 
   &__link {
+    color: $white;
     display: inline-block;
     margin: 32px 0 0;
     padding: 16px 12px;

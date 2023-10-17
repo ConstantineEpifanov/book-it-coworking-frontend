@@ -145,6 +145,20 @@ export function getUserInfo() {
   });
 }
 
+export function getActiveOrders() {
+  return request("/orders/?finished=false", {
+    method: "GET",
+    headers: setHeaders(),
+  });
+}
+
+export function getFinishedOrders() {
+  return request("/orders/?finished=true", {
+    method: "GET",
+    headers: setHeaders(),
+  });
+}
+
 // Лайк-дислайк
 
 export function addFavorite(id) {

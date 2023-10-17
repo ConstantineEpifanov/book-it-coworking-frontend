@@ -8,7 +8,7 @@ import UserIcon from "../../images/profile-icons/UserIcon";
 import HeartIcon from "../../images/profile-icons/HeartIcon";
 import SuitcaseIcon from "../../images/profile-icons/SuitcaseIcon";
 import LockIcon from "../../images/profile-icons/LockIcon";
-import CardIcon from "../../images/profile-icons/CardItem";
+import CardIcon from "../../images/profile-icons/CardIcon";
 
 import "./ProfileDashboard.scss";
 
@@ -36,11 +36,7 @@ export const ProfileDashboard = () => (
         </Link>
       </div>
       <div className="profile-dashboard__card-center">
-        <Link
-          className="profile-dashboard__link"
-          to="/profile/favorites"
-          state={null}
-        >
+        <Link className="profile-dashboard__link" to="/profile/favorites">
           <ProfileItem title="Избранное" svgElement={<HeartIcon />} />
         </Link>
       </div>
