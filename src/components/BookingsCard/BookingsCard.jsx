@@ -16,7 +16,7 @@ const statusLabels = {
       Подтверждено
     </span>
   ),
-  Processing: (
+  "Ожидается оплата": (
     <span className="bookings-card__status bookings-card__status_processing">
       В обработке
     </span>
@@ -67,7 +67,7 @@ export const BookingsCard = ({ item }) => {
     if (booking.status === "Confirmed") {
       return `Бронирование уже подтверждено.`;
     }
-    if (booking.status === "Processing") {
+    if (booking.status === "Ожидается оплата") {
       return `Бронирование еще находится в обработке.`;
     }
     return "Отменить бронирование";
@@ -210,15 +210,15 @@ export const BookingsCard = ({ item }) => {
 
 BookingsCard.propTypes = {
   item: PropTypes.shape({
-    id: PropTypes.string,
+    id: PropTypes.number,
     location_photo: PropTypes.string,
     location_name: PropTypes.string,
     date: PropTypes.string,
     start_time: PropTypes.string,
     end_time: PropTypes.string,
-    bill: PropTypes.number,
+    bill: PropTypes.string,
     isFinished: PropTypes.bool,
-    status: PropTypes.oneOf(["Confirmed", "Processing"]),
+    status: PropTypes.oneOf(["Confirmed", "Ожидается оплата"]),
   }),
 };
 
