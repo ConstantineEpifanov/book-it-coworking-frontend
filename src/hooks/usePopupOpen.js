@@ -1,10 +1,13 @@
 import React from "react";
+
 import { useLocation } from "react-router-dom";
 import { checkPath } from "../utils/utils";
 import { routesPopup } from "../utils/constants";
+import { useApiError } from "./useApiError";
 
 export default function usePopupOpen() {
   const location = useLocation();
+  const { clearApiError } = useApiError();
   const [isOpenPopup, setIsOpenPopup] = React.useState(false);
   const [previousLocation, setPreviousLocation] = React.useState(
     location?.state?.previousLocation,
@@ -20,10 +23,11 @@ export default function usePopupOpen() {
   const handleClosePopup = React.useCallback(() => {
     setIsOpenPopup(false);
     if (showPopup) {
+      clearApiError();
       setPreviousLocation(null); // обнуляем стейт предыдущей локации
       window.history.replaceState(null, null, "/"); // обнуляем url
     }
-  }, [showPopup]);
+  }, [clearApiError, showPopup]);
 
   React.useEffect(() => {
     function closeByEscape(evt) {

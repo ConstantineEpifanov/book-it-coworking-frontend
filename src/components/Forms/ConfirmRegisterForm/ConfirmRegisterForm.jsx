@@ -1,6 +1,7 @@
 /* eslint-disable react/jsx-no-bind */
 /* eslint-disable camelcase */
 import PropTypes from "prop-types";
+import React from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 
 import Popup from "../../Popup/Popup";
@@ -9,10 +10,12 @@ import Input from "../../UI-kit/Input/Input";
 import Button from "../../UI-kit/Button/Button";
 import { confirmRegister } from "../../../utils/Api";
 import useFormAndValidation from "../../../hooks/useFormAndValidation";
+import { useApiError } from "../../../hooks/useApiError";
 
 const ConfirmRegisterForm = ({ data, isOpenPopup, handleClosePopup }) => {
   const navigate = useNavigate();
   const location = useLocation();
+  const { isErrApi, setIsErrApi } = useApiError();
   const { values, errors, handleChange, isValid } = useFormAndValidation();
 
   const handleConfirm = async ({ email, confirmation_code }) => {
@@ -22,6 +25,7 @@ const ConfirmRegisterForm = ({ data, isOpenPopup, handleClosePopup }) => {
         navigate("/popup/login", { state: { previousLocation: location } });
       }
     } catch (err) {
+      setIsErrApi({ ...isErrApi, message: err });
       console.log(`Что-то пошло не так: ошибка запроса ${err.message} 😔`);
     }
   };
@@ -32,6 +36,7 @@ const ConfirmRegisterForm = ({ data, isOpenPopup, handleClosePopup }) => {
       email: data.email,
       confirmation_code: values.confirmation_code,
     });
+    setIsErrApi("");
   }
 
   return (
@@ -47,8 +52,11 @@ const ConfirmRegisterForm = ({ data, isOpenPopup, handleClosePopup }) => {
           inputName="confirmation_code"
           inputRequired
         />
+        <span className="entry-form__text_error">
+          {isErrApi && `${isErrApi.message}`}
+        </span>
         <Button
-          btnClass="button_type_form button_type_form_margin-top"
+          btnClass="button_type_form"
           btnType="submit"
           btnText="Отправить"
           isValidBtn={isValid}

@@ -2,6 +2,7 @@
 /* eslint-disable camelcase */
 import PropTypes from "prop-types";
 import { useNavigate } from "react-router-dom";
+import React from "react";
 
 import { resetPassConfirmCode } from "../../../utils/Api";
 import EntryForm from "../EntryForm/EntryForm";
@@ -9,8 +10,10 @@ import Input from "../../UI-kit/Input/Input";
 import Button from "../../UI-kit/Button/Button";
 import Popup from "../../Popup/Popup";
 import useFormAndValidation from "../../../hooks/useFormAndValidation";
+import { useApiError } from "../../../hooks/useApiError";
 
 const RestorePassForm = ({ isOpenPopup, handleClosePopup }) => {
+  const { isErrApi, setIsErrApi } = useApiError();
   // const [isSuccess, setIsSuccess] = React.useState(false);
   const { values, errors, isValid, handleChange } = useFormAndValidation();
   const navigate = useNavigate();
@@ -22,6 +25,7 @@ const RestorePassForm = ({ isOpenPopup, handleClosePopup }) => {
       });
       console.log(res);
     } catch (err) {
+      setIsErrApi({ ...isErrApi, message: err });
       console.log(`Что-то пошло не так: ошибка запроса ${err.message} 😔`);
     }
   };
@@ -29,6 +33,7 @@ const RestorePassForm = ({ isOpenPopup, handleClosePopup }) => {
   function handleSubmit(evt) {
     evt.preventDefault();
     handleResetPassConfirmCode(values);
+    setIsErrApi("");
   }
   return (
     <Popup isOpen={isOpenPopup} onClickClose={handleClosePopup}>
@@ -43,8 +48,11 @@ const RestorePassForm = ({ isOpenPopup, handleClosePopup }) => {
           inputRequired
           inputInfo="Код для сброса пароля будет направлен на этот адрес электронной почты"
         />
+        <span className="entry-form__text_error">
+          {isErrApi && `${isErrApi.message}`}
+        </span>
         <Button
-          btnClass="button_type_form button_type_form_margin-top"
+          btnClass="button_type_form"
           btnType="button"
           btnText="Сбросить пароль"
           isValidBtn={isValid}
