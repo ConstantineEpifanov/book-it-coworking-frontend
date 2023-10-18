@@ -69,6 +69,10 @@ export const CoworkingList = () => {
     });
   };
 
+  const handleUpdateCoworkings = (data) => {
+    setCoworkingsArray(data);
+  };
+
   return (
     <main className="coworking-list">
       {isLoading ? (
@@ -83,7 +87,7 @@ export const CoworkingList = () => {
             titleText="Вы можете снять рабочее место в одном из коворкингов Санкт-Петербурга, представленных в нашем каталоге"
             titleClass="section-subtitle_search"
           />
-          <SearchForm />
+          <SearchForm handleUpdateCoworkings={handleUpdateCoworkings} />
           <MainMap points={mapPoints} defaultState={defaultState} />
           <PointsList
             isListed

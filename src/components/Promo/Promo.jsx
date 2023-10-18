@@ -31,14 +31,13 @@ const data = [
 export const Promo = ({ lastSearchRequest }) => {
   const { form, handleChange } = useForm({
     search: lastSearchRequest,
-    searchError: "",
   });
 
   const navigate = useNavigate();
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    navigate("points");
+    localStorage.setItem("lastSearchRequest", form.search);
     searchLocations({
       name: form.search,
     })
@@ -47,9 +46,8 @@ export const Promo = ({ lastSearchRequest }) => {
       })
       .catch((error) => {
         console.error(error);
-      });
-
-    console.log("submit");
+      })
+      .finally(navigate("points"));
   };
 
   useEffect(() => {

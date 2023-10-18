@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import PropTypes from "prop-types";
 import Button from "../../UI-kit/Button/Button";
 import Input from "../../UI-kit/Input/Input";
@@ -9,7 +9,9 @@ import { searchLocations } from "../../../utils/Api";
 
 import useForm from "../../../hooks/useForm";
 
-const SearchForm = ({ lastSearchRequest }) => {
+const SearchForm = ({ handleUpdateCoworkings }) => {
+  const lastSearchRequest = localStorage.getItem("lastSearchRequest");
+  JSON.parse(localStorage.getItem("formData"));
   const { form, handleChange, handleSelectChange } = useForm({
     search: lastSearchRequest,
     category: "",
@@ -22,7 +24,7 @@ const SearchForm = ({ lastSearchRequest }) => {
         inputType="search"
         inputName="search"
         inputValue={form.search}
-        // inputError={form.search}
+        // inputError={errors.search}
         handleChange={handleChange}
         inputRequired
         inputPlaceholder="Искать по названию... "
@@ -33,23 +35,19 @@ const SearchForm = ({ lastSearchRequest }) => {
 
   const formSearchSubmit = (e) => {
     e.preventDefault();
-    console.log("submit");
+    localStorage.setItem("lastSearchRequest", form.search);
     searchLocations({
       name: form.search,
       category: form.category,
       metro: form.metro,
     })
       .then((res) => {
-        console.log(res);
+        handleUpdateCoworkings(res);
       })
       .catch((error) => {
         console.error(error);
       });
   };
-
-  useEffect(() => {
-    console.log(form);
-  }, [form]);
 
   function handleSubmit(evt) {
     evt.preventDefault();
@@ -105,9 +103,5 @@ const SearchForm = ({ lastSearchRequest }) => {
 export default SearchForm;
 
 SearchForm.propTypes = {
-  lastSearchRequest: PropTypes.string,
-};
-
-SearchForm.defaultProps = {
-  lastSearchRequest: "",
+  handleUpdateCoworkings: PropTypes.func.isRequired,
 };
