@@ -110,6 +110,7 @@ export const Main = () => {
               <NotFoundError
                 titleText="Данные с сервера не получены"
                 subtitleText="Попробуйте чуть позже"
+                directionRow
               />
             ) : (
               <PointsList
