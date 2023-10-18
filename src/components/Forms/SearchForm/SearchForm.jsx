@@ -11,7 +11,6 @@ import useForm from "../../../hooks/useForm";
 
 const SearchForm = ({ handleUpdateCoworkings }) => {
   const lastSearchRequest = localStorage.getItem("lastSearchRequest");
-  JSON.parse(localStorage.getItem("formData"));
   const { form, handleChange, handleSelectChange } = useForm({
     search: lastSearchRequest,
     category: "",

@@ -27,7 +27,9 @@ export const CoworkingList = () => {
   const { isLoading, setIsLoading } = useContext(CurrentUserContext);
 
   const location = useLocation();
-  const { coworkingsArrayFromPromo } = location.state;
+  const coworkingsArrayFromPromo = location.state
+    ? location.state.coworkingsArrayFromPromo
+    : undefined;
 
   useEffect(() => {
     const fetchData = () => {
@@ -84,13 +86,6 @@ export const CoworkingList = () => {
   const handleUpdateCoworkings = (data) => {
     setCoworkingsArray(data);
   };
-
-  // useEffect(() => {
-  //   if (coworkingsArrayFromPromo) {
-  //     setCoworkingsArray(coworkingsArrayFromPromo);
-
-  //   }
-  // }, [coworkingsArrayFromPromo]);
 
   useEffect(() => {
     console.log("coworkingsArray", coworkingsArray);

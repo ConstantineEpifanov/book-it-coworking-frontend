@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import PropTypes from "prop-types";
 
 import { useNavigate } from "react-router-dom";
@@ -46,16 +46,11 @@ export const Promo = ({ lastSearchRequest }) => {
     })
       .then((coworkingsArrayFromPromo) => {
         navigate("/points", { state: { coworkingsArrayFromPromo } });
-        console.log(coworkingsArrayFromPromo);
       })
       .catch((error) => {
         console.error(error);
       });
   };
-
-  useEffect(() => {
-    console.log("form", form);
-  }, [form]);
 
   return (
     <section className="promo">
