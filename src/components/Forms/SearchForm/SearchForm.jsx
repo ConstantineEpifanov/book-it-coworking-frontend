@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import React, { useEffect } from "react";
 import PropTypes from "prop-types";
 import Button from "../../UI-kit/Button/Button";
 import Input from "../../UI-kit/Input/Input";
@@ -14,6 +14,22 @@ const SearchForm = ({ lastSearchRequest }) => {
     search: lastSearchRequest,
     category: "",
   });
+
+  const inputComponent = React.useMemo(
+    () => (
+      <Input
+        inputClass="input__search"
+        inputType="search"
+        inputName="search"
+        inputValue={form.search}
+        // inputError={form.search}
+        handleChange={handleChange}
+        inputRequired
+        inputPlaceholder="Искать по названию... "
+      />
+    ),
+    [form.search, handleChange],
+  );
 
   const formSearchSubmit = (e) => {
     e.preventDefault();
@@ -35,12 +51,16 @@ const SearchForm = ({ lastSearchRequest }) => {
     console.log(form);
   }, [form]);
 
+  function handleSubmit(evt) {
+    evt.preventDefault();
+  }
   return (
     <div className="entry-form__container">
       <form
         className="entry-form__inner entry-form__inner_select"
         name="form"
         autoComplete="off"
+        onSubmit={handleSubmit}
       >
         <div className="entry-form__search">
           {/* @ TODO подумать над реализацией смены иконки при ошибке */}
@@ -49,16 +69,8 @@ const SearchForm = ({ lastSearchRequest }) => {
             alt="иконка поиска"
             className="entry-form__search-img"
           />
-          <Input
-            inputClass="input__search"
-            inputType="search"
-            inputName="search"
-            inputValue={form.search}
-            // inputError={form.search}
-            handleChange={handleChange}
-            inputRequired
-            inputPlaceholder="Искать по названию... "
-          />
+
+          {inputComponent}
         </div>
         <SortData
           selectName="category"
@@ -76,7 +88,7 @@ const SearchForm = ({ lastSearchRequest }) => {
         />
         <Button
           btnClass="button_type_form button_type_form-select"
-          btnType="submit"
+          btnType="button"
           btnText="Искать"
           onClick={formSearchSubmit}
         />
