@@ -1,4 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
+import { useLocation } from "react-router-dom";
 import { CurrentUserContext } from "../../contexts/currentUserContext";
 // import PropTypes from "prop-types";
 import "./CoworkingList.scss";
@@ -25,9 +26,10 @@ export const CoworkingList = () => {
   const [mapPoints, setMapPoints] = useState([]);
   const { isLoading, setIsLoading } = useContext(CurrentUserContext);
 
-  useEffect(() => {
-    setIsLoading(true);
+  const location = useLocation();
+  const { coworkingsArrayFromPromo } = location.state;
 
+  useEffect(() => {
     const fetchData = () => {
       const locationsPromise = getLocations(
         LAPTOP_POINTS_QUANTITY,
@@ -54,7 +56,17 @@ export const CoworkingList = () => {
         });
     };
 
-    fetchData();
+    if (
+      (Array.isArray(coworkingsArrayFromPromo) &&
+        coworkingsArrayFromPromo.length === 0) ||
+      !coworkingsArrayFromPromo
+    ) {
+      setIsLoading(true);
+      fetchData();
+    } else {
+      setCoworkingsArray(coworkingsArrayFromPromo);
+      setIsLoading(false);
+    }
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -72,6 +84,17 @@ export const CoworkingList = () => {
   const handleUpdateCoworkings = (data) => {
     setCoworkingsArray(data);
   };
+
+  // useEffect(() => {
+  //   if (coworkingsArrayFromPromo) {
+  //     setCoworkingsArray(coworkingsArrayFromPromo);
+
+  //   }
+  // }, [coworkingsArrayFromPromo]);
+
+  useEffect(() => {
+    console.log("coworkingsArray", coworkingsArray);
+  }, [coworkingsArray]);
 
   return (
     <main className="coworking-list">

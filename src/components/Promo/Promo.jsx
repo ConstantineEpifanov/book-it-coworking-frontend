@@ -37,17 +37,20 @@ export const Promo = ({ lastSearchRequest }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    if (!form.search) {
+      return;
+    }
     localStorage.setItem("lastSearchRequest", form.search);
     searchLocations({
       name: form.search,
     })
-      .then((res) => {
-        console.log(res);
+      .then((coworkingsArrayFromPromo) => {
+        navigate("/points", { state: { coworkingsArrayFromPromo } });
+        console.log(coworkingsArrayFromPromo);
       })
       .catch((error) => {
         console.error(error);
-      })
-      .finally(navigate("points"));
+      });
   };
 
   useEffect(() => {
