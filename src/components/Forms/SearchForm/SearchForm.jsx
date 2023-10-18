@@ -90,12 +90,12 @@ const SearchForm = ({ handleUpdateCoworkings }) => {
           btnText="Искать"
           onClick={formSearchSubmit}
         />
-        <Button
+        {/* <Button
           btnClass="button_type_transparent button_type_transparent-select"
           btnType="button"
           btnText="Сбросить"
           onClick={() => {}}
-        />
+        /> */}
       </form>
     </div>
   );
