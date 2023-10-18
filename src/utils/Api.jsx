@@ -2,7 +2,17 @@
 export function checkResponse(res) {
   return res.ok
     ? res.json()
-    : Promise.reject(new Error(`Ошибка ${res.status}`));
+    : res.json().then((errorResponse) => {
+        // ошибка с сообщением
+        if (errorResponse && errorResponse.error) {
+          const errorMessage = errorResponse.error[0];
+          return Promise.reject(errorMessage);
+        }
+        //  общее сообщение об ошибке
+        return Promise.reject(
+          new Error(`Ошибка ${res.statusText} ${res.status}`),
+        );
+      });
 }
 
 function request(url, options) {
