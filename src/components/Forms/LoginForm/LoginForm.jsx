@@ -32,8 +32,9 @@ const LoginForm = ({ isOpenPopup, onClosePopup, onGetUserInfo }) => {
       onClosePopup();
     } catch (err) {
       setIsErrApi({ ...isErrApi, message: err });
-      console.log(
-        `Что-то пошло не так: ошибка запроса ${err || err.status} 😔`,
+      console.error(
+        "Что-то пошло не так: ошибка запроса 😔",
+        JSON.stringify(err, null, 2),
       );
     }
   };

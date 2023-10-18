@@ -43,7 +43,10 @@ const RegisterForm = ({ isOpenPopup, handleClosePopup }) => {
     } catch (err) {
       setIsErrApi({ ...isErrApi, message: err });
       setIsSuccessReg(false);
-      console.log(`Что-то пошло не так:  ${err.status} 😔`);
+      console.error(
+        "Что-то пошло не так: ошибка запроса 😔",
+        JSON.stringify(err, null, 2),
+      );
     }
   };
 

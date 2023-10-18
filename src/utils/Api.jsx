@@ -4,9 +4,8 @@ export function checkResponse(res) {
     ? res.json()
     : res.json().then((errorResponse) => {
         // ошибка с сообщением
-        if (errorResponse && errorResponse.error) {
-          const errorMessage = errorResponse.error[0];
-          return Promise.reject(errorMessage);
+        if (errorResponse) {
+          return Promise.reject(errorResponse);
         }
         //  общее сообщение об ошибке
         return Promise.reject(

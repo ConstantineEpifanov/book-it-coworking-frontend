@@ -46,7 +46,10 @@ function App() {
       const data = await getUserInfo();
       setСurrentUser(data);
     } catch (err) {
-      console.log(`Что-то пошло не так: ошибка запроса ${err} 😔`);
+      console.error(
+        "Что-то пошло не так: ошибка запроса 😔",
+        JSON.stringify(err, null, 2),
+      );
     }
   };
 
@@ -69,7 +72,10 @@ function App() {
         // при ошибке проверки токена отключаем лоудер
         setIsLoading(false);
         setIsLoggedIn(false);
-        console.log(`Что-то пошло не так: ошибка запроса ${err.message} 😔`);
+        console.error(
+          "Что-то пошло не так: ошибка запроса 😔",
+          JSON.stringify(err, null, 2),
+        );
       }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
