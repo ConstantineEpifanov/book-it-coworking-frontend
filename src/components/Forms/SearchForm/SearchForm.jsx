@@ -5,6 +5,7 @@ import Input from "../../UI-kit/Input/Input";
 import logoSearch from "../../../images/search-icon.svg";
 import SortData from "../../UI-kit/SortData/SortData";
 import { coWorkingOptions, metroOptions } from "../../../config/dataOptions";
+import { searchLocations } from "../../../utils/Api";
 
 import useForm from "../../../hooks/useForm";
 
@@ -13,6 +14,22 @@ const SearchForm = ({ lastSearchRequest }) => {
     search: lastSearchRequest,
     category: "",
   });
+
+  const formSearchSubmit = (e) => {
+    e.preventDefault();
+    console.log("submit");
+    searchLocations({
+      name: form.search,
+      category: form.category,
+      metro: form.metro,
+    })
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  };
 
   useEffect(() => {
     console.log(form);
@@ -59,9 +76,9 @@ const SearchForm = ({ lastSearchRequest }) => {
         />
         <Button
           btnClass="button_type_form button_type_form-select"
-          btnType="button"
+          btnType="submit"
           btnText="Искать"
-          onClick={() => {}}
+          onClick={formSearchSubmit}
         />
         <Button
           btnClass="button_type_transparent button_type_transparent-select"
