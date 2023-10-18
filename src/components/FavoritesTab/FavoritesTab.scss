@@ -24,10 +24,11 @@
     gap: 20px;
   }
   &__card {
+    @include card-border-color;
     box-sizing: border-box;
     border-radius: 40px;
     border: 2px solid $black;
-    width: 320px;
+    width: 266px;
     overflow: hidden;
 
     &-image {

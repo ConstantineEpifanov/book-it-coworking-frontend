@@ -42,3 +42,16 @@ export const WORKING_DAYS_COUNTS = {
 
 // Количество доступных дней в календаре для бронирования
 export const CALENDAR_MAX_ALLOWED_DAYS = 60;
+
+// Статусы заказов
+export const ORDER_STATUSES = {
+  WAIT_PAY: "Ожидается оплата",
+  PAID: "Оплачено",
+  FINISH: "Завершен",
+  CANCEL: "Отменен",
+  NOT_PAID: "Не оплачено",
+};
+
+// Количество символов в отзыве
+
+export const MAX_REVIEW_CHARACTERS_NUMBER = 300;
