@@ -42,3 +42,9 @@ export const WORKING_DAYS_COUNTS = {
 
 // Количество доступных дней в календаре для бронирования
 export const CALENDAR_MAX_ALLOWED_DAYS = 60;
+
+export const routesPopup = [
+  "/popup/login",
+  "/popup/register",
+  "/popup/reset_password",
+];
