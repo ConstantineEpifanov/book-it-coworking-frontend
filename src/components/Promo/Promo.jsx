@@ -1,10 +1,14 @@
 import React from "react";
+import PropTypes from "prop-types";
 
+import { useNavigate } from "react-router-dom";
 import img from "../../images/Promo.svg";
 import "./Promo.scss";
 import { PromoItem } from "../PromoItem/PromoItem";
 import Input from "../UI-kit/Input/Input";
 import Button from "../UI-kit/Button/Button";
+import { searchLocations } from "../../utils/Api";
+import useForm from "../../hooks/useForm";
 
 const data = [
   {
@@ -24,11 +28,30 @@ const data = [
   },
 ];
 
-export const Promo = () => {
-  const onChangeInput = () => {};
+export const Promo = ({ lastSearchRequest }) => {
+  const { form, handleChange } = useForm({
+    search: lastSearchRequest,
+  });
+
+  const navigate = useNavigate();
 
   const handleSubmit = (e) => {
     e.preventDefault();
+
+    if (form.search === "" || !form.search) {
+      const coworkingsArrayFromPromo = [];
+      navigate("/points", { state: { coworkingsArrayFromPromo } });
+    }
+    localStorage.setItem("lastSearchRequest", form.search);
+    searchLocations({
+      name: form.search,
+    })
+      .then((coworkingsArrayFromPromo) => {
+        navigate("/points", { state: { coworkingsArrayFromPromo } });
+      })
+      .catch((error) => {
+        console.error(error);
+      });
   };
 
   return (
@@ -45,8 +68,11 @@ export const Promo = () => {
               inputType="text"
               inputName="search"
               inputPlaceholder="Найти рабочее место..."
-              inputValue=""
-              onChangeInput={onChangeInput}
+              // inputValue=""
+              inputValue={form.search}
+              // onChangeInput={onChangeInput}
+              handleChange={handleChange}
+              // onFocusInput={handleFocus}
             />
             <Button
               btnClass="button__promo"
@@ -69,4 +95,12 @@ export const Promo = () => {
       </ul>
     </section>
   );
+};
+
+Promo.propTypes = {
+  lastSearchRequest: PropTypes.string,
+};
+
+Promo.defaultProps = {
+  lastSearchRequest: "",
 };

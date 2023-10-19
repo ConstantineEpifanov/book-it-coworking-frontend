@@ -1,4 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
+import { useLocation } from "react-router-dom";
 import { CurrentUserContext } from "../../contexts/currentUserContext";
 // import PropTypes from "prop-types";
 import "./CoworkingList.scss";
@@ -25,9 +26,12 @@ export const CoworkingList = () => {
   const [mapPoints, setMapPoints] = useState([]);
   const { isLoading, setIsLoading } = useContext(CurrentUserContext);
 
-  useEffect(() => {
-    setIsLoading(true);
+  const location = useLocation();
+  const coworkingsArrayFromPromo = location.state
+    ? location.state.coworkingsArrayFromPromo
+    : undefined;
 
+  useEffect(() => {
     const fetchData = () => {
       const locationsPromise = getLocations(
         LAPTOP_POINTS_QUANTITY,
@@ -54,7 +58,17 @@ export const CoworkingList = () => {
         });
     };
 
-    fetchData();
+    if (
+      (Array.isArray(coworkingsArrayFromPromo) &&
+        coworkingsArrayFromPromo.length === 0) ||
+      !coworkingsArrayFromPromo
+    ) {
+      setIsLoading(true);
+      fetchData();
+    } else {
+      setCoworkingsArray(coworkingsArrayFromPromo);
+      setIsLoading(false);
+    }
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -68,6 +82,14 @@ export const CoworkingList = () => {
         setMoreButtonVisible(false);
     });
   };
+
+  const handleUpdateCoworkings = (data) => {
+    setCoworkingsArray(data);
+  };
+
+  useEffect(() => {
+    console.log("coworkingsArray", coworkingsArray);
+  }, [coworkingsArray]);
 
   return (
     <main className="coworking-list">
@@ -83,7 +105,7 @@ export const CoworkingList = () => {
             titleText="Вы можете снять рабочее место в одном из коворкингов, представленных в нашем каталоге"
             titleClass="section-subtitle_search"
           />
-          <SearchForm />
+          <SearchForm handleUpdateCoworkings={handleUpdateCoworkings} />
           <MainMap points={mapPoints} defaultState={defaultState} />
           <PointsList
             isListed

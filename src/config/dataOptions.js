@@ -14,5 +14,5 @@ export const metroOptions = [
 
 export const coWorkingOptions = [
   { id: 1, text: "Переговорная" },
-  { id: 2, text: "Место в общей зоне" },
+  { id: 2, text: "Рабочее место" },
 ];

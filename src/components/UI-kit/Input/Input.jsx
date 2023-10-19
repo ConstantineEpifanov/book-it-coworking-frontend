@@ -59,13 +59,13 @@ Input.propTypes = {
 
 Input.defaultProps = {
   inputClass: "",
-  inputValue: null,
-  inputError: null,
+  inputValue: "",
+  inputError: "",
   inputName: "",
   inputPlaceholder: "",
   inputInfo: "",
-  inputRequired: null,
-  inputDisabled: null,
+  inputRequired: true,
+  inputDisabled: false,
   handleChange: () => {},
 };
 

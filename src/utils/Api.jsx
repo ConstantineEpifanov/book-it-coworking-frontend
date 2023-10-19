@@ -2,7 +2,16 @@
 export function checkResponse(res) {
   return res.ok
     ? res.json()
-    : Promise.reject(new Error(`Ошибка ${res.status}`));
+    : res.json().then((errorResponse) => {
+        // ошибка с сообщением
+        if (errorResponse) {
+          return Promise.reject(errorResponse);
+        }
+        //  общее сообщение об ошибке
+        return Promise.reject(
+          new Error(`Ошибка ${res.statusText} ${res.status}`),
+        );
+      });
 }
 
 function request(url, options) {
@@ -237,6 +246,23 @@ export function getLocationPlanPhoto(id) {
 
 export function getSpots(id) {
   return request(`/locations/${id}/spots`, {
+    method: "GET",
+    headers: setHeaders(),
+  });
+}
+
+// search
+
+export function searchLocations(params = {}) {
+  const query = new URLSearchParams();
+
+  Object.keys(params).forEach((key) => {
+    if (params[key] !== undefined && params[key] !== null) {
+      query.append(key, params[key]);
+    }
+  });
+
+  return request(`/locations/?${query.toString()}`, {
     method: "GET",
     headers: setHeaders(),
   });
