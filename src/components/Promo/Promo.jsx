@@ -37,8 +37,10 @@ export const Promo = ({ lastSearchRequest }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (!form.search) {
-      return;
+
+    if (form.search === "" || !form.search) {
+      const coworkingsArrayFromPromo = [];
+      navigate("/points", { state: { coworkingsArrayFromPromo } });
     }
     localStorage.setItem("lastSearchRequest", form.search);
     searchLocations({
