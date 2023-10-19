@@ -106,12 +106,37 @@ export const ProfileDataTab = () => {
           <ProfileDataForm title="Редактирование данных профиля">
             <ul className="profile-data__list">
               {[
-                { id: 1, name: "first_name", placeholder: "Имя" },
-                { id: 2, name: "last_name", placeholder: "Фамилия" },
-                { id: 3, name: "birth_date", placeholder: "Дата рождения" },
-                { id: 4, name: "phone", placeholder: "Номер телефона" },
-                { id: 5, name: "email", placeholder: "Email" },
-                { id: 6, name: "occupation", placeholder: "Род деятельности" },
+                {
+                  id: 1,
+                  name: "first_name",
+                  placeholder: "Имя",
+                  required: true,
+                },
+                {
+                  id: 2,
+                  name: "last_name",
+                  placeholder: "Фамилия",
+                  required: true,
+                },
+                {
+                  id: 3,
+                  name: "birth_date",
+                  placeholder: "Дата рождения",
+                  required: false,
+                },
+                {
+                  id: 4,
+                  name: "phone",
+                  placeholder: "Номер телефона",
+                  required: false,
+                },
+                { id: 5, name: "email", placeholder: "Email", required: true },
+                {
+                  id: 6,
+                  name: "occupation",
+                  placeholder: "Род деятельности",
+                  required: false,
+                },
               ].map((field) => (
                 <li key={field.id} className="profile-data__list-input">
                   <Input
@@ -122,6 +147,7 @@ export const ProfileDataTab = () => {
                     inputError={errors[field.name]}
                     handleChange={handleChange}
                     inputPlaceholder={field.placeholder}
+                    inputRequired={field.required}
                   />
                 </li>
               ))}

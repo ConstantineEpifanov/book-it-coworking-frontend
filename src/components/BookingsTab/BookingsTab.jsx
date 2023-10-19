@@ -56,6 +56,9 @@ export const BookingsTab = () => {
         </button>
       </div>
       <ul className="bookings__card-list">
+        {bookings.length === 0 && (
+          <span className="bookings__nodata">Пока бронирований нет</span>
+        )}
         {bookings.map((item) => (
           <BookingsCard item={item} key={item.id} />
         ))}

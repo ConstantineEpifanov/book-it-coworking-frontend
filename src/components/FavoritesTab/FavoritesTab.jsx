@@ -92,17 +92,20 @@ export const FavoritesTab = () => {
       {!isLoading ? (
         <>
           <h2 className="favorites__title">Избранное</h2>
-          <ul className="favorites__card-list">
-            {favoritesArray.length !== 0
-              ? favoritesArray.map((item) => (
-                  <FavoriteCard
-                    item={item}
-                    key={item.id}
-                    onFavoriteDeleted={handleFavoriteDeleted}
-                  />
-                ))
-              : "Пока ничего не добавлено"}
-          </ul>
+
+          {favoritesArray.length !== 0 ? (
+            <ul className="favorites__card-list">
+              {favoritesArray.map((item) => (
+                <FavoriteCard
+                  item={item}
+                  key={item.id}
+                  onFavoriteDeleted={handleFavoriteDeleted}
+                />
+              ))}
+            </ul>
+          ) : (
+            <span className="favorites__nodata">Пока ничего не добавлено</span>
+          )}
         </>
       ) : (
         <Loader />
