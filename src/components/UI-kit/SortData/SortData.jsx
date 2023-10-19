@@ -12,12 +12,12 @@ const SortData = ({
 }) => {
   const sortRef = React.useRef(null);
   const [open, setOpen] = React.useState(false);
-  const [sort, setSort] = React.useState(false);
+  const [sort, setSort] = React.useState("");
 
   const onClickListItem = (obj) => {
-    setSort(obj);
-    // console.log(`Сортировка по : ${obj.text}`);
-    handleSelectChange({ [selectName]: obj.text });
+    const newSort = obj.text === "--" ? "" : obj.text;
+    setSort(newSort);
+    handleSelectChange({ [selectName]: newSort });
     setOpen(false);
   };
 
@@ -45,7 +45,7 @@ const SortData = ({
         } `}
       >
         <div className="sort__label">
-          <p className="sort__label_text">{!sort ? titleSort : sort.text}</p>
+          <p className="sort__label_text">{!sort ? titleSort : sort}</p>
           <button
             className={`sort__label_button   ${
               open && "sort__label_button-active"
