@@ -3,8 +3,7 @@ import React from "react";
 const validationPatterns = {
   first_name: /^[a-zA-Zа-яА-Я\sё.-]+$/,
   last_name: /^[a-zA-Zа-яА-Я\sё.-]+$/,
-  email:
-    /^[-!#$%&'*+/0-9=?A-Z^_a-z`{|}~](\.?[-!#$%&'*+/0-9=?A-Z^_a-z`{|}~])*@[a-zA-Z0-9](-?[a-zA-Z0-9])*.[a-zA-Z](-?[a-zA-Z0-9])+$/,
+  email: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
   phoneNumber: /^\+7\d{10}$/,
   date: /^(0[1-9]|[12][0-9]|3[01])\.(0[1-9]|1[0-2])\.\d{4}$/,
   confirmation_code: /^\d{6}$/,
@@ -17,6 +16,8 @@ const validationMessages = {
   phoneNumber: "Введите номер телефона в формате +7XXXXXXXXXX",
   date: "Введите дату в формате дд.мм.гггг",
   confirmation_code: "Некорректный код",
+  password: "Пароль должен содержать не менее 6 символов",
+  re_password: "Пароли должны совпадать",
 };
 
 export default function useFormAndValidation() {
@@ -30,6 +31,7 @@ export default function useFormAndValidation() {
     setIsValid(e.target.closest("form").checkValidity());
 
     if (value) {
+      //  // валидация всех полей 
       if (validationPatterns[name]) {
         const isValidField = validationPatterns[name].test(value);
         setErrors({
@@ -39,9 +41,24 @@ export default function useFormAndValidation() {
         if (!isValidField) {
           setIsValid(false);
         }
-      } else if (name === "password" || name === "re_password") {
-        setErrors({ ...errors, [name]: e.target.validationMessage });
+      } 
+      // валидация полей с паролем 
+      else if (name === "password") {
+        if (value.length < 6) {
+          setErrors({ ...errors, [name]: validationMessages[name] });
+          setIsValid(false);
+        } else {
+          setErrors({ ...errors, [name]: "" });
+        }
+      } else if (name === "re_password") {
+        if (value !== values.password) {
+          setErrors({ ...errors, [name]: validationMessages[name] });
+          setIsValid(false);
+        } else {
+          setErrors({ ...errors, [name]: "" });
+        }
       }
+       // валидация полей с обязательным заполнением 
     } else if (required && !value) {
       setErrors({
         ...errors,
