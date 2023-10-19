@@ -34,6 +34,12 @@ export default {
         type: "boolean",
       },
     },
+    isSelectByRanges: {
+      description: "Автоматический выбор всех промежуточных значений между двумя отмеченными",
+      control: {
+        type: "boolean",
+      },
+    },
     allowedRanges: {
       description: "Допустимые диапазоны элементов для множественного выбора",
       control: {
@@ -58,6 +64,12 @@ export default {
         type: "string",
       },
     },
+    extraRules: {
+      description: "Массив доволнительных функций проверки",
+    },
+    sortFunc: {
+      description: "Функция сортироваки элементов списка"
+    }
   },
 };
 

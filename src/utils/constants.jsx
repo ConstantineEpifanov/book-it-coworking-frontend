@@ -43,6 +43,9 @@ export const WORKING_DAYS_COUNTS = {
 // Количество доступных дней в календаре для бронирования
 export const CALENDAR_MAX_ALLOWED_DAYS = 60;
 
+// Доступные промежутки времени для бронирования
+export const ALLOWED_TIME_RANGES = [{ startTime: "09:00", endTime: "12:00" }];
+
 export const routesPopup = [
   "/popup/login",
   "/popup/register",
