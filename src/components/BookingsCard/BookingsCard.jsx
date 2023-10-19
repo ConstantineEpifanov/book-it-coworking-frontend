@@ -9,7 +9,7 @@ import {
 import { publishReview, cancelOrder } from "../../utils/Api";
 import { formatDate } from "../../utils/utils";
 
-// import usePopupOpen from "../../hooks/usePopupOpen";
+import usePopupOpen from "../../hooks/usePopupOpen";
 
 import Button from "../UI-kit/Button/Button";
 import Popup from "../Popup/Popup";
@@ -35,30 +35,17 @@ const statusLabels = {
 };
 
 export const BookingsCard = ({ item }) => {
-  // const { isOpenPopup, handleOpenPopup, handleClosePopup } = usePopupOpen();
-  const [isOpenPopup, setIsOpenPopup] = useState(false);
+  const { isOpenPopup, handleOpenPopup, handleClosePopup } = usePopupOpen();
   const [isCancellationConfirmed, setIsCancellationConfirmed] = useState(false);
   const [isReviewFormOpen, setIsReviewFormOpen] = useState(false);
   const [reviewText, setReviewText] = useState("");
   const [reviewRating, setReviewRating] = useState(0);
 
-  // после перехода на хук удалить
-  const handleOpenPopup = () => {
-    setIsOpenPopup(true);
-  };
-
-  const handleClosePopup = () => {
-    setIsOpenPopup(false);
+  const handleCloseBookingPopup = () => {
+    handleClosePopup();
     setIsCancellationConfirmed(false);
     setIsReviewFormOpen(false);
   };
-
-  // после перехода на хук использовать
-  // const handleCloseBookingPopup = () => {
-  //   handleClosePopup();
-  //   setIsCancellationConfirmed(false);
-  //   setIsReviewFormOpen(false);
-  // };
 
   const handleConfirmCancellation = () => {
     cancelOrder(item.location_id, item.spot, item.id).finally(() => {
@@ -68,7 +55,7 @@ export const BookingsCard = ({ item }) => {
 
   const handleOpenReviewForm = () => {
     setIsReviewFormOpen(true);
-    setIsOpenPopup(true);
+    handleOpenPopup();
   };
 
   const handleReviewTextChange = (e) => {
@@ -118,7 +105,7 @@ export const BookingsCard = ({ item }) => {
           <Button
             btnText="Назад"
             btnClass="button__profile-transparent"
-            onClick={handleClosePopup}
+            onClick={handleCloseBookingPopup}
           />
           <Button
             btnText="Создать"
@@ -167,7 +154,7 @@ export const BookingsCard = ({ item }) => {
           <Button
             btnText="Назад"
             btnClass="button__profile-transparent"
-            onClick={handleClosePopup}
+            onClick={handleCloseBookingPopup}
           />
           <Button
             btnText="Отменить"
@@ -224,7 +211,7 @@ export const BookingsCard = ({ item }) => {
       <Popup
         isOpen={isOpenPopup}
         popupClass="bookings-card__popup"
-        onClickClose={handleClosePopup}
+        onClickClose={handleCloseBookingPopup}
       >
         {content}
       </Popup>

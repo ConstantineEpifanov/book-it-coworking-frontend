@@ -22,6 +22,7 @@
     flex-wrap: wrap;
     justify-content: space-between;
     gap: 20px;
+    max-width: 552px;
   }
   &__card {
     @include card-border-color;
