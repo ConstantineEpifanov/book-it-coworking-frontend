@@ -102,7 +102,7 @@ export const CoworkingList = () => {
             titleClass="section-title_search"
           />
           <SectionSubtitle
-            titleText="Вы можете снять рабочее место в одном из коворкингов Санкт-Петербурга, представленных в нашем каталоге"
+            titleText="Вы можете снять рабочее место в одном из коворкингов, представленных в нашем каталоге"
             titleClass="section-subtitle_search"
           />
           <SearchForm handleUpdateCoworkings={handleUpdateCoworkings} />

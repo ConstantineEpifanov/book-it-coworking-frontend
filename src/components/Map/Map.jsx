@@ -27,8 +27,8 @@ export const MainMap = ({ points }) => {
     <div className="map__container" ref={mapRef}>
       <Button
         onClick={handleMapButtonClick}
-        btnClass={`button_type_tertiary${
-          isMap ? " button_type_tertiary-shown" : ""
+        btnClass={`button_type_tertiary-map${
+          isMap ? " button_type_tertiary-map-shown" : ""
         }`}
         btnText={isMap ? "Скрыть карту" : "Показать на карте"}
       />

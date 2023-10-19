@@ -1,5 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
+import { Link } from "react-router-dom";
 
 import { PointsItem } from "../PointsItem/PointsItem";
 import Button from "../UI-kit/Button/Button";
@@ -23,9 +24,17 @@ export const PointsList = ({
     {isMoreButtonVisible && (
       <Button
         btnClass="button_more button_type_transparent button_size_large"
-        btnText="Больше локаций"
+        btnText="Еще"
         onClick={handleMoreClick}
       />
+    )}
+    {isCompact && (
+      <Link to="/points">
+        <Button
+          btnClass="button_more button_type_tertiary"
+          btnText="Больше локаций"
+        />
+      </Link>
     )}
   </div>
 );

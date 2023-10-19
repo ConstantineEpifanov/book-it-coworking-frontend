@@ -33,6 +33,9 @@
   &__icons {
     display: flex;
     gap: 12px;
+    &_mobile {
+      display: none;
+    }
   }
 
   &__icon {
@@ -55,14 +58,14 @@
 
   &__link {
     margin-top: 22px;
-    max-width: 256px;
+    max-width: 170px;
     display: block;
     font-family: $font-family;
     text-decoration: none;
-    color: $white;
-    font-size: 18px;
+    color: $main-white;
+    font-size: 14px;
     font-style: normal;
-    font-weight: 500;
+    font-weight: 300;
     line-height: 22px;
     transition: color 0.3s;
     @include link-color-transition;
@@ -96,12 +99,28 @@
       order: 2;
       gap: 20px;
     }
-    &__contacts,
+    &__contacts {
+      text-align: right;
+    }
     &__link {
-      font-size: 16px;
+      max-width: 120px;
+      margin-top: 8px;
+      font-size: 10px;
+      font-style: normal;
+      font-weight: 300;
+      line-height: 20px;
     }
     &__column {
       flex-basis: 50%;
+    }
+    &__icons {
+      display: none;
+      &_mobile {
+        display: flex;
+        justify-content: center;
+        gap: 40px;
+        order: 2;
+      }
     }
   }
 }

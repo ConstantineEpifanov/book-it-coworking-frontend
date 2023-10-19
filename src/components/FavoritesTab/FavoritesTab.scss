@@ -80,9 +80,6 @@
     &-like {
       display: block;
       cursor: pointer;
-      &:hover {
-        opacity: 0.7;
-      }
     }
     &-address {
       @include mp-null;

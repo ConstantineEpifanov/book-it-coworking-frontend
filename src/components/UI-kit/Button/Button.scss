@@ -67,7 +67,7 @@
     margin-top: 32px;
   }
 
-  &_type_tertiary {
+  &_type_tertiary-map {
     color: $black;
     background-color: transparent;
     padding: 16px 12px 16px 36px;
@@ -106,6 +106,28 @@
     }
   }
 
+  &_type_tertiary {
+    color: $black;
+    background-color: transparent;
+    padding: 16px 12px;
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 1.22;
+    width: 220px;
+    border: none;
+
+    &:hover {
+      color: $pink;
+      opacity: 0.7;
+    }
+
+    &:active {
+      color: $green;
+      opacity: 0.7;
+    }
+  }
+
   &_type_form {
     background-color: $green;
     color: $black;
@@ -113,22 +135,27 @@
     font-style: normal;
     font-weight: 400;
     line-height: 1.22;
+
     &-select {
       width: 170px;
       @include text-font-select;
       padding: 16px 32px;
     }
+
     &_margin-top {
       margin-top: 32px;
     }
+
     &:hover {
       opacity: 0.7;
     }
+
     &:disabled {
       opacity: 0.8;
       pointer-events: none;
       background: $light-gray;
     }
+
     &:active {
       background-color: $black;
       color: $green;
@@ -155,19 +182,31 @@
     font-style: normal;
     font-weight: 400;
     line-height: 22px;
+
     &-select {
       width: 170px;
       @include text-font-select;
     }
+
     &:hover {
       border: 2px solid $pink;
       color: $pink;
     }
+
     &:active {
       border: 2px solid $black;
       background: $pink;
       color: $black;
     }
+  }
+
+  &_type_main-card {
+    background-color: $green;
+    color: $black;
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 22px;
   }
 
   //стили кнопки пароля
@@ -250,17 +289,31 @@
     font-weight: 400;
     line-height: 22px;
     transition: opacity 0.3s ease-in-out;
+
     &:hover {
       opacity: 0.7;
+    }
+
+    &:active {
+      background-color: $black;
+      color: $green;
+      opacity: 1;
+    }
+
+    &:disabled {
+      background-color: $light-gray;
+      color: $gray;
     }
   }
 
   &__profile-bookings {
     width: 226px;
   }
+
   &__profile-review {
     width: 265px;
   }
+
   &__profile-transparent {
     background-color: transparent;
     border-radius: 32px;
@@ -282,49 +335,60 @@
     font-weight: 400;
     line-height: 44px;
     transition: opacity 0.3s ease-in-out;
+
     &:hover {
       opacity: 0.7;
     }
+
     &_data {
       @include button-with-image("../../../images/profile-icons/user.svg");
     }
+
     &_security {
       line-height: 22px;
       @include button-with-image("../../../images/profile-icons/security.svg");
     }
+
     &_payment {
       @include button-with-image("../../../images/profile-icons/payment.svg");
     }
+
     &_bookings {
       @include button-with-image("../../../images/profile-icons/bookings.svg");
     }
+
     &_favorites {
       @include button-with-image("../../../images/profile-icons/favorites.svg");
     }
+
     &_data-active {
       @include button-with-image(
         "../../../images/profile-icons/user-active.svg"
       );
       @include button-active;
     }
+
     &_security-active {
       @include button-with-image(
         "../../../images/profile-icons/security-active.svg"
       );
       @include button-active;
     }
+
     &_payment-active {
       @include button-with-image(
         "../../../images/profile-icons/payment-active.svg"
       );
       @include button-active;
     }
+
     &_bookings-active {
       @include button-with-image(
         "../../../images/profile-icons/bookings-active.svg"
       );
       @include button-active;
     }
+
     &_favorites-active {
       @include button-with-image(
         "../../../images/profile-icons/favorites-active.svg"

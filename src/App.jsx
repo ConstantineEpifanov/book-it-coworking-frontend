@@ -4,6 +4,8 @@ import React from "react";
 import { Route, Routes, useLocation, useNavigate } from "react-router-dom";
 import { CurrentUserContext } from "./contexts/currentUserContext";
 
+import { ProtectedRouteElement } from "./HOC/ProtectedRoute";
+
 import "./App.css";
 
 import { Footer } from "./components/Footer/Footer";
@@ -18,14 +20,15 @@ import { ProfileDashboard } from "./components/ProfileDashboard/ProfileDashboard
 import { Profile } from "./components/Profile/Profile";
 // import { exampleCoworkingsData } from "./config/exampleCoworkingsData";
 // import { exampleEventsData } from "./config/exampleEventsData";
-import { user, favorites, bookings } from "./config/exampleProfileData";
+// import { user, favorites, bookings } from "./config/exampleProfileData";
 import RegisterForm from "./components/Forms/RegisterForm/RegisterForm";
 import LoginForm from "./components/Forms/LoginForm/LoginForm";
 import RestorePassForm from "./components/Forms/RestorePassForm/RestorePassForm";
 import { Coworking } from "./components/Coworking/Coworking";
 
 import usePopupOpen from "./hooks/usePopupOpen";
-import { getUserInfo, setHeaders, login } from "./utils/Api";
+import { getUserInfo, setHeaders } from "./utils/Api";
+import { useApiError } from "./hooks/useApiError";
 
 function App() {
   const navigate = useNavigate();
@@ -33,9 +36,11 @@ function App() {
 
   const { isOpenPopup, handleOpenPopup, handleClosePopup, previousLocation } =
     usePopupOpen();
+  const { isErrApi, setIsErrApi } = useApiError();
 
   const [isLoading, setIsLoading] = React.useState(false);
   const [isLoggedIn, setIsLoggedIn] = React.useState(false);
+
   const [currentUser, setСurrentUser] = React.useState({});
 
   const handleGetUserInfo = async () => {
@@ -43,11 +48,15 @@ function App() {
       const data = await getUserInfo();
       setСurrentUser(data);
     } catch (err) {
-      console.log(`Что-то пошло не так: ошибка запроса ${err} 😔`);
+      console.error(
+        "Что-то пошло не так: ошибка запроса 😔",
+        JSON.stringify(err, null, 2),
+      );
     }
   };
 
   //  ---------- AUTH FUNC ---------
+
   // проверка токена
   React.useEffect(() => {
     const token = localStorage.getItem("token");
@@ -61,30 +70,21 @@ function App() {
           navigate(location.pathname);
         }
       } catch (err) {
+        setIsErrApi({ ...isErrApi, message: err });
+        // при ошибке проверки токена отключаем лоудер
+        setIsLoading(false);
         setIsLoggedIn(false);
-        console.log(`Что-то пошло не так: ошибка запроса ${err.message} 😔`);
+        console.error(
+          "Что-то пошло не так: ошибка запроса 😔",
+          JSON.stringify(err, null, 2),
+        );
       }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const handleAuthorization = async ({ email, password }) => {
-    try {
-      const data = await login({ email, password });
-      localStorage.setItem("token", data.auth_token);
-
-      if (localStorage.getItem("token")) {
-        handleGetUserInfo();
-      }
-      setIsLoggedIn(true);
-      handleClosePopup();
-    } catch (err) {
-      console.log(`Что-то пошло не так: ошибка запроса ${err.message} 😔`);
-    }
-  };
-
   const handleLogout = () => {
-    localStorage.removeItem("jwt");
+    localStorage.removeItem("token");
     setIsLoggedIn(false);
     setСurrentUser({});
     // для очистки локального хранилища после выхода из приложения
@@ -92,8 +92,22 @@ function App() {
   };
 
   const contextValue = React.useMemo(
-    () => ({ isLoading, setIsLoading, isLoggedIn, setIsLoggedIn, currentUser }),
-    [isLoading, setIsLoading, isLoggedIn, setIsLoggedIn, currentUser],
+    () => ({
+      isLoading,
+      setIsLoading,
+      isLoggedIn,
+      setIsLoggedIn,
+      currentUser,
+      setСurrentUser,
+    }),
+    [
+      isLoading,
+      setIsLoading,
+      isLoggedIn,
+      setIsLoggedIn,
+      currentUser,
+      setСurrentUser,
+    ],
   );
 
   return (
@@ -109,14 +123,16 @@ function App() {
           <Route path="/" element={<Main />} />
           <Route path="/points" element={<CoworkingList />} />
           <Route path="/faq" element={<RulesQuestions />} />
-          <Route path="/profile" exact element={<ProfileDashboard />} />
+          <Route
+            path="/profile"
+            exact
+            element={<ProtectedRouteElement element={ProfileDashboard} />}
+          />
           <Route
             path="/profile/*"
             exact
             state={null}
-            element={
-              <Profile user={user} bookings={bookings} favorites={favorites} />
-            }
+            element={<ProtectedRouteElement element={Profile} />}
           />
 
           <Route path="/contacts" element={<Contacts />} />
@@ -131,9 +147,10 @@ function App() {
               path="/popup/login"
               element={
                 <LoginForm
+                  isErrApi={isErrApi}
                   isOpenPopup={isOpenPopup}
                   onClosePopup={handleClosePopup}
-                  onAuthorization={handleAuthorization}
+                  onGetUserInfo={handleGetUserInfo}
                 />
               }
             />

@@ -8,7 +8,7 @@ import UserIcon from "../../images/profile-icons/UserIcon";
 import HeartIcon from "../../images/profile-icons/HeartIcon";
 import SuitcaseIcon from "../../images/profile-icons/SuitcaseIcon";
 import LockIcon from "../../images/profile-icons/LockIcon";
-import CardIcon from "../../images/profile-icons/CardItem";
+// import CardIcon from "../../images/profile-icons/CardIcon";
 
 import "./ProfileDashboard.scss";
 
@@ -28,22 +28,17 @@ export const ProfileDashboard = () => (
         </Link>
       </div>
       <div className="profile-dashboard__card-row">
-        <Link className="profile-dashboard__link" to="/profile/payment">
+        {/* <Link className="profile-dashboard__link" to="/profile/payment">
           <ProfileItem title="Платежные данные" svgElement={<CardIcon />} />
-        </Link>
+        </Link> */}
         <Link className="profile-dashboard__link" to="/profile/bookings">
           <ProfileItem title="Бронирования" svgElement={<SuitcaseIcon />} />
         </Link>
-      </div>
-      <div className="profile-dashboard__card-center">
-        <Link
-          className="profile-dashboard__link"
-          to="/profile/favorites"
-          state={null}
-        >
+        <Link className="profile-dashboard__link" to="/profile/favorites">
           <ProfileItem title="Избранное" svgElement={<HeartIcon />} />
         </Link>
       </div>
+      {/* <div className="profile-dashboard__card-center"></div> */}
     </div>
   </div>
 );

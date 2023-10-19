@@ -2,7 +2,16 @@
 export function checkResponse(res) {
   return res.ok
     ? res.json()
-    : Promise.reject(new Error(`Ошибка ${res.status}`));
+    : res.json().then((errorResponse) => {
+        // ошибка с сообщением
+        if (errorResponse) {
+          return Promise.reject(errorResponse);
+        }
+        //  общее сообщение об ошибке
+        return Promise.reject(
+          new Error(`Ошибка ${res.statusText} ${res.status}`),
+        );
+      });
 }
 
 function request(url, options) {
@@ -23,7 +32,6 @@ export function setHeaders() {
   }
 
   return {
-    Authorization: `Token 930409b4e1c2238901b3a7ea7a7f4a3fb0503de5`,
     "Content-Type": "application/json",
   };
 }
@@ -160,6 +168,28 @@ export function getUserInfo() {
   return request("/users/me/", {
     method: "GET",
     headers: setHeaders(),
+  });
+}
+
+export function getActiveOrders() {
+  return request("/orders/?finished=false", {
+    method: "GET",
+    headers: setHeaders(),
+  });
+}
+
+export function getFinishedOrders() {
+  return request("/orders/?finished=true", {
+    method: "GET",
+    headers: setHeaders(),
+  });
+}
+
+export function editUserData(data) {
+  return request("/users/me/", {
+    method: "PATCH",
+    headers: setHeaders(),
+    body: JSON.stringify(data),
   });
 }
 

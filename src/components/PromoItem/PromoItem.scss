@@ -5,27 +5,5 @@
   @include mp-null;
   display: flex;
   flex-direction: column;
-  gap: 20px;
   max-width: 360px;
-
-  &__title {
-    @include mp-null;
-    font-family: $font-family;
-    font-size: 40px;
-    font-style: normal;
-    font-weight: 400;
-    line-height: 1.2;
-    color: $black;
-  }
-
-  &__subtitle {
-    @include mp-null;
-    font-family: $font-family;
-    font-size: 20px;
-    font-style: normal;
-    font-weight: 500;
-    line-height: 1.5;
-    color: $black;
-    text-transform: uppercase;
-  }
 }

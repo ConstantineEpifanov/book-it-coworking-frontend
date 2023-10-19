@@ -99,7 +99,7 @@ export const PointsItem = ({ isCompact, isListed, data }) => {
         </ul>
 
         <Button
-          btnClass="button_type_transparent button_size_postmiddle"
+          btnClass="button_type_main-card button_size_postmiddle"
           btnText="Подробнее"
           onClick={handleDetailsButton}
         />
@@ -161,6 +161,7 @@ export const PointsItem = ({ isCompact, isListed, data }) => {
               !isListed && "point__rating-container_own-page"
             } `}
           />
+
           {/* блок кнопок для страницы коворкинга */}
           {!isListed && (
             <div className="point__info-buttons z-index-2">
@@ -183,6 +184,7 @@ export const PointsItem = ({ isCompact, isListed, data }) => {
             </div>
           )}
         </div>
+        {/* конец блока */}
 
         <div className="point__info-container">
           {isListed && (
@@ -199,7 +201,7 @@ export const PointsItem = ({ isCompact, isListed, data }) => {
                 </button>
               </div>
               <div className="point__subtitle-container">
-                <h4 className="point__subtitle">{data.short_annotation}</h4>
+                <p className="point__about">{data.description}</p>
                 <button
                   type="button"
                   className="point__action-button"
@@ -209,7 +211,6 @@ export const PointsItem = ({ isCompact, isListed, data }) => {
                   <Share />
                 </button>
               </div>
-              <p className="point__about">{data.description}</p>
             </div>
           )}
           <ul className="point__info point__info_large">

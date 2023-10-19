@@ -14,8 +14,10 @@ import PasswordInput from "../../UI-kit/PasswordInput/PasswordInput";
 import useFormAndValidation from "../../../hooks/useFormAndValidation";
 
 import { register } from "../../../utils/Api";
+import { useApiError } from "../../../hooks/useApiError";
 
 const RegisterForm = ({ isOpenPopup, handleClosePopup }) => {
+  const { isErrApi, setIsErrApi, clearApiError } = useApiError();
   const { values, errors, isValid, handleChange } = useFormAndValidation();
   const [isSuccessReg, setIsSuccessReg] = React.useState(false);
   const [userData, setUserData] = React.useState({});
@@ -39,14 +41,19 @@ const RegisterForm = ({ isOpenPopup, handleClosePopup }) => {
       setIsSuccessReg(true);
       setUserData(res);
     } catch (err) {
+      setIsErrApi({ ...isErrApi, message: err });
       setIsSuccessReg(false);
-      console.log(`Что-то пошло не так: ошибка запроса ${err.message} 😔`);
+      console.error(
+        "Что-то пошло не так: ошибка запроса 😔",
+        JSON.stringify(err, null, 2),
+      );
     }
   };
 
   function handleSubmit(evt) {
     evt.preventDefault();
     handleRegister(values);
+    clearApiError();
   }
 
   return (
@@ -110,8 +117,11 @@ const RegisterForm = ({ isOpenPopup, handleClosePopup }) => {
             Нажимая зарегистрироваться вы даёте согласие на обработку ваших
             персональных данных{" "}
           </span>
+          <span className="entry-form__text_error">{`${
+            isErrApi ? isErrApi.message : ""
+          }`}</span>
           <Button
-            btnClass="button_type_form button_type_form_margin-top"
+            btnClass="button_type_form"
             btnType="submit"
             btnText="Зарегистрироваться"
             onClick={() => {}}
