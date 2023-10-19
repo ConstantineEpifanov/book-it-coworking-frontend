@@ -27,7 +27,8 @@ import RestorePassForm from "./components/Forms/RestorePassForm/RestorePassForm"
 import { Coworking } from "./components/Coworking/Coworking";
 
 import usePopupOpen from "./hooks/usePopupOpen";
-import { getUserInfo, setHeaders, login } from "./utils/Api";
+import { getUserInfo, setHeaders } from "./utils/Api";
+import { useApiError } from "./hooks/useApiError";
 
 function App() {
   const navigate = useNavigate();
@@ -35,9 +36,11 @@ function App() {
 
   const { isOpenPopup, handleOpenPopup, handleClosePopup, previousLocation } =
     usePopupOpen();
+  const { isErrApi, setIsErrApi } = useApiError();
 
   const [isLoading, setIsLoading] = React.useState(false);
   const [isLoggedIn, setIsLoggedIn] = React.useState(false);
+
   const [currentUser, setСurrentUser] = React.useState({});
 
   const handleGetUserInfo = async () => {
@@ -45,11 +48,15 @@ function App() {
       const data = await getUserInfo();
       setСurrentUser(data);
     } catch (err) {
-      console.log(`Что-то пошло не так: ошибка запроса ${err} 😔`);
+      console.error(
+        "Что-то пошло не так: ошибка запроса 😔",
+        JSON.stringify(err, null, 2),
+      );
     }
   };
 
   //  ---------- AUTH FUNC ---------
+
   // проверка токена
   React.useEffect(() => {
     const token = localStorage.getItem("token");
@@ -63,27 +70,18 @@ function App() {
           navigate(location.pathname);
         }
       } catch (err) {
+        setIsErrApi({ ...isErrApi, message: err });
+        // при ошибке проверки токена отключаем лоудер
+        setIsLoading(false);
         setIsLoggedIn(false);
-        console.log(`Что-то пошло не так: ошибка запроса ${err.message} 😔`);
+        console.error(
+          "Что-то пошло не так: ошибка запроса 😔",
+          JSON.stringify(err, null, 2),
+        );
       }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-
-  const handleAuthorization = async ({ email, password }) => {
-    try {
-      const data = await login({ email, password });
-      localStorage.setItem("token", data.auth_token);
-
-      if (localStorage.getItem("token")) {
-        handleGetUserInfo();
-      }
-      setIsLoggedIn(true);
-      handleClosePopup();
-    } catch (err) {
-      console.log(`Что-то пошло не так: ошибка запроса ${err.message} 😔`);
-    }
-  };
 
   const handleLogout = () => {
     localStorage.removeItem("token");
@@ -149,9 +147,10 @@ function App() {
               path="/popup/login"
               element={
                 <LoginForm
+                  isErrApi={isErrApi}
                   isOpenPopup={isOpenPopup}
                   onClosePopup={handleClosePopup}
-                  onAuthorization={handleAuthorization}
+                  onGetUserInfo={handleGetUserInfo}
                 />
               }
             />
