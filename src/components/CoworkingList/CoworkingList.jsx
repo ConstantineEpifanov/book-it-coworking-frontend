@@ -31,43 +31,43 @@ export const CoworkingList = () => {
     ? location.state.coworkingsArrayFromPromo
     : undefined;
 
+  const fetchData = () => {
+    const locationsPromise = getLocations(
+      LAPTOP_POINTS_QUANTITY,
+      pointsAddCount,
+    )
+      .then((res) => {
+        setCoworkingsArray(res.results);
+        setPointsAddCount((prev) => prev + LAPTOP_POINTS_QUANTITY);
+      })
+      .catch(() => {});
+
+    const mapLocationsPromise = getMapLocations()
+      .then((res) => {
+        setMapPoints(res);
+      })
+      .catch(() => {});
+
+    Promise.all([locationsPromise, mapLocationsPromise])
+      .then(() => {
+        setIsLoading(false);
+      })
+      .catch(() => {
+        setIsLoading(false);
+      });
+  };
+
   useEffect(() => {
-    const fetchData = () => {
-      const locationsPromise = getLocations(
-        LAPTOP_POINTS_QUANTITY,
-        pointsAddCount,
-      )
-        .then((res) => {
-          setCoworkingsArray(res.results);
-          setPointsAddCount((prev) => prev + LAPTOP_POINTS_QUANTITY);
-        })
-        .catch(() => {});
-
-      const mapLocationsPromise = getMapLocations()
-        .then((res) => {
-          setMapPoints(res);
-        })
-        .catch(() => {});
-
-      Promise.all([locationsPromise, mapLocationsPromise])
-        .then(() => {
-          setIsLoading(false);
-        })
-        .catch(() => {
-          setIsLoading(false);
-        });
-    };
-
     if (
       (Array.isArray(coworkingsArrayFromPromo) &&
         coworkingsArrayFromPromo.length === 0) ||
       !coworkingsArrayFromPromo
     ) {
-      setIsLoading(true);
       fetchData();
     } else {
       setCoworkingsArray(coworkingsArrayFromPromo);
       setIsLoading(false);
+      setMoreButtonVisible(coworkingsArrayFromPromo > LAPTOP_POINTS_QUANTITY);
     }
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -85,11 +85,12 @@ export const CoworkingList = () => {
 
   const handleUpdateCoworkings = (data) => {
     setCoworkingsArray(data);
+    setMoreButtonVisible(data.length > LAPTOP_POINTS_QUANTITY);
   };
 
-  useEffect(() => {
-    console.log("coworkingsArray", coworkingsArray);
-  }, [coworkingsArray]);
+  // useEffect(() => {
+  //   console.log("coworkingsArray", coworkingsArray);
+  // }, [coworkingsArray]);
 
   return (
     <main className="coworking-list">
