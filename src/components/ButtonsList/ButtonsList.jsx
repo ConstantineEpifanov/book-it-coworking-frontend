@@ -4,42 +4,53 @@ import PropTypes from "prop-types";
 import "./ButtonsList.scss";
 import Button from "../UI-kit/Button/Button";
 
+const defaultSort = (a, b) => a.name.localeCompare(b.name);
+
 export const ButtonsList = ({
   listType = "time-ranges",
   itemsList = [],
   isEnabled = true,
   isMultiselect = false,
+  isSelectByRanges = true,
   allowedRanges = [],
   ariaLabel = "Список кнопок",
   listClassName = "",
   itemsClassName = "",
+  extraRules = null,
+  sortFunc = defaultSort,
 }) => {
+  const [baseItemsList, setBaseItemsList] = useState([]);
   const [selectedItems, setSelectedItems] = useState([]);
   const [itemsStatesList, setItemsStatesList] = useState([]);
 
-  const followAllowedRules = (id, currentSelected) => {
-    const sharedRanges = allowedRanges.filter((range) => range.includes(id));
-
-    setItemsStatesList(
-      itemsList.map((item) => {
-        let isEnabledStatus = item.isEnabled;
-
-        if (currentSelected.length > 0) {
-          isEnabledStatus =
-            currentSelected.includes(item.id) ||
-            currentSelected.every((selectedItem) =>
-              sharedRanges.some(
-                (range) =>
-                  range.includes(item.id) && range.includes(selectedItem),
-              ),
-            );
-        }
-        return {
-          ...item,
-          isEnabled: isEnabledStatus,
-        };
-      }),
+  const followAllowedRules = (item, currentSelected) => {
+    const sharedRanges = allowedRanges.filter((range) =>
+      currentSelected.every((selectedItem) => range.includes(selectedItem.id)),
     );
+
+    const resultStatesList = baseItemsList.map((baseItem) => {
+      let isEnabledStatus = baseItem.isEnabled;
+
+      if (currentSelected.length > 0) {
+        isEnabledStatus =
+          !!currentSelected.find(
+            (selectedItem) => selectedItem.id === baseItem.id,
+          ) ||
+          currentSelected.every((selectedItem) =>
+            sharedRanges.some(
+              (range) =>
+                range.includes(baseItem.id) && range.includes(selectedItem.id),
+            ),
+          );
+      }
+      return {
+        ...baseItem,
+        isEnabled: isEnabledStatus,
+      };
+    });
+
+    setItemsStatesList(resultStatesList);
+    return resultStatesList;
   };
 
   const getClassName = (id) => {
@@ -47,39 +58,97 @@ export const ButtonsList = ({
       itemsClassName ? ` ${itemsClassName}` : ""
     }`;
 
-    if (selectedItems.includes(id)) {
+    if (selectedItems.find((item) => item.id === id)) {
       resultClass += " button_type_buttons-list-selected";
     }
 
     return resultClass;
   };
 
-  const handleClick = (id, onClick) => {
+  const getAutoSelectedItems = (
+    currentSelectedItems,
+    currentItemsStatusList,
+  ) => {
+    let currentSelected = [...currentSelectedItems].sort(sortFunc);
+    const firstSelectedElementIndex = currentItemsStatusList.findIndex(
+      (item) => item.id === currentSelected[0].id,
+    );
+
+    return currentItemsStatusList
+      .slice(firstSelectedElementIndex)
+      .reduce((result, item) => {
+        if (currentSelected.find((currentItem) => currentItem.id === item.id)) {
+          result.push(item);
+          currentSelected = currentSelected.filter(
+            (selectedItem) => selectedItem.id !== item.id,
+          );
+
+          return result;
+        }
+        if (item.isEnabled && currentSelected.length > 0) {
+          result.push(item);
+        }
+        return result;
+      }, []);
+  };
+
+  const handleClick = (item, onClick) => {
     let resultSelected = [];
-    if (selectedItems.includes(id)) {
-      resultSelected = selectedItems.filter((itemId) => itemId !== id);
+    let currentItemsStatusList = itemsStatesList;
+    const isAlreadySelected = !!selectedItems.find(
+      (selectedItem) => item.id === selectedItem.id,
+    );
+
+    if (isAlreadySelected && isSelectByRanges) {
+      resultSelected = [];
+    } else if (isAlreadySelected) {
+      resultSelected = selectedItems.filter(
+        (selectedItem) => selectedItem.id !== item.id,
+      );
     } else {
-      resultSelected = [...selectedItems, id];
+      resultSelected = [...selectedItems, item];
+    }
+
+    if (allowedRanges.length > 0 || !isMultiselect) {
+      currentItemsStatusList = followAllowedRules(item, resultSelected);
+    }
+
+    if (isSelectByRanges && resultSelected.length > 1) {
+      resultSelected = getAutoSelectedItems(
+        resultSelected,
+        currentItemsStatusList,
+      );
     }
     setSelectedItems(resultSelected);
 
-    if (allowedRanges.length > 0 || !isMultiselect) {
-      followAllowedRules(id, resultSelected);
-    }
     onClick(resultSelected);
   };
 
   useEffect(() => {
+    if (extraRules && selectedItems.length > 0) {
+      const resultItemsStates = itemsStatesList.map((item) => ({
+        ...item,
+        isEnabled: !extraRules.some((checkRule) =>
+          checkRule(item, selectedItems),
+        ),
+      }));
+      setItemsStatesList(resultItemsStates);
+    }
+  }, [selectedItems, extraRules, itemsStatesList]);
+
+  useEffect(() => {
+    const resultItemsList = [...itemsList].sort(sortFunc);
+    setBaseItemsList(resultItemsList);
     if (isEnabled) {
-      setItemsStatesList([...itemsList]);
+      setItemsStatesList([...resultItemsList]);
       return;
     }
 
     setItemsStatesList(
-      itemsList.map((item) => ({ ...item, isEnabled: false })),
+      resultItemsList.map((item) => ({ ...item, isEnabled: false })),
     );
     setSelectedItems([]);
-  }, [itemsList, isEnabled]);
+  }, [itemsList, isEnabled, sortFunc]);
 
   return (
     <section className="buttons-list" aria-label={ariaLabel}>
@@ -88,20 +157,21 @@ export const ButtonsList = ({
           listClassName ? ` ${listClassName}` : ""
         }`}
       >
-        {itemsStatesList.map(
-          ({ id, name, onClick, isEnabled: isButtonEnabled }) => (
+        {itemsStatesList.map((item) => {
+          const { id, name, onClick, isEnabled: isButtonEnabled } = item;
+          return (
             <li key={`${name}-item-${id}`} className="buttons-list__item">
               <Button
                 key={`${name}-button-${id}`}
                 btnClass={getClassName(id)}
                 btnType="button"
                 btnText={name}
-                onClick={() => handleClick(id, onClick)}
+                onClick={() => handleClick(item, onClick)}
                 isValidBtn={isButtonEnabled}
               />
             </li>
-          ),
-        )}
+          );
+        })}
       </ul>
     </section>
   );
@@ -119,10 +189,13 @@ ButtonsList.propTypes = {
   ),
   isEnabled: PropTypes.bool,
   isMultiselect: PropTypes.bool,
+  isSelectByRanges: PropTypes.bool,
   allowedRanges: PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.number)),
   ariaLabel: PropTypes.string,
   listClassName: PropTypes.string,
   itemsClassName: PropTypes.string,
+  extraRules: PropTypes.arrayOf(PropTypes.func),
+  sortFunc: PropTypes.func,
 };
 
 ButtonsList.defaultProps = {
@@ -130,8 +203,11 @@ ButtonsList.defaultProps = {
   itemsList: [],
   isEnabled: true,
   isMultiselect: false,
+  isSelectByRanges: true,
   allowedRanges: [],
   ariaLabel: "Список кнопок",
   listClassName: "",
   itemsClassName: "",
+  extraRules: null,
+  sortFunc: defaultSort,
 };
