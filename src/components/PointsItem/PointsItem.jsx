@@ -99,7 +99,7 @@ export const PointsItem = ({ isCompact, isListed, data }) => {
         </ul>
 
         <Button
-          btnClass="button_type_main-card button_size_postmiddle"
+          btnClass="button_type_form button_size_postmiddle"
           btnText="Подробнее"
           onClick={handleDetailsButton}
         />

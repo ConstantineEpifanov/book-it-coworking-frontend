@@ -135,6 +135,7 @@
     font-style: normal;
     font-weight: 400;
     line-height: 1.22;
+    padding: 16px 32px;
 
     &-select {
       width: 170px;
@@ -198,15 +199,6 @@
       background: $pink;
       color: $black;
     }
-  }
-
-  &_type_main-card {
-    background-color: $green;
-    color: $black;
-    font-size: 18px;
-    font-style: normal;
-    font-weight: 400;
-    line-height: 22px;
   }
 
   //стили кнопки пароля

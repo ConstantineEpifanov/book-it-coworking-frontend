@@ -86,15 +86,16 @@
 
 @mixin button-active {
   color: $green;
-  background-color: black;
+  background-color: $black;
 }
 
 // --------------CARDS-------------------
 
 @mixin card-border-color {
-  transition: border-color 0.3s ease-in-out;
+  transition: all 0.3s ease;
   &:hover {
     border-color: $pink;
+    box-shadow: 0px 5px 24px 0px $black;
   }
 
   &:active {
