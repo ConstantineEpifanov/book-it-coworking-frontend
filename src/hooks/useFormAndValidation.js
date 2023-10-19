@@ -34,7 +34,7 @@ export default function useFormAndValidation() {
     setIsValid(e.target.closest("form").checkValidity());
 
     if (value) {
-      //  // валидация всех полей 
+      //  // валидация всех полей
       if (validationPatterns[name]) {
         const isValidField = validationPatterns[name].test(value);
         setErrors({
@@ -44,8 +44,8 @@ export default function useFormAndValidation() {
         if (!isValidField) {
           setIsValid(false);
         }
-      } 
-      // валидация полей с паролем 
+      }
+      // валидация полей с паролем
       else if (name === "password") {
         if (value.length < 6) {
           setErrors({ ...errors, [name]: validationMessages[name] });
@@ -61,7 +61,7 @@ export default function useFormAndValidation() {
           setErrors({ ...errors, [name]: "" });
         }
       }
-       // валидация полей с обязательным заполнением 
+      // валидация полей с обязательным заполнением
     } else if (required && !value) {
       setErrors({
         ...errors,

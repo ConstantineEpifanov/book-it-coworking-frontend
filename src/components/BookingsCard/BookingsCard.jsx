@@ -1,5 +1,15 @@
+/* eslint-disable no-unused-vars */
 import React, { useState } from "react";
 import PropTypes from "prop-types";
+
+import {
+  ORDER_STATUSES,
+  MAX_REVIEW_CHARACTERS_NUMBER,
+} from "../../utils/constants";
+import { publishReview, cancelOrder } from "../../utils/Api";
+import { formatDate } from "../../utils/utils";
+
+import usePopupOpen from "../../hooks/usePopupOpen";
 
 import Button from "../UI-kit/Button/Button";
 import Popup from "../Popup/Popup";
@@ -10,43 +20,42 @@ import CardIcon from "../../images/profile-icons/card.svg";
 
 import "./BookingsCard.scss";
 
+const getStatusLabel = (status, className) => (
+  <span className={`bookings-card__status bookings-card__status_${className}`}>
+    {status}
+  </span>
+);
+
 const statusLabels = {
-  Confirmed: (
-    <span className="bookings-card__status bookings-card__status_confirmed">
-      Подтверждено
-    </span>
-  ),
-  "Ожидается оплата": (
-    <span className="bookings-card__status bookings-card__status_processing">
-      В обработке
-    </span>
-  ),
+  [ORDER_STATUSES.WAIT_PAY]: getStatusLabel(ORDER_STATUSES.WAIT_PAY, "warn"),
+  [ORDER_STATUSES.PAID]: getStatusLabel(ORDER_STATUSES.PAID, "success"),
+  [ORDER_STATUSES.FINISH]: getStatusLabel(ORDER_STATUSES.FINISH, "main"),
+  [ORDER_STATUSES.CANCEL]: getStatusLabel(ORDER_STATUSES.CANCEL, "alert"),
+  [ORDER_STATUSES.NOT_PAID]: getStatusLabel(ORDER_STATUSES.NOT_PAID, "warn"),
 };
 
 export const BookingsCard = ({ item }) => {
-  const [isPopupOpen, setIsPopupOpen] = useState(false);
+  const { isOpenPopup, handleOpenPopup, handleClosePopup } = usePopupOpen();
   const [isCancellationConfirmed, setIsCancellationConfirmed] = useState(false);
   const [isReviewFormOpen, setIsReviewFormOpen] = useState(false);
   const [reviewText, setReviewText] = useState("");
   const [reviewRating, setReviewRating] = useState(0);
-  const maxCharacters = 300;
-  const handleOpenPopup = () => {
-    setIsPopupOpen(true);
-  };
 
-  const handleClosePopup = () => {
-    setIsPopupOpen(false);
+  const handleCloseBookingPopup = () => {
+    handleClosePopup();
     setIsCancellationConfirmed(false);
     setIsReviewFormOpen(false);
   };
 
   const handleConfirmCancellation = () => {
-    setIsCancellationConfirmed(true);
+    cancelOrder(item.location_id, item.spot, item.id).finally(() => {
+      setIsCancellationConfirmed(true);
+    });
   };
 
   const handleOpenReviewForm = () => {
     setIsReviewFormOpen(true);
-    setIsPopupOpen(true);
+    handleOpenPopup();
   };
 
   const handleReviewTextChange = (e) => {
@@ -58,16 +67,23 @@ export const BookingsCard = ({ item }) => {
     setReviewRating(rating);
   };
 
-  // для демонстрационных целей
-
-  const handleReviewSubmit = () =>
-    `Рейтинг: ${reviewRating} Текст: ${reviewText}`;
+  const handleReviewSubmit = (e) => {
+    e.preventDefault();
+    publishReview(item.location_id, item.spot, item.id, {
+      description: reviewText,
+      rating: reviewRating,
+    })
+      .catch(() => {})
+      .finally(() => handleClosePopup());
+    setReviewText("");
+    setReviewRating(0);
+  };
 
   const getPopupText = (booking) => {
-    if (booking.status === "Confirmed") {
-      return `Бронирование уже подтверждено.`;
+    if (booking.status === ORDER_STATUSES.PAID) {
+      return `Бронирование уже оплачено.`;
     }
-    if (booking.status === "Ожидается оплата") {
+    if (booking.status === ORDER_STATUSES.WAIT_PAY || ORDER_STATUSES.NOT_PAID) {
       return `Бронирование еще находится в обработке.`;
     }
     return "Отменить бронирование";
@@ -89,7 +105,7 @@ export const BookingsCard = ({ item }) => {
           <Button
             btnText="Назад"
             btnClass="button__profile-transparent"
-            onClick={handleClosePopup}
+            onClick={handleCloseBookingPopup}
           />
           <Button
             btnText="Создать"
@@ -110,13 +126,14 @@ export const BookingsCard = ({ item }) => {
           id="review"
           name="review"
           className="bookings-card__review-text"
-          maxLength={maxCharacters}
+          minLength="10"
+          maxLength={MAX_REVIEW_CHARACTERS_NUMBER}
           placeholder="Текст"
           value={reviewText}
           onChange={handleReviewTextChange}
         />
         <p className="bookings-card__character-count">
-          {reviewText.length}/{maxCharacters}
+          {reviewText.length}/{MAX_REVIEW_CHARACTERS_NUMBER}
         </p>
         <Button
           btnText="Отправить"
@@ -137,7 +154,7 @@ export const BookingsCard = ({ item }) => {
           <Button
             btnText="Назад"
             btnClass="button__profile-transparent"
-            onClick={handleClosePopup}
+            onClick={handleCloseBookingPopup}
           />
           <Button
             btnText="Отменить"
@@ -159,20 +176,14 @@ export const BookingsCard = ({ item }) => {
         />
         <div className="bookings-card__text-container">
           <h3 className="bookings-card__name">{item.location_name}</h3>
-          {!item.isFinished && (
-            <div className="bookings-card__status">
-              {statusLabels[item.status]}
-            </div>
-          )}
+          <div className="bookings-card__status">
+            {statusLabels[item.status]}
+          </div>
 
-          <div
-            className={`bookings-card__date-row ${
-              item.isFinished ? "bookings-card__date-row_isfinished" : ""
-            }`}
-          >
+          <div className="bookings-card__date-row">
             <img src={ClockIcon} alt="Иконка часов" />
             <div className="bookings-card__date-container">
-              <p className="bookings-card__date">{item.date}</p>
+              <p className="bookings-card__date">{formatDate(item.date)}</p>
               <p className="bookings-card__date">
                 {item.start_time}-{item.end_time}
               </p>
@@ -198,9 +209,9 @@ export const BookingsCard = ({ item }) => {
         </div>
       </li>
       <Popup
-        isOpen={isPopupOpen}
+        isOpen={isOpenPopup}
         popupClass="bookings-card__popup"
-        onClickClose={handleClosePopup}
+        onClickClose={handleCloseBookingPopup}
       >
         {content}
       </Popup>
@@ -213,12 +224,20 @@ BookingsCard.propTypes = {
     id: PropTypes.number,
     location_photo: PropTypes.string,
     location_name: PropTypes.string,
+    location_id: PropTypes.number,
+    spot: PropTypes.number,
     date: PropTypes.string,
     start_time: PropTypes.string,
     end_time: PropTypes.string,
     bill: PropTypes.string,
     isFinished: PropTypes.bool,
-    status: PropTypes.oneOf(["Confirmed", "Ожидается оплата"]),
+    status: PropTypes.oneOf([
+      ORDER_STATUSES.WAIT_PAY,
+      ORDER_STATUSES.PAID,
+      ORDER_STATUSES.FINISH,
+      ORDER_STATUSES.CANCEL,
+      ORDER_STATUSES.NOT_PAID,
+    ]),
   }),
 };
 

@@ -185,6 +185,32 @@ export function getFinishedOrders() {
   });
 }
 
+export function publishReview(
+  locationId,
+  spotId,
+  orderId,
+  { description, rating },
+) {
+  return request(
+    `/locations/${locationId}/spots/${spotId}/order/${orderId}/reviews/`,
+    {
+      method: "POST",
+      headers: setHeaders(),
+      body: JSON.stringify({
+        description,
+        rating,
+      }),
+    },
+  );
+}
+
+export function cancelOrder(locationId, spotId, orderId) {
+  return request(`/locations/${locationId}/spots/${spotId}/order/${orderId}/`, {
+    method: "PATCH",
+    headers: setHeaders(),
+  });
+}
+
 export function editUserData(data) {
   return request("/users/me/", {
     method: "PATCH",
