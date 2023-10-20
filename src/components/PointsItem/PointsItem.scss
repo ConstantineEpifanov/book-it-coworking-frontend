@@ -2,6 +2,7 @@
 @import "./../../scss/mixins.scss";
 
 .point {
+  @include card-border-color;
   max-width: 360px;
   max-height: 500px;
   display: flex;
@@ -17,14 +18,6 @@
   &_own-page {
     border: none;
     border-radius: 0;
-  }
-
-  &:hover {
-    border-color: $pink;
-  }
-
-  &:active {
-    border-color: $green;
   }
 
   &__span {
@@ -123,6 +116,10 @@
     flex-direction: row;
     flex-wrap: nowrap;
     gap: 8px;
+
+    :first-child {
+      flex-shrink: 0;
+    }
   }
 
   &__info-container {
