@@ -2,8 +2,8 @@ import React from "react";
 import "./Discounts.scss";
 import { SectionTitle } from "../SectionTitle/SectionTitle";
 import img1 from "../../images/Discount_10.svg";
-import img2 from "../../images/Discount_20.svg";
-import img3 from "../../images/Discount_invite_friend.svg";
+import img2 from "../../images/Discount_invite_friend.svg";
+import img3 from "../../images/Discount_20.svg";
 
 const data = [
   { id: 1, imageUrl: img1 },

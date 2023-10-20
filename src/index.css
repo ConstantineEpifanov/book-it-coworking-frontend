@@ -21,3 +21,13 @@ body {
   margin: auto;
   height: 100vh;
 }
+
+@keyframes render-cards {
+  0% {
+    transform: translateX(70%);
+  }
+
+  100% {
+    transform: translateX(0);
+  }
+}
