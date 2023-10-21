@@ -1,16 +1,17 @@
 import React from "react";
+import PropTypes from "prop-types";
 import { SectionTitle } from "../../SectionTitle/SectionTitle";
 import Button from "../../UI-kit/Button/Button";
 import EntryForm from "../EntryForm/EntryForm";
 import Input from "../../UI-kit/Input/Input";
 import "./PaymentsForm.scss";
 
-const PaymentsForm = () => {
+const PaymentsForm = ({ onSubmit }) => {
   const [reviewText, setReviewText] = React.useState("");
   const [inputError, setInputError] = React.useState("");
 
   return (
-    <EntryForm formClass="entry-form__inner_payments-form">
+    <EntryForm formClass="entry-form__inner_payments-form" onSubmit={onSubmit}>
       <div className="payments-form">
         <SectionTitle titleText="Оплата" />
         <h3 className="payments-form__subtitle">
@@ -90,11 +91,20 @@ const PaymentsForm = () => {
           <Button
             btnClass="button_type_form button_size_middle"
             btnText="Оплатить"
+            btnType="submit"
           />
         </div>
       </div>
     </EntryForm>
   );
+};
+
+PaymentsForm.propTypes = {
+  onSubmit: PropTypes.func,
+};
+
+PaymentsForm.defaultProps = {
+  onSubmit: null,
 };
 
 export default PaymentsForm;

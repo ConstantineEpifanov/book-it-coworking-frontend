@@ -280,3 +280,13 @@ export function searchLocations(params = {}) {
     headers: setHeaders(),
   });
 }
+
+// Payments
+
+export function postOrder(locationId, spotId, data) {
+  return request(`/locations/${locationId}/spots/${spotId}/order`, {
+    method: "POST",
+    headers: setHeaders(),
+    body: JSON.stringify(data),
+  });
+}
