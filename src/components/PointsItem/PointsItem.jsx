@@ -1,7 +1,7 @@
 /* eslint-disable camelcase */
 import React, { useState } from "react";
 import PropTypes from "prop-types";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 
 import "./PointsItem.scss";
 import "swiper/swiper-bundle.min.css";
@@ -26,6 +26,7 @@ SwiperCore.use([Pagination]);
 export const PointsItem = ({ isCompact, isListed, data }) => {
   const [isLiked, setLiked] = useState(data.is_favorited);
 
+  const location = useLocation();
   const navigate = useNavigate();
   const time = `${data.days_open} ${data.open_time}–${data.close_time}`;
 
@@ -44,8 +45,7 @@ export const PointsItem = ({ isCompact, isListed, data }) => {
       .then(() => {
         setLiked(!isLiked);
       })
-      .catch((err) => new Error(err))
-      .finally(() => setLiked(!isLiked));
+      .catch((err) => new Error(err));
   }
 
   function onLikeClick() {
@@ -57,7 +57,18 @@ export const PointsItem = ({ isCompact, isListed, data }) => {
   }
 
   // Поделиться страницей коворкинга
-  const handleShare = () => {};
+  const handleShare = () => {
+    if (navigator.share) {
+      navigator
+        .share({
+          title: `Коворкинг ${data.name}`,
+          text: "Забронируйте место в лучшем коворкинге для IT-специалистов",
+          url: location.pathname,
+        })
+        .then(() => console.log("Удалось поделиться"))
+        .catch((error) => console.log("Не удалось поделиться", error));
+    }
+  };
 
   // Переход на страницу коворкинга
   const handleDetailsButton = () => {
