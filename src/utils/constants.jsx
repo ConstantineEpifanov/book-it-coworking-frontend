@@ -71,3 +71,5 @@ export const PROFILE_DATA_UPDATE = "Данные успешно обновлен
 export const NOT_FOUND_ERROR_TITLE = "Этого мы не нашли";
 export const NOT_FOUND_ERROR_SUBTITLE =
   "Попробуйте изменить параметры поиска и повторите попытку";
+export const SUCCESSFUL_LIKE = "Добавлено в избранное";
+export const SUCCESSFUL_DISLIKE = "Удалено из избранного";

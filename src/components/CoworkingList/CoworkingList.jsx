@@ -110,7 +110,7 @@ export const CoworkingList = () => {
       ) : (
         <>
           <SectionTitle
-            titleText="Поиск по коворкингам Санкт-Петербурга"
+            titleText="Поиск по коворкингам сети SPOT IT"
             titleClass="section-title_search"
           />
           <SectionSubtitle

@@ -17,7 +17,9 @@
   &_own-page {
     border: none;
     border-radius: 0;
-    border-color: none;
+    &:hover {
+      box-shadow: none;
+    }
   }
 
   &__span {

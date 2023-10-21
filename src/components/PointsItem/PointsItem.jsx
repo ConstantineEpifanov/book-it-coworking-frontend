@@ -21,6 +21,7 @@ import { MeetingRoom } from "./icons/MeetingRoom";
 import { Share } from "./icons/Share";
 import { addFavorite, deleteFavorite } from "../../utils/Api";
 import { CurrentUserContext } from "../../contexts/currentUserContext";
+import { SUCCESSFUL_DISLIKE, SUCCESSFUL_LIKE } from "../../utils/constants";
 
 SwiperCore.use([Pagination]);
 
@@ -36,6 +37,7 @@ export const PointsItem = ({ isCompact, isListed, data }) => {
     addFavorite(data.id)
       .then(() => {
         setLiked(!isLiked);
+        showMessage(SUCCESSFUL_LIKE);
       })
       .catch((err) => showMessage(err.detail));
   }
@@ -45,6 +47,7 @@ export const PointsItem = ({ isCompact, isListed, data }) => {
     deleteFavorite(data.id)
       .then(() => {
         setLiked(!isLiked);
+        showMessage(SUCCESSFUL_DISLIKE);
       })
       .catch((err) => showMessage(err.detail));
   }
@@ -82,11 +85,28 @@ export const PointsItem = ({ isCompact, isListed, data }) => {
     navigate(`/points/${data.id}`, { replace: false });
   };
 
+  const handleBooking = () => {
+    navigate("/booking", {
+      state: {
+        id: data.id,
+        openTime: data.open_time,
+        closeTime: data.close_time,
+        daysOpen: data.days_open,
+      },
+      replace: false,
+    });
+  };
+
   // Компактная карточка для главной страницы
   const compactCard = () => (
     <div className="point">
       <div className="point__image-container">
-        <img src={data.main_photo} alt={data.name} className="point__image" />
+        <img
+          loading="lazy"
+          src={data.main_photo}
+          alt={data.name}
+          className="point__image"
+        />
         <p className="point__cost">От {data.low_price}&#8381;/час</p>
         <PointRating
           rating={data.rating?.toFixed(1)}
@@ -150,6 +170,7 @@ export const PointsItem = ({ isCompact, isListed, data }) => {
             {photos.map((item) => (
               <SwiperSlide key={item.id}>
                 <img
+                  loading="lazy"
                   src={item.image}
                   alt={data.name}
                   className={`point__image point__image_large ${
@@ -263,6 +284,7 @@ export const PointsItem = ({ isCompact, isListed, data }) => {
             <Button
               btnClass="button_type_form button_size_middle"
               btnText="Забронировать место"
+              onClick={handleBooking}
             />
             {isListed && (
               <Button
