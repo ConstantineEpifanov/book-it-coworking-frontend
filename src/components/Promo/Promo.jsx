@@ -1,5 +1,4 @@
 import React from "react";
-import PropTypes from "prop-types";
 
 import { useNavigate } from "react-router-dom";
 import img from "../../images/Promo.svg";
@@ -9,6 +8,7 @@ import Input from "../UI-kit/Input/Input";
 import Button from "../UI-kit/Button/Button";
 import { searchLocations } from "../../utils/Api";
 import useForm from "../../hooks/useForm";
+import usePagination from "../../hooks/usePagination";
 
 const data = [
   {
@@ -28,10 +28,13 @@ const data = [
   },
 ];
 
-export const Promo = ({ lastSearchRequest }) => {
+export const Promo = () => {
+  const lastSearchRequest = localStorage.getItem("lastSearchRequest") || "";
   const { form, handleChange } = useForm({
     search: lastSearchRequest,
   });
+
+  const { offset, limit } = usePagination();
 
   const navigate = useNavigate();
 
@@ -45,9 +48,11 @@ export const Promo = ({ lastSearchRequest }) => {
     localStorage.setItem("lastSearchRequest", form.search);
     searchLocations({
       name: form.search,
+      offset,
+      limit,
     })
-      .then((coworkingsArrayFromPromo) => {
-        navigate("/points", { state: { coworkingsArrayFromPromo } });
+      .then((coworkingsFromPromo) => {
+        navigate("/points", { state: { coworkingsFromPromo } });
       })
       .catch((error) => {
         console.error(error);
@@ -95,12 +100,4 @@ export const Promo = ({ lastSearchRequest }) => {
       </ul>
     </section>
   );
-};
-
-Promo.propTypes = {
-  lastSearchRequest: PropTypes.string,
-};
-
-Promo.defaultProps = {
-  lastSearchRequest: "",
 };

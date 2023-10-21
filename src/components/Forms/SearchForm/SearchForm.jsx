@@ -9,8 +9,8 @@ import { searchLocations } from "../../../utils/Api";
 
 import useForm from "../../../hooks/useForm";
 
-const SearchForm = ({ handleUpdateCoworkings }) => {
-  const lastSearchRequest = localStorage.getItem("lastSearchRequest");
+const SearchForm = ({ handleUpdateCoworkings, limit, offset }) => {
+  const lastSearchRequest = localStorage.getItem("lastSearchRequest") || "";
   const { form, handleChange, handleSelectChange } = useForm({
     search: lastSearchRequest,
     category: "",
@@ -23,10 +23,9 @@ const SearchForm = ({ handleUpdateCoworkings }) => {
         inputType="search"
         inputName="search"
         inputValue={form.search}
-        // inputError={errors.search}
         handleChange={handleChange}
-        inputRequired
-        inputPlaceholder="Искать по названию... "
+        inputPlaceholder="Искать по названию"
+        inputRequired={false}
       />
     ),
     [form.search, handleChange],
@@ -39,6 +38,8 @@ const SearchForm = ({ handleUpdateCoworkings }) => {
       name: form.search,
       category: form.category,
       metro: form.metro,
+      offset,
+      limit,
     })
       .then((res) => {
         handleUpdateCoworkings(res);
@@ -48,16 +49,13 @@ const SearchForm = ({ handleUpdateCoworkings }) => {
       });
   };
 
-  function handleSubmit(evt) {
-    evt.preventDefault();
-  }
   return (
     <div className="entry-form__container">
       <form
         className="entry-form__inner entry-form__inner_select"
         name="form"
         autoComplete="off"
-        onSubmit={handleSubmit}
+        onSubmit={formSearchSubmit}
       >
         <div className="entry-form__search">
           {/* @ TODO подумать над реализацией смены иконки при ошибке */}
@@ -85,16 +83,9 @@ const SearchForm = ({ handleUpdateCoworkings }) => {
         />
         <Button
           btnClass="button_type_form button_type_form-select"
-          btnType="button"
+          btnType="submit"
           btnText="Искать"
-          onClick={formSearchSubmit}
         />
-        {/* <Button
-          btnClass="button_type_transparent button_type_transparent-select"
-          btnType="button"
-          btnText="Сбросить"
-          onClick={() => {}}
-        /> */}
       </form>
     </div>
   );
@@ -103,4 +94,11 @@ export default SearchForm;
 
 SearchForm.propTypes = {
   handleUpdateCoworkings: PropTypes.func.isRequired,
+  limit: PropTypes.number,
+  offset: PropTypes.number,
+};
+
+SearchForm.defaultProps = {
+  limit: 0,
+  offset: 0,
 };

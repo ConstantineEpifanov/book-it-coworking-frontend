@@ -1,7 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import { CurrentUserContext } from "../../contexts/currentUserContext";
-// import PropTypes from "prop-types";
 import "./CoworkingList.scss";
 import { Loader } from "../Loader/Loader";
 import { SectionTitle } from "../SectionTitle/SectionTitle";
@@ -11,44 +10,50 @@ import { MainMap } from "../Map/Map";
 import SearchForm from "../Forms/SearchForm/SearchForm";
 
 import { defaultState } from "../../config/mapOptions";
+import usePagination from "../../hooks/usePagination";
 
-import { getLocations, getMapLocations } from "../../utils/Api";
-import {
-  LAPTOP_POINTS_QUANTITY,
-  LAPTOP_MORE_POINTS_QUANTITY,
-} from "../../utils/constants";
+import { searchLocations, getMapLocations } from "../../utils/Api";
 
 export const CoworkingList = () => {
   const [coworkingsArray, setCoworkingsArray] = useState([]);
-  const [pointsAddCount, setPointsAddCount] = useState(0);
-  const [isMoreButtonVisible, setMoreButtonVisible] = useState(true);
-
+  const [nextPageURL, setNextPageURL] = useState(null);
   const [mapPoints, setMapPoints] = useState([]);
   const { isLoading, setIsLoading } = useContext(CurrentUserContext);
-
   const location = useLocation();
-  const coworkingsArrayFromPromo = location.state
-    ? location.state.coworkingsArrayFromPromo
+
+  const coworkingsFromPromo = location.state
+    ? location.state.coworkingsFromPromo
     : undefined;
 
-  const fetchData = () => {
-    const locationsPromise = getLocations(
-      LAPTOP_POINTS_QUANTITY,
-      pointsAddCount,
-    )
-      .then((res) => {
-        setCoworkingsArray(res.results);
-        setPointsAddCount((prev) => prev + LAPTOP_POINTS_QUANTITY);
-      })
-      .catch(() => {});
+  const { initialLimit, limit, offset, nextPage } = usePagination();
 
+  const getLocations = (offsetParameter, limitParameter, nameParamerer) => {
+    searchLocations({
+      name: nameParamerer,
+      offset: offsetParameter,
+      limit: limitParameter,
+    })
+      .then((res) => {
+        setCoworkingsArray((prevCoworkings) => [
+          ...prevCoworkings,
+          ...res.results,
+        ]);
+        setNextPageURL(res.next);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  };
+
+  const fetchData = () => {
+    setIsLoading(true);
     const mapLocationsPromise = getMapLocations()
       .then((res) => {
         setMapPoints(res);
       })
       .catch(() => {});
 
-    Promise.all([locationsPromise, mapLocationsPromise])
+    Promise.all([getLocations(offset, initialLimit), mapLocationsPromise])
       .then(() => {
         setIsLoading(false);
       })
@@ -57,40 +62,28 @@ export const CoworkingList = () => {
       });
   };
 
-  useEffect(() => {
-    if (
-      (Array.isArray(coworkingsArrayFromPromo) &&
-        coworkingsArrayFromPromo.length === 0) ||
-      !coworkingsArrayFromPromo
-    ) {
-      fetchData();
-    } else {
-      setCoworkingsArray(coworkingsArrayFromPromo);
-      setIsLoading(false);
-      setMoreButtonVisible(coworkingsArrayFromPromo > LAPTOP_POINTS_QUANTITY);
-    }
+  const handleUpdateCoworkings = (data) => {
+    setCoworkingsArray(data.results);
+    setNextPageURL(data.next);
+  };
 
+  useEffect(() => {
+    const lastSearchRequest = localStorage.getItem("lastSearchRequest") || "";
+    if (lastSearchRequest) getLocations(offset, limit, lastSearchRequest);
+    else if (
+      coworkingsFromPromo &&
+      Array.isArray(coworkingsFromPromo.results) &&
+      coworkingsFromPromo.results.length > 0
+    ) {
+      setCoworkingsArray(coworkingsFromPromo.results);
+      setNextPageURL(coworkingsFromPromo.next);
+    } else fetchData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const handleMoreClick = () => {
-    setPointsAddCount((prev) => prev + LAPTOP_MORE_POINTS_QUANTITY);
-
-    getLocations(LAPTOP_MORE_POINTS_QUANTITY, pointsAddCount).then((res) => {
-      setCoworkingsArray(coworkingsArray.concat(res.results));
-      if (res.results.length < LAPTOP_MORE_POINTS_QUANTITY)
-        setMoreButtonVisible(false);
-    });
-  };
-
-  const handleUpdateCoworkings = (data) => {
-    setCoworkingsArray(data);
-    setMoreButtonVisible(data.length > LAPTOP_POINTS_QUANTITY);
-  };
-
-  // useEffect(() => {
-  //   console.log("coworkingsArray", coworkingsArray);
-  // }, [coworkingsArray]);
+  useEffect(() => {
+    if (initialLimit !== limit) getLocations(offset, limit);
+  }, [limit, offset, initialLimit]);
 
   return (
     <main className="coworking-list">
@@ -106,13 +99,17 @@ export const CoworkingList = () => {
             titleText="Вы можете снять рабочее место в одном из коворкингов, представленных в нашем каталоге"
             titleClass="section-subtitle_search"
           />
-          <SearchForm handleUpdateCoworkings={handleUpdateCoworkings} />
+          <SearchForm
+            handleUpdateCoworkings={handleUpdateCoworkings}
+            limit={limit}
+            offset={offset}
+          />
           <MainMap points={mapPoints} defaultState={defaultState} />
           <PointsList
             isListed
             coworkingsArray={coworkingsArray}
-            handleMoreClick={handleMoreClick}
-            isMoreButtonVisible={isMoreButtonVisible}
+            handleMoreClick={nextPage}
+            isMoreButtonVisible={!!nextPageURL}
           />
         </>
       )}

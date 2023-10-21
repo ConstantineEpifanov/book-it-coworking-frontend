@@ -241,3 +241,16 @@ export function searchLocations(params = {}) {
     headers: setHeaders(),
   });
 }
+
+// Next page
+
+export function loadMorePoints(nextPageURL) {
+  if (!nextPageURL)
+    return Promise.reject(new Error("Нет ссылки на следующую страницу"));
+  const url = new URL(nextPageURL);
+  const basePath = url.pathname.replace("/api/v1", "") + url.search;
+  return request(basePath, {
+    method: "GET",
+    headers: setHeaders(),
+  });
+}

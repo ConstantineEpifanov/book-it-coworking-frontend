@@ -14,7 +14,7 @@ function Button({
     <button
       className={`button ${btnClass}`}
       type={btnType}
-      onClick={onClick}
+      onClick={onClick || undefined}
       style={backgroundColor && { backgroundColor }}
       disabled={!isValidBtn}
     >
@@ -35,7 +35,7 @@ Button.defaultProps = {
   btnClass: "button_type_form",
   btnText: "",
   btnType: "button",
-  onClick: () => {},
+  onClick: null,
   backgroundColor: null,
   isValidBtn: true,
 };
