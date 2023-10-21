@@ -62,4 +62,14 @@
     display: flex;
     gap: 20px;
   }
+  &__text-overflow {
+    max-width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    line-height: 30px;
+  }
+  &__label {
+    min-width: 235px;
+  }
 }

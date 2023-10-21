@@ -45,8 +45,6 @@ export const BookingsCard = ({ item }) => {
   // const [reviewText, setReviewText] = useState("");
   // const [reviewRating, setReviewRating] = useState(0);
 
-  console.log(item.reviews);
-
   const handleCloseBookingPopup = () => {
     handleClosePopup();
     setIsCancellationConfirmed(false);
@@ -142,7 +140,7 @@ export const BookingsCard = ({ item }) => {
           />
           <Button
             btnText="Отменить"
-            btnClass="button__profile-edit"
+            btnClass="button__profile-edit "
             onClick={handleConfirmCancellation}
           />
         </div>
@@ -189,7 +187,7 @@ export const BookingsCard = ({ item }) => {
           ) : (
             <Button
               btnText="Отменить"
-              btnClass="button__profile-bookings"
+              btnClass="button__profile-small button_type_transparent button_width-bookings"
               onClick={handleOpenPopup}
             />
           )}

@@ -16,7 +16,8 @@ import { formatPhone, formatDate } from "../../utils/utils";
 import { PROFILE_DATA_UPDATE } from "../../utils/constants";
 
 export const ProfileDataTab = () => {
-  const { currentUser, showMessage } = useContext(CurrentUserContext);
+  const { currentUser, setСurrentUser, showMessage } =
+    useContext(CurrentUserContext);
   const [isEdited, setIsEdited] = useState(false);
   const [editedUser, setEditedUser] = useState(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -43,25 +44,29 @@ export const ProfileDataTab = () => {
     handleScrollToTop();
   };
 
-  const hasChanges = () =>
-    Object.keys(values).some((key) => values[key] !== editedUser[key]);
+  const hasChanges = () => currentUser !== editedUser;
+
+  const handleFormChange = (e) => {
+    handleChange(e);
+    const { name, value } = e.target;
+    setEditedUser((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
     setIsSubmitting(true);
-    const changedFields = {};
-    Object.keys(values).forEach((key) => {
-      if (values[key] !== editedUser[key]) {
-        changedFields[key] = values[key];
-      }
-    });
-    setEditedUser((prev) => ({
-      ...prev,
-      ...changedFields,
-    }));
-    editUserData(changedFields)
-      .then(() => showMessage(PROFILE_DATA_UPDATE, "info"))
-      .finally(() => setIsSubmitting(false));
+    editUserData(editedUser)
+      .then(() => {
+        showMessage(PROFILE_DATA_UPDATE, "info");
+        setСurrentUser(editedUser);
+      })
+      .finally(() => {
+        setIsSubmitting(false);
+      });
+
     setIsEdited(false);
     handleScrollToTop();
   };
@@ -80,30 +85,34 @@ export const ProfileDataTab = () => {
       {!isEdited ? (
         <ul className="profile-data__info-list">
           <li className="profile-data__list-item">
-            <span>Имя</span>
+            <span className="profile-data__label">Имя</span>
             <span>{editedUser?.first_name}</span>
           </li>
           <li className="profile-data__list-item">
-            <span>Фамилия</span>
+            <span className="profile-data__label">Фамилия</span>
             <span>{editedUser?.last_name}</span>
           </li>
           <li className="profile-data__list-item">
-            <span>Дата рождения</span>
+            <span className="profile-data__label">Дата рождения</span>
             <span>
               {editedUser?.birth_date && formatDate(editedUser?.birth_date)}
             </span>
           </li>
           <li className="profile-data__list-item">
-            <span>Номер телефона</span>
+            <span className="profile-data__label">Номер телефона</span>
             <span>{editedUser?.phone && formatPhone(editedUser?.phone)}</span>
           </li>
           <li className="profile-data__list-item">
-            <span>Адрес эл. почты</span>
-            <span>{editedUser?.email}</span>
+            <span className="profile-data__label">Адрес эл. почты</span>
+            <span className="profile-data__text-overflow">
+              {editedUser?.email}
+            </span>
           </li>
           <li className="profile-data__list-item">
-            <span>Род деятельности</span>
-            <span>{editedUser?.occupation}</span>
+            <span className="profile-data__label">Род деятельности</span>
+            <span className="profile-data__text-overflow">
+              {editedUser?.occupation}
+            </span>
           </li>
         </ul>
       ) : (
@@ -117,6 +126,7 @@ export const ProfileDataTab = () => {
                   placeholder: "Имя",
                   required: true,
                   type: "text",
+                  maxLength: 21,
                 },
                 {
                   id: 2,
@@ -124,6 +134,7 @@ export const ProfileDataTab = () => {
                   placeholder: "Фамилия",
                   required: true,
                   type: "text",
+                  maxLength: 21,
                 },
                 {
                   id: 3,
@@ -161,9 +172,10 @@ export const ProfileDataTab = () => {
                     inputName={field.name}
                     inputValue={values[field.name] ?? editedUser[field.name]}
                     inputError={errors[field.name]}
-                    handleChange={handleChange}
+                    handleChange={handleFormChange}
                     inputPlaceholder={field.placeholder}
                     inputRequired={field.required}
+                    inputMaxLength={field.maxLength}
                   />
                 </li>
               ))}

@@ -34,13 +34,15 @@
     width: 295px;
     cursor: pointer;
     background-color: transparent;
-    font-size: 20px;
-    font-weight: 500;
+    font-size: 18px;
+    font-weight: 400;
+    line-height: 22px;
     padding: 10px 95px;
     border: 2px solid transparent;
+    border-radius: 20px;
     &_active {
-      border-radius: 20px;
-      border-color: $black;
+      background-color: black;
+      color: $white;
     }
   }
   &__nodata {
