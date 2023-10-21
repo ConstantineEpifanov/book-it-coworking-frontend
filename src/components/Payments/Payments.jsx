@@ -18,7 +18,8 @@ const Payments = () => {
     return `${date.getDate()} ${monthName} ${date.getFullYear()}`;
   };
 
-  const handleSubmit = async () => {
+  const handleSubmit = async (e) => {
+    e.preventDefault();
     try {
       await postOrder(place.id, place.spotId);
       setResponseOK(true);
