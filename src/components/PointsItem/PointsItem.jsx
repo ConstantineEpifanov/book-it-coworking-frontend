@@ -37,7 +37,7 @@ export const PointsItem = ({ isCompact, isListed, data }) => {
     addFavorite(data.id)
       .then(() => {
         setLiked(!isLiked);
-        showMessage(SUCCESSFUL_LIKE);
+        showMessage(SUCCESSFUL_LIKE, "info");
       })
       .catch((err) => showMessage(err.detail));
   }
@@ -47,7 +47,7 @@ export const PointsItem = ({ isCompact, isListed, data }) => {
     deleteFavorite(data.id)
       .then(() => {
         setLiked(!isLiked);
-        showMessage(SUCCESSFUL_DISLIKE);
+        showMessage(SUCCESSFUL_DISLIKE, "info");
       })
       .catch((err) => showMessage(err.detail));
   }

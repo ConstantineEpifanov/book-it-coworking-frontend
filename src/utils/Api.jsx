@@ -258,7 +258,7 @@ export function getLocationPlanPhoto(id) {
 }
 
 export function getSpots(id) {
-  return request(`/locations/${id}/spots`, {
+  return request(`/locations/${id}/spots/`, {
     method: "GET",
     headers: setHeaders(),
   });
@@ -284,7 +284,7 @@ export function searchLocations(params = {}) {
 // Payments
 
 export function postOrder(locationId, spotId, data) {
-  return request(`/locations/${locationId}/spots/${spotId}/order`, {
+  return request(`/locations/${locationId}/spots/${spotId}/order/`, {
     method: "POST",
     headers: setHeaders(),
     body: JSON.stringify(data),

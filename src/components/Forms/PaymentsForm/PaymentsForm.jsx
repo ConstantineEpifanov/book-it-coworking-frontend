@@ -20,35 +20,45 @@ const PaymentsForm = ({ onSubmit }) => {
         <p className="payments-form__text_info">
           Данные карты мы будем использовать только для оплаты бронирования
           абонемента, помещений коворгинга и оплаты дополнительных услуг.
-          Списание будут происходить только после вашего подтверждения{" "}
+          Списание будут происходить только после вашего подтверждения
         </p>
         <Input
           inputClass=""
           inputPlaceholder="Имя владельца"
           inputType="text"
+          inputRequired={false}
         />
-        <Input inputClass="" inputPlaceholder="Номер карты" inputType="text" />
+        <Input
+          inputClass=""
+          inputPlaceholder="Номер карты"
+          inputType="text"
+          inputRequired={false}
+        />
         <div className="payments-form__box">
           <Input
             inputClass="input_type_card"
             inputPlaceholder="Срок действия"
             inputType="text"
+            inputRequired={false}
           />
           <Input
             inputClass="input_type_card"
             inputPlaceholder="CVV/CVC"
             inputType="text"
+            inputRequired={false}
           />
         </div>
         <Input
           inputClass="input_size-middle"
           inputPlaceholder="Email"
           inputType="email"
+          inputRequired={false}
         />
         <Input
           inputClass="input_size-middle"
           inputPlaceholder="Телефон"
           inputType="tel"
+          inputRequired={false}
         />
         <textarea
           className={`entry-form__reviews ${
@@ -67,7 +77,6 @@ const PaymentsForm = ({ onSubmit }) => {
             setInputError(evt.target.validationMessage);
             setReviewText(text);
           }}
-          required
         />
         {/* если нет ошибки ввода, то покажи информацию */}
         {inputError ? (

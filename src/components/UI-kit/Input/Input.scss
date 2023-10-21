@@ -16,6 +16,7 @@
   &::-ms-reveal {
     display: none;
   }
+
   /* кастомный псевдоэлемент для placeholder */
   // &::before {
   //   content: attr(
@@ -49,10 +50,12 @@
   &_size-middle {
     width: 300px;
   }
+
   &_type_card {
     width: 170px;
     padding: 18px 20px 18px 20px;
   }
+
   &__label {
     font-family: $font-family;
     font-size: 10px;
@@ -78,16 +81,19 @@
     // margin: 0;
     // border: 0;
     align-self: self-start;
+
     &_error {
       color: $alert-red;
       padding-top: 5px;
       padding-left: 20px;
     }
+
     &_info {
       color: $dark-gray;
       padding-top: 5px;
       padding-left: 20px;
     }
+
     &_confirm {
       color: $dark-gray;
       font-size: 14px;
@@ -115,9 +121,11 @@
     width: 100%;
     height: 58px;
   }
+
   &__items {
     position: relative;
   }
+
   &__search {
     font-family: $font-family;
     width: 265px;
@@ -125,5 +133,9 @@
     padding-left: 46px;
     background-color: $main-white;
     border: 2px solid $black;
+
+    &::placeholder {
+      color: $gray;
+    }
   }
 }
