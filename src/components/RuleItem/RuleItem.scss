@@ -80,6 +80,7 @@
     stroke: $white;
     color: $white;
     fill: none;
+    cursor: pointer;
 
     &_active {
       transform: matrix(1, 0, 0, -1, 0, 0);

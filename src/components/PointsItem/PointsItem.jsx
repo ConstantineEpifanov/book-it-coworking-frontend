@@ -1,7 +1,7 @@
 /* eslint-disable camelcase */
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import PropTypes from "prop-types";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 import "./PointsItem.scss";
 import "swiper/swiper-bundle.min.css";
@@ -20,13 +20,14 @@ import { Time } from "./icons/Time";
 import { MeetingRoom } from "./icons/MeetingRoom";
 import { Share } from "./icons/Share";
 import { addFavorite, deleteFavorite } from "../../utils/Api";
+import { CurrentUserContext } from "../../contexts/currentUserContext";
 
 SwiperCore.use([Pagination]);
 
 export const PointsItem = ({ isCompact, isListed, data }) => {
   const [isLiked, setLiked] = useState(data.is_favorited);
+  const { showMessage } = useContext(CurrentUserContext);
 
-  const location = useLocation();
   const navigate = useNavigate();
   const time = `${data.days_open} ${data.open_time}–${data.close_time}`;
 
@@ -36,7 +37,7 @@ export const PointsItem = ({ isCompact, isListed, data }) => {
       .then(() => {
         setLiked(!isLiked);
       })
-      .catch((err) => new Error(err));
+      .catch((err) => showMessage(err.detail));
   }
 
   // Удалить из избранного
@@ -45,7 +46,7 @@ export const PointsItem = ({ isCompact, isListed, data }) => {
       .then(() => {
         setLiked(!isLiked);
       })
-      .catch((err) => new Error(err));
+      .catch((err) => showMessage(err.detail));
   }
 
   function onLikeClick() {
@@ -63,10 +64,16 @@ export const PointsItem = ({ isCompact, isListed, data }) => {
         .share({
           title: `Коворкинг ${data.name}`,
           text: "Забронируйте место в лучшем коворкинге для IT-специалистов",
-          url: location.pathname,
+          url: isListed ? window.location.href + data.id : window.location.href,
         })
-        .then(() => console.log("Удалось поделиться"))
-        .catch((error) => console.log("Не удалось поделиться", error));
+        .then(() => showMessage("Получилось поделиться", "info"))
+        .catch((error) => showMessage(error, "error"));
+    } else {
+      navigator.clipboard
+        .writeText(
+          isListed ? window.location.href + data.id : window.location.href,
+        )
+        .then(() => showMessage("Ссылка скопирована в буфер обмена", "info"));
     }
   };
 

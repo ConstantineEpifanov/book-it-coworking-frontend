@@ -11,7 +11,8 @@ import "./RulesQuestions.scss";
 export const RulesQuestions = () => {
   const [questions, setQuestions] = useState([]);
   const [rules, setRules] = useState([]);
-  const { isLoading, setIsLoading } = useContext(CurrentUserContext);
+  const { isLoading, setIsLoading, showMessage } =
+    useContext(CurrentUserContext);
 
   useEffect(() => {
     setIsLoading(true);
@@ -19,13 +20,17 @@ export const RulesQuestions = () => {
       .then((res) => {
         setQuestions(res);
       })
-      .catch(() => {});
+      .catch((err) => {
+        showMessage(err.detail);
+      });
 
     getRules()
       .then((res) => {
         setRules(res);
       })
-      .catch(() => {})
+      .catch((err) => {
+        showMessage(err.detail);
+      })
       .finally(() => {
         setIsLoading(false);
       });

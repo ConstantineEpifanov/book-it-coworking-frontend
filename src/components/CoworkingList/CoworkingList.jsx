@@ -16,12 +16,16 @@ import { getLocations, getMapLocations } from "../../utils/Api";
 import {
   LAPTOP_POINTS_QUANTITY,
   LAPTOP_MORE_POINTS_QUANTITY,
+  NOT_FOUND_ERROR_TITLE,
+  NOT_FOUND_ERROR_SUBTITLE,
 } from "../../utils/constants";
+import { NotFoundError } from "../NotFoundError/NotFoundError";
 
 export const CoworkingList = () => {
   const [coworkingsArray, setCoworkingsArray] = useState([]);
   const [pointsAddCount, setPointsAddCount] = useState(0);
   const [isMoreButtonVisible, setMoreButtonVisible] = useState(true);
+  const [isNotFoundError, setNotFoundError] = useState(false);
 
   const [mapPoints, setMapPoints] = useState([]);
   const { isLoading, setIsLoading } = useContext(CurrentUserContext);
@@ -85,11 +89,19 @@ export const CoworkingList = () => {
 
   const handleUpdateCoworkings = (data) => {
     setCoworkingsArray(data);
-  };
 
-  useEffect(() => {
-    console.log("coworkingsArray", coworkingsArray);
-  }, [coworkingsArray]);
+    if (data.length > LAPTOP_POINTS_QUANTITY) {
+      setMoreButtonVisible(true);
+    } else {
+      setMoreButtonVisible(false);
+    }
+
+    if (data.length === 0) {
+      setNotFoundError(true);
+    } else {
+      setNotFoundError(false);
+    }
+  };
 
   return (
     <main className="coworking-list">
@@ -106,13 +118,23 @@ export const CoworkingList = () => {
             titleClass="section-subtitle_search"
           />
           <SearchForm handleUpdateCoworkings={handleUpdateCoworkings} />
-          <MainMap points={mapPoints} defaultState={defaultState} />
-          <PointsList
-            isListed
-            coworkingsArray={coworkingsArray}
-            handleMoreClick={handleMoreClick}
-            isMoreButtonVisible={isMoreButtonVisible}
-          />
+
+          {isNotFoundError ? (
+            <NotFoundError
+              titleText={NOT_FOUND_ERROR_TITLE}
+              subtitleText={NOT_FOUND_ERROR_SUBTITLE}
+            />
+          ) : (
+            <>
+              <MainMap points={mapPoints} defaultState={defaultState} />
+              <PointsList
+                isListed
+                coworkingsArray={coworkingsArray}
+                handleMoreClick={handleMoreClick}
+                isMoreButtonVisible={isMoreButtonVisible}
+              />
+            </>
+          )}
         </>
       )}
     </main>
