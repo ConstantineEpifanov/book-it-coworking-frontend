@@ -126,13 +126,13 @@ export const ButtonsList = ({
 
   useEffect(() => {
     if (extraRules && selectedItems.length > 0) {
-      const resultItemsStates = itemsStatesList.map((item) => ({
-        ...item,
-        isEnabled: !extraRules.some((checkRule) =>
-          checkRule(item, selectedItems),
-        ),
-      }));
-      setItemsStatesList(resultItemsStates);
+      // const resultItemsStates = itemsStatesList.map((item) => ({
+      //   ...item,
+      //   isEnabled: !extraRules.some((checkRule) =>
+      //     checkRule(item, selectedItems),
+      //   ),
+      // }));
+      // setItemsStatesList(resultItemsStates);
     }
   }, [selectedItems, extraRules, itemsStatesList]);
 

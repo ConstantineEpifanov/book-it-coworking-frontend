@@ -48,6 +48,21 @@ const getNormalizedDayNumber = (date) => {
   return resultNumber;
 };
 
+// Вернет true, если тот же день месяца
+const isSameDateDay = (firstDate, secondDate) => {
+  const firstDay = new Date(
+    firstDate.getFullYear(),
+    firstDate.getMonth(),
+    firstDate.getDate(),
+  );
+  const secondDay = new Date(
+    secondDate.getFullYear(),
+    secondDate.getMonth(),
+    secondDate.getDate(),
+  );
+  return firstDay.getTime() === secondDay.getTime();
+};
+
 const getTimeWithZeroPrefixedMinutes = (timeArray) => {
   let resultTime = `${timeArray[0]}:`;
   resultTime = `${resultTime}${
@@ -214,7 +229,7 @@ export const Booking = ({
     setTimeRangesSelected(selectedRanges);
   };
 
-  const [timeRangeItems] = useState(
+  const [timeRangeItems, setTimeRangeItems] = useState(
     getTimeRangeItems(openTime, closeTime, handleTimeItemClick),
   );
 
@@ -323,7 +338,7 @@ export const Booking = ({
       const secondItem = secondSpots.find((item) => firtsItem.id === item.id);
       return {
         ...firtsItem,
-        isOrdered: firtsItem.isOrdered && secondItem.isOrdered,
+        isEnabled: firtsItem.isEnabled && secondItem.isEnabled,
       };
     });
   };
@@ -420,6 +435,33 @@ export const Booking = ({
     }
   }, [id]);
 
+  // Получить актуальные промежутки времени. Активными будут те, что будут позже или равны текущему времени
+  const getAvailableTimeRanges = useCallback(
+    (currentTimeRanges) =>
+      currentTimeRanges.map((timeRange) => ({
+        ...timeRange,
+        isEnabled: !datesSelected.some((date) => {
+          const todayDate = new Date();
+          if (isSameDateDay(date, todayDate)) {
+            const [rangeStartHour, rangeStartMinutes] = getHourAndMinutes(
+              timeRange.startTime,
+            );
+            const todayHour = todayDate.getHours();
+            const todayMinutes = todayDate.getMinutes();
+            if (rangeStartHour > todayHour) {
+              return false;
+            }
+            if (rangeStartHour === todayHour) {
+              return rangeStartMinutes < todayMinutes;
+            }
+            return true;
+          }
+          return false;
+        }),
+      })),
+    [datesSelected],
+  );
+
   useEffect(() => {
     if (!isSpotsEnabled) {
       setSpotsSelected([]);
@@ -464,6 +506,12 @@ export const Booking = ({
     loadPlanPhoto(id);
     loadWorkplacesInitial();
   }, [id, loadPlanPhoto, loadWorkplacesInitial]);
+
+  useEffect(() => {
+    if (datesSelected.length > 0) {
+      setTimeRangeItems(getAvailableTimeRanges);
+    }
+  }, [datesSelected, getAvailableTimeRanges]);
 
   return (
     <main className="booking" aria-label="Страница бронирования">
