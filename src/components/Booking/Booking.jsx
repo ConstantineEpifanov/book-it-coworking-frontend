@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback, useMemo } from "react";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import PropTypes from "prop-types";
 
 import "./Booking.scss";
@@ -199,12 +199,11 @@ const spotsSortFunc = (a, b) => {
   return aNum - bNum;
 };
 
-export const Booking = ({
-  location: { id, openTime, closeTime, daysOpen },
-}) => {
+export const Booking = () => {
   const FIRST_SPOT_TYPE = "Общая зона";
   const SECOND_SPOT_TYPE = "Переговорная";
   const navigate = useNavigate();
+  const [coworking, setCoworking] = useState({});
   const [planPhoto, setPlanPhoto] = useState("");
   const [datesSelected, setDatesSelected] = useState([]);
   const [timeRangesSelected, setTimeRangesSelected] = useState([]);
@@ -219,6 +218,8 @@ export const Booking = ({
   const [isWorkplacesEnabled, setWorkplacesEnabled] = useState(false);
   const [isMeetingRoomsEnabled, setMeetingRoomsEnabled] = useState(false);
 
+  const location = useLocation();
+
   // Обработчик выбора даты
   const handleCalendarClick = (dates) => {
     setDatesSelected(dates);
@@ -229,9 +230,7 @@ export const Booking = ({
     setTimeRangesSelected(selectedRanges);
   };
 
-  const [timeRangeItems, setTimeRangeItems] = useState(
-    getTimeRangeItems(openTime, closeTime, handleTimeItemClick),
-  );
+  const [timeRangeItems, setTimeRangeItems] = useState([]);
 
   // Разрешенные группы промежутков времени
   const allowedRanges = useMemo(
@@ -266,6 +265,40 @@ export const Booking = ({
     navigate(-1);
   };
 
+  // Обработчик кнопки "Перейти к оплате"
+  const handlePayClick = () => {
+    let workplaceCategory = EQUIPMENT_GENERAL_CATEGORY;
+    let selectedWorkplaces = spotsSelected.map((item) => item.name).join(", ");
+    let selectedSpotId = spotsSelected.at(0).id;
+    const selectedDate = datesSelected.at(0);
+    const timeSeleted = [...timeRangesSelected].sort(timeSortFunc);
+    const { startTime } = timeSeleted.at(0);
+    const { endTime } = timeSeleted.at(-1);
+
+    if (meetingRoomsSelected.length > 0) {
+      selectedSpotId = meetingRoomsSelected.at(0).id;
+      workplaceCategory = EQUIPMENT_MEETING_CATEGORY;
+      selectedWorkplaces = meetingRoomsSelected
+        .map((item) => item.name)
+        .join(", ");
+    }
+
+    navigate("/payments", {
+      state: {
+        id: coworking.id,
+        spotId: selectedSpotId,
+        name: coworking.name,
+        location: coworking.location,
+        category: workplaceCategory,
+        equipment: selectedWorkplaces,
+        date: selectedDate,
+        startTime,
+        endTime,
+        bill: totalPrice,
+      },
+    });
+  };
+
   // Получение текущей цены выбранного массива мест
   const getSelectedPrice = (selectedItems) =>
     selectedItems.reduce((sum, item) => {
@@ -276,7 +309,8 @@ export const Booking = ({
   // Дополнительные правила-функции для проверки дат календаря
   // Если функция возвращает true - дата календаря будет недоступной
   const calendarExtraRules = [
-    (date) => getNormalizedDayNumber(date) > WORKING_DAYS_COUNTS[daysOpen],
+    (date) =>
+      getNormalizedDayNumber(date) > WORKING_DAYS_COUNTS[coworking.daysOpen],
   ];
 
   // Получение информации о всех местах в данной location
@@ -361,7 +395,7 @@ export const Booking = ({
               selectedDate.getMonth() + 1
             }-${selectedDate.getDate()}`;
             const receivedWorkplaces = await getWorkplacesData({
-              id,
+              id: coworking.id,
               date: preparedDate,
               startTime: timeItem.startTime,
               endTime: timeItem.endTime,
@@ -396,7 +430,7 @@ export const Booking = ({
       setMeetingRooms(resultSpots.meetingRooms);
     }
   }, [
-    id,
+    coworking.id,
     datesSelected,
     timeRangesSelected,
     timeRangeItems,
@@ -416,24 +450,29 @@ export const Booking = ({
       tomorrowDate.getMonth() + 1
     }-${tomorrowDate.getDate()}`;
     const resultSpots = await getWorkplacesData({
-      id,
+      id: coworking.id,
       date: preparedDate,
-      startTime: openTime,
-      endTime: closeTime,
+      startTime: coworking.openTime,
+      endTime: coworking.closeTime,
     });
     setSpots(resultSpots.spots);
     setMeetingRooms(resultSpots.meetingRooms);
-  }, [id, getWorkplacesData, openTime, closeTime]);
+  }, [
+    coworking.id,
+    getWorkplacesData,
+    coworking.openTime,
+    coworking.closeTime,
+  ]);
 
   // Загрузка изображения плана помещения
   const loadPlanPhoto = useCallback(async () => {
     try {
-      const { image } = await getLocationPlanPhoto(id);
+      const { image } = await getLocationPlanPhoto(coworking.id);
       setPlanPhoto(image);
     } catch (err) {
       console.log(err.message);
     }
-  }, [id]);
+  }, [coworking.id]);
 
   // Получить актуальные промежутки времени. Активными будут те, что будут позже или равны текущему времени
   const getAvailableTimeRanges = useCallback(
@@ -514,9 +553,24 @@ export const Booking = ({
 
   // Первоначальная загрузка компонента
   useEffect(() => {
-    loadPlanPhoto(id);
+    setTimeRangeItems(
+      getTimeRangeItems(
+        location.state.openTime,
+        location.state.closeTime,
+        handleTimeItemClick,
+      ),
+    );
+    setCoworking(location.state);
+    loadPlanPhoto(coworking.id);
     loadWorkplacesInitial();
-  }, [id, loadPlanPhoto, loadWorkplacesInitial]);
+  }, [
+    coworking.id,
+    loadPlanPhoto,
+    loadWorkplacesInitial,
+    location.state,
+    location.state.openTime,
+    location.state.closeTime,
+  ]);
 
   return (
     <main className="booking" aria-label="Страница бронирования">
@@ -620,6 +674,7 @@ export const Booking = ({
           btnClass="button_type_form button_size_middle"
           btnText="Перейти к оплате"
           isValidBtn={!!totalPrice}
+          onClick={handlePayClick}
         />
       </section>
     </main>
