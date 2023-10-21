@@ -3,7 +3,13 @@ import React from "react";
 
 import "./SortData.scss";
 
-const SortData = ({ titleSort, array, size }) => {
+const SortData = ({
+  titleSort,
+  array,
+  size,
+  handleSelectChange,
+  selectName,
+}) => {
   const sortRef = React.useRef(null);
   const [open, setOpen] = React.useState(false);
   const [sort, setSort] = React.useState(false);
@@ -11,6 +17,7 @@ const SortData = ({ titleSort, array, size }) => {
   const onClickListItem = (obj) => {
     setSort(obj);
     // console.log(`Сортировка по : ${obj.text}`);
+    handleSelectChange({ [selectName]: obj.text });
     setOpen(false);
   };
 
@@ -79,6 +86,8 @@ SortData.propTypes = {
     }),
   ),
   size: PropTypes.string,
+  handleSelectChange: PropTypes.func.isRequired,
+  selectName: PropTypes.string.isRequired,
 };
 
 SortData.defaultProps = {

@@ -69,7 +69,7 @@ const LoginForm = ({ isOpenPopup, onClosePopup, onGetUserInfo }) => {
           isErrApi ? isErrApi.message : ""
         }`}</span>
         <Button
-          btnClass="button_type_form "
+          btnClass="button_type_form"
           btnType="submit"
           btnText="Войти"
           onClick={() => {}}

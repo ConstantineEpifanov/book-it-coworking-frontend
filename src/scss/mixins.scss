@@ -18,6 +18,7 @@
   display: flex;
   gap: 20px;
 }
+
 @mixin flex-box-column {
   display: flex;
   gap: 20px;
@@ -40,6 +41,7 @@
   font-style: normal;
   line-height: 22px;
 }
+
 // для информации под импутами, текст с маленьким шрифтом.
 @mixin text-info {
   font-family: $font-family;
@@ -70,6 +72,7 @@
   border: 2px solid $alert-red;
   background: $alert-light-red;
   color: $alert-red;
+
   &:focus {
     border: 2px solid $alert-red;
     outline: none;
@@ -86,15 +89,17 @@
 
 @mixin button-active {
   color: $green;
-  background-color: black;
+  background-color: $black;
 }
 
 // --------------CARDS-------------------
 
 @mixin card-border-color {
-  transition: border-color 0.3s ease-in-out;
+  transition: all 0.3s ease;
+
   &:hover {
     border-color: $pink;
+    box-shadow: 0px 5px 24px 0px rgba(18, 32, 35, 0.1);
   }
 
   &:active {
@@ -110,6 +115,7 @@
   &:hover {
     color: $color1;
   }
+
   &:active {
     color: $color2;
   }
@@ -117,12 +123,19 @@
 
 @mixin svg-color-transition($color1: $pink, $color2: $green, $duration: 0.3s) {
   transition: stroke $duration ease-in-out;
+
   &:hover {
     stroke: $color1;
   }
+
   &:active {
     stroke: $color2;
   }
+}
+
+@mixin render-animation {
+  transform: translateX(70%);
+  animation: render-cards 1s forwards;
 }
 
 // ------------MEDIA QUERIES------------

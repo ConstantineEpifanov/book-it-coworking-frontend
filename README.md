@@ -1,6 +1,8 @@
-# [book-it-coworking-frontend]
+# Spot It
 
 Интерфейс приложения для онлайн-бронирования и управления местами в коворкингах для IT-специалистов
+
+URL: https://spotit.acceleratorpracticum.ru/
 
 ## Запуск фронтенд-сервера
 

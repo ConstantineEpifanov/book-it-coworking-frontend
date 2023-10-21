@@ -1,4 +1,5 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect, useCallback, useMemo } from "react";
+import { useNavigate } from "react-router-dom";
 import PropTypes from "prop-types";
 
 import "./Booking.scss";
@@ -13,6 +14,7 @@ import {
   WORKING_DAYS_COUNTS,
   EQUIPMENT_GENERAL_CATEGORY,
   EQUIPMENT_MEETING_CATEGORY,
+  ALLOWED_TIME_RANGES,
 } from "../../utils/constants";
 
 // Блок функций-заглушек, используются вместо обращений к API
@@ -46,8 +48,34 @@ const getNormalizedDayNumber = (date) => {
   return resultNumber;
 };
 
-// Возвращает инстанс с параметрами для кнопки промежутка времени
+// Вернет true, если тот же день месяца
+const isSameDateDay = (firstDate, secondDate) => {
+  const firstDay = new Date(
+    firstDate.getFullYear(),
+    firstDate.getMonth(),
+    firstDate.getDate(),
+  );
+  const secondDay = new Date(
+    secondDate.getFullYear(),
+    secondDate.getMonth(),
+    secondDate.getDate(),
+  );
+  return firstDay.getTime() === secondDay.getTime();
+};
+
+const getTimeWithZeroPrefixedMinutes = (timeArray) => {
+  let resultTime = `${timeArray[0]}:`;
+  resultTime = `${resultTime}${
+    timeArray[1] < 10 ? `0${timeArray[1]}` : timeArray[1]
+  }`;
+  return resultTime;
+};
+
+// Возвращает объект с параметрами для кнопки промежутка времени
 const getRangeItem = (id, startTime, endTime, onItemClick) => {
+  const resultName = `${getTimeWithZeroPrefixedMinutes(
+    startTime,
+  )}\xa0-\xa0${getTimeWithZeroPrefixedMinutes(endTime)}`;
   const resultStartTime = startTime
     .map((item) => (item < 10 ? `0${item}` : item))
     .join(":");
@@ -57,7 +85,7 @@ const getRangeItem = (id, startTime, endTime, onItemClick) => {
 
   return {
     id,
-    name: `${resultStartTime} - ${resultEndTime}`,
+    name: resultName,
     startTime: resultStartTime,
     endTime: resultEndTime,
     onClick: onItemClick,
@@ -113,50 +141,137 @@ const getTimeRangeItems = (startTime, endTime, onItemClick) => {
   return resultRanges;
 };
 
+// Получение пары часов и минут из строки времени
+const getHourAndMinutes = (time) =>
+  time.split(":").map((item) => parseInt(item, 10));
+
+// Получение массива массивов, являющихся группами - они содержат id элементов,
+// которым разрешено быть друг с другом в одной группе
+const getAllowedRanges = (baseRanges, itemsList) => {
+  const allowedRanges = baseRanges.reduce((ranges, allowedRange) => {
+    const [allowedRangeStartHour, allowedRangeStartMinutes] = getHourAndMinutes(
+      allowedRange.startTime,
+    );
+    const [allowedRangeEndHour, allowedRangeEndMinutes] = getHourAndMinutes(
+      allowedRange.endTime,
+    );
+
+    const range = itemsList.reduce((itemsRange, item) => {
+      const [itemStartHour, itemStartMinutes] = getHourAndMinutes(
+        item.startTime,
+      );
+      const [itemEndHour, itemEndMinutes] = getHourAndMinutes(item.endTime);
+      if (
+        itemStartHour >= allowedRangeStartHour &&
+        itemStartMinutes >= allowedRangeStartMinutes &&
+        itemEndHour <= allowedRangeEndHour &&
+        itemEndMinutes <= allowedRangeEndMinutes
+      ) {
+        itemsRange.push(item.id);
+      }
+      return itemsRange;
+    }, []);
+
+    if (range.length > 0) {
+      ranges.push(range);
+    }
+
+    return ranges;
+  }, []);
+
+  return allowedRanges;
+};
+
+const timeSortFunc = (a, b) => {
+  const [firstHour, firstMinutes] = getHourAndMinutes(a.startTime);
+  const [secondHour, secondMinutes] = getHourAndMinutes(b.startTime);
+
+  if (firstHour === secondHour) {
+    return firstMinutes - secondMinutes;
+  }
+
+  return firstHour - secondHour;
+};
+
+const spotsSortFunc = (a, b) => {
+  const aNum = parseInt(a.name, 10);
+  const bNum = parseInt(b.name, 10);
+  return aNum - bNum;
+};
+
 export const Booking = ({
-  location: {
-    id,
-    open_time: openTime,
-    close_time: closeTime,
-    days_open: daysOpen,
-  },
+  location: { id, openTime, closeTime, daysOpen },
 }) => {
   const FIRST_SPOT_TYPE = "Общая зона";
   const SECOND_SPOT_TYPE = "Переговорная";
+  const navigate = useNavigate();
   const [planPhoto, setPlanPhoto] = useState("");
   const [datesSelected, setDatesSelected] = useState([]);
   const [timeRangesSelected, setTimeRangesSelected] = useState([]);
+  const [spotsSelected, setSpotsSelected] = useState([]);
+  const [meetingRoomsSelected, setMeetingRoomsSelected] = useState([]);
+  const [currentSpotPrice, setCurrentSpotPrice] = useState("");
+  const [currentMeetingPrice, setCurrentMeetingPrice] = useState("");
+  const [totalPrice, setTotalPrice] = useState("");
   const [spots, setSpots] = useState([]);
   const [meetingRooms, setMeetingRooms] = useState([]);
-  const [isSpotsEnabled, setSpotsEnabled] = useState(false);
-  const [isWorkplacesEnabled, setWorkplacesEnabled] = useState(true);
+  const [isSpotsEnabled, setSpotsEnabled] = useState(true);
+  const [isWorkplacesEnabled, setWorkplacesEnabled] = useState(false);
   const [isMeetingRoomsEnabled, setMeetingRoomsEnabled] = useState(false);
 
+  // Обработчик выбора даты
   const handleCalendarClick = (dates) => {
     setDatesSelected(dates);
   };
 
+  // Обработчик выбора времени
   const handleTimeItemClick = async (selectedRanges) => {
     setTimeRangesSelected(selectedRanges);
   };
 
-  const [timeRangeItems] = useState(
+  const [timeRangeItems, setTimeRangeItems] = useState(
     getTimeRangeItems(openTime, closeTime, handleTimeItemClick),
   );
 
+  // Разрешенные группы промежутков времени
+  const allowedRanges = useMemo(
+    () => getAllowedRanges(ALLOWED_TIME_RANGES, timeRangeItems),
+    [timeRangeItems],
+  );
+
+  // Обработчик выбора типа места
   const handleSwitcherClick = (selectedSpotType) => {
     if (selectedSpotType === FIRST_SPOT_TYPE) {
-      setWorkplacesEnabled(true);
+      setSpotsEnabled(true);
       setMeetingRoomsEnabled(false);
       return;
     }
-    setWorkplacesEnabled(false);
+    setSpotsEnabled(false);
     setMeetingRoomsEnabled(true);
   };
 
+  // Обработчик выбора места в общей зоне
   const handleSpotSelect = (selectedItems) => {
-    console.log(selectedItems);
+    setSpotsSelected(selectedItems);
   };
+
+  // Обработчик выбора переговорной
+  const handleMeetingRoomSelect = (selectedItems) => {
+    setMeetingRoomsSelected(selectedItems);
+  };
+
+  // Обработчик клика по кнопке "Назад"
+  const handleBackButton = (e) => {
+    e.preventDefault();
+    navigate(-1);
+  };
+
+  // Получение текущей цены выбранного массива мест
+  const getSelectedPrice = (selectedItems) =>
+    selectedItems.reduce((sum, item) => {
+      const newSum = sum + parseInt(item.price, 10);
+      return newSum;
+    }, 0);
 
   // Дополнительные правила-функции для проверки дат календаря
   // Если функция возвращает true - дата календаря будет недоступной
@@ -164,6 +279,7 @@ export const Booking = ({
     (date) => getNormalizedDayNumber(date) > WORKING_DAYS_COUNTS[daysOpen],
   ];
 
+  // Получение информации о всех местах в данной location
   const getWorkplacesData = useCallback(
     async ({ locationId, date, startTime, endTime }) => {
       let result = {};
@@ -193,7 +309,7 @@ export const Booking = ({
         ).map((item) => ({
           ...item,
           isEnabled: !item.isOrdered,
-          onClick: handleSpotSelect,
+          onClick: handleMeetingRoomSelect,
         }));
         result = {
           spots: spotsData,
@@ -207,6 +323,8 @@ export const Booking = ({
     [],
   );
 
+  // Приведение двух списков мест к одному списку
+  // Если в одном из сравниваемых списках место будет занято, то оно будет занято в результирующем списке
   const mergeSpotsStates = (firstSpots, secondSpots) => {
     if (!firstSpots) {
       return secondSpots;
@@ -220,19 +338,21 @@ export const Booking = ({
       const secondItem = secondSpots.find((item) => firtsItem.id === item.id);
       return {
         ...firtsItem,
-        isOrdered: firtsItem.isOrdered && secondItem.isOrdered,
+        isEnabled: firtsItem.isEnabled && secondItem.isEnabled,
       };
     });
   };
 
-  //
+  // Запрос данных и сравнение данных о всех местах в локации
+  // Запрос к бэку будет выполнен для каждой выбранной даты, для каждого выбранного времени
+  // Для варианта с singleSelect, запрос должен будет выполниться один раз при выборе времени
   const loadWorkplaces = useCallback(async () => {
     const resultSpots = await datesSelected.reduce(
       async (dateResult, selectedDate) => {
         const dateSpots = await timeRangesSelected.reduce(
           async (timeResult, timeRange) => {
             const timeItem = timeRangeItems.find(
-              (item) => item.id === timeRange,
+              (item) => item.id === timeRange.id,
             );
             if (!timeItem) {
               return timeResult;
@@ -315,16 +435,84 @@ export const Booking = ({
     }
   }, [id]);
 
+  // Получить актуальные промежутки времени. Активными будут те, что будут позже или равны текущему времени
+  const getAvailableTimeRanges = useCallback(
+    (currentTimeRanges) =>
+      currentTimeRanges.map((timeRange) => ({
+        ...timeRange,
+        isEnabled: !datesSelected.some((date) => {
+          const todayDate = new Date();
+          if (isSameDateDay(date, todayDate)) {
+            const [rangeStartHour, rangeStartMinutes] = getHourAndMinutes(
+              timeRange.startTime,
+            );
+            const todayHour = todayDate.getHours();
+            const todayMinutes = todayDate.getMinutes();
+            if (rangeStartHour > todayHour) {
+              return false;
+            }
+            if (rangeStartHour === todayHour) {
+              return rangeStartMinutes < todayMinutes;
+            }
+            return true;
+          }
+          return false;
+        }),
+      })),
+    [datesSelected],
+  );
+
+  // Рекация на изменение доступности
+  useEffect(() => {
+    if (!isSpotsEnabled) {
+      setSpotsSelected([]);
+    }
+
+    if (!isMeetingRoomsEnabled) {
+      setMeetingRoomsSelected([]);
+    }
+
+    if (!isWorkplacesEnabled) {
+      setSpotsSelected([]);
+      setMeetingRoomsSelected([]);
+    }
+  }, [isSpotsEnabled, isMeetingRoomsEnabled, isWorkplacesEnabled]);
+
+  // Реакция на изменение выбранных рабочих мест, переговорных комнат и промежутков времени
+  useEffect(() => {
+    const spotPrice = getSelectedPrice(spotsSelected);
+    setCurrentSpotPrice(spotPrice === 0 ? "\u200b" : `${spotPrice} ₽/час`);
+
+    const meetingRoomPrice = getSelectedPrice(meetingRoomsSelected);
+    setCurrentMeetingPrice(
+      meetingRoomPrice === 0 ? "\u200b" : `${meetingRoomPrice} ₽/час`,
+    );
+
+    setTotalPrice(
+      spotPrice * timeRangesSelected.length +
+        meetingRoomPrice * timeRangesSelected.length,
+    );
+  }, [spotsSelected, meetingRoomsSelected, timeRangesSelected]);
+
   // Реакция на изменение выбранных промежутков времени
   useEffect(() => {
-    if (timeRangesSelected) {
+    if (timeRangesSelected.length > 0) {
       loadWorkplaces();
-      setSpotsEnabled(true);
+      setWorkplacesEnabled(true);
       return;
     }
-    setSpotsEnabled(false);
+    setWorkplacesEnabled(false);
   }, [timeRangesSelected, loadWorkplaces]);
 
+  // Реакция на изменение выбранной даты
+  useEffect(() => {
+    if (datesSelected.length > 0) {
+      setTimeRangeItems(getAvailableTimeRanges);
+    }
+    setTimeRangesSelected([]);
+  }, [datesSelected, getAvailableTimeRanges]);
+
+  // Первоначальная загрузка компонента
   useEffect(() => {
     loadPlanPhoto(id);
     loadWorkplacesInitial();
@@ -332,6 +520,11 @@ export const Booking = ({
 
   return (
     <main className="booking" aria-label="Страница бронирования">
+      <Button
+        onClick={handleBackButton}
+        btnClass="button_type_back"
+        btnText="Назад"
+      />
       <SectionTitle titleText="Бронирование" />
       <section
         className="booking__section"
@@ -347,6 +540,8 @@ export const Booking = ({
             isEnabled={datesSelected.length > 0}
             listType="time-ranges"
             itemsList={timeRangeItems}
+            allowedRanges={allowedRanges}
+            sortFunc={timeSortFunc}
           />
         </div>
       </section>
@@ -379,16 +574,17 @@ export const Booking = ({
               <h3 className="booking__tab-title">
                 Одна цифра - одно рабочее место
               </h3>
-              <p className="booking__spot-price">200 &#8381;/час</p>
+              <p className="booking__spot-price">{currentSpotPrice}</p>
               <ButtonsList
                 isEnabled={
-                  isSpotsEnabled &&
                   isWorkplacesEnabled &&
+                  isSpotsEnabled &&
                   datesSelected.length > 0 &&
                   timeRangesSelected.length > 0
                 }
                 listType="spots"
                 itemsList={spots}
+                sortFunc={spotsSortFunc}
               />
             </section>
             <section
@@ -399,16 +595,17 @@ export const Booking = ({
               <h3 className="booking__tab-title">
                 В одной переговорной 8 мест
               </h3>
-              <p className="booking__spot-price">600 &#8381;/час</p>
+              <p className="booking__spot-price">{currentMeetingPrice}</p>
               <ButtonsList
                 isEnabled={
-                  isSpotsEnabled &&
+                  isWorkplacesEnabled &&
                   isMeetingRoomsEnabled &&
                   datesSelected.length > 0 &&
                   timeRangesSelected.length > 0
                 }
                 listType="meeting-rooms"
                 itemsList={meetingRooms}
+                sortFunc={spotsSortFunc}
               />
             </section>
           </div>
@@ -418,10 +615,11 @@ export const Booking = ({
         className="booking__section"
         aria-label="Секция итоговой суммы к оплате"
       >
-        <h2 className="booking__section-title">Сумма к оплате: 1200</h2>
+        <h2 className="booking__section-title">{`Сумма к оплате: ${totalPrice}`}</h2>
         <Button
           btnClass="button_type_form button_size_middle"
           btnText="Перейти к оплате"
+          isValidBtn={!!totalPrice}
         />
       </section>
     </main>
@@ -431,21 +629,17 @@ export const Booking = ({
 Booking.propTypes = {
   location: PropTypes.shape({
     id: PropTypes.number,
-    open_time: PropTypes.string,
-    close_time: PropTypes.string,
-    count_workspace: PropTypes.number,
-    count_meeting_room: PropTypes.number,
-    days_open: PropTypes.string,
+    openTime: PropTypes.string,
+    closeTime: PropTypes.string,
+    daysOpen: PropTypes.string,
   }),
 };
 
 Booking.defaultProps = {
   location: {
     id: null,
-    open_time: null,
-    close_time: null,
-    count_workspace: null,
-    count_meeting_room: null,
-    days_open: null,
+    openTime: null,
+    closeTime: null,
+    daysOpen: null,
   },
 };

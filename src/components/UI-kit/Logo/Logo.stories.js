@@ -9,14 +9,14 @@ export default {
   },
 };
 
-export const BlueLogo = {
+export const HeaderLogo = {
   args: {
-    mode: "blue",
+    className: "",
   },
 };
 
-export const GreenLogo = {
+export const FooterLogo = {
   args: {
-    mode: "green",
+    className: "logo_type_footer",
   },
 };

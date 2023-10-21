@@ -198,6 +198,32 @@ export function getFinishedOrders() {
   });
 }
 
+export function publishReview(
+  locationId,
+  spotId,
+  orderId,
+  { description, rating },
+) {
+  return request(
+    `/locations/${locationId}/spots/${spotId}/order/${orderId}/reviews/`,
+    {
+      method: "POST",
+      headers: setHeaders(),
+      body: JSON.stringify({
+        description,
+        rating,
+      }),
+    },
+  );
+}
+
+export function cancelOrder(locationId, spotId, orderId) {
+  return request(`/locations/${locationId}/spots/${spotId}/order/${orderId}/`, {
+    method: "PATCH",
+    headers: setHeaders(),
+  });
+}
+
 export function editUserData(data) {
   return request("/users/me/", {
     method: "PATCH",
@@ -233,6 +259,23 @@ export function getLocationPlanPhoto(id) {
 
 export function getSpots(id) {
   return request(`/locations/${id}/spots`, {
+    method: "GET",
+    headers: setHeaders(),
+  });
+}
+
+// search
+
+export function searchLocations(params = {}) {
+  const query = new URLSearchParams();
+
+  Object.keys(params).forEach((key) => {
+    if (params[key] !== undefined && params[key] !== null) {
+      query.append(key, params[key]);
+    }
+  });
+
+  return request(`/locations/?${query.toString()}`, {
     method: "GET",
     headers: setHeaders(),
   });

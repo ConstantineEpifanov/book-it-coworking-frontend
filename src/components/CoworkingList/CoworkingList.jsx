@@ -1,4 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
+import { useLocation } from "react-router-dom";
 import { CurrentUserContext } from "../../contexts/currentUserContext";
 // import PropTypes from "prop-types";
 import "./CoworkingList.scss";
@@ -15,19 +16,26 @@ import { getLocations, getMapLocations } from "../../utils/Api";
 import {
   LAPTOP_POINTS_QUANTITY,
   LAPTOP_MORE_POINTS_QUANTITY,
+  NOT_FOUND_ERROR_TITLE,
+  NOT_FOUND_ERROR_SUBTITLE,
 } from "../../utils/constants";
+import { NotFoundError } from "../NotFoundError/NotFoundError";
 
 export const CoworkingList = () => {
   const [coworkingsArray, setCoworkingsArray] = useState([]);
   const [pointsAddCount, setPointsAddCount] = useState(0);
   const [isMoreButtonVisible, setMoreButtonVisible] = useState(true);
+  const [isNotFoundError, setNotFoundError] = useState(false);
 
   const [mapPoints, setMapPoints] = useState([]);
   const { isLoading, setIsLoading } = useContext(CurrentUserContext);
 
-  useEffect(() => {
-    setIsLoading(true);
+  const location = useLocation();
+  const coworkingsArrayFromPromo = location.state
+    ? location.state.coworkingsArrayFromPromo
+    : undefined;
 
+  useEffect(() => {
     const fetchData = () => {
       const locationsPromise = getLocations(
         LAPTOP_POINTS_QUANTITY,
@@ -54,7 +62,17 @@ export const CoworkingList = () => {
         });
     };
 
-    fetchData();
+    if (
+      (Array.isArray(coworkingsArrayFromPromo) &&
+        coworkingsArrayFromPromo.length === 0) ||
+      !coworkingsArrayFromPromo
+    ) {
+      setIsLoading(true);
+      fetchData();
+    } else {
+      setCoworkingsArray(coworkingsArrayFromPromo);
+      setIsLoading(false);
+    }
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -69,6 +87,22 @@ export const CoworkingList = () => {
     });
   };
 
+  const handleUpdateCoworkings = (data) => {
+    setCoworkingsArray(data);
+
+    if (data.length > LAPTOP_POINTS_QUANTITY) {
+      setMoreButtonVisible(true);
+    } else {
+      setMoreButtonVisible(false);
+    }
+
+    if (data.length === 0) {
+      setNotFoundError(true);
+    } else {
+      setNotFoundError(false);
+    }
+  };
+
   return (
     <main className="coworking-list">
       {isLoading ? (
@@ -76,21 +110,31 @@ export const CoworkingList = () => {
       ) : (
         <>
           <SectionTitle
-            titleText="Поиск по коворкингам Санкт-Петербурга"
+            titleText="Поиск по коворкингам сети SPOT IT"
             titleClass="section-title_search"
           />
           <SectionSubtitle
             titleText="Вы можете снять рабочее место в одном из коворкингов, представленных в нашем каталоге"
             titleClass="section-subtitle_search"
           />
-          <SearchForm />
-          <MainMap points={mapPoints} defaultState={defaultState} />
-          <PointsList
-            isListed
-            coworkingsArray={coworkingsArray}
-            handleMoreClick={handleMoreClick}
-            isMoreButtonVisible={isMoreButtonVisible}
-          />
+          <SearchForm handleUpdateCoworkings={handleUpdateCoworkings} />
+
+          {isNotFoundError ? (
+            <NotFoundError
+              titleText={NOT_FOUND_ERROR_TITLE}
+              subtitleText={NOT_FOUND_ERROR_SUBTITLE}
+            />
+          ) : (
+            <>
+              <MainMap points={mapPoints} defaultState={defaultState} />
+              <PointsList
+                isListed
+                coworkingsArray={coworkingsArray}
+                handleMoreClick={handleMoreClick}
+                isMoreButtonVisible={isMoreButtonVisible}
+              />
+            </>
+          )}
         </>
       )}
     </main>

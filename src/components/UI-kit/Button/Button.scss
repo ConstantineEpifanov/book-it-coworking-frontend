@@ -135,6 +135,7 @@
     font-style: normal;
     font-weight: 400;
     line-height: 1.22;
+    padding: 16px 32px;
 
     &-select {
       width: 170px;
@@ -200,15 +201,6 @@
     }
   }
 
-  &_type_main-card {
-    background-color: $green;
-    color: $black;
-    font-size: 18px;
-    font-style: normal;
-    font-weight: 400;
-    line-height: 22px;
-  }
-
   //стили кнопки пароля
   &__password-toggle {
     @include mp-null;
@@ -270,11 +262,15 @@
   }
 
   &_size_postmiddle {
-    width: 320px;
+    max-width: 100%;
   }
 
   &_size_large {
     width: 550px;
+  }
+
+  &__profile-small {
+    width: 170px;
   }
 
   &__profile-edit,

@@ -26,7 +26,8 @@ import {
 export const Main = () => {
   const [coworkingsArray, setCoworkingsArray] = useState([]);
   const [eventsArray, setEventsArray] = useState([]);
-  const { isLoading, setIsLoading } = useContext(CurrentUserContext);
+  const { isLoading, setIsLoading, showMessage } =
+    useContext(CurrentUserContext);
   //  const size = useResize();
 
   useEffect(() => {
@@ -40,13 +41,17 @@ export const Main = () => {
         .then((res) => {
           setCoworkingsArray(res.results);
         })
-        .catch(() => {});
+        .catch((err) => {
+          showMessage(err.detail);
+        });
 
       const eventsPromise = getEvents()
         .then((res) => {
           setEventsArray(res);
         })
-        .catch(() => {});
+        .catch((err) => {
+          showMessage(err.detail);
+        });
 
       Promise.all([shortLocationsPromise, eventsPromise])
         .then(() => {
@@ -103,6 +108,7 @@ export const Main = () => {
               <NotFoundError
                 titleText="Данные с сервера не получены"
                 subtitleText="Попробуйте чуть позже"
+                directionRow
               />
             ) : (
               <PointsList
