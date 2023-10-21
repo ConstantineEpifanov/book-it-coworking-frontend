@@ -92,6 +92,8 @@ export const PointsItem = ({ isCompact, isListed, data }) => {
         openTime: data.open_time,
         closeTime: data.close_time,
         daysOpen: data.days_open,
+        name: data.name,
+        location: data.get_full_address_str,
       },
       replace: false,
     });
