@@ -48,6 +48,21 @@ const getNormalizedDayNumber = (date) => {
   return resultNumber;
 };
 
+// Вернет true, если тот же день месяца
+const isSameDateDay = (firstDate, secondDate) => {
+  const firstDay = new Date(
+    firstDate.getFullYear(),
+    firstDate.getMonth(),
+    firstDate.getDate(),
+  );
+  const secondDay = new Date(
+    secondDate.getFullYear(),
+    secondDate.getMonth(),
+    secondDate.getDate(),
+  );
+  return firstDay.getTime() === secondDay.getTime();
+};
+
 const getTimeWithZeroPrefixedMinutes = (timeArray) => {
   let resultTime = `${timeArray[0]}:`;
   resultTime = `${resultTime}${
@@ -200,8 +215,8 @@ export const Booking = ({
   const [totalPrice, setTotalPrice] = useState("");
   const [spots, setSpots] = useState([]);
   const [meetingRooms, setMeetingRooms] = useState([]);
-  const [isSpotsEnabled, setSpotsEnabled] = useState(false);
-  const [isWorkplacesEnabled, setWorkplacesEnabled] = useState(true);
+  const [isSpotsEnabled, setSpotsEnabled] = useState(true);
+  const [isWorkplacesEnabled, setWorkplacesEnabled] = useState(false);
   const [isMeetingRoomsEnabled, setMeetingRoomsEnabled] = useState(false);
 
   // Обработчик выбора даты
@@ -214,7 +229,7 @@ export const Booking = ({
     setTimeRangesSelected(selectedRanges);
   };
 
-  const [timeRangeItems] = useState(
+  const [timeRangeItems, setTimeRangeItems] = useState(
     getTimeRangeItems(openTime, closeTime, handleTimeItemClick),
   );
 
@@ -227,11 +242,11 @@ export const Booking = ({
   // Обработчик выбора типа места
   const handleSwitcherClick = (selectedSpotType) => {
     if (selectedSpotType === FIRST_SPOT_TYPE) {
-      setWorkplacesEnabled(true);
+      setSpotsEnabled(true);
       setMeetingRoomsEnabled(false);
       return;
     }
-    setWorkplacesEnabled(false);
+    setSpotsEnabled(false);
     setMeetingRoomsEnabled(true);
   };
 
@@ -323,7 +338,7 @@ export const Booking = ({
       const secondItem = secondSpots.find((item) => firtsItem.id === item.id);
       return {
         ...firtsItem,
-        isOrdered: firtsItem.isOrdered && secondItem.isOrdered,
+        isEnabled: firtsItem.isEnabled && secondItem.isEnabled,
       };
     });
   };
@@ -420,6 +435,34 @@ export const Booking = ({
     }
   }, [id]);
 
+  // Получить актуальные промежутки времени. Активными будут те, что будут позже или равны текущему времени
+  const getAvailableTimeRanges = useCallback(
+    (currentTimeRanges) =>
+      currentTimeRanges.map((timeRange) => ({
+        ...timeRange,
+        isEnabled: !datesSelected.some((date) => {
+          const todayDate = new Date();
+          if (isSameDateDay(date, todayDate)) {
+            const [rangeStartHour, rangeStartMinutes] = getHourAndMinutes(
+              timeRange.startTime,
+            );
+            const todayHour = todayDate.getHours();
+            const todayMinutes = todayDate.getMinutes();
+            if (rangeStartHour > todayHour) {
+              return false;
+            }
+            if (rangeStartHour === todayHour) {
+              return rangeStartMinutes < todayMinutes;
+            }
+            return true;
+          }
+          return false;
+        }),
+      })),
+    [datesSelected],
+  );
+
+  // Рекация на изменение доступности
   useEffect(() => {
     if (!isSpotsEnabled) {
       setSpotsSelected([]);
@@ -435,6 +478,7 @@ export const Booking = ({
     }
   }, [isSpotsEnabled, isMeetingRoomsEnabled, isWorkplacesEnabled]);
 
+  // Реакция на изменение выбранных рабочих мест, переговорных комнат и промежутков времени
   useEffect(() => {
     const spotPrice = getSelectedPrice(spotsSelected);
     setCurrentSpotPrice(spotPrice === 0 ? "\u200b" : `${spotPrice} ₽/час`);
@@ -454,12 +498,21 @@ export const Booking = ({
   useEffect(() => {
     if (timeRangesSelected.length > 0) {
       loadWorkplaces();
-      setSpotsEnabled(true);
+      setWorkplacesEnabled(true);
       return;
     }
-    setSpotsEnabled(false);
+    setWorkplacesEnabled(false);
   }, [timeRangesSelected, loadWorkplaces]);
 
+  // Реакция на изменение выбранной даты
+  useEffect(() => {
+    if (datesSelected.length > 0) {
+      setTimeRangeItems(getAvailableTimeRanges);
+    }
+    setTimeRangesSelected([]);
+  }, [datesSelected, getAvailableTimeRanges]);
+
+  // Первоначальная загрузка компонента
   useEffect(() => {
     loadPlanPhoto(id);
     loadWorkplacesInitial();
@@ -524,8 +577,8 @@ export const Booking = ({
               <p className="booking__spot-price">{currentSpotPrice}</p>
               <ButtonsList
                 isEnabled={
-                  isSpotsEnabled &&
                   isWorkplacesEnabled &&
+                  isSpotsEnabled &&
                   datesSelected.length > 0 &&
                   timeRangesSelected.length > 0
                 }
@@ -545,7 +598,7 @@ export const Booking = ({
               <p className="booking__spot-price">{currentMeetingPrice}</p>
               <ButtonsList
                 isEnabled={
-                  isSpotsEnabled &&
+                  isWorkplacesEnabled &&
                   isMeetingRoomsEnabled &&
                   datesSelected.length > 0 &&
                   timeRangesSelected.length > 0

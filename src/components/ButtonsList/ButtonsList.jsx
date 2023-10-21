@@ -4,6 +4,7 @@ import PropTypes from "prop-types";
 import "./ButtonsList.scss";
 import Button from "../UI-kit/Button/Button";
 
+// Функция сортировки элементов списка по умолчанию
 const defaultSort = (a, b) => a.name.localeCompare(b.name);
 
 export const ButtonsList = ({
@@ -16,43 +17,45 @@ export const ButtonsList = ({
   ariaLabel = "Список кнопок",
   listClassName = "",
   itemsClassName = "",
-  extraRules = null,
+  // extraRules = null,
   sortFunc = defaultSort,
 }) => {
-  const [baseItemsList, setBaseItemsList] = useState([]);
+  // const [baseItemsList, setBaseItemsList] = useState([]);
   const [selectedItems, setSelectedItems] = useState([]);
   const [itemsStatesList, setItemsStatesList] = useState([]);
 
-  const followAllowedRules = (item, currentSelected) => {
-    const sharedRanges = allowedRanges.filter((range) =>
-      currentSelected.every((selectedItem) => range.includes(selectedItem.id)),
-    );
+  // Функция для контроля доступности кнопки при использовании allowedRanges
+  // const followAllowedRules = (item, currentSelected) => {
+  //   const sharedRanges = allowedRanges.filter((range) =>
+  //     currentSelected.every((selectedItem) => range.includes(selectedItem.id)),
+  //   );
 
-    const resultStatesList = baseItemsList.map((baseItem) => {
-      let isEnabledStatus = baseItem.isEnabled;
+  //   const resultStatesList = baseItemsList.map((baseItem) => {
+  //     let isEnabledStatus = baseItem.isEnabled;
 
-      if (currentSelected.length > 0) {
-        isEnabledStatus =
-          !!currentSelected.find(
-            (selectedItem) => selectedItem.id === baseItem.id,
-          ) ||
-          currentSelected.every((selectedItem) =>
-            sharedRanges.some(
-              (range) =>
-                range.includes(baseItem.id) && range.includes(selectedItem.id),
-            ),
-          );
-      }
-      return {
-        ...baseItem,
-        isEnabled: isEnabledStatus,
-      };
-    });
+  //     if (currentSelected.length > 0) {
+  //       isEnabledStatus =
+  //         !!currentSelected.find(
+  //           (selectedItem) => selectedItem.id === baseItem.id,
+  //         ) ||
+  //         currentSelected.every((selectedItem) =>
+  //           sharedRanges.some(
+  //             (range) =>
+  //               range.includes(baseItem.id) && range.includes(selectedItem.id),
+  //           ),
+  //         );
+  //     }
+  //     return {
+  //       ...baseItem,
+  //       isEnabled: isEnabledStatus,
+  //     };
+  //   });
 
-    setItemsStatesList(resultStatesList);
-    return resultStatesList;
-  };
+  //   setItemsStatesList(resultStatesList);
+  //   return resultStatesList;
+  // };
 
+  // Получение класса для текущего элемента
   const getClassName = (id) => {
     let resultClass = `buttons-list__button button_type_buttons-list button_type_transparent${
       itemsClassName ? ` ${itemsClassName}` : ""
@@ -65,7 +68,22 @@ export const ButtonsList = ({
     return resultClass;
   };
 
+  // Проверка принадлежности элементов к одним и тем же наборам
+  const isBelongsToSameRanges = (items, ranges) => {
+    if (ranges.length < 1) {
+      return false;
+    }
+
+    return ranges.some((range) =>
+      items.every((item) => range.includes(item.id)),
+    );
+  };
+
+  // Получение автоматически заполненного списка выбранных элементов
+  // Если текущий выбранный элемент принадлежит к тому же набору, что и остальные выбранные,
+  // то он будет добавлен к выбранным, как и все промежуточные элементы входящие в тот же набор
   const getAutoSelectedItems = (
+    currentSelectedItem,
     currentSelectedItems,
     currentItemsStatusList,
   ) => {
@@ -73,6 +91,10 @@ export const ButtonsList = ({
     const firstSelectedElementIndex = currentItemsStatusList.findIndex(
       (item) => item.id === currentSelected[0].id,
     );
+
+    if (!isBelongsToSameRanges(currentSelectedItems, allowedRanges)) {
+      return [currentSelectedItem];
+    }
 
     return currentItemsStatusList
       .slice(firstSelectedElementIndex)
@@ -85,16 +107,21 @@ export const ButtonsList = ({
 
           return result;
         }
-        if (item.isEnabled && currentSelected.length > 0) {
+        if (
+          item.isEnabled &&
+          isBelongsToSameRanges([...currentSelected, item], allowedRanges) &&
+          currentSelected.length > 0
+        ) {
           result.push(item);
         }
         return result;
       }, []);
   };
 
+  // Обработчик клика по элементу
   const handleClick = (item, onClick) => {
     let resultSelected = [];
-    let currentItemsStatusList = itemsStatesList;
+    const currentItemsStatusList = itemsStatesList;
     const isAlreadySelected = !!selectedItems.find(
       (selectedItem) => item.id === selectedItem.id,
     );
@@ -109,12 +136,13 @@ export const ButtonsList = ({
       resultSelected = [...selectedItems, item];
     }
 
-    if (allowedRanges.length > 0 || !isMultiselect) {
-      currentItemsStatusList = followAllowedRules(item, resultSelected);
-    }
+    // if (allowedRanges.length > 0 || !isMultiselect) {
+    //   currentItemsStatusList = followAllowedRules(item, resultSelected);
+    // }
 
-    if (isSelectByRanges && resultSelected.length > 1) {
+    if (isSelectByRanges && resultSelected.length > 1 && !isMultiselect) {
       resultSelected = getAutoSelectedItems(
+        item,
         resultSelected,
         currentItemsStatusList,
       );
@@ -125,20 +153,9 @@ export const ButtonsList = ({
   };
 
   useEffect(() => {
-    if (extraRules && selectedItems.length > 0) {
-      const resultItemsStates = itemsStatesList.map((item) => ({
-        ...item,
-        isEnabled: !extraRules.some((checkRule) =>
-          checkRule(item, selectedItems),
-        ),
-      }));
-      setItemsStatesList(resultItemsStates);
-    }
-  }, [selectedItems, extraRules, itemsStatesList]);
-
-  useEffect(() => {
     const resultItemsList = [...itemsList].sort(sortFunc);
-    setBaseItemsList(resultItemsList);
+    // setBaseItemsList(resultItemsList);
+    setSelectedItems([]);
     if (isEnabled) {
       setItemsStatesList([...resultItemsList]);
       return;
@@ -147,7 +164,6 @@ export const ButtonsList = ({
     setItemsStatesList(
       resultItemsList.map((item) => ({ ...item, isEnabled: false })),
     );
-    setSelectedItems([]);
   }, [itemsList, isEnabled, sortFunc]);
 
   return (
@@ -194,7 +210,7 @@ ButtonsList.propTypes = {
   ariaLabel: PropTypes.string,
   listClassName: PropTypes.string,
   itemsClassName: PropTypes.string,
-  extraRules: PropTypes.arrayOf(PropTypes.func),
+  // extraRules: PropTypes.arrayOf(PropTypes.func),
   sortFunc: PropTypes.func,
 };
 
@@ -208,6 +224,6 @@ ButtonsList.defaultProps = {
   ariaLabel: "Список кнопок",
   listClassName: "",
   itemsClassName: "",
-  extraRules: null,
+  // extraRules: null,
   sortFunc: defaultSort,
 };

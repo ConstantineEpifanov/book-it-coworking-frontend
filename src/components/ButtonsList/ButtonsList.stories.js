@@ -65,9 +65,9 @@ export default {
         type: "string",
       },
     },
-    extraRules: {
-      description: "Массив доволнительных функций проверки",
-    },
+    // extraRules: {
+    //   description: "Массив доволнительных функций проверки",
+    // },
     sortFunc: {
       description: "Функция сортироваки элементов списка",
     },
