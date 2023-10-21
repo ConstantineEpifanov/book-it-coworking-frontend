@@ -215,8 +215,8 @@ export const Booking = ({
   const [totalPrice, setTotalPrice] = useState("");
   const [spots, setSpots] = useState([]);
   const [meetingRooms, setMeetingRooms] = useState([]);
-  const [isSpotsEnabled, setSpotsEnabled] = useState(false);
-  const [isWorkplacesEnabled, setWorkplacesEnabled] = useState(true);
+  const [isSpotsEnabled, setSpotsEnabled] = useState(true);
+  const [isWorkplacesEnabled, setWorkplacesEnabled] = useState(false);
   const [isMeetingRoomsEnabled, setMeetingRoomsEnabled] = useState(false);
 
   // Обработчик выбора даты
@@ -242,11 +242,11 @@ export const Booking = ({
   // Обработчик выбора типа места
   const handleSwitcherClick = (selectedSpotType) => {
     if (selectedSpotType === FIRST_SPOT_TYPE) {
-      setWorkplacesEnabled(true);
+      setSpotsEnabled(true);
       setMeetingRoomsEnabled(false);
       return;
     }
-    setWorkplacesEnabled(false);
+    setSpotsEnabled(false);
     setMeetingRoomsEnabled(true);
   };
 
@@ -462,6 +462,7 @@ export const Booking = ({
     [datesSelected],
   );
 
+  // Рекация на изменение доступности
   useEffect(() => {
     if (!isSpotsEnabled) {
       setSpotsSelected([]);
@@ -477,6 +478,7 @@ export const Booking = ({
     }
   }, [isSpotsEnabled, isMeetingRoomsEnabled, isWorkplacesEnabled]);
 
+  // Реакция на изменение выбранных рабочих мест, переговорных комнат и промежутков времени
   useEffect(() => {
     const spotPrice = getSelectedPrice(spotsSelected);
     setCurrentSpotPrice(spotPrice === 0 ? "\u200b" : `${spotPrice} ₽/час`);
@@ -496,22 +498,25 @@ export const Booking = ({
   useEffect(() => {
     if (timeRangesSelected.length > 0) {
       loadWorkplaces();
-      setSpotsEnabled(true);
+      setWorkplacesEnabled(true);
       return;
     }
-    setSpotsEnabled(false);
+    setWorkplacesEnabled(false);
   }, [timeRangesSelected, loadWorkplaces]);
 
-  useEffect(() => {
-    loadPlanPhoto(id);
-    loadWorkplacesInitial();
-  }, [id, loadPlanPhoto, loadWorkplacesInitial]);
-
+  // Реакция на изменение выбранной даты
   useEffect(() => {
     if (datesSelected.length > 0) {
       setTimeRangeItems(getAvailableTimeRanges);
     }
+    setTimeRangesSelected([]);
   }, [datesSelected, getAvailableTimeRanges]);
+
+  // Первоначальная загрузка компонента
+  useEffect(() => {
+    loadPlanPhoto(id);
+    loadWorkplacesInitial();
+  }, [id, loadPlanPhoto, loadWorkplacesInitial]);
 
   return (
     <main className="booking" aria-label="Страница бронирования">
@@ -572,8 +577,8 @@ export const Booking = ({
               <p className="booking__spot-price">{currentSpotPrice}</p>
               <ButtonsList
                 isEnabled={
-                  isSpotsEnabled &&
                   isWorkplacesEnabled &&
+                  isSpotsEnabled &&
                   datesSelected.length > 0 &&
                   timeRangesSelected.length > 0
                 }
@@ -593,7 +598,7 @@ export const Booking = ({
               <p className="booking__spot-price">{currentMeetingPrice}</p>
               <ButtonsList
                 isEnabled={
-                  isSpotsEnabled &&
+                  isWorkplacesEnabled &&
                   isMeetingRoomsEnabled &&
                   datesSelected.length > 0 &&
                   timeRangesSelected.length > 0
