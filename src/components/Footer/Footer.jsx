@@ -51,10 +51,9 @@ export const Footer = ({ onSubmit }) => {
           <div className="footer__column">
             <Link to="/">
               <Logo
-                mode="green"
                 width="70px"
                 height="22px"
-                className="logo_type_responsive"
+                className="logo_type_footer logo_type_responsive"
               />
             </Link>
             <a href="/" className="footer__link">
