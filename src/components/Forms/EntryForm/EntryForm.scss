@@ -103,7 +103,7 @@
     padding-top: 15px;
     margin: 0;
   }
-  &__text_error{
+  &__text_error {
     @include text-info;
     align-self: center;
     color: $alert-red;

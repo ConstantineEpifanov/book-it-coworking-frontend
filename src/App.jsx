@@ -60,28 +60,31 @@ function App() {
   // проверка токена
   React.useEffect(() => {
     const token = localStorage.getItem("token");
-    if (token) {
-      try {
-        const headers = setHeaders();
-        navigate(location.pathname);
-        if (headers.Authorization) {
-          setIsLoggedIn(true);
-          handleGetUserInfo();
+    if (isLoggedIn) {
+      if (token) {
+        try {
+          const headers = setHeaders();
           navigate(location.pathname);
+          if (headers.Authorization) {
+            setIsLoggedIn(true);
+            handleGetUserInfo();
+            navigate(location.pathname);
+          }
+        } catch (err) {
+          setIsErrApi({ ...isErrApi, message: err });
+          // при ошибке проверки токена отключаем лоудер
+          setIsLoading(false);
+          setIsLoggedIn(false);
+          console.error(
+            "Что-то пошло не так: ошибка запроса 😔",
+            JSON.stringify(err, null, 2),
+          );
         }
-      } catch (err) {
-        setIsErrApi({ ...isErrApi, message: err });
-        // при ошибке проверки токена отключаем лоудер
-        setIsLoading(false);
-        setIsLoggedIn(false);
-        console.error(
-          "Что-то пошло не так: ошибка запроса 😔",
-          JSON.stringify(err, null, 2),
-        );
       }
     }
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [isLoggedIn]);
 
   const handleLogout = () => {
     localStorage.removeItem("token");

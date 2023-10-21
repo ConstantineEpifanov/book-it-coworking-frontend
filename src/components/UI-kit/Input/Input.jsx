@@ -33,6 +33,7 @@ function Input({
         onChange={handleChange}
         required={inputRequired}
         disabled={inputDisabled}
+        autoComplete="off"
       />
       {/* если нет ошибки ввода, то покажи информацию */}
       {inputError ? (

@@ -15,7 +15,7 @@ import { CurrentUserContext } from "../../../contexts/currentUserContext";
 
 const LoginForm = ({ isOpenPopup, onClosePopup, onGetUserInfo }) => {
   const location = useLocation();
-  const { isErrApi, setIsErrApi } = useApiError();
+  const { isErrApi, setIsErrApi, clearApiError } = useApiError();
   const { setIsLoggedIn } = React.useContext(CurrentUserContext);
   const { values, errors, handleChange, isValid } = useFormAndValidation();
 
@@ -42,6 +42,7 @@ const LoginForm = ({ isOpenPopup, onClosePopup, onGetUserInfo }) => {
   function handleSubmit(evt) {
     evt.preventDefault();
     handleAuthorization(values);
+    clearApiError();
   }
 
   return (
