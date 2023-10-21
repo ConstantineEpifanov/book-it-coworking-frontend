@@ -24,11 +24,10 @@ const LoginForm = ({ isOpenPopup, onClosePopup, onGetUserInfo }) => {
       const data = await login({ email, password });
       onGetUserInfo();
       localStorage.setItem("token", data.auth_token);
-
+      setIsLoggedIn(true);
       if (localStorage.getItem("token")) {
         onGetUserInfo();
       }
-      setIsLoggedIn(true);
       onClosePopup();
     } catch (err) {
       setIsErrApi({ ...isErrApi, message: err });

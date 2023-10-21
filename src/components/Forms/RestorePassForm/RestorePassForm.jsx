@@ -1,7 +1,7 @@
 /* eslint-disable react/jsx-no-bind */
 /* eslint-disable camelcase */
 import PropTypes from "prop-types";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import React from "react";
 
 import { resetPass, resetPassConfirmCode } from "../../../utils/Api";
@@ -14,15 +14,17 @@ import { useApiError } from "../../../hooks/useApiError";
 import PasswordInput from "../../UI-kit/PasswordInput/PasswordInput";
 
 const RestorePassForm = ({ isOpenPopup, handleClosePopup }) => {
+  const location = useLocation();
+  const navigate = useNavigate();
+  const { values, errors, isValid, handleChange, resetForm } =
+    useFormAndValidation();
   const { isErrApi, setIsErrApi, clearApiError } = useApiError();
+
   const [isSuccessApi, setIsSuccessApi] = React.useState({
     resetPass: true,
     changePass: false,
   });
   const [userEmail, setUserEmail] = React.useState("");
-
-  const { values, errors, isValid, handleChange } = useFormAndValidation();
-  const navigate = useNavigate();
 
   // отправка запроса на отправку пароля на почту
   const handleResetPassCode = async ({ email }) => {
@@ -66,7 +68,7 @@ const RestorePassForm = ({ isOpenPopup, handleClosePopup }) => {
           changePass: true,
           resetPass: false,
         });
-        handleClosePopup();
+        navigate("/popup/login", { state: { previousLocation: location } });
       }
     } catch (err) {
       setIsErrApi({ ...isErrApi, message: err });
@@ -88,7 +90,7 @@ const RestorePassForm = ({ isOpenPopup, handleClosePopup }) => {
             handleResetPassCode(values);
             // очистка форм и ошибок
             clearApiError();
-            // resetForm();
+            resetForm();
           }}
         >
           <Input
@@ -109,9 +111,7 @@ const RestorePassForm = ({ isOpenPopup, handleClosePopup }) => {
             btnType="submit"
             btnText="Сбросить пароль"
             isValidBtn={isValid}
-            onClick={() => {
-              // setIsSuccessApi({ ...isSuccessApi, resetPass: false });
-            }}
+            onClick={() => {}}
           />
           <Button
             btnClass="button_type_link"
@@ -133,7 +133,7 @@ const RestorePassForm = ({ isOpenPopup, handleClosePopup }) => {
             handleResetPass(values);
             // очистка форм и ошибок
             clearApiError();
-            // resetForm();
+            resetForm();
           }}
         >
           <Input
@@ -171,6 +171,7 @@ const RestorePassForm = ({ isOpenPopup, handleClosePopup }) => {
             btnClass="button_type_form"
             btnType="submit"
             btnText="Сохранить"
+            isValidBtn={isValid}
             onClick={() => {}}
           />
           <Button
@@ -178,8 +179,8 @@ const RestorePassForm = ({ isOpenPopup, handleClosePopup }) => {
             btnType="button"
             btnText="Назад"
             onClick={() => {
+              clearApiError();
               setIsSuccessApi({
-                ...isSuccessApi,
                 changePass: false,
                 resetPass: true,
               });

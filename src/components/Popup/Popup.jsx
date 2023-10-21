@@ -18,7 +18,7 @@ function Popup({ isOpen, children, onClickClose, popupClass }) {
 Popup.propTypes = {
   isOpen: PropTypes.bool,
   popupClass: PropTypes.string,
-  children: PropTypes.element.isRequired,
+  children: PropTypes.oneOfType([PropTypes.element, PropTypes.node]).isRequired,
   onClickClose: PropTypes.func,
 };
 Popup.defaultProps = {
