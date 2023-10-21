@@ -37,9 +37,8 @@ export const SecurityTab = () => {
             <span>{hidePassword(currentUser.password)}</span>
           </div>
           <Button
-            btnText="Сбросить"
-            btnClass="button__profile-edit"
-            isValidBtn={false}
+            btnText="Изменить"
+            btnClass="button__profile-small button_type_transparent"
           />
         </li>
         <li className="security__board-row">
@@ -51,7 +50,7 @@ export const SecurityTab = () => {
             </p>
           </div>
           <Button
-            btnText="Изменить"
+            btnText="Выйти"
             btnClass="button__profile-edit"
             isValidBtn={false}
           />
@@ -62,8 +61,8 @@ export const SecurityTab = () => {
             <p className="security__feature-description">Завершить сеанс</p>
           </div>
           <Button
-            btnText="Выйти"
-            btnClass="button__profile-edit"
+            btnText="Завершить"
+            btnClass="button__profile-small button_type_transparent"
             onClick={handleLogout}
           />
         </li>
