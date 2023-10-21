@@ -12,10 +12,11 @@ import "./ProfileDataTab.scss";
 
 import ProfilePhoto from "../../images/ProfilePhoto.png";
 
-import { formatPhone } from "../../utils/utils";
+import { formatPhone, formatDate } from "../../utils/utils";
+import { PROFILE_DATA_UPDATE } from "../../utils/constants";
 
 export const ProfileDataTab = () => {
-  const { currentUser } = useContext(CurrentUserContext);
+  const { currentUser, showMessage } = useContext(CurrentUserContext);
   const [isEdited, setIsEdited] = useState(false);
   const [editedUser, setEditedUser] = useState(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -58,7 +59,9 @@ export const ProfileDataTab = () => {
       ...prev,
       ...changedFields,
     }));
-    editUserData(changedFields).finally(() => setIsSubmitting(false));
+    editUserData(changedFields)
+      .then(() => showMessage(PROFILE_DATA_UPDATE, "info"))
+      .finally(() => setIsSubmitting(false));
     setIsEdited(false);
     handleScrollToTop();
   };
@@ -86,7 +89,9 @@ export const ProfileDataTab = () => {
           </li>
           <li className="profile-data__list-item">
             <span>Дата рождения</span>
-            <span>{editedUser?.birth_date}</span>
+            <span>
+              {editedUser?.birth_date && formatDate(editedUser?.birth_date)}
+            </span>
           </li>
           <li className="profile-data__list-item">
             <span>Номер телефона</span>
@@ -111,37 +116,48 @@ export const ProfileDataTab = () => {
                   name: "first_name",
                   placeholder: "Имя",
                   required: true,
+                  type: "text",
                 },
                 {
                   id: 2,
                   name: "last_name",
                   placeholder: "Фамилия",
                   required: true,
+                  type: "text",
                 },
                 {
                   id: 3,
                   name: "birth_date",
                   placeholder: "Дата рождения",
                   required: false,
+                  type: "date",
                 },
                 {
                   id: 4,
                   name: "phone",
                   placeholder: "Номер телефона",
                   required: false,
+                  type: "text",
                 },
-                { id: 5, name: "email", placeholder: "Email", required: true },
+                {
+                  id: 5,
+                  name: "email",
+                  placeholder: "Email",
+                  required: true,
+                  type: "email",
+                },
                 {
                   id: 6,
                   name: "occupation",
                   placeholder: "Род деятельности",
                   required: false,
+                  type: "text",
                 },
               ].map((field) => (
                 <li key={field.id} className="profile-data__list-input">
                   <Input
                     inputClass="profile-data__input"
-                    inputType="text"
+                    inputType={field.type}
                     inputName={field.name}
                     inputValue={values[field.name] ?? editedUser[field.name]}
                     inputError={errors[field.name]}

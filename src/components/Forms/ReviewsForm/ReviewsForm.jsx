@@ -1,34 +1,41 @@
 import PropTypes from "prop-types";
 import React from "react";
 
-import Popup from "../../Popup/Popup";
 import Button from "../../UI-kit/Button/Button";
 import StarRating from "../../UI-kit/StarRating/StarRating";
 
-const ReviewsForm = ({ isOpenPopup, handleClosePopup }) => {
+import { MAX_REVIEW_CHARACTERS_NUMBER } from "../../../utils/constants";
+
+import "./ReviewsForm.scss";
+
+const ReviewsForm = ({ onSubmit, serverError }) => {
   const [rating, setRating] = React.useState(0);
   const [reviewText, setReviewText] = React.useState("");
   const [inputError, setInputError] = React.useState("");
 
+  const handleReviewSubmit = (e) => {
+    e.preventDefault();
+    onSubmit({
+      description: reviewText,
+      rating,
+    });
+    setReviewText("");
+    setRating(0);
+  };
+
   return (
-    <Popup
-      isOpen={isOpenPopup}
-      onClickClose={handleClosePopup}
-      popupClass="popup__container_reviews-form"
-    >
-      <p className="popup__subtitle">Поставьте оценку и оставьте отзыв</p>
-      <section className="entry-form" aria-label="форма отзывов">
-        <div className="entry-form__container ">
-          <form
-            className="entry-form__inner entry-form__inner_reviews"
-            name="form"
-            autoComplete="off"
-          >
-            <fieldset className="entry-form__box entry-form__box_reviews">
-              <StarRating rating={rating} onRatingChange={setRating} />
+    <div className="reviews-form__popup-content">
+      <p className="reviews-form__popup-text reviews-form__popup-text_type_review">
+        Поставьте оценку и оставьте отзыв
+      </p>
+      <section className="reviews-form__container" aria-label="форма отзывов">
+        <div className=" ">
+          <StarRating rating={rating} onRatingChange={setRating} />
+          <form className="" name="form" autoComplete="off" noValidate>
+            <fieldset className="reviews-form__fieldset">
               <textarea
-                className={`entry-form__reviews ${
-                  inputError ? "entry-form__reviews-error" : ""
+                className={`reviews-form__reviews ${
+                  inputError ? "reviews-form__reviews-error" : ""
                 }`}
                 rows="10"
                 cols="45"
@@ -37,7 +44,7 @@ const ReviewsForm = ({ isOpenPopup, handleClosePopup }) => {
                 placeholder="Ваш текст..."
                 value={reviewText}
                 minLength="10"
-                maxLength="300"
+                maxLength={MAX_REVIEW_CHARACTERS_NUMBER}
                 onChange={(evt) => {
                   const text = evt.target.value;
                   setInputError(evt.target.validationMessage);
@@ -47,35 +54,42 @@ const ReviewsForm = ({ isOpenPopup, handleClosePopup }) => {
               />
               {/* если нет ошибки ввода, то покажи информацию */}
               {inputError ? (
-                <span className="entry-form__box_text entry-form__box_error">
+                <span className="reviews-form__box_text reviews-form__box_error">
                   {inputError}
                 </span>
               ) : (
-                <span className="entry-form__box_text">
-                  {`${reviewText.length}/300`}
+                <span className="reviews-form__box_text">
+                  {`${reviewText.length}/${MAX_REVIEW_CHARACTERS_NUMBER}`}
+                </span>
+              )}{" "}
+              {serverError && (
+                <span className="reviews-form__server-error">
+                  {serverError}
                 </span>
               )}
-
               <Button
-                btnClass="button_type_form"
+                btnClass="button__profile-review"
                 btnType="button"
                 btnText="Отправить"
-                onClick={() => {}}
+                onClick={handleReviewSubmit}
+                isValidBtn={
+                  inputError === "" && rating !== 0 && reviewText.length >= 10
+                }
               />
             </fieldset>
           </form>
         </div>
       </section>
-    </Popup>
+    </div>
   );
 };
 
 ReviewsForm.propTypes = {
-  isOpenPopup: PropTypes.bool,
-  handleClosePopup: PropTypes.func,
+  onSubmit: PropTypes.func,
+  serverError: PropTypes.string,
 };
 ReviewsForm.defaultProps = {
-  isOpenPopup: true,
-  handleClosePopup: () => {},
+  onSubmit: () => {},
+  serverError: undefined,
 };
 export default ReviewsForm;

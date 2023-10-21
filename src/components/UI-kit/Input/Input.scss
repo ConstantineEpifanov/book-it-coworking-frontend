@@ -17,19 +17,19 @@
     display: none;
   }
   /* кастомный псевдоэлемент для placeholder */
-  &::before {
-    content: attr(
-      placeholder
-    ); // Отображаем текст placeholder в качестве содержимого псевдоэлемента
-    color: $gray;
-    opacity: 0.4;
-    font-size: 16px;
-    font-style: normal;
-    font-weight: 300;
-    line-height: 22px;
-    position: absolute;
-    pointer-events: none; // Позволяет щелкать через placeholder
-  }
+  // &::before {
+  //   content: attr(
+  //     placeholder
+  //   ); // Отображаем текст placeholder в качестве содержимого псевдоэлемента
+  //   color: $gray;
+  //   opacity: 0.4;
+  //   font-size: 16px;
+  //   font-style: normal;
+  //   font-weight: 300;
+  //   line-height: 22px;
+  //   position: absolute;
+  //   pointer-events: none; // Позволяет щелкать через placeholder
+  // }
 
   /* При фокусе убираем placeholder */
   &:focus {
