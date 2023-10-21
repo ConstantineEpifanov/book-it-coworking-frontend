@@ -32,14 +32,14 @@
   // }
 
   /* При фокусе убираем placeholder */
-  &:focus {
-    border: 2px solid $green;
-    outline: none;
+  // &:focus {
+  //   border: 2px solid $green;
+  //   outline: none;
 
-    &::before {
-      display: none;
-    }
-  }
+  //   &::before {
+  //     display: none;
+  //   }
+  // }
   // стили для ошибки импута
   &-error {
     @include error-input;

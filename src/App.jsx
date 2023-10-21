@@ -33,6 +33,7 @@ import usePopupOpen from "./hooks/usePopupOpen";
 import { useInfoMessage } from "./hooks/useInfoMessage";
 import { getUserInfo, setHeaders } from "./utils/Api";
 import { useApiError } from "./hooks/useApiError";
+import Payments from "./components/Payments/Payments";
 
 function App() {
   const navigate = useNavigate();
@@ -85,6 +86,7 @@ function App() {
         );
       }
     }
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -144,19 +146,8 @@ function App() {
 
           <Route path="/contacts" element={<Contacts />} />
           <Route path="/points/:id" element={<Coworking />} />
-          <Route
-            path="/booking"
-            element={
-              <Booking
-                location={{
-                  id: 1,
-                  openTime: "07:00",
-                  closeTime: "22:00",
-                  daysOpen: "пн-сб",
-                }}
-              />
-            }
-          />
+          <Route path="/booking" element={<Booking />} />
+          <Route path="/payments" element={<Payments />} />
           <Route path="*" element={<PageNotFound />} />
           {/* для рероутинга попапов, чтобы при переключении не бил в 404 */}
           <Route path="/popup/*" element={<Main />} />

@@ -15,33 +15,34 @@ import { CurrentUserContext } from "../../../contexts/currentUserContext";
 
 const LoginForm = ({ isOpenPopup, onClosePopup, onGetUserInfo }) => {
   const location = useLocation();
-  const { isErrApi, setIsErrApi } = useApiError();
-  const { setIsLoggedIn } = React.useContext(CurrentUserContext);
+  const { isErrApi, setIsErrApi, clearApiError } = useApiError();
+  const { setIsLoggedIn, setIsLoading } = React.useContext(CurrentUserContext);
   const { values, errors, handleChange, isValid } = useFormAndValidation();
 
   const handleAuthorization = async ({ email, password }) => {
     try {
+      setIsLoading(true);
       const data = await login({ email, password });
-      onGetUserInfo();
       localStorage.setItem("token", data.auth_token);
-
-      if (localStorage.getItem("token")) {
-        onGetUserInfo();
-      }
+      await onGetUserInfo();
       setIsLoggedIn(true);
       onClosePopup();
     } catch (err) {
+      setIsLoading(false);
       setIsErrApi({ ...isErrApi, message: err });
       console.error(
         "Что-то пошло не так: ошибка запроса 😔",
         JSON.stringify(err, null, 2),
       );
+    } finally {
+      setIsLoading(false);
     }
   };
 
   function handleSubmit(evt) {
     evt.preventDefault();
     handleAuthorization(values);
+    clearApiError();
   }
 
   return (

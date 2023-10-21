@@ -15,18 +15,22 @@ import { useApiError } from "../../../hooks/useApiError";
 const ConfirmRegisterForm = ({ data, isOpenPopup, handleClosePopup }) => {
   const navigate = useNavigate();
   const location = useLocation();
-  const { isErrApi, setIsErrApi } = useApiError();
+  const { isErrApi, setIsErrApi, clearApiError } = useApiError();
   const { values, errors, handleChange, isValid } = useFormAndValidation();
 
   const handleConfirm = async ({ email, confirmation_code }) => {
     try {
       const res = await confirmRegister({ email, confirmation_code });
       if (res) {
+        console.log(res.message);
         navigate("/popup/login", { state: { previousLocation: location } });
       }
     } catch (err) {
       setIsErrApi({ ...isErrApi, message: err });
-      console.log(`Что-то пошло не так: ошибка запроса ${err.message} 😔`);
+      console.error(
+        "Что-то пошло не так: ошибка запроса 😔",
+        JSON.stringify(err, null, 2),
+      );
     }
   };
 
@@ -36,7 +40,8 @@ const ConfirmRegisterForm = ({ data, isOpenPopup, handleClosePopup }) => {
       email: data.email,
       confirmation_code: values.confirmation_code,
     });
-    setIsErrApi("");
+    // очистка ошибок
+    clearApiError();
   }
 
   return (
@@ -52,9 +57,9 @@ const ConfirmRegisterForm = ({ data, isOpenPopup, handleClosePopup }) => {
           inputName="confirmation_code"
           inputRequired
         />
-        <span className="entry-form__text_error">
-          {isErrApi && `${isErrApi.message}`}
-        </span>
+        <span className="entry-form__text_error">{`${
+          isErrApi ? isErrApi.message : ""
+        }`}</span>
         <Button
           btnClass="button_type_form"
           btnType="submit"

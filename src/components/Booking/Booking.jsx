@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback, useMemo } from "react";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import PropTypes from "prop-types";
 
 import "./Booking.scss";
@@ -46,6 +46,21 @@ const getNormalizedDayNumber = (date) => {
   const dayNumber = date.getDay();
   const resultNumber = dayNumber === 0 ? 7 : dayNumber;
   return resultNumber;
+};
+
+// Вернет true, если тот же день месяца
+const isSameDateDay = (firstDate, secondDate) => {
+  const firstDay = new Date(
+    firstDate.getFullYear(),
+    firstDate.getMonth(),
+    firstDate.getDate(),
+  );
+  const secondDay = new Date(
+    secondDate.getFullYear(),
+    secondDate.getMonth(),
+    secondDate.getDate(),
+  );
+  return firstDay.getTime() === secondDay.getTime();
 };
 
 const getTimeWithZeroPrefixedMinutes = (timeArray) => {
@@ -184,12 +199,11 @@ const spotsSortFunc = (a, b) => {
   return aNum - bNum;
 };
 
-export const Booking = ({
-  location: { id, openTime, closeTime, daysOpen },
-}) => {
+export const Booking = () => {
   const FIRST_SPOT_TYPE = "Общая зона";
   const SECOND_SPOT_TYPE = "Переговорная";
   const navigate = useNavigate();
+  const [coworking, setCoworking] = useState({});
   const [planPhoto, setPlanPhoto] = useState("");
   const [datesSelected, setDatesSelected] = useState([]);
   const [timeRangesSelected, setTimeRangesSelected] = useState([]);
@@ -200,9 +214,11 @@ export const Booking = ({
   const [totalPrice, setTotalPrice] = useState("");
   const [spots, setSpots] = useState([]);
   const [meetingRooms, setMeetingRooms] = useState([]);
-  const [isSpotsEnabled, setSpotsEnabled] = useState(false);
-  const [isWorkplacesEnabled, setWorkplacesEnabled] = useState(true);
+  const [isSpotsEnabled, setSpotsEnabled] = useState(true);
+  const [isWorkplacesEnabled, setWorkplacesEnabled] = useState(false);
   const [isMeetingRoomsEnabled, setMeetingRoomsEnabled] = useState(false);
+
+  const location = useLocation();
 
   // Обработчик выбора даты
   const handleCalendarClick = (dates) => {
@@ -214,9 +230,7 @@ export const Booking = ({
     setTimeRangesSelected(selectedRanges);
   };
 
-  const [timeRangeItems] = useState(
-    getTimeRangeItems(openTime, closeTime, handleTimeItemClick),
-  );
+  const [timeRangeItems, setTimeRangeItems] = useState([]);
 
   // Разрешенные группы промежутков времени
   const allowedRanges = useMemo(
@@ -227,11 +241,11 @@ export const Booking = ({
   // Обработчик выбора типа места
   const handleSwitcherClick = (selectedSpotType) => {
     if (selectedSpotType === FIRST_SPOT_TYPE) {
-      setWorkplacesEnabled(true);
+      setSpotsEnabled(true);
       setMeetingRoomsEnabled(false);
       return;
     }
-    setWorkplacesEnabled(false);
+    setSpotsEnabled(false);
     setMeetingRoomsEnabled(true);
   };
 
@@ -251,6 +265,40 @@ export const Booking = ({
     navigate(-1);
   };
 
+  // Обработчик кнопки "Перейти к оплате"
+  const handlePayClick = () => {
+    let workplaceCategory = EQUIPMENT_GENERAL_CATEGORY;
+    let selectedWorkplaces = spotsSelected.map((item) => item.name).join(", ");
+    let selectedSpotId = spotsSelected.at(0).id;
+    const selectedDate = datesSelected.at(0);
+    const timeSeleted = [...timeRangesSelected].sort(timeSortFunc);
+    const { startTime } = timeSeleted.at(0);
+    const { endTime } = timeSeleted.at(-1);
+
+    if (meetingRoomsSelected.length > 0) {
+      selectedSpotId = meetingRoomsSelected.at(0).id;
+      workplaceCategory = EQUIPMENT_MEETING_CATEGORY;
+      selectedWorkplaces = meetingRoomsSelected
+        .map((item) => item.name)
+        .join(", ");
+    }
+
+    navigate("/payments", {
+      state: {
+        id: coworking.id,
+        spotId: selectedSpotId,
+        name: coworking.name,
+        location: coworking.location,
+        category: workplaceCategory,
+        equipment: selectedWorkplaces,
+        date: selectedDate,
+        startTime,
+        endTime,
+        bill: totalPrice,
+      },
+    });
+  };
+
   // Получение текущей цены выбранного массива мест
   const getSelectedPrice = (selectedItems) =>
     selectedItems.reduce((sum, item) => {
@@ -261,7 +309,8 @@ export const Booking = ({
   // Дополнительные правила-функции для проверки дат календаря
   // Если функция возвращает true - дата календаря будет недоступной
   const calendarExtraRules = [
-    (date) => getNormalizedDayNumber(date) > WORKING_DAYS_COUNTS[daysOpen],
+    (date) =>
+      getNormalizedDayNumber(date) > WORKING_DAYS_COUNTS[coworking.daysOpen],
   ];
 
   // Получение информации о всех местах в данной location
@@ -323,7 +372,7 @@ export const Booking = ({
       const secondItem = secondSpots.find((item) => firtsItem.id === item.id);
       return {
         ...firtsItem,
-        isOrdered: firtsItem.isOrdered && secondItem.isOrdered,
+        isEnabled: firtsItem.isEnabled && secondItem.isEnabled,
       };
     });
   };
@@ -346,7 +395,7 @@ export const Booking = ({
               selectedDate.getMonth() + 1
             }-${selectedDate.getDate()}`;
             const receivedWorkplaces = await getWorkplacesData({
-              id,
+              id: coworking.id,
               date: preparedDate,
               startTime: timeItem.startTime,
               endTime: timeItem.endTime,
@@ -381,7 +430,7 @@ export const Booking = ({
       setMeetingRooms(resultSpots.meetingRooms);
     }
   }, [
-    id,
+    coworking.id,
     datesSelected,
     timeRangesSelected,
     timeRangeItems,
@@ -401,25 +450,58 @@ export const Booking = ({
       tomorrowDate.getMonth() + 1
     }-${tomorrowDate.getDate()}`;
     const resultSpots = await getWorkplacesData({
-      id,
+      id: coworking.id,
       date: preparedDate,
-      startTime: openTime,
-      endTime: closeTime,
+      startTime: coworking.openTime,
+      endTime: coworking.closeTime,
     });
     setSpots(resultSpots.spots);
     setMeetingRooms(resultSpots.meetingRooms);
-  }, [id, getWorkplacesData, openTime, closeTime]);
+  }, [
+    coworking.id,
+    getWorkplacesData,
+    coworking.openTime,
+    coworking.closeTime,
+  ]);
 
   // Загрузка изображения плана помещения
   const loadPlanPhoto = useCallback(async () => {
     try {
-      const { image } = await getLocationPlanPhoto(id);
+      const { image } = await getLocationPlanPhoto(coworking.id);
       setPlanPhoto(image);
     } catch (err) {
       console.log(err.message);
     }
-  }, [id]);
+  }, [coworking.id]);
 
+  // Получить актуальные промежутки времени. Активными будут те, что будут позже или равны текущему времени
+  const getAvailableTimeRanges = useCallback(
+    (currentTimeRanges) =>
+      currentTimeRanges.map((timeRange) => ({
+        ...timeRange,
+        isEnabled: !datesSelected.some((date) => {
+          const todayDate = new Date();
+          if (isSameDateDay(date, todayDate)) {
+            const [rangeStartHour, rangeStartMinutes] = getHourAndMinutes(
+              timeRange.startTime,
+            );
+            const todayHour = todayDate.getHours();
+            const todayMinutes = todayDate.getMinutes();
+            if (rangeStartHour > todayHour) {
+              return false;
+            }
+            if (rangeStartHour === todayHour) {
+              return rangeStartMinutes < todayMinutes;
+            }
+            return true;
+          }
+          return false;
+        }),
+      })),
+    [datesSelected],
+  );
+
+  // Рекация на изменение доступности
   useEffect(() => {
     if (!isSpotsEnabled) {
       setSpotsSelected([]);
@@ -435,6 +517,7 @@ export const Booking = ({
     }
   }, [isSpotsEnabled, isMeetingRoomsEnabled, isWorkplacesEnabled]);
 
+  // Реакция на изменение выбранных рабочих мест, переговорных комнат и промежутков времени
   useEffect(() => {
     const spotPrice = getSelectedPrice(spotsSelected);
     setCurrentSpotPrice(spotPrice === 0 ? "\u200b" : `${spotPrice} ₽/час`);
@@ -454,16 +537,40 @@ export const Booking = ({
   useEffect(() => {
     if (timeRangesSelected.length > 0) {
       loadWorkplaces();
-      setSpotsEnabled(true);
+      setWorkplacesEnabled(true);
       return;
     }
-    setSpotsEnabled(false);
+    setWorkplacesEnabled(false);
   }, [timeRangesSelected, loadWorkplaces]);
 
+  // Реакция на изменение выбранной даты
   useEffect(() => {
-    loadPlanPhoto(id);
+    if (datesSelected.length > 0) {
+      setTimeRangeItems(getAvailableTimeRanges);
+    }
+    setTimeRangesSelected([]);
+  }, [datesSelected, getAvailableTimeRanges]);
+
+  // Первоначальная загрузка компонента
+  useEffect(() => {
+    setTimeRangeItems(
+      getTimeRangeItems(
+        location.state.openTime,
+        location.state.closeTime,
+        handleTimeItemClick,
+      ),
+    );
+    setCoworking(location.state);
+    loadPlanPhoto(coworking.id);
     loadWorkplacesInitial();
-  }, [id, loadPlanPhoto, loadWorkplacesInitial]);
+  }, [
+    coworking.id,
+    loadPlanPhoto,
+    loadWorkplacesInitial,
+    location.state,
+    location.state.openTime,
+    location.state.closeTime,
+  ]);
 
   return (
     <main className="booking" aria-label="Страница бронирования">
@@ -524,8 +631,8 @@ export const Booking = ({
               <p className="booking__spot-price">{currentSpotPrice}</p>
               <ButtonsList
                 isEnabled={
-                  isSpotsEnabled &&
                   isWorkplacesEnabled &&
+                  isSpotsEnabled &&
                   datesSelected.length > 0 &&
                   timeRangesSelected.length > 0
                 }
@@ -545,7 +652,7 @@ export const Booking = ({
               <p className="booking__spot-price">{currentMeetingPrice}</p>
               <ButtonsList
                 isEnabled={
-                  isSpotsEnabled &&
+                  isWorkplacesEnabled &&
                   isMeetingRoomsEnabled &&
                   datesSelected.length > 0 &&
                   timeRangesSelected.length > 0
@@ -567,6 +674,7 @@ export const Booking = ({
           btnClass="button_type_form button_size_middle"
           btnText="Перейти к оплате"
           isValidBtn={!!totalPrice}
+          onClick={handlePayClick}
         />
       </section>
     </main>

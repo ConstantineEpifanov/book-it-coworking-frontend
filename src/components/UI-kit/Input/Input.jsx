@@ -35,6 +35,7 @@ function Input({
         required={inputRequired}
         disabled={inputDisabled}
         maxLength={inputMaxLength}
+        autoComplete="off"
       />
       {/* если нет ошибки ввода, то покажи информацию */}
       {inputError ? (

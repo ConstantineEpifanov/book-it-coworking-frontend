@@ -81,11 +81,24 @@ export function login({ email, password }) {
 }
 
 export function resetPassConfirmCode({ email }) {
-  return request("/users/reset_password_confirmation_code", {
+  return request("/users/reset_password_confirmation_code/", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({
       email,
+    }),
+  });
+}
+
+export function resetPass({ email, confirmation_code, password, re_password }) {
+  return request("/users/reset_password/", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      email,
+      confirmation_code,
+      password,
+      re_password,
     }),
   });
 }
@@ -265,5 +278,15 @@ export function searchLocations(params = {}) {
   return request(`/locations/?${query.toString()}`, {
     method: "GET",
     headers: setHeaders(),
+  });
+}
+
+// Payments
+
+export function postOrder(locationId, spotId, data) {
+  return request(`/locations/${locationId}/spots/${spotId}/order`, {
+    method: "POST",
+    headers: setHeaders(),
+    body: JSON.stringify(data),
   });
 }
