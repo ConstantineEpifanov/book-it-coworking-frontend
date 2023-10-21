@@ -1,3 +1,4 @@
+/* eslint-disable no-underscore-dangle */
 /* eslint-disable no-unused-vars */
 import React, { useState } from "react";
 import PropTypes from "prop-types";
@@ -10,6 +11,8 @@ import { publishReview, cancelOrder } from "../../utils/Api";
 import { formatDate } from "../../utils/utils";
 
 import usePopupOpen from "../../hooks/usePopupOpen";
+
+import ReviewsForm from "../Forms/ReviewsForm/ReviewsForm";
 
 import Button from "../UI-kit/Button/Button";
 import Popup from "../Popup/Popup";
@@ -38,13 +41,17 @@ export const BookingsCard = ({ item }) => {
   const { isOpenPopup, handleOpenPopup, handleClosePopup } = usePopupOpen();
   const [isCancellationConfirmed, setIsCancellationConfirmed] = useState(false);
   const [isReviewFormOpen, setIsReviewFormOpen] = useState(false);
-  const [reviewText, setReviewText] = useState("");
-  const [reviewRating, setReviewRating] = useState(0);
+  const [serverError, setServerError] = useState(null);
+  // const [reviewText, setReviewText] = useState("");
+  // const [reviewRating, setReviewRating] = useState(0);
+
+  console.log(item.reviews);
 
   const handleCloseBookingPopup = () => {
     handleClosePopup();
     setIsCancellationConfirmed(false);
     setIsReviewFormOpen(false);
+    setServerError(null);
   };
 
   const handleConfirmCancellation = () => {
@@ -58,25 +65,25 @@ export const BookingsCard = ({ item }) => {
     handleOpenPopup();
   };
 
-  const handleReviewTextChange = (e) => {
-    const newText = e.target.value;
-    setReviewText(newText);
-  };
+  // const handleReviewTextChange = (e) => {
+  //   const newText = e.target.value;
+  //   setReviewText(newText);
+  // };
 
-  const handleRatingChange = (rating) => {
-    setReviewRating(rating);
-  };
+  // const handleRatingChange = (rating) => {
+  //   setReviewRating(rating);
+  // };
 
-  const handleReviewSubmit = (e) => {
-    e.preventDefault();
-    publishReview(item.location_id, item.spot, item.id, {
-      description: reviewText,
-      rating: reviewRating,
-    })
-      .catch(() => {})
-      .finally(() => handleClosePopup());
-    setReviewText("");
-    setReviewRating(0);
+  const handleReviewSubmit = (data) => {
+    setServerError(null);
+    publishReview(item.location_id, item.spot, item.id, data)
+      .then(() => handleClosePopup())
+      .catch((e) => {
+        // eslint-disable-next-line no-underscore-dangle
+        console.log(e.booked_spot[0]);
+        setServerError(e.booked_spot[0]);
+      })
+      .finally(() => {});
   };
 
   const getPopupText = (booking) => {
@@ -117,30 +124,7 @@ export const BookingsCard = ({ item }) => {
     );
   } else if (isReviewFormOpen) {
     content = (
-      <div className="bookings-card__popup-content">
-        <p className="bookings-card__popup-text bookings-card__popup-text_type_review">
-          Поставьте оценку и оставьте отзыв
-        </p>
-        <StarRating rating={reviewRating} onRatingChange={handleRatingChange} />
-        <textarea
-          id="review"
-          name="review"
-          className="bookings-card__review-text"
-          minLength="10"
-          maxLength={MAX_REVIEW_CHARACTERS_NUMBER}
-          placeholder="Текст"
-          value={reviewText}
-          onChange={handleReviewTextChange}
-        />
-        <p className="bookings-card__character-count">
-          {reviewText.length}/{MAX_REVIEW_CHARACTERS_NUMBER}
-        </p>
-        <Button
-          btnText="Отправить"
-          btnClass="button__profile-review"
-          onClick={handleReviewSubmit}
-        />
-      </div>
+      <ReviewsForm onSubmit={handleReviewSubmit} serverError={serverError} />
     );
   } else {
     content = (
@@ -195,9 +179,12 @@ export const BookingsCard = ({ item }) => {
           </div>
           {item.isFinished ? (
             <Button
-              btnText="Оставить отзыв"
+              btnText={
+                item.reviews === null ? "Оставить отзыв" : "Отзыв оставлен"
+              }
               btnClass="button__profile-bookings"
               onClick={handleOpenReviewForm}
+              isValidBtn={item.reviews === null}
             />
           ) : (
             <Button
@@ -231,6 +218,7 @@ BookingsCard.propTypes = {
     end_time: PropTypes.string,
     bill: PropTypes.string,
     isFinished: PropTypes.bool,
+    reviews: PropTypes.number,
     status: PropTypes.oneOf([
       ORDER_STATUSES.WAIT_PAY,
       ORDER_STATUSES.PAID,

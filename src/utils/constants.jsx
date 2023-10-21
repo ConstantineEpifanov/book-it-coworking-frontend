@@ -64,3 +64,7 @@ export const ORDER_STATUSES = {
 // Количество символов в отзыве
 
 export const MAX_REVIEW_CHARACTERS_NUMBER = 300;
+
+// Сообщения
+
+export const PROFILE_DATA_UPDATE = "Данные успешно обновлены";
