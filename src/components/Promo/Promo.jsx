@@ -47,7 +47,7 @@ export const Promo = () => {
     }
     localStorage.setItem("lastSearchRequest", form.search);
     searchLocations({
-      name: form.search,
+      search: form.search,
       offset,
       limit,
     })
