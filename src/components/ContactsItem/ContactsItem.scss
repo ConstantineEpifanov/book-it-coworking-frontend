@@ -7,6 +7,10 @@
   flex-direction: column;
   gap: 20px;
   max-width: 360px;
+  border-radius: 20px;
+  padding: 20px; 
+  box-sizing: border-box;
+  background-color:$green;
 
   &__header {
     @include mp-null;
