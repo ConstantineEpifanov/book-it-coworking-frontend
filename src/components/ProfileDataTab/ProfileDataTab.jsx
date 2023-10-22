@@ -86,21 +86,27 @@ export const ProfileDataTab = () => {
         <ul className="profile-data__info-list">
           <li className="profile-data__list-item">
             <span className="profile-data__label">Имя</span>
-            <span>{editedUser?.first_name}</span>
+            <span className="profile-data__text-overflow">
+              {editedUser?.first_name}
+            </span>
           </li>
           <li className="profile-data__list-item">
             <span className="profile-data__label">Фамилия</span>
-            <span>{editedUser?.last_name}</span>
+            <span className="profile-data__text-overflow">
+              {editedUser?.last_name}
+            </span>
           </li>
           <li className="profile-data__list-item">
             <span className="profile-data__label">Дата рождения</span>
-            <span>
+            <span className="profile-data__text-overflow">
               {editedUser?.birth_date && formatDate(editedUser?.birth_date)}
             </span>
           </li>
           <li className="profile-data__list-item">
             <span className="profile-data__label">Номер телефона</span>
-            <span>{editedUser?.phone && formatPhone(editedUser?.phone)}</span>
+            <span className="profile-data__text-overflow">
+              {editedUser?.phone && formatPhone(editedUser?.phone)}
+            </span>
           </li>
           <li className="profile-data__list-item">
             <span className="profile-data__label">Адрес эл. почты</span>

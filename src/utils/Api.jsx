@@ -232,6 +232,18 @@ export function editUserData(data) {
   });
 }
 
+export function changePass({ current_password, password, re_password }) {
+  return request("/users/change_password/", {
+    method: "POST",
+    headers: setHeaders(),
+    body: JSON.stringify({
+      current_password,
+      password,
+      re_password,
+    }),
+  });
+}
+
 // Лайк-дислайк
 
 export function addFavorite(id) {
