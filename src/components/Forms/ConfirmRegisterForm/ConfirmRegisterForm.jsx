@@ -1,7 +1,7 @@
 /* eslint-disable react/jsx-no-bind */
 /* eslint-disable camelcase */
 import PropTypes from "prop-types";
-import React from "react";
+import React, { useContext } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 
 import Popup from "../../Popup/Popup";
@@ -11,18 +11,20 @@ import Button from "../../UI-kit/Button/Button";
 import { confirmRegister } from "../../../utils/Api";
 import useFormAndValidation from "../../../hooks/useFormAndValidation";
 import { useApiError } from "../../../hooks/useApiError";
+import { CurrentUserContext } from "../../../contexts/currentUserContext";
 
 const ConfirmRegisterForm = ({ data, isOpenPopup, handleClosePopup }) => {
   const navigate = useNavigate();
   const location = useLocation();
   const { isErrApi, setIsErrApi, clearApiError } = useApiError();
+  const { showMessage } = useContext(CurrentUserContext);
   const { values, errors, handleChange, isValid } = useFormAndValidation();
 
   const handleConfirm = async ({ email, confirmation_code }) => {
     try {
       const res = await confirmRegister({ email, confirmation_code });
       if (res) {
-        console.log(res.message);
+        showMessage(res.message, "info");
         navigate("/popup/login", { state: { previousLocation: location } });
       }
     } catch (err) {
