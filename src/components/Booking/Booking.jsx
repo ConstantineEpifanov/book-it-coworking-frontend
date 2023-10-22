@@ -3,7 +3,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import PropTypes from "prop-types";
 
 import "./Booking.scss";
-// import { getLocationPlanPhoto, getSpots } from '../../utils/Api';
+import { getLocationPlanPhoto } from "../../utils/Api";
 import { locationData } from "../../config/exampleBookingData";
 import Button from "../UI-kit/Button/Button";
 import { SectionTitle } from "../SectionTitle/SectionTitle";
@@ -18,11 +18,11 @@ import {
 } from "../../utils/constants";
 
 // Блок функций-заглушек, используются вместо обращений к API
-const getLocationPlanPhoto = () =>
-  Promise.resolve({
-    image:
-      "https://spotit.acceleratorpracticum.ru/media/images/plans/workplace_plan2_MyVLYSU.png",
-  });
+// const getLocationPlanPhoto = () =>
+//   Promise.resolve({
+//     image:
+//       "https://spotit.acceleratorpracticum.ru/media/images/plans/workplace_plan2_MyVLYSU.png",
+//   });
 
 const getWorkplaces = ({
   /* locationId, */ type,
@@ -269,7 +269,7 @@ export const Booking = () => {
   const handlePayClick = () => {
     let workplaceCategory = EQUIPMENT_GENERAL_CATEGORY;
     let selectedWorkplaces = spotsSelected.map((item) => item.name).join(", ");
-    let selectedSpotId = spotsSelected.at(0).id;
+    let selectedSpotId = spotsSelected.at(0)?.id;
     const selectedDate = datesSelected.at(0);
     const timeSeleted = [...timeRangesSelected].sort(timeSortFunc);
     const { startTime } = timeSeleted.at(0);
@@ -350,7 +350,7 @@ export const Booking = () => {
           meetingRooms: meetingRoomsData,
         };
       } catch (err) {
-        console.log(err.message);
+        console.log(err);
       }
       return result;
     },
@@ -439,40 +439,38 @@ export const Booking = () => {
 
   // Начальная загрузка рабочих мест
   // Получаем количество рабочих мест на завтрашний день. Из-за ограничений бэка
-  const loadWorkplacesInitial = useCallback(async () => {
-    const date = new Date();
-    const tomorrowDate = new Date(
-      date.getFullYear(),
-      date.getMonth(),
-      date.getDate() + 1,
-    );
-    const preparedDate = `${tomorrowDate.getFullYear()}-${
-      tomorrowDate.getMonth() + 1
-    }-${tomorrowDate.getDate()}`;
-    const resultSpots = await getWorkplacesData({
-      id: coworking.id,
-      date: preparedDate,
-      startTime: coworking.openTime,
-      endTime: coworking.closeTime,
-    });
-    setSpots(resultSpots.spots);
-    setMeetingRooms(resultSpots.meetingRooms);
-  }, [
-    coworking.id,
-    getWorkplacesData,
-    coworking.openTime,
-    coworking.closeTime,
-  ]);
+  const loadWorkplacesInitial = useCallback(
+    async (coworkingState) => {
+      const date = new Date();
+      const tomorrowDate = new Date(
+        date.getFullYear(),
+        date.getMonth(),
+        date.getDate() + 1,
+      );
+      const preparedDate = `${tomorrowDate.getFullYear()}-${
+        tomorrowDate.getMonth() + 1
+      }-${tomorrowDate.getDate()}`;
+      const resultSpots = await getWorkplacesData({
+        id: coworkingState.id,
+        date: preparedDate,
+        startTime: coworkingState.openTime,
+        endTime: coworkingState.closeTime,
+      });
+      setSpots(resultSpots.spots);
+      setMeetingRooms(resultSpots.meetingRooms);
+    },
+    [getWorkplacesData],
+  );
 
   // Загрузка изображения плана помещения
-  const loadPlanPhoto = useCallback(async () => {
+  const loadPlanPhoto = useCallback(async (locationId) => {
     try {
-      const { image } = await getLocationPlanPhoto(coworking.id);
+      const { image } = await getLocationPlanPhoto(locationId);
       setPlanPhoto(image);
     } catch (err) {
       console.log(err.message);
     }
-  }, [coworking.id]);
+  }, []);
 
   // Получить актуальные промежутки времени. Активными будут те, что будут позже или равны текущему времени
   const getAvailableTimeRanges = useCallback(
@@ -561,8 +559,8 @@ export const Booking = () => {
       ),
     );
     setCoworking(location.state);
-    loadPlanPhoto(coworking.id);
-    loadWorkplacesInitial();
+    loadPlanPhoto(location.state.id);
+    loadWorkplacesInitial(location.state);
   }, [
     coworking.id,
     loadPlanPhoto,
