@@ -35,7 +35,7 @@ const SearchForm = ({ handleUpdateCoworkings, limit, offset }) => {
     e.preventDefault();
     localStorage.setItem("lastSearchRequest", form.search);
     searchLocations({
-      name: form.search,
+      search: form.search,
       category: form.category,
       metro: form.metro,
       offset,
