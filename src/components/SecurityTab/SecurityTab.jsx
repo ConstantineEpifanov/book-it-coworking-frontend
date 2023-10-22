@@ -3,11 +3,18 @@ import { useNavigate } from "react-router-dom";
 import { CurrentUserContext } from "../../contexts/currentUserContext";
 import "./SecurityTab.scss";
 // import PropTypes from "prop-types";
+
+import usePopupOpen from "../../hooks/usePopupOpen";
+
+import ChangePassForm from "../Forms/ChangePassForm/ChangePassForm";
+
 import Button from "../UI-kit/Button/Button";
+import Popup from "../Popup/Popup";
 
 export const SecurityTab = () => {
   const { currentUser, setIsLoggedIn, setСurrentUser } =
     useContext(CurrentUserContext);
+  const { isOpenPopup, handleOpenPopup, handleClosePopup } = usePopupOpen();
 
   const navigate = useNavigate();
 
@@ -29,7 +36,6 @@ export const SecurityTab = () => {
   return (
     <section className="security">
       <h2 className="security__title">Безопасность и конфиденциальность</h2>
-
       <ul className="security__board">
         <li className="security__board-row">
           <div className="security__password-container">
@@ -39,6 +45,7 @@ export const SecurityTab = () => {
           <Button
             btnText="Изменить"
             btnClass="button__profile-small button_type_transparent"
+            onClick={handleOpenPopup}
           />
         </li>
         <li className="security__board-row">
@@ -66,7 +73,10 @@ export const SecurityTab = () => {
             onClick={handleLogout}
           />
         </li>
-      </ul>
+      </ul>{" "}
+      <Popup isOpen={isOpenPopup} popupClass="" onClickClose={handleClosePopup}>
+        <ChangePassForm handleClosePopup={handleClosePopup} />
+      </Popup>
     </section>
   );
 };

@@ -38,7 +38,7 @@
     }
   }
   &__list-item {
-    margin-top: 30px;
+    margin-top: 20px;
     display: flex;
     :first-child {
       flex-basis: 235px;
@@ -71,5 +71,6 @@
   }
   &__label {
     min-width: 235px;
+    line-height: 30px;
   }
 }
