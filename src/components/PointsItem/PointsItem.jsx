@@ -1,5 +1,5 @@
 /* eslint-disable camelcase */
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import PropTypes from "prop-types";
 import { useNavigate } from "react-router-dom";
 
@@ -20,11 +20,14 @@ import { Time } from "./icons/Time";
 import { MeetingRoom } from "./icons/MeetingRoom";
 import { Share } from "./icons/Share";
 import { addFavorite, deleteFavorite } from "../../utils/Api";
+import { CurrentUserContext } from "../../contexts/currentUserContext";
+import { SUCCESSFUL_DISLIKE, SUCCESSFUL_LIKE } from "../../utils/constants";
 
 SwiperCore.use([Pagination]);
 
 export const PointsItem = ({ isCompact, isListed, data }) => {
   const [isLiked, setLiked] = useState(data.is_favorited);
+  const { showMessage } = useContext(CurrentUserContext);
 
   const navigate = useNavigate();
   const time = `${data.days_open} ${data.open_time}–${data.close_time}`;
@@ -34,8 +37,9 @@ export const PointsItem = ({ isCompact, isListed, data }) => {
     addFavorite(data.id)
       .then(() => {
         setLiked(!isLiked);
+        showMessage(SUCCESSFUL_LIKE, "info");
       })
-      .catch((err) => new Error(err));
+      .catch((err) => showMessage(err.detail));
   }
 
   // Удалить из избранного
@@ -43,9 +47,9 @@ export const PointsItem = ({ isCompact, isListed, data }) => {
     deleteFavorite(data.id)
       .then(() => {
         setLiked(!isLiked);
+        showMessage(SUCCESSFUL_DISLIKE, "info");
       })
-      .catch((err) => new Error(err))
-      .finally(() => setLiked(!isLiked));
+      .catch((err) => showMessage(err.detail));
   }
 
   function onLikeClick() {
@@ -57,18 +61,54 @@ export const PointsItem = ({ isCompact, isListed, data }) => {
   }
 
   // Поделиться страницей коворкинга
-  const handleShare = () => {};
+  const handleShare = () => {
+    if (navigator.share) {
+      navigator
+        .share({
+          title: `Коворкинг ${data.name}`,
+          text: "Забронируйте место в лучшем коворкинге для IT-специалистов",
+          url: isListed ? window.location.href + data.id : window.location.href,
+        })
+        .then(() => showMessage("Получилось поделиться", "info"))
+        .catch((error) => showMessage(error, "error"));
+    } else {
+      navigator.clipboard
+        .writeText(
+          isListed ? window.location.href + data.id : window.location.href,
+        )
+        .then(() => showMessage("Ссылка скопирована в буфер обмена", "info"));
+    }
+  };
 
   // Переход на страницу коворкинга
   const handleDetailsButton = () => {
     navigate(`/points/${data.id}`, { replace: false });
   };
 
+  const handleBooking = () => {
+    navigate("/booking", {
+      state: {
+        id: data.id,
+        openTime: data.open_time,
+        closeTime: data.close_time,
+        daysOpen: data.days_open,
+        name: data.name,
+        location: data.get_full_address_str,
+      },
+      replace: false,
+    });
+  };
+
   // Компактная карточка для главной страницы
   const compactCard = () => (
     <div className="point">
       <div className="point__image-container">
-        <img src={data.main_photo} alt={data.name} className="point__image" />
+        <img
+          loading="lazy"
+          src={data.main_photo}
+          alt={data.name}
+          className="point__image"
+        />
         <p className="point__cost">От {data.low_price}&#8381;/час</p>
         <PointRating
           rating={data.rating?.toFixed(1)}
@@ -99,7 +139,7 @@ export const PointsItem = ({ isCompact, isListed, data }) => {
         </ul>
 
         <Button
-          btnClass="button_type_main-card button_size_postmiddle"
+          btnClass="button_type_form button_size_postmiddle"
           btnText="Подробнее"
           onClick={handleDetailsButton}
         />
@@ -132,6 +172,7 @@ export const PointsItem = ({ isCompact, isListed, data }) => {
             {photos.map((item) => (
               <SwiperSlide key={item.id}>
                 <img
+                  loading="lazy"
                   src={item.image}
                   alt={data.name}
                   className={`point__image point__image_large ${
@@ -245,6 +286,7 @@ export const PointsItem = ({ isCompact, isListed, data }) => {
             <Button
               btnClass="button_type_form button_size_middle"
               btnText="Забронировать место"
+              onClick={handleBooking}
             />
             {isListed && (
               <Button

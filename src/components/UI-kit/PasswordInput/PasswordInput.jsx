@@ -38,6 +38,7 @@ function PasswordInput({
           onChange={handleChange}
           required={inputRequired}
           disabled={inputDisabled}
+          autoComplete="off"
         />
         {/* если данные введены, покажи кнопку */}
         {inputValue && (

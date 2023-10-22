@@ -97,8 +97,10 @@ const getSpots = (type, count) => [
     .fill(null)
     .map((_, index) => ({
       id: index,
-      name: (index + 1).toString(),
-      price: 100,
+      name: `${(index + 1).toString()}${
+        type === EQUIPMENT_MEETING_CATEGORY ? " переговорная" : ""
+      }`,
+      price: type === EQUIPMENT_MEETING_CATEGORY ? 600 : 200,
       category: type,
       isOrdered: false,
     })),

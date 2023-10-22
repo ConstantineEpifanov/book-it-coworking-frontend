@@ -14,9 +14,19 @@ import usePagination from "../../hooks/usePagination";
 
 import { searchLocations, getMapLocations } from "../../utils/Api";
 
+import {
+  NOT_FOUND_ERROR_TITLE,
+  NOT_FOUND_ERROR_SUBTITLE,
+} from "../../utils/constants";
+
+import { NotFoundError } from "../NotFoundError/NotFoundError";
+
 export const CoworkingList = () => {
   const [coworkingsArray, setCoworkingsArray] = useState([]);
   const [nextPageURL, setNextPageURL] = useState(null);
+
+  const [isNotFoundError, setIsNotFoundError] = useState(false);
+
   const [mapPoints, setMapPoints] = useState([]);
   const { isLoading, setIsLoading } = useContext(CurrentUserContext);
   const location = useLocation();
@@ -85,6 +95,10 @@ export const CoworkingList = () => {
     if (initialLimit !== limit) getLocations(offset, limit);
   }, [limit, offset, initialLimit]);
 
+  useEffect(() => {
+    setIsNotFoundError(coworkingsArray.length === 0);
+  }, [coworkingsArray]);
+
   return (
     <main className="coworking-list">
       {isLoading ? (
@@ -92,25 +106,36 @@ export const CoworkingList = () => {
       ) : (
         <>
           <SectionTitle
-            titleText="Поиск по коворкингам Санкт-Петербурга"
+            titleText="Поиск по коворкингам сети SPOT IT"
             titleClass="section-title_search"
           />
           <SectionSubtitle
             titleText="Вы можете снять рабочее место в одном из коворкингов, представленных в нашем каталоге"
             titleClass="section-subtitle_search"
           />
+
           <SearchForm
             handleUpdateCoworkings={handleUpdateCoworkings}
             limit={limit}
             offset={offset}
           />
-          <MainMap points={mapPoints} defaultState={defaultState} />
-          <PointsList
-            isListed
-            coworkingsArray={coworkingsArray}
-            handleMoreClick={nextPage}
-            isMoreButtonVisible={!!nextPageURL}
-          />
+
+          {isNotFoundError ? (
+            <NotFoundError
+              titleText={NOT_FOUND_ERROR_TITLE}
+              subtitleText={NOT_FOUND_ERROR_SUBTITLE}
+            />
+          ) : (
+            <>
+              <MainMap points={mapPoints} defaultState={defaultState} />
+              <PointsList
+                isListed
+                coworkingsArray={coworkingsArray}
+                handleMoreClick={nextPage}
+                isMoreButtonVisible={!!nextPageURL}
+              />
+            </>
+          )}
         </>
       )}
     </main>

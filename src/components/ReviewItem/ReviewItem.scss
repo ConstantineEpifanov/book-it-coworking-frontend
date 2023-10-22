@@ -2,6 +2,7 @@
 @import "./../../scss/mixins.scss";
 
 .review-item {
+  @include render-animation;
   display: flex;
   flex-direction: row;
   flex-wrap: nowrap;

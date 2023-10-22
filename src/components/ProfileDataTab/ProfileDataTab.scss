@@ -22,9 +22,20 @@
     display: block;
     object-fit: contain;
   }
+  &__form {
+    margin-top: 20px;
+  }
+  &__info-list {
+    @include mp-null;
+    margin-bottom: 20px;
+    list-style-type: none;
+  }
   &__list {
     @include mp-null;
     list-style-type: none;
+    &-input {
+      @include mp-null;
+    }
   }
   &__list-item {
     margin-top: 30px;
@@ -33,13 +44,32 @@
       flex-basis: 235px;
     }
   }
+  &__input {
+    min-width: 415px;
+    height: 58px;
+    padding: 16px 12px 12px 20px;
+  }
   &__info {
     @include mp-null;
-    margin-top: 25px;
+    margin-bottom: 30px;
     max-width: 275px;
     font-size: 12px;
     font-style: normal;
     font-weight: 300;
     line-height: 14px;
+  }
+  &__buttons {
+    display: flex;
+    gap: 20px;
+  }
+  &__text-overflow {
+    max-width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    line-height: 30px;
+  }
+  &__label {
+    min-width: 235px;
   }
 }

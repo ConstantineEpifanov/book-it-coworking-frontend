@@ -3,6 +3,7 @@
 
 .bookings {
   font-family: $font-family;
+  font-style: normal;
   color: $black;
   width: 600px;
   text-align: left;
@@ -10,7 +11,6 @@
     @include mp-null;
     text-align: left;
     font-size: 28px;
-    font-style: normal;
     font-weight: 300;
     line-height: 42px;
   }
@@ -34,16 +34,21 @@
     width: 295px;
     cursor: pointer;
     background-color: transparent;
-    border: none;
-    font-size: 20px;
-    font-style: normal;
-    font-weight: 500;
-    line-height: normal;
+    font-size: 18px;
+    font-weight: 400;
+    line-height: 22px;
     padding: 10px 95px;
+    border: 2px solid transparent;
+    border-radius: 20px;
     &_active {
-      border-radius: 20px;
-      background-color: $black;
-      color: $main-white;
+      background-color: black;
+      color: $white;
     }
+  }
+  &__nodata {
+    margin-top: 40px;
+    display: block;
+    width: 100%;
+    text-align: center;
   }
 }

@@ -5,18 +5,16 @@ export function useApiError() {
   const [isErrApi, setIsErrApi] = React.useState({ message: "", status: "" });
 
   if (isErrApi.message.email) {
-    setIsErrApi({ ...isErrApi, message: isErrApi.message.email[0] });
+    setIsErrApi({ ...isErrApi, message: isErrApi.message.email });
   } else if (isErrApi.message.error) {
-    setIsErrApi({ ...isErrApi, message: isErrApi.message.error[0] });
+    setIsErrApi({ ...isErrApi, message: isErrApi.message.error });
   }
 
   const clearApiError = () => {
-    if (isErrApi) {
-      setIsErrApi({
-        message: "",
-        status: "",
-      });
-    }
+    setIsErrApi({
+      message: "",
+      status: "",
+    });
   };
 
   return {

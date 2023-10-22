@@ -4,7 +4,7 @@
 .main {
   display: flex;
   flex-direction: column;
-  gap: 140px;
+  gap: $desktop-gap;
   margin: $main-margin;
 }
 

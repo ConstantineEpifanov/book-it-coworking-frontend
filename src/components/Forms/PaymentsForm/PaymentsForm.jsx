@@ -1,16 +1,17 @@
 import React from "react";
+import PropTypes from "prop-types";
 import { SectionTitle } from "../../SectionTitle/SectionTitle";
 import Button from "../../UI-kit/Button/Button";
 import EntryForm from "../EntryForm/EntryForm";
 import Input from "../../UI-kit/Input/Input";
 import "./PaymentsForm.scss";
 
-const PaymentsForm = () => {
+const PaymentsForm = ({ onSubmit }) => {
   const [reviewText, setReviewText] = React.useState("");
   const [inputError, setInputError] = React.useState("");
 
   return (
-    <EntryForm formClass="entry-form__inner_payments-form">
+    <EntryForm formClass="entry-form__inner_payments-form" onSubmit={onSubmit}>
       <div className="payments-form">
         <SectionTitle titleText="Оплата" />
         <h3 className="payments-form__subtitle">
@@ -19,35 +20,45 @@ const PaymentsForm = () => {
         <p className="payments-form__text_info">
           Данные карты мы будем использовать только для оплаты бронирования
           абонемента, помещений коворгинга и оплаты дополнительных услуг.
-          Списание будут происходить только после вашего подтверждения{" "}
+          Списание будут происходить только после вашего подтверждения
         </p>
         <Input
           inputClass=""
           inputPlaceholder="Имя владельца"
           inputType="text"
+          inputRequired={false}
         />
-        <Input inputClass="" inputPlaceholder="Номер карты" inputType="text" />
+        <Input
+          inputClass=""
+          inputPlaceholder="Номер карты"
+          inputType="text"
+          inputRequired={false}
+        />
         <div className="payments-form__box">
           <Input
             inputClass="input_type_card"
             inputPlaceholder="Срок действия"
             inputType="text"
+            inputRequired={false}
           />
           <Input
             inputClass="input_type_card"
             inputPlaceholder="CVV/CVC"
             inputType="text"
+            inputRequired={false}
           />
         </div>
         <Input
           inputClass="input_size-middle"
           inputPlaceholder="Email"
           inputType="email"
+          inputRequired={false}
         />
         <Input
           inputClass="input_size-middle"
           inputPlaceholder="Телефон"
           inputType="tel"
+          inputRequired={false}
         />
         <textarea
           className={`entry-form__reviews ${
@@ -66,7 +77,6 @@ const PaymentsForm = () => {
             setInputError(evt.target.validationMessage);
             setReviewText(text);
           }}
-          required
         />
         {/* если нет ошибки ввода, то покажи информацию */}
         {inputError ? (
@@ -90,11 +100,20 @@ const PaymentsForm = () => {
           <Button
             btnClass="button_type_form button_size_middle"
             btnText="Оплатить"
+            btnType="submit"
           />
         </div>
       </div>
     </EntryForm>
   );
+};
+
+PaymentsForm.propTypes = {
+  onSubmit: PropTypes.func,
+};
+
+PaymentsForm.defaultProps = {
+  onSubmit: null,
 };
 
 export default PaymentsForm;

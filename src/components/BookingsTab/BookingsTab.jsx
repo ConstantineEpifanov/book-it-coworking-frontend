@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-// import PropTypes from "prop-types";
 
 import { BookingsCard } from "../BookingsCard/BookingsCard";
 
@@ -57,6 +56,9 @@ export const BookingsTab = () => {
         </button>
       </div>
       <ul className="bookings__card-list">
+        {bookings.length === 0 && (
+          <span className="bookings__nodata">Пока бронирований нет</span>
+        )}
         {bookings.map((item) => (
           <BookingsCard item={item} key={item.id} />
         ))}
@@ -64,36 +66,3 @@ export const BookingsTab = () => {
     </section>
   );
 };
-
-// BookingsTab.propTypes = {
-//   bookings: PropTypes.arrayOf(
-//     PropTypes.shape({
-//       id: PropTypes.string,
-//       spot: PropTypes.shape({
-//         name: PropTypes.string,
-//         image: PropTypes.string,
-//       }),
-//       date: PropTypes.string,
-//       start_time: PropTypes.string,
-//       end_time: PropTypes.string,
-//       bill: PropTypes.number,
-//       isFinished: PropTypes.bool,
-//       status: PropTypes.oneOf(["Confirmed", "Processing"]),
-//     }),
-//   ),
-// };
-
-// BookingsTab.defaultProps = {
-//   bookings: [
-//     {
-//       id: undefined,
-//       spot: {},
-//       date: undefined,
-//       start_time: undefined,
-//       end_time: undefined,
-//       bill: undefined,
-//       isFinished: false,
-//       status: "Processing",
-//     },
-//   ],
-// };

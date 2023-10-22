@@ -87,7 +87,8 @@ export const Coworking = () => {
 
     getReviews(pathId, LAPTOP_REVIEWS_QUANTITY, reviewsAddCount).then((res) => {
       setReviews(reviews.concat(res.results));
-      if (res.results.length < LAPTOP_REVIEWS_QUANTITY)
+
+      if (res.count === reviews.length + LAPTOP_REVIEWS_QUANTITY)
         setMoreButtonVisible(false);
     });
   };

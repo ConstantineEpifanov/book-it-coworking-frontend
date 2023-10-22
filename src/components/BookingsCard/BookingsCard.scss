@@ -2,6 +2,7 @@
 @import "./../../scss/mixins.scss";
 
 .bookings-card {
+  @include card-border-color;
   font-family: $font-family;
   color: $black;
   box-sizing: border-box;
@@ -65,14 +66,25 @@
     font-style: normal;
     font-weight: 300;
     line-height: 14px;
-    &_processing {
+    &_main {
+      color: $black;
+    }
+    &_warn {
       color: #ffc329;
+    }
+    &_alert {
+      color: $alert-red;
+    }
+    &_success {
+      color: #1fdf00;
     }
   }
   &__popup {
     min-width: 740px;
     min-height: 276px;
     text-align: center;
+
+    padding: 60px 95px 95px 95px;
   }
   &__popup-content {
     text-align: left;

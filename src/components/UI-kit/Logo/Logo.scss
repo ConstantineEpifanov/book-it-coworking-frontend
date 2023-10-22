@@ -7,3 +7,22 @@
     height: 20px;
   }
 }
+
+.logo {
+  &_type_footer {
+    fill: $white;
+  }
+  &:hover path {
+    fill: $green;
+    fill-opacity: 1;
+    stroke-opacity: 0;
+  }
+
+  &:active path {
+    fill: $pink;
+  }
+
+  & path {
+    transition: all 0.2s ease;
+  }
+}

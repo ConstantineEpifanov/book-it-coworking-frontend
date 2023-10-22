@@ -43,8 +43,33 @@ export const WORKING_DAYS_COUNTS = {
 // Количество доступных дней в календаре для бронирования
 export const CALENDAR_MAX_ALLOWED_DAYS = 60;
 
+// Доступные промежутки времени для бронирования
+export const ALLOWED_TIME_RANGES = [{ startTime: "09:00", endTime: "12:00" }];
+
 export const routesPopup = [
   "/popup/login",
   "/popup/register",
   "/popup/reset_password",
 ];
+
+// Статусы заказов
+export const ORDER_STATUSES = {
+  WAIT_PAY: "Ожидается оплата",
+  PAID: "Оплачено",
+  FINISH: "Завершен",
+  CANCEL: "Отменен",
+  NOT_PAID: "Не оплачено",
+};
+
+// Количество символов в отзыве
+
+export const MAX_REVIEW_CHARACTERS_NUMBER = 300;
+
+// Сообщения
+
+export const PROFILE_DATA_UPDATE = "Данные успешно обновлены";
+export const NOT_FOUND_ERROR_TITLE = "Этого мы не нашли";
+export const NOT_FOUND_ERROR_SUBTITLE =
+  "Попробуйте изменить параметры поиска и повторите попытку";
+export const SUCCESSFUL_LIKE = "Добавлено в избранное";
+export const SUCCESSFUL_DISLIKE = "Удалено из избранного";

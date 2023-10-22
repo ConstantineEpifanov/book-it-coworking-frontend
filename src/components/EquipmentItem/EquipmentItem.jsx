@@ -9,11 +9,7 @@ export const EquipmentItem = ({ title, data }) =>
       <ul className="equipment-item__list">
         {data?.map((item) => (
           <li key={item.id} className="equipment-item__list-item">
-            <img
-              className="equipment-item__img"
-              src={`https://spotit.acceleratorpracticum.ru/media/${item.icon}`}
-              alt=""
-            />
+            <img className="equipment-item__img" src={item.icon} alt="" />
             <p className="equipment-item__text">{item.name}</p>
           </li>
         ))}

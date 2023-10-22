@@ -28,3 +28,11 @@ export function formatPhone(phoneNumber) {
     .replace(/\D/g, "")
     .replace(/(\d{1})(\d{3})(\d{3})(\d{2})(\d{2})/, "+$1 $2 $3 $4 $5");
 }
+
+export function formatDate(dateString) {
+  const options = { year: "numeric", month: "long", day: "numeric" };
+  const date = new Date(dateString);
+  const formattedDate = date.toLocaleDateString("ru-RU", options);
+  const cleanedDate = formattedDate.replace(/ г\.$/, "");
+  return cleanedDate;
+}

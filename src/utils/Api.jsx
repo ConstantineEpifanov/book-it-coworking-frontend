@@ -81,11 +81,24 @@ export function login({ email, password }) {
 }
 
 export function resetPassConfirmCode({ email }) {
-  return request("/users/reset_password_confirmation_code", {
+  return request("/users/reset_password_confirmation_code/", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({
       email,
+    }),
+  });
+}
+
+export function resetPass({ email, confirmation_code, password, re_password }) {
+  return request("/users/reset_password/", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      email,
+      confirmation_code,
+      password,
+      re_password,
     }),
   });
 }
@@ -185,6 +198,32 @@ export function getFinishedOrders() {
   });
 }
 
+export function publishReview(
+  locationId,
+  spotId,
+  orderId,
+  { description, rating },
+) {
+  return request(
+    `/locations/${locationId}/spots/${spotId}/order/${orderId}/reviews/`,
+    {
+      method: "POST",
+      headers: setHeaders(),
+      body: JSON.stringify({
+        description,
+        rating,
+      }),
+    },
+  );
+}
+
+export function cancelOrder(locationId, spotId, orderId) {
+  return request(`/locations/${locationId}/spots/${spotId}/order/${orderId}/`, {
+    method: "PATCH",
+    headers: setHeaders(),
+  });
+}
+
 export function editUserData(data) {
   return request("/users/me/", {
     method: "PATCH",
@@ -219,7 +258,7 @@ export function getLocationPlanPhoto(id) {
 }
 
 export function getSpots(id) {
-  return request(`/locations/${id}/spots`, {
+  return request(`/locations/${id}/spots/`, {
     method: "GET",
     headers: setHeaders(),
   });
@@ -242,15 +281,12 @@ export function searchLocations(params = {}) {
   });
 }
 
-// Next page
+// Payments
 
-export function loadMorePoints(nextPageURL) {
-  if (!nextPageURL)
-    return Promise.reject(new Error("Нет ссылки на следующую страницу"));
-  const url = new URL(nextPageURL);
-  const basePath = url.pathname.replace("/api/v1", "") + url.search;
-  return request(basePath, {
-    method: "GET",
+export function postOrder(locationId, spotId, data) {
+  return request(`/locations/${locationId}/spots/${spotId}/order/`, {
+    method: "POST",
     headers: setHeaders(),
+    body: JSON.stringify(data),
   });
 }
