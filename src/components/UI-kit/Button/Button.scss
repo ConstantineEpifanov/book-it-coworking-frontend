@@ -165,11 +165,19 @@
   }
 
   &_type_link {
+    font-family: $font-family;
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 22px; /* 122.222% */
     border: none;
     background: none;
     padding: 16px 12px;
     margin-top: 12px;
-
+    &-password {
+      font-size: 16px;
+      line-height: 22px;
+    }
     &:hover {
       color: $pink;
     }

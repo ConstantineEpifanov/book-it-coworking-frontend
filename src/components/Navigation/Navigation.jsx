@@ -3,18 +3,16 @@ import React from "react";
 import { NavLink } from "react-router-dom";
 
 import "./Navigation.scss";
+import { activeLinkClass } from "../../utils/constants";
 
 function Navigation() {
-  const activeLinkClass = "navigation__link navigation__link_active";
-  const inativeLinkClass = "navigation__link";
-
   return (
     <nav className="navigation">
       <div className="navigation__item">
         <NavLink
           to="/points"
           className={({ isActive }) =>
-            isActive ? activeLinkClass : inativeLinkClass
+            isActive ? activeLinkClass : "navigation__link"
           }
         >
           Коворкинги
@@ -22,7 +20,7 @@ function Navigation() {
         <NavLink
           to="/faq"
           className={({ isActive }) =>
-            isActive ? activeLinkClass : inativeLinkClass
+            isActive ? activeLinkClass : "navigation__link"
           }
         >
           Правила и вопросы
@@ -30,7 +28,7 @@ function Navigation() {
         <NavLink
           to="/contacts"
           className={({ isActive }) =>
-            isActive ? activeLinkClass : inativeLinkClass
+            isActive ? activeLinkClass : "navigation__link"
           }
         >
           Контакты

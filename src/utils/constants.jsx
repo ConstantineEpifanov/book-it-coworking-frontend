@@ -73,3 +73,8 @@ export const NOT_FOUND_ERROR_SUBTITLE =
   "Попробуйте изменить параметры поиска и повторите попытку";
 export const SUCCESSFUL_LIKE = "Добавлено в избранное";
 export const SUCCESSFUL_DISLIKE = "Удалено из избранного";
+
+// классы навигации в header
+export const activeLinkClass = "navigation__link navigation__link_active";
+export const headerActiveLinkClass =
+  "header__profile_nav header__profile_nav_active";
