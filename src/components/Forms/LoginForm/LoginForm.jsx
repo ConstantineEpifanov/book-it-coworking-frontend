@@ -87,7 +87,7 @@ const LoginForm = ({ isOpenPopup, onClosePopup, onGetUserInfo }) => {
         </Link>
         <Link to="/popup/reset_password" state={{ previousLocation: location }}>
           <Button
-            btnClass="button_type_link"
+            btnClass="button_type_link button_type_link-password"
             btnType="button"
             btnText="Забыли пароль?"
             onClick={() => {}}

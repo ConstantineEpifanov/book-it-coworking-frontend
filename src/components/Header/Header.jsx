@@ -1,13 +1,15 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, NavLink } from "react-router-dom";
 
 import "./Header.scss";
 import Navigation from "../Navigation/Navigation";
 import { Logo } from "../UI-kit/Logo/Logo";
+import imgProfile from "../../images/profile-icons/profile-icon-header.svg";
 import Button from "../UI-kit/Button/Button";
+import { headerActiveLinkClass } from "../../utils/constants";
 
-const Header = ({ isLoggedIn, onOpenPopup, onLogout, profileInfo }) => {
+const Header = ({ isLoggedIn, onOpenPopup, profileInfo }) => {
   const location = useLocation();
   return (
     <header className="header">
@@ -17,22 +19,31 @@ const Header = ({ isLoggedIn, onOpenPopup, onLogout, profileInfo }) => {
 
       <Navigation />
       {isLoggedIn ? (
-        <>
-          {" "}
-          <Link className="header__profile" to="/profile">
+        <div className="header__profile">
+          <img
+            className="header__profile_img"
+            src={imgProfile}
+            alt="иконка пользователя"
+          />
+          <NavLink
+            className={({ isActive }) =>
+              isActive ? headerActiveLinkClass : "header__profile_nav"
+            }
+            to="/profile"
+          >
             {profileInfo && profileInfo.last_name && (
-              <p className="header__profile-info">{`${
+              <p className="header__profile_nav-info">{`${
                 profileInfo.first_name
               } ${profileInfo.last_name.substring(0, 1)}.`}</p>
             )}
-          </Link>
+          </NavLink>
           {/* TODO удалить после реализации  */}
-          <Button
+          {/* <Button
             btnClass="button_size_small-s button_type_transparent"
             btnText="Выйти"
             onClick={onLogout}
-          />
-        </>
+          /> */}
+        </div>
       ) : (
         <Link to="/popup/login" state={{ previousLocation: location }}>
           <Button
@@ -55,7 +66,7 @@ Header.propTypes = {
   }),
   isLoggedIn: PropTypes.bool,
   onOpenPopup: PropTypes.func,
-  onLogout: PropTypes.func,
+  // onLogout: PropTypes.func,
 };
 Header.defaultProps = {
   profileInfo: {
@@ -66,6 +77,6 @@ Header.defaultProps = {
   },
   isLoggedIn: false,
   onOpenPopup: () => {},
-  onLogout: () => {},
+  // onLogout: () => {},
 };
 export default Header;

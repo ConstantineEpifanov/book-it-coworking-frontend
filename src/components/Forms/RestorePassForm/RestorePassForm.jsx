@@ -2,7 +2,7 @@
 /* eslint-disable camelcase */
 import PropTypes from "prop-types";
 import { useLocation, useNavigate } from "react-router-dom";
-import React from "react";
+import React, { useContext } from "react";
 
 import { resetPass, resetPassConfirmCode } from "../../../utils/Api";
 import EntryForm from "../EntryForm/EntryForm";
@@ -12,10 +12,12 @@ import Popup from "../../Popup/Popup";
 import useFormAndValidation from "../../../hooks/useFormAndValidation";
 import { useApiError } from "../../../hooks/useApiError";
 import PasswordInput from "../../UI-kit/PasswordInput/PasswordInput";
+import { CurrentUserContext } from "../../../contexts/currentUserContext";
 
 const RestorePassForm = ({ isOpenPopup, handleClosePopup }) => {
   const location = useLocation();
   const navigate = useNavigate();
+  const { showMessage } = useContext(CurrentUserContext);
   const { values, errors, isValid, handleChange, resetForm } =
     useFormAndValidation();
   const { isErrApi, setIsErrApi, clearApiError } = useApiError();
@@ -32,6 +34,7 @@ const RestorePassForm = ({ isOpenPopup, handleClosePopup }) => {
       const res = await resetPassConfirmCode({ email });
 
       if (res) {
+        showMessage(res.message, "info");
         setUserEmail(email);
         setIsSuccessApi({
           ...isSuccessApi,
@@ -62,6 +65,7 @@ const RestorePassForm = ({ isOpenPopup, handleClosePopup }) => {
         re_password,
       });
       if (res) {
+        showMessage(res.message, "info");
         console.log(res.message);
         setIsSuccessApi({
           ...isSuccessApi,

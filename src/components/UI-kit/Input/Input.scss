@@ -3,7 +3,8 @@
 
 .input {
   width: 360px;
-  padding: 18px 40px 18px 20px;
+  height: 58px;
+  padding: 12px 40px 12px 20px;
   box-sizing: border-box;
   border-radius: 40px;
   border: 2px solid $dark-gray;
@@ -33,14 +34,14 @@
   // }
 
   /* При фокусе убираем placeholder */
-  // &:focus {
-  //   border: 2px solid $green;
-  //   outline: none;
+  &:focus {
+    border: 2px solid $green;
+    outline: none;
 
-  //   &::before {
-  //     display: none;
-  //   }
-  // }
+    &::before {
+      display: none;
+    }
+  }
   // стили для ошибки импута
   &-error {
     @include error-input;
@@ -65,7 +66,7 @@
     position: absolute;
     top: 15px;
     transform: translateY(-50%);
-    left: 20px;
+    left: 22px;
     color: $dark-gray;
     pointer-events: none;
     transition: 0.3s ease-in-out;
