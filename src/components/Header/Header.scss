@@ -16,7 +16,7 @@
   &__profile {
     @include flex-box-row;
     align-items: center;
-    &-img{
+    &-img {
       width: 48px;
       height: 48px;
       // в будущем если будет загружаться картинка, то будет скругление

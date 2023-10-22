@@ -6,7 +6,7 @@
   flex-direction: column;
   gap: 20px;
   box-sizing: border-box;
-  max-width: 550px;
+  max-width: 100%;
 
   &__container {
     display: flex;
@@ -19,7 +19,8 @@
   &__items {
     @include mp-null;
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
+    flex-wrap: wrap;
     list-style: none;
     gap: 16px;
   }
@@ -34,8 +35,6 @@
     font-style: normal;
     font-weight: 400;
     line-height: 1.5;
-    padding-left: 12px;
-    border-left: 2px solid $black;
   }
 
   &__text,

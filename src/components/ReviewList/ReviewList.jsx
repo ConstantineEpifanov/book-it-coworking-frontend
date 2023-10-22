@@ -23,7 +23,7 @@ export const ReviewList = ({
     </div>
     <ul className="review-list__items">
       {reviews.map((item) => (
-        <li key={item.id}>
+        <li className="review-item" key={item.id}>
           <ReviewItem
             author={`${item.first_name} ${item.last_name}`}
             date={item.pub_date}

@@ -10,9 +10,7 @@
   align-items: flex-start;
   gap: 30px;
   border-radius: 40px;
-  border: 2px solid $black;
   max-width: 835px;
-  background-color: $white;
 
   &__title {
     @include mp-null;
@@ -27,8 +25,8 @@
     @include mp-null;
     width: 100%;
     list-style: none;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
+    display: flex;
+    flex-direction: column;
     gap: 22px;
   }
 
