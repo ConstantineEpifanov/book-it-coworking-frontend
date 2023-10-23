@@ -1,4 +1,8 @@
-import { DEFAULT_LATITUDE, DEFAULT_LONGITUDE } from "./constants";
+import {
+  DEFAULT_LATITUDE,
+  DEFAULT_LONGITUDE,
+  ORDER_STATUSES,
+} from "./constants";
 
 export function formatEventDate(date) {
   const dateComponents = date.split("-");
@@ -36,3 +40,13 @@ export function formatDate(dateString) {
   const cleanedDate = formattedDate.replace(/ г\.$/, "");
   return cleanedDate;
 }
+
+export const getPopupText = (booking) => {
+  if (booking.status === ORDER_STATUSES.PAID) {
+    return `Бронирование уже оплачено.`;
+  }
+  if (booking.status === ORDER_STATUSES.WAIT_PAY || ORDER_STATUSES.NOT_PAID) {
+    return `Бронирование еще находится в обработке.`;
+  }
+  return "Отменить бронирование";
+};
