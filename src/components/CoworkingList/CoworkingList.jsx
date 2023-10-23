@@ -38,7 +38,7 @@ export const CoworkingList = () => {
 
   const getLocations = (offsetParameter, limitParameter, nameParameter) => {
     searchLocations({
-      name: nameParameter,
+      search: nameParameter,
       offset: offsetParameter,
       limit: limitParameter,
     })
@@ -113,6 +113,7 @@ export const CoworkingList = () => {
           />
 
           <SearchForm
+            metroArray={[...new Set(mapPoints.map((item) => item.metro))] || []}
             handleUpdateCoworkings={handleUpdateCoworkings}
             limit={limit}
             offset={offset}
