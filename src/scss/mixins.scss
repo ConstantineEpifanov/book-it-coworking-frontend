@@ -88,8 +88,11 @@
 }
 
 @mixin button-active {
-  color: $green;
+  color: $white;
   background-color: $black;
+  &:hover {
+    color: $pink;
+  }
 }
 
 // --------------CARDS-------------------
