@@ -1,7 +1,5 @@
-/* eslint-disable react/prop-types */
-/* eslint-disable no-undef */
-/* eslint-disable no-unused-vars */
 import { useContext } from "react";
+import PropTypes from "prop-types";
 import useFormAndValidation from "../../../hooks/useFormAndValidation";
 import { useApiError } from "../../../hooks/useApiError";
 import { CurrentUserContext } from "../../../contexts/currentUserContext";
@@ -85,6 +83,14 @@ const ChangePassForm = ({ handleClosePopup }) => {
       />
     </EntryForm>
   );
+};
+
+ChangePassForm.propTypes = {
+  handleClosePopup: PropTypes.func,
+};
+
+ChangePassForm.defaultProps = {
+  handleClosePopup: undefined,
 };
 
 export default ChangePassForm;

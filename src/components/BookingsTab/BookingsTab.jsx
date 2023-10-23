@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 
 import { BookingsCard } from "../BookingsCard/BookingsCard";
+import { SectionTitle } from "../SectionTitle/SectionTitle";
 
 import { getActiveOrders, getFinishedOrders } from "../../utils/Api";
 
@@ -36,7 +37,10 @@ export const BookingsTab = () => {
 
   return (
     <section className="bookings">
-      <h2 className="bookings__title">Бронирования</h2>
+      <SectionTitle
+        titleText="Бронирования"
+        titleClass="section-title_profile"
+      />
       <div className="bookings__tabs">
         <button
           className={`bookings__tab-button ${
