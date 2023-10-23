@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
+import { Link } from "react-router-dom";
 
 import { ORDER_STATUSES } from "../../utils/constants";
 import { publishReview, cancelOrder } from "../../utils/Api";
@@ -31,7 +32,7 @@ const statusLabels = {
   [ORDER_STATUSES.NOT_PAID]: getStatusLabel(ORDER_STATUSES.NOT_PAID, "warn"),
 };
 
-export const BookingsCard = ({ item }) => {
+export const BookingsCard = ({ item, onUpdateStatus }) => {
   const { isOpenPopup, handleOpenPopup, handleClosePopup } = usePopupOpen();
   const [isCancellationConfirmed, setIsCancellationConfirmed] = useState(false);
   const [isReviewFormOpen, setIsReviewFormOpen] = useState(false);
@@ -45,9 +46,12 @@ export const BookingsCard = ({ item }) => {
   };
 
   const handleConfirmCancellation = () => {
-    cancelOrder(item.location_id, item.spot, item.id).finally(() => {
-      setIsCancellationConfirmed(true);
-    });
+    cancelOrder(item.location_id, item.spot, item.id)
+      .then(() => {
+        setIsCancellationConfirmed(true);
+      })
+      .catch((e) => console.log(e))
+      .finally(() => {});
   };
 
   const handleOpenReviewForm = () => {
@@ -58,7 +62,9 @@ export const BookingsCard = ({ item }) => {
   const handleReviewSubmit = (data) => {
     setServerError(null);
     publishReview(item.location_id, item.spot, item.id, data)
-      .then(() => handleClosePopup())
+      .then(() => {
+        handleClosePopup();
+      })
       .catch((e) => {
         // eslint-disable-next-line no-underscore-dangle
         setServerError(e.booked_spot[0]);
@@ -84,13 +90,18 @@ export const BookingsCard = ({ item }) => {
           <Button
             btnText="Назад"
             btnClass="button__profile-transparent"
-            onClick={handleCloseBookingPopup}
+            onClick={() => {
+              handleCloseBookingPopup();
+              onUpdateStatus(item.id);
+            }}
           />
-          <Button
-            btnText="Создать"
-            btnClass="button__profile-edit"
-            onClick={handleOpenReviewForm}
-          />
+          <Link to={`/points/${item.location_id}`}>
+            <Button
+              btnText="Создать"
+              btnClass="button__profile-edit"
+              onClick={handleOpenReviewForm}
+            />
+          </Link>
         </div>
       </>
     );
@@ -199,8 +210,10 @@ BookingsCard.propTypes = {
       ORDER_STATUSES.NOT_PAID,
     ]),
   }),
+  onUpdateStatus: PropTypes.func,
 };
 
 BookingsCard.defaultProps = {
   item: PropTypes.shape({}),
+  onUpdateStatus: undefined,
 };
