@@ -1,0 +1,6 @@
+svg {
+    path {
+      fill: $pink;
+      stroke: $pink;
+    }
+  }
