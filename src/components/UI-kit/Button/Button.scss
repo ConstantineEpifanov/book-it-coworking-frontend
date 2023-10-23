@@ -354,6 +354,9 @@
           "../../../images/profile-icons/user-hover.svg"
         );
       }
+      &:active {
+        @include button-with-image("../../../images/profile-icons/user.svg");
+      }
     }
 
     &_security {
@@ -362,6 +365,11 @@
       &:hover {
         @include button-with-image(
           "../../../images/profile-icons/security-hover.svg"
+        );
+      }
+      &:active {
+        @include button-with-image(
+          "../../../images/profile-icons/security.svg"
         );
       }
     }
@@ -373,6 +381,9 @@
           "../../../images/profile-icons/payment-hover.svg"
         );
       }
+      &:active {
+        @include button-with-image("../../../images/profile-icons/payment.svg");
+      }
     }
 
     &_bookings {
@@ -382,6 +393,11 @@
           "../../../images/profile-icons/bookings-hover.svg"
         );
       }
+      &:active {
+        @include button-with-image(
+          "../../../images/profile-icons/bookings.svg"
+        );
+      }
     }
 
     &_favorites {
@@ -389,6 +405,11 @@
       &:hover {
         @include button-with-image(
           "../../../images/profile-icons/favorites-hover.svg"
+        );
+      }
+      &:active {
+        @include button-with-image(
+          "../../../images/profile-icons/favorites.svg"
         );
       }
     }

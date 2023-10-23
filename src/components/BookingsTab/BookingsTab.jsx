@@ -35,6 +35,12 @@ export const BookingsTab = () => {
     }
   }, [activeTab]);
 
+  const onUpdateStatus = (itemId) => {
+    const updatedBookings = bookings.filter((item) => item.id !== itemId);
+
+    setBookings(updatedBookings);
+  };
+
   return (
     <section className="bookings">
       <SectionTitle
@@ -64,7 +70,11 @@ export const BookingsTab = () => {
           <span className="bookings__nodata">Пока бронирований нет</span>
         )}
         {bookings.map((item) => (
-          <BookingsCard item={item} key={item.id} />
+          <BookingsCard
+            item={item}
+            key={item.id}
+            onUpdateStatus={onUpdateStatus}
+          />
         ))}
       </ul>
     </section>
