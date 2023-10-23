@@ -8,6 +8,7 @@ import "./FavoritesTab.scss";
 import Button from "../UI-kit/Button/Button";
 import { LikeIcon } from "../../images/profile-icons/LikeIcon";
 import { Loader } from "../Loader/Loader";
+import { SectionTitle } from "../SectionTitle/SectionTitle";
 
 import TagIcon from "../../images/tag.svg";
 import StarIcon from "../../images/star.svg";
@@ -91,7 +92,10 @@ export const FavoritesTab = () => {
     <section className="favorites">
       {!isLoading ? (
         <>
-          <h2 className="favorites__title">Избранное</h2>
+          <SectionTitle
+            titleText="Избранное"
+            titleClass="section-title_profile"
+          />
 
           {favoritesArray.length !== 0 ? (
             <ul className="favorites__card-list">

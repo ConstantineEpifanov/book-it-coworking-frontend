@@ -7,7 +7,6 @@
   height: 225px;
   padding: 40px 58px;
   border-radius: 40px;
-
   background-color: $black;
   border: 2px solid $black;
   font-family: $font-family;
@@ -59,6 +58,35 @@
     cursor: pointer;
     &:hover {
       opacity: 0.7;
+    }
+  }
+}
+
+@include mobile {
+  .profile-item {
+    height: 120px;
+    padding: 30px 20px;
+    border-radius: 20px;
+    &__row {
+      flex-direction: column;
+      gap: 8px;
+    }
+    &__svg svg {
+      width: 32px;
+      height: 32px;
+      display: block;
+    }
+
+    &__title {
+      font-size: 20px;
+      text-align: left;
+      width: 100%;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+    &__link {
+      display: none;
     }
   }
 }
