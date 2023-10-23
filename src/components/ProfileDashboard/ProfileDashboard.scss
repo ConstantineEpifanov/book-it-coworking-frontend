@@ -40,3 +40,15 @@
     }
   }
 }
+
+@include tablet {
+  .profile-dashboard {
+    margin: 0 auto;
+    &__card-row {
+      flex-direction: column;
+    }
+    &__link {
+      margin: 0 auto;
+    }
+  }
+}

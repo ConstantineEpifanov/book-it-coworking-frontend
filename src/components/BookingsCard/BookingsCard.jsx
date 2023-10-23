@@ -1,14 +1,9 @@
-/* eslint-disable no-underscore-dangle */
-/* eslint-disable no-unused-vars */
 import React, { useState } from "react";
 import PropTypes from "prop-types";
 
-import {
-  ORDER_STATUSES,
-  MAX_REVIEW_CHARACTERS_NUMBER,
-} from "../../utils/constants";
+import { ORDER_STATUSES } from "../../utils/constants";
 import { publishReview, cancelOrder } from "../../utils/Api";
-import { formatDate } from "../../utils/utils";
+import { formatDate, getPopupText } from "../../utils/utils";
 
 import usePopupOpen from "../../hooks/usePopupOpen";
 
@@ -16,7 +11,6 @@ import ReviewsForm from "../Forms/ReviewsForm/ReviewsForm";
 
 import Button from "../UI-kit/Button/Button";
 import Popup from "../Popup/Popup";
-import StarRating from "../UI-kit/StarRating/StarRating";
 
 import ClockIcon from "../../images/profile-icons/time.svg";
 import CardIcon from "../../images/profile-icons/card.svg";
@@ -42,8 +36,6 @@ export const BookingsCard = ({ item }) => {
   const [isCancellationConfirmed, setIsCancellationConfirmed] = useState(false);
   const [isReviewFormOpen, setIsReviewFormOpen] = useState(false);
   const [serverError, setServerError] = useState(null);
-  // const [reviewText, setReviewText] = useState("");
-  // const [reviewRating, setReviewRating] = useState(0);
 
   const handleCloseBookingPopup = () => {
     handleClosePopup();
@@ -63,36 +55,18 @@ export const BookingsCard = ({ item }) => {
     handleOpenPopup();
   };
 
-  // const handleReviewTextChange = (e) => {
-  //   const newText = e.target.value;
-  //   setReviewText(newText);
-  // };
-
-  // const handleRatingChange = (rating) => {
-  //   setReviewRating(rating);
-  // };
-
   const handleReviewSubmit = (data) => {
     setServerError(null);
     publishReview(item.location_id, item.spot, item.id, data)
       .then(() => handleClosePopup())
       .catch((e) => {
         // eslint-disable-next-line no-underscore-dangle
-        console.log(e.booked_spot[0]);
         setServerError(e.booked_spot[0]);
       })
       .finally(() => {});
   };
 
-  const getPopupText = (booking) => {
-    if (booking.status === ORDER_STATUSES.PAID) {
-      return `Бронирование уже оплачено.`;
-    }
-    if (booking.status === ORDER_STATUSES.WAIT_PAY || ORDER_STATUSES.NOT_PAID) {
-      return `Бронирование еще находится в обработке.`;
-    }
-    return "Отменить бронирование";
-  };
+  const shouldButtonBeDisabled = () => item.status !== ORDER_STATUSES.CANCEL;
 
   let content;
   if (isCancellationConfirmed) {
@@ -180,9 +154,9 @@ export const BookingsCard = ({ item }) => {
               btnText={
                 item.reviews === null ? "Оставить отзыв" : "Отзыв оставлен"
               }
-              btnClass="button__profile-bookings"
+              btnClass="button_width-bookings"
               onClick={handleOpenReviewForm}
-              isValidBtn={item.reviews === null}
+              isValidBtn={item.reviews === null && shouldButtonBeDisabled()}
             />
           ) : (
             <Button
