@@ -33,7 +33,7 @@
     font-size: 28px;
     line-height: 40px;
     font-weight: 800;
-    max-width: 420px;
+    max-width: 100%;
     text-align: left;
   }
 }
@@ -42,5 +42,10 @@
   .section-title {
     font-size: 36px;
     line-height: 44px;
+    &_profile {
+      font-size: 24px;
+      line-height: 36px;
+      text-align: center;
+    }
   }
 }
