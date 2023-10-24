@@ -189,6 +189,7 @@ export const Booking = () => {
 
   const navigate = useNavigate();
   const coworking = useRef(location.state);
+  const [currentCoworkingState, setCurrentCoworkingState] = useState(coworking);
   const [planPhoto, setPlanPhoto] = useState("");
   const [datesSelected, setDatesSelected] = useState([]);
   const [timeRangesSelected, setTimeRangesSelected] = useState([]);
@@ -291,11 +292,16 @@ export const Booking = () => {
 
   // Дополнительные правила-функции для проверки дат календаря
   // Если функция возвращает true - дата календаря будет недоступной
-  const calendarExtraRules = [
-    (date) =>
-      getNormalizedDayNumber(date) >
-      WORKING_DAYS_COUNTS[coworking.current.daysOpen],
-  ];
+  const getCalendarExtraRules = useCallback(
+    () => [
+      (date) =>
+        getNormalizedDayNumber(date) >
+        WORKING_DAYS_COUNTS[currentCoworkingState.daysOpen],
+    ],
+    [currentCoworkingState],
+  );
+
+  const calendarExtraRules = getCalendarExtraRules();
 
   // Получение информации о всех местах в данной location
   const getWorkplacesData = useCallback(
@@ -535,9 +541,10 @@ export const Booking = () => {
     }
 
     if (!coworking.current) {
-      coworking.current = JSON.parse(coworkingState);
+      coworking.current = coworkingState;
     }
 
+    setCurrentCoworkingState(coworking.current);
     sessionStorage.setItem("coworkingState", JSON.stringify(coworking.current));
 
     const { id, openTime, closeTime } = coworking.current;
