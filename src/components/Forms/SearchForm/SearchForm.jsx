@@ -10,7 +10,7 @@ import { searchLocations } from "../../../utils/Api";
 import useForm from "../../../hooks/useForm";
 
 const SearchForm = ({ handleUpdateCoworkings, limit, offset }) => {
-  const lastSearchRequest = localStorage.getItem("lastSearchRequest") || "";
+  const lastSearchRequest = sessionStorage.getItem("lastSearchRequest") || "";
   const { form, handleChange, handleSelectChange } = useForm({
     search: lastSearchRequest,
     category: "",

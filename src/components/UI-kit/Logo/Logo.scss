@@ -13,13 +13,13 @@
     fill: $white;
   }
   &:hover path {
-    fill: $green;
+    fill: $pink;
     fill-opacity: 1;
     stroke-opacity: 0;
   }
 
   &:active path {
-    fill: $pink;
+    fill: $green;
   }
 
   & path {

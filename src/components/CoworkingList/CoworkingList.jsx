@@ -38,7 +38,7 @@ export const CoworkingList = () => {
 
   const getLocations = (offsetParameter, limitParameter, nameParameter) => {
     searchLocations({
-      name: nameParameter,
+      search: nameParameter,
       offset: offsetParameter,
       limit: limitParameter,
     })
@@ -62,7 +62,11 @@ export const CoworkingList = () => {
       })
       .catch(() => {});
 
-    Promise.all([getLocations(offset, initialLimit), mapLocationsPromise])
+    Promise.all([
+      getLocations(offset, initialLimit),
+      mapLocationsPromise,
+      isNotFoundError,
+    ])
       .then(() => {
         setIsLoading(false);
       })
@@ -77,7 +81,7 @@ export const CoworkingList = () => {
   };
 
   useEffect(() => {
-    const lastSearchRequest = localStorage.getItem("lastSearchRequest") || "";
+    const lastSearchRequest = sessionStorage.getItem("lastSearchRequest") || "";
     if (lastSearchRequest) getLocations(offset, limit, lastSearchRequest);
     else if (
       coworkingsFromPromo &&
@@ -113,6 +117,7 @@ export const CoworkingList = () => {
           />
 
           <SearchForm
+            metroArray={[...new Set(mapPoints.map((item) => item.metro))] || []}
             handleUpdateCoworkings={handleUpdateCoworkings}
             limit={limit}
             offset={offset}

@@ -14,7 +14,7 @@ const data = [
   {
     id: 1,
     title: "01",
-    subtitle: "Уникальные локации и комфортная обстановка",
+    subtitle: `Уникальные локации и\u00A0комфортная обстановка`,
   },
   {
     id: 2,
@@ -24,12 +24,12 @@ const data = [
   {
     id: 3,
     title: "03",
-    subtitle: "Гибкие тарифы и индивидуальный подход",
+    subtitle: "Гибкие тарифы и\u00A0индивидуальный подход",
   },
 ];
 
 export const Promo = () => {
-  const lastSearchRequest = localStorage.getItem("lastSearchRequest") || "";
+  const lastSearchRequest = sessionStorage.getItem("lastSearchRequest") || "";
   const { form, handleChange } = useForm({
     search: lastSearchRequest,
   });
@@ -45,7 +45,7 @@ export const Promo = () => {
       const coworkingsArrayFromPromo = [];
       navigate("/points", { state: { coworkingsArrayFromPromo } });
     }
-    localStorage.setItem("lastSearchRequest", form.search);
+    sessionStorage.setItem("lastSearchRequest", form.search);
     searchLocations({
       search: form.search,
       offset,
