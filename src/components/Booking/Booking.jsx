@@ -359,7 +359,6 @@ export const Booking = () => {
           spots: spotsData,
           meetingRooms: meetingRoomsData,
         };
-        console.log(result);
       } catch (err) {
         console.log(err.message);
       }
