@@ -10,14 +10,17 @@ const Payments = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const place = useRef(location.state);
-  const [placeState, setPlaceState] = useState(place.current);
+  const [placeState, setPlaceState] = useState(
+    place.current || JSON.parse(sessionStorage.getItem("paymentState")),
+  );
   const [isPopupOpened, setPopupOpened] = useState(false);
   const [isResponseOK, setResponseOK] = useState(false);
 
   const getPrettifiedDate = (date) => {
-    const monthName = date.toLocaleString("ru-ru", { month: "long" });
+    const resultDate = new Date(date);
+    const monthName = resultDate.toLocaleString("ru-ru", { month: "long" });
 
-    return `${date.getDate()} ${monthName} ${date.getFullYear()}`;
+    return `${resultDate.getDate()} ${monthName} ${resultDate.getFullYear()}`;
   };
 
   const getDateString = (date) => {
@@ -46,7 +49,7 @@ const Payments = () => {
   };
 
   const handleBack = () => {
-    navigate(-1);
+    navigate("/booking");
   };
 
   useEffect(() => {
@@ -58,7 +61,8 @@ const Payments = () => {
     }
 
     if (!place.current) {
-      setPlaceState(JSON.parse(paymentState));
+      place.current = paymentState;
+      setPlaceState(paymentState);
     }
 
     sessionStorage.setItem("paymentState", JSON.stringify(place.current));
@@ -89,32 +93,34 @@ const Payments = () => {
       <PaymentsForm onSubmit={handleSubmit} onBack={handleBack} />
       <article className="payments-place">
         <h3 className="payments-place__info">коворкинг</h3>
-        <h3 className="payments-place__header">{placeState.name}</h3>
+        <h3 className="payments-place__header">{placeState?.name}</h3>
         <ul className="payments-place__list">
           <li className="payments-place__list-item">
             <span>Адрес: </span>
-            <span>{placeState.location}</span>
+            <span>{placeState?.location}</span>
           </li>
           <li className="payments-place__list-item">
-            <span>{placeState.category}:</span>
-            <span>{placeState.equipment}</span>
+            <span>{placeState?.category}:</span>
+            <span>{placeState?.equipment}</span>
           </li>
           <li className="payments-place__list-item">
             <span>Начало:</span>
             <span>
-              {getPrettifiedDate(placeState.date)} {placeState.startTime}
+              {placeState?.date && getPrettifiedDate(placeState?.date)}{" "}
+              {placeState?.startTime}
             </span>
           </li>
           <li className="payments-place__list-item">
             <span>Окончание:</span>
             <span>
-              {getPrettifiedDate(placeState.date)} {placeState.endTime}
+              {placeState?.date && getPrettifiedDate(placeState?.date)}{" "}
+              {placeState?.endTime}
             </span>
           </li>
         </ul>
         <div className="payments-place__bill">
           <span>К оплате:</span>
-          <span>{placeState.bill}</span>
+          <span>{placeState?.bill}</span>
         </div>
       </article>
     </section>

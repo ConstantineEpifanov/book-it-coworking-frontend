@@ -189,6 +189,7 @@ export const Booking = () => {
 
   const navigate = useNavigate();
   const coworking = useRef(location.state);
+  console.log(coworking, JSON.parse(sessionStorage.getItem("coworkingState")));
   const [currentCoworkingState, setCurrentCoworkingState] = useState(coworking);
   const [planPhoto, setPlanPhoto] = useState("");
   const [datesSelected, setDatesSelected] = useState([]);
