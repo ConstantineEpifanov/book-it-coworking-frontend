@@ -268,7 +268,7 @@ export const Booking = () => {
 
     navigate("/payments", {
       state: {
-        id: coworking.id,
+        id: coworking.current.id,
         spotId: selectedSpotId,
         name: coworking.current.name,
         location: coworking.current.location,

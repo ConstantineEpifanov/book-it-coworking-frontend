@@ -20,10 +20,20 @@ const Payments = () => {
     return `${date.getDate()} ${monthName} ${date.getFullYear()}`;
   };
 
+  const getDateString = (date) => {
+    const month = date.getMonth() + 1;
+    const monthString = month < 10 ? `0${month}` : month.toString();
+    return `${date.getFullYear()}-${monthString}-${date.getDate()}`;
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await postOrder(placeState.id, placeState.spotId);
+      await postOrder(placeState.id, placeState.spotId, {
+        date: getDateString(placeState.date),
+        start_time: placeState.startTime,
+        end_time: placeState.endTime,
+      });
       setResponseOK(true);
     } catch {
       setResponseOK(false);
@@ -33,6 +43,10 @@ const Payments = () => {
 
   const handlePopupClose = () => {
     setPopupOpened(false);
+  };
+
+  const handleBack = () => {
+    navigate(-1);
   };
 
   useEffect(() => {
@@ -72,7 +86,7 @@ const Payments = () => {
         </Popup>
       )}
 
-      <PaymentsForm onSubmit={handleSubmit} />
+      <PaymentsForm onSubmit={handleSubmit} onBack={handleBack} />
       <article className="payments-place">
         <h3 className="payments-place__info">коворкинг</h3>
         <h3 className="payments-place__header">{placeState.name}</h3>
