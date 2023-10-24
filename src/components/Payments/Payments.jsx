@@ -3,7 +3,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import "./Payments.scss";
 import PaymentsForm from "../Forms/PaymentsForm/PaymentsForm";
 import Popup from "../Popup/Popup";
-import { postOrder } from "../../utils/Api";
+import { pay } from "../../utils/Api";
 import Button from "../UI-kit/Button/Button";
 
 const Payments = () => {
@@ -23,21 +23,12 @@ const Payments = () => {
     return `${resultDate.getDate()} ${monthName} ${resultDate.getFullYear()}`;
   };
 
-  const getDateString = (date) => {
-    const month = date.getMonth() + 1;
-    const monthString = month < 10 ? `0${month}` : month.toString();
-    return `${date.getFullYear()}-${monthString}-${date.getDate()}`;
-  };
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await postOrder(placeState.id, placeState.spotId, {
-        date: getDateString(placeState.date),
-        start_time: placeState.startTime,
-        end_time: placeState.endTime,
-      });
+      await pay(placeState.id, placeState.spotId, placeState.orderId);
       setResponseOK(true);
+      navigate("/points", { replace: true });
     } catch {
       setResponseOK(false);
     }

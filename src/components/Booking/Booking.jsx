@@ -9,7 +9,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import PropTypes from "prop-types";
 
 import "./Booking.scss";
-import { getLocationPlanPhoto, getSpots } from "../../utils/Api";
+import { getLocationPlanPhoto, getSpots, postOrder } from "../../utils/Api";
 // import { locationData } from "../../config/exampleBookingData";
 import Button from "../UI-kit/Button/Button";
 import { SectionTitle } from "../SectionTitle/SectionTitle";
@@ -28,6 +28,13 @@ const getNormalizedDayNumber = (date) => {
   const dayNumber = date.getDay();
   const resultNumber = dayNumber === 0 ? 7 : dayNumber;
   return resultNumber;
+};
+
+// Возвращает дату в формате YYYY-MM-DD
+const getDateString = (date) => {
+  const month = date.getMonth() + 1;
+  const monthString = month < 10 ? `0${month}` : month.toString();
+  return `${date.getFullYear()}-${monthString}-${date.getDate()}`;
 };
 
 // Вернет true, если тот же день месяца
@@ -189,7 +196,6 @@ export const Booking = () => {
 
   const navigate = useNavigate();
   const coworking = useRef(location.state);
-  console.log(coworking, JSON.parse(sessionStorage.getItem("coworkingState")));
   const [currentCoworkingState, setCurrentCoworkingState] = useState(coworking);
   const [planPhoto, setPlanPhoto] = useState("");
   const [datesSelected, setDatesSelected] = useState([]);
@@ -251,7 +257,7 @@ export const Booking = () => {
   };
 
   // Обработчик кнопки "Перейти к оплате"
-  const handlePayClick = () => {
+  const handlePayClick = async () => {
     let workplaceCategory = EQUIPMENT_GENERAL_CATEGORY;
     let selectedWorkplaces = spotsSelected.map((item) => item.name).join(", ");
     let selectedSpotId = spotsSelected.at(0)?.id;
@@ -268,20 +274,35 @@ export const Booking = () => {
         .join(", ");
     }
 
-    navigate("/payments", {
-      state: {
-        id: coworking.current.id,
-        spotId: selectedSpotId,
-        name: coworking.current.name,
-        location: coworking.current.location,
-        category: workplaceCategory,
-        equipment: selectedWorkplaces,
-        date: selectedDate,
-        startTime,
-        endTime,
-        bill: totalPrice,
-      },
-    });
+    try {
+      const { id: orderId } = await postOrder(
+        coworking.current.id,
+        selectedSpotId,
+        {
+          date: getDateString(selectedDate),
+          start_time: startTime,
+          end_time: endTime,
+        },
+      );
+
+      navigate("/payments", {
+        state: {
+          id: coworking.current.id,
+          spotId: selectedSpotId,
+          name: coworking.current.name,
+          location: coworking.current.location,
+          category: workplaceCategory,
+          equipment: selectedWorkplaces,
+          date: selectedDate,
+          startTime,
+          endTime,
+          bill: totalPrice,
+          orderId,
+        },
+      });
+    } catch (err) {
+      console.log(err.message);
+    }
   };
 
   // Получение текущей цены выбранного массива мест

@@ -276,6 +276,14 @@ export function getSpots(id, data) {
   });
 }
 
+export function postOrder(locationId, spotId, data) {
+  return request(`/locations/${locationId}/spots/${spotId}/order/`, {
+    method: "POST",
+    headers: setHeaders(),
+    body: JSON.stringify(data),
+  });
+}
+
 // search
 
 export function searchLocations(params = {}) {
@@ -295,10 +303,12 @@ export function searchLocations(params = {}) {
 
 // Payments
 
-export function postOrder(locationId, spotId, data) {
-  return request(`/locations/${locationId}/spots/${spotId}/order/`, {
-    method: "POST",
-    headers: setHeaders(),
-    body: JSON.stringify(data),
-  });
+export function pay(locationId, spotId, orderId) {
+  return request(
+    `/locations/${locationId}/spots/${spotId}/order/${orderId}/pay/`,
+    {
+      method: "PATCH",
+      headers: setHeaders(),
+    },
+  );
 }
