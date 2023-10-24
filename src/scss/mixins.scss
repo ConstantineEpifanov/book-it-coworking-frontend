@@ -67,6 +67,24 @@
   line-height: 48px;
 }
 
+@mixin use-font(
+  $font-size: 20px,
+  $line-height: 24px,
+  $font-weight: 500,
+  $font-style: normal
+) {
+  font-size: $font-size;
+  line-height: $line-height;
+  font-weight: $font-weight;
+  font-style: $font-style;
+}
+
+@mixin use-cut {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
 //  -------------- INPUT -----------------
 @mixin error-input {
   border: 2px solid $alert-red;

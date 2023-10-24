@@ -13,7 +13,7 @@ import "./ProfileDataTab.scss";
 
 import ProfilePhoto from "../../images/ProfilePhoto.png";
 
-import { formatPhone, formatDate } from "../../utils/utils";
+import { formatPhone, formatDate, getMaxDate } from "../../utils/utils";
 import { PROFILE_DATA_UPDATE } from "../../utils/constants";
 
 export const ProfileDataTab = () => {
@@ -152,6 +152,7 @@ export const ProfileDataTab = () => {
                   placeholder: "Дата рождения",
                   required: false,
                   type: "date",
+                  max: getMaxDate(),
                 },
                 {
                   id: 4,
@@ -186,6 +187,7 @@ export const ProfileDataTab = () => {
                     inputPlaceholder={field.placeholder}
                     inputRequired={field.required}
                     inputMaxLength={field.maxLength}
+                    inputMaxValue={field.max}
                   />
                 </li>
               ))}
