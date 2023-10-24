@@ -28,7 +28,15 @@ export const CoworkingList = () => {
   const [isNotFoundError, setIsNotFoundError] = useState(false);
   const [mapPoints, setMapPoints] = useState([]);
   const { isLoading, setIsLoading } = useContext(CurrentUserContext);
-  const { initialLimit, limit, offset, nextPage } = usePagination();
+  const {
+    initialLimit,
+    limit,
+    offset,
+    goToNextPage,
+    resetPagination,
+    requestApproved,
+    setRequestApproved,
+  } = usePagination();
 
   const location = useLocation();
 
@@ -36,12 +44,17 @@ export const CoworkingList = () => {
     ? location.state.coworkingsFromPromo
     : undefined;
 
-  const getLocations = (offsetParameter, limitParameter, nameParameter) => {
-    searchLocations({
-      search: nameParameter,
+  const getLocations = (offsetParameter, limitParameter, search) => {
+    const params = {
       offset: offsetParameter,
       limit: limitParameter,
-    })
+    };
+
+    if (search) {
+      params.search = search;
+    }
+
+    searchLocations(params)
       .then((res) => {
         setCoworkingsArray((prevCoworkings) => [
           ...prevCoworkings,
@@ -51,22 +64,8 @@ export const CoworkingList = () => {
       })
       .catch((error) => {
         console.error(error);
-      });
-  };
-
-  const fetchData = () => {
-    setIsLoading(true);
-    const mapLocationsPromise = getMapLocations()
-      .then((res) => {
-        setMapPoints(res);
       })
-      .catch(() => {});
-
-    Promise.all([getLocations(offset, initialLimit), mapLocationsPromise])
-      .then(() => {
-        setIsLoading(false);
-      })
-      .catch(() => {
+      .finally(() => {
         setIsLoading(false);
       });
   };
@@ -77,20 +76,39 @@ export const CoworkingList = () => {
   };
 
   useEffect(() => {
-    const lastSearchRequest = localStorage.getItem("lastSearchRequest") || "";
-    if (lastSearchRequest) getLocations(offset, limit, lastSearchRequest);
-    else if (
+    getMapLocations()
+      .then((res) => {
+        setMapPoints(res);
+      })
+      .catch((error) => {
+        console.error("Error loading map locations:", error);
+      });
+  }, []);
+
+  useEffect(() => {
+    const lastSearchRequest = sessionStorage.getItem("lastSearchRequest") || "";
+
+    if (lastSearchRequest) {
+      setIsLoading(true);
+      getLocations(offset, limit, lastSearchRequest);
+    } else if (
       coworkingsFromPromo &&
       Array.isArray(coworkingsFromPromo.results) &&
       coworkingsFromPromo.results.length > 0
     ) {
       setCoworkingsArray(coworkingsFromPromo.results);
       setNextPageURL(coworkingsFromPromo.next);
-    } else fetchData();
+    } else {
+      setIsLoading(true);
+      getLocations(offset, initialLimit);
+    }
   }, []);
 
   useEffect(() => {
-    if (initialLimit !== limit) getLocations(offset, limit);
+    if (requestApproved) {
+      getLocations(offset, limit);
+      setRequestApproved(false);
+    }
   }, [limit, offset, initialLimit]);
 
   useEffect(() => {
@@ -117,6 +135,7 @@ export const CoworkingList = () => {
             handleUpdateCoworkings={handleUpdateCoworkings}
             limit={limit}
             offset={offset}
+            resetPagination={resetPagination}
           />
 
           {isNotFoundError ? (
@@ -130,7 +149,7 @@ export const CoworkingList = () => {
               <PointsList
                 isListed
                 coworkingsArray={coworkingsArray}
-                handleMoreClick={nextPage}
+                handleMoreClick={goToNextPage}
                 isMoreButtonVisible={!!nextPageURL}
               />
             </>

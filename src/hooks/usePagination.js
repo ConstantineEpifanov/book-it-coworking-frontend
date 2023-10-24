@@ -1,5 +1,6 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
+import { useResize } from "./useResize";
 import {
   SCREEN_MEDIUM,
   SCREEN_SMALL,
@@ -19,6 +20,7 @@ import {
 
 const usePagination = () => {
   const location = useLocation();
+  const { width } = useResize();
   const isCoworkingPage = location.pathname.includes("points");
 
   const determineInitialLimit = () => {
@@ -52,17 +54,32 @@ const usePagination = () => {
   const initialLimit = determineInitialLimit();
   const [limit, setLimit] = useState(determineInitialLimit());
   const [offset, setOffset] = useState(0);
+  const [requestApproved, setRequestApproved] = useState(false);
 
-  const nextPage = () => {
+  const goToNextPage = () => {
     setLimit(determineMoreLimit());
     setOffset((prevOffset) => prevOffset + limit);
+    setRequestApproved(true);
   };
+
+  const resetPagination = () => {
+    setLimit(determineInitialLimit());
+    setOffset(0);
+  };
+
+  useEffect(() => {
+    setLimit(determineInitialLimit());
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [width]);
 
   return {
     initialLimit,
     limit,
     offset,
-    nextPage,
+    goToNextPage,
+    resetPagination,
+    requestApproved,
+    setRequestApproved,
   };
 };
 

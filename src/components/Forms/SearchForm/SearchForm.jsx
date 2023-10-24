@@ -10,8 +10,14 @@ import { searchLocations } from "../../../utils/Api";
 
 import useForm from "../../../hooks/useForm";
 
-const SearchForm = ({ metroArray, handleUpdateCoworkings, limit, offset }) => {
-  const lastSearchRequest = localStorage.getItem("lastSearchRequest") || "";
+const SearchForm = ({
+  metroArray,
+  handleUpdateCoworkings,
+  limit,
+  offset,
+  resetPagination,
+}) => {
+  const lastSearchRequest = sessionStorage.getItem("lastSearchRequest") || "";
   const { form, handleChange, handleSelectChange } = useForm({
     search: lastSearchRequest,
     category: "",
@@ -35,7 +41,8 @@ const SearchForm = ({ metroArray, handleUpdateCoworkings, limit, offset }) => {
 
   const formSearchSubmit = (e) => {
     e.preventDefault();
-    localStorage.setItem("lastSearchRequest", form.search);
+    sessionStorage.setItem("lastSearchRequest", form.search);
+    resetPagination();
     searchLocations({
       search: form.search,
       category: form.category,
@@ -84,12 +91,12 @@ const SearchForm = ({ metroArray, handleUpdateCoworkings, limit, offset }) => {
           handleSelectChange={handleSelectChange}
         />
         {/* <SortData
-          selectName="metro"
-          titleSort="Линия метро"
-          array={metroOptions}
-          size="min"
-          handleSelectChange={handleSelectChange}
-        /> */}
+selectName="metro"
+titleSort="Линия метро"
+array={metroOptions}
+size="min"
+handleSelectChange={handleSelectChange}
+/> */}
         <Button
           btnClass="button_type_form button_type_form-select"
           btnType="submit"
@@ -106,6 +113,7 @@ SearchForm.propTypes = {
   limit: PropTypes.number,
   offset: PropTypes.number,
   metroArray: PropTypes.arrayOf(PropTypes.string).isRequired,
+  resetPagination: PropTypes.func.isRequired,
 };
 
 SearchForm.defaultProps = {
