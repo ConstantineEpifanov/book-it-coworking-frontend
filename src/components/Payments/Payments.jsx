@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
+import { createPortal } from "react-dom";
 import "./Payments.scss";
 import PaymentsForm from "../Forms/PaymentsForm/PaymentsForm";
 import Popup from "../Popup/Popup";
@@ -28,7 +29,9 @@ const Payments = () => {
     try {
       await pay(placeState.id, placeState.spotId, placeState.orderId);
       setResponseOK(true);
-      navigate("/points", { replace: true });
+      setTimeout(() => {
+        navigate("/points", { replace: true });
+      }, 1000);
     } catch {
       setResponseOK(false);
     }
@@ -62,23 +65,26 @@ const Payments = () => {
 
   return (
     <section className="payments" aria-label="страница с формой оплаты">
-      {isResponseOK ? (
-        <Popup isOpen={isPopupOpened} onClickClose={handlePopupClose}>
-          <p className="popup__title">Оплата прошла успешно</p>
-          <p className="popup__text">
-            Письмо с подтверждением и деталями бронирования отправлено вам на
-            указанный номер телефона и электронную почту
-          </p>
-        </Popup>
-      ) : (
-        <Popup isOpen={isPopupOpened} onClickClose={handlePopupClose}>
-          <p className="popup__title">Оплата не прошла</p>
-          <p className="popup__text">
-            Проверьте, пожалуйста, корректность введенных платежных данных и
-            повторите попытку
-          </p>
-          <Button btnText="Попробовать еще раз" />
-        </Popup>
+      {createPortal(
+        isResponseOK ? (
+          <Popup isOpen={isPopupOpened} onClickClose={handlePopupClose}>
+            <p className="popup__title">Оплата прошла успешно</p>
+            <p className="popup__text">
+              Письмо с подтверждением и деталями бронирования отправлено вам на
+              указанный номер телефона и электронную почту
+            </p>
+          </Popup>
+        ) : (
+          <Popup isOpen={isPopupOpened} onClickClose={handlePopupClose}>
+            <p className="popup__title">Оплата не прошла</p>
+            <p className="popup__text">
+              Проверьте, пожалуйста, корректность введенных платежных данных и
+              повторите попытку
+            </p>
+            <Button btnText="Попробовать еще раз" />
+          </Popup>
+        ),
+        document.body,
       )}
 
       <PaymentsForm onSubmit={handleSubmit} onBack={handleBack} />

@@ -339,7 +339,7 @@ export const Booking = () => {
           })
         ).map((item) => ({
           ...item,
-          isEnabled: !item.isOrdered,
+          isEnabled: !item.is_ordered,
           onClick: handleSpotSelect,
         }));
 
@@ -352,13 +352,14 @@ export const Booking = () => {
           })
         ).map((item) => ({
           ...item,
-          isEnabled: !item.isOrdered,
+          isEnabled: !item.is_ordered,
           onClick: handleMeetingRoomSelect,
         }));
         result = {
           spots: spotsData,
           meetingRooms: meetingRoomsData,
         };
+        console.log(result);
       } catch (err) {
         console.log(err.message);
       }
