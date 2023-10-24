@@ -40,6 +40,11 @@
     &__menu {
       display: none;
     }
+    &__tab {
+      border: none;
+      border-radius: 0;
+      padding: 50px 20px 70px 20px;
+    }
     &__back {
       display: flex;
       align-items: center;
@@ -70,5 +75,11 @@
         }
       }
     }
+  }
+}
+
+@include mobile {
+  .profile__back {
+    @include use-font(16px, 20px, 400);
   }
 }
