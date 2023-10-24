@@ -263,14 +263,14 @@ export function deleteFavorite(id) {
 // Booking
 
 export function getLocationPlanPhoto(id) {
-  return request(`/locations/${id}/plan_photo`, {
+  return request(`/locations/${id}/plan_photo/`, {
     method: "GET",
     headers: setHeaders(),
   });
 }
 
-export function getSpots(id) {
-  return request(`/locations/${id}/spots/`, {
+export function getSpots(id, data) {
+  return request(`/locations/${id}/spots/?${new URLSearchParams(data)}`, {
     method: "GET",
     headers: setHeaders(),
   });

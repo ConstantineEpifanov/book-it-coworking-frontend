@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { useLocation } from "react-router-dom";
+import React, { useState, useEffect, useRef } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 import "./Payments.scss";
 import PaymentsForm from "../Forms/PaymentsForm/PaymentsForm";
 import Popup from "../Popup/Popup";
@@ -7,7 +7,10 @@ import { postOrder } from "../../utils/Api";
 import Button from "../UI-kit/Button/Button";
 
 const Payments = () => {
-  const { state: place } = useLocation();
+  const location = useLocation();
+  const navigate = useNavigate();
+  const place = useRef(location.state);
+  const [placeState, setPlaceState] = useState(place.current);
   const [isPopupOpened, setPopupOpened] = useState(false);
   const [isResponseOK, setResponseOK] = useState(false);
 
@@ -20,7 +23,7 @@ const Payments = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await postOrder(place.id, place.spotId);
+      await postOrder(placeState.id, placeState.spotId);
       setResponseOK(true);
     } catch {
       setResponseOK(false);
@@ -31,6 +34,22 @@ const Payments = () => {
   const handlePopupClose = () => {
     setPopupOpened(false);
   };
+
+  useEffect(() => {
+    const paymentState = JSON.parse(sessionStorage.getItem("paymentState"));
+
+    if (!place.current && !paymentState) {
+      navigate("/", { replace: true });
+      return;
+    }
+
+    if (!place.current) {
+      setPlaceState(JSON.parse(paymentState));
+    }
+
+    sessionStorage.setItem("paymentState", JSON.stringify(place.current));
+    window.scrollTo(0, 0);
+  }, [navigate]);
 
   return (
     <section className="payments" aria-label="страница с формой оплаты">
@@ -56,32 +75,32 @@ const Payments = () => {
       <PaymentsForm onSubmit={handleSubmit} />
       <article className="payments-place">
         <h3 className="payments-place__info">коворкинг</h3>
-        <h3 className="payments-place__header">{place.name}</h3>
+        <h3 className="payments-place__header">{placeState.name}</h3>
         <ul className="payments-place__list">
           <li className="payments-place__list-item">
             <span>Адрес: </span>
-            <span>{place.location}</span>
+            <span>{placeState.location}</span>
           </li>
           <li className="payments-place__list-item">
-            <span>{place.category}:</span>
-            <span>{place.equipment}</span>
+            <span>{placeState.category}:</span>
+            <span>{placeState.equipment}</span>
           </li>
           <li className="payments-place__list-item">
             <span>Начало:</span>
             <span>
-              {getPrettifiedDate(place.date)} {place.startTime}
+              {getPrettifiedDate(placeState.date)} {placeState.startTime}
             </span>
           </li>
           <li className="payments-place__list-item">
             <span>Окончание:</span>
             <span>
-              {getPrettifiedDate(place.date)} {place.endTime}
+              {getPrettifiedDate(placeState.date)} {placeState.endTime}
             </span>
           </li>
         </ul>
         <div className="payments-place__bill">
           <span>К оплате:</span>
-          <span>{place.bill}</span>
+          <span>{placeState.bill}</span>
         </div>
       </article>
     </section>
