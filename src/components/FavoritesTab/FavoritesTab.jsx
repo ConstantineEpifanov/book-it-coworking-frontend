@@ -1,13 +1,11 @@
-import React, { useEffect, useState, useContext } from "react";
+import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
-import { CurrentUserContext } from "../../contexts/currentUserContext";
 
 import "./FavoritesTab.scss";
 
 import Button from "../UI-kit/Button/Button";
 import { LikeIcon } from "../../images/profile-icons/LikeIcon";
-import { Loader } from "../Loader/Loader";
 import { SectionTitle } from "../SectionTitle/SectionTitle";
 
 import TagIcon from "../../images/tag.svg";
@@ -69,7 +67,6 @@ const FavoriteCard = ({ item, onFavoriteDeleted }) => {
 
 export const FavoritesTab = () => {
   const [favoritesArray, setFavoritesArray] = useState([]);
-  const { isLoading, setIsLoading } = useContext(CurrentUserContext);
 
   const handleFavoriteDeleted = (deletedId) => {
     setFavoritesArray((prev) => prev.filter((item) => item.id !== deletedId));
@@ -80,39 +77,29 @@ export const FavoritesTab = () => {
   }, []);
 
   useEffect(() => {
-    setIsLoading(true);
     getFavorites()
       .then((res) => setFavoritesArray(res))
       .catch(() => {})
-      .finally(() => setIsLoading(false));
+      .finally(() => {});
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
     <section className="favorites">
-      {!isLoading ? (
-        <>
-          <SectionTitle
-            titleText="Избранное"
-            titleClass="section-title_profile"
-          />
+      <SectionTitle titleText="Избранное" titleClass="section-title_profile" />
 
-          {favoritesArray.length !== 0 ? (
-            <ul className="favorites__card-list">
-              {favoritesArray.map((item) => (
-                <FavoriteCard
-                  item={item}
-                  key={item.id}
-                  onFavoriteDeleted={handleFavoriteDeleted}
-                />
-              ))}
-            </ul>
-          ) : (
-            <span className="favorites__nodata">Пока ничего не добавлено</span>
-          )}
-        </>
+      {favoritesArray.length !== 0 ? (
+        <ul className="favorites__card-list">
+          {favoritesArray.map((item) => (
+            <FavoriteCard
+              item={item}
+              key={item.id}
+              onFavoriteDeleted={handleFavoriteDeleted}
+            />
+          ))}
+        </ul>
       ) : (
-        <Loader />
+        <span className="favorites__nodata">Пока ничего не добавлено</span>
       )}
     </section>
   );

@@ -2,7 +2,7 @@
 @import "./../../scss/mixins.scss";
 
 .events-item {
-  @include card-border-color;
+  @include card-border-color(false);
   margin-bottom: 2px;
   font-family: $font-family;
   color: $black;
@@ -11,14 +11,16 @@
   border: 2px solid $black;
   overflow: hidden;
   width: 360px;
+
   &__image-container {
     position: relative;
+    background-color: $black;
   }
   &__info__container {
     margin: 20px;
   }
   &__image {
-    object-fit: fill;
+    object-fit: cover;
     display: block;
     width: 360px;
     height: 250px;
