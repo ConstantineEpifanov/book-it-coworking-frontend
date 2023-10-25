@@ -55,3 +55,6 @@ export const getMaxDate = () => {
   const maxDate = new Date();
   return maxDate.toISOString().split("T")[0];
 };
+
+export const checkMobile = () =>
+  window.matchMedia("(max-width: 767px)").matches;
