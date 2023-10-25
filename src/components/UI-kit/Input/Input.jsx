@@ -11,9 +11,11 @@ function Input({
   inputPlaceholder,
   inputInfo,
   handleChange,
+  handleFocus,
   inputRequired,
   inputDisabled,
   inputMaxLength,
+  inputMaxValue,
 }) {
   return (
     <div className="input__items">
@@ -33,10 +35,12 @@ function Input({
         placeholder={inputPlaceholder}
         value={inputValue || ""}
         onChange={handleChange}
+        onFocus={handleFocus}
         required={inputRequired}
         disabled={inputDisabled}
         maxLength={inputMaxLength}
         autoComplete="off"
+        max={inputMaxValue}
       />
       {/* если нет ошибки ввода, то покажи информацию */}
       {inputError ? (
@@ -59,8 +63,10 @@ Input.propTypes = {
   inputRequired: PropTypes.bool,
   inputMaxLength: PropTypes.number,
   inputDisabled: PropTypes.bool,
+  inputMaxValue: PropTypes.string,
 
   handleChange: () => {},
+  handleFocus: () => {},
 };
 
 Input.defaultProps = {
@@ -73,7 +79,9 @@ Input.defaultProps = {
   inputRequired: true,
   inputDisabled: false,
   inputMaxLength: undefined,
+  inputMaxValue: undefined,
   handleChange: () => {},
+  handleFocus: () => {},
 };
 
 export default Input;

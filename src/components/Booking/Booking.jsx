@@ -1,10 +1,16 @@
-import React, { useState, useEffect, useCallback, useMemo } from "react";
+import React, {
+  useState,
+  useEffect,
+  useCallback,
+  useMemo,
+  useRef,
+} from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import PropTypes from "prop-types";
 
 import "./Booking.scss";
-import { getLocationPlanPhoto } from "../../utils/Api";
-import { locationData } from "../../config/exampleBookingData";
+import { getLocationPlanPhoto, getSpots, postOrder } from "../../utils/Api";
+// import { locationData } from "../../config/exampleBookingData";
 import Button from "../UI-kit/Button/Button";
 import { SectionTitle } from "../SectionTitle/SectionTitle";
 import { Calendar } from "../Calendar/Calendar";
@@ -17,35 +23,18 @@ import {
   ALLOWED_TIME_RANGES,
 } from "../../utils/constants";
 
-// Блок функций-заглушек, используются вместо обращений к API
-// const getLocationPlanPhoto = () =>
-//   Promise.resolve({
-//     image:
-//       "https://spotit.acceleratorpracticum.ru/media/images/plans/workplace_plan2_MyVLYSU.png",
-//   });
-
-const getWorkplaces = ({
-  /* locationId, */ type,
-  date,
-  startTime,
-  endTime,
-}) => {
-  if (
-    type !== EQUIPMENT_GENERAL_CATEGORY &&
-    type !== EQUIPMENT_MEETING_CATEGORY
-  ) {
-    throw new Error("Unknown workplace type");
-  }
-
-  return Promise.resolve(locationData.getSpots(type, date, startTime, endTime));
-};
-// - окончание блока функций заглушек
-
 // Возвращает число дня: от 1 до 7
 const getNormalizedDayNumber = (date) => {
   const dayNumber = date.getDay();
   const resultNumber = dayNumber === 0 ? 7 : dayNumber;
   return resultNumber;
+};
+
+// Возвращает дату в формате YYYY-MM-DD
+const getDateString = (date) => {
+  const month = date.getMonth() + 1;
+  const monthString = month < 10 ? `0${month}` : month.toString();
+  return `${date.getFullYear()}-${monthString}-${date.getDate()}`;
 };
 
 // Вернет true, если тот же день месяца
@@ -202,8 +191,12 @@ const spotsSortFunc = (a, b) => {
 export const Booking = () => {
   const FIRST_SPOT_TYPE = "Общая зона";
   const SECOND_SPOT_TYPE = "Переговорная";
+
+  const location = useLocation();
+
   const navigate = useNavigate();
-  const [coworking, setCoworking] = useState({});
+  const coworking = useRef(location.state);
+  const [currentCoworkingState, setCurrentCoworkingState] = useState(coworking);
   const [planPhoto, setPlanPhoto] = useState("");
   const [datesSelected, setDatesSelected] = useState([]);
   const [timeRangesSelected, setTimeRangesSelected] = useState([]);
@@ -217,8 +210,6 @@ export const Booking = () => {
   const [isSpotsEnabled, setSpotsEnabled] = useState(true);
   const [isWorkplacesEnabled, setWorkplacesEnabled] = useState(false);
   const [isMeetingRoomsEnabled, setMeetingRoomsEnabled] = useState(false);
-
-  const location = useLocation();
 
   // Обработчик выбора даты
   const handleCalendarClick = (dates) => {
@@ -266,7 +257,7 @@ export const Booking = () => {
   };
 
   // Обработчик кнопки "Перейти к оплате"
-  const handlePayClick = () => {
+  const handlePayClick = async () => {
     let workplaceCategory = EQUIPMENT_GENERAL_CATEGORY;
     let selectedWorkplaces = spotsSelected.map((item) => item.name).join(", ");
     let selectedSpotId = spotsSelected.at(0)?.id;
@@ -283,20 +274,35 @@ export const Booking = () => {
         .join(", ");
     }
 
-    navigate("/payments", {
-      state: {
-        id: coworking.id,
-        spotId: selectedSpotId,
-        name: coworking.name,
-        location: coworking.location,
-        category: workplaceCategory,
-        equipment: selectedWorkplaces,
-        date: selectedDate,
-        startTime,
-        endTime,
-        bill: totalPrice,
-      },
-    });
+    try {
+      const { id: orderId } = await postOrder(
+        coworking.current.id,
+        selectedSpotId,
+        {
+          date: getDateString(selectedDate),
+          start_time: startTime,
+          end_time: endTime,
+        },
+      );
+
+      navigate("/payments", {
+        state: {
+          id: coworking.current.id,
+          spotId: selectedSpotId,
+          name: coworking.current.name,
+          location: coworking.current.location,
+          category: workplaceCategory,
+          equipment: selectedWorkplaces,
+          date: selectedDate,
+          startTime,
+          endTime,
+          bill: totalPrice,
+          orderId,
+        },
+      });
+    } catch (err) {
+      console.log(err.message);
+    }
   };
 
   // Получение текущей цены выбранного массива мест
@@ -308,41 +314,45 @@ export const Booking = () => {
 
   // Дополнительные правила-функции для проверки дат календаря
   // Если функция возвращает true - дата календаря будет недоступной
-  const calendarExtraRules = [
-    (date) =>
-      getNormalizedDayNumber(date) > WORKING_DAYS_COUNTS[coworking.daysOpen],
-  ];
+  const getCalendarExtraRules = useCallback(
+    () => [
+      (date) =>
+        getNormalizedDayNumber(date) >
+        WORKING_DAYS_COUNTS[currentCoworkingState.daysOpen],
+    ],
+    [currentCoworkingState],
+  );
+
+  const calendarExtraRules = getCalendarExtraRules();
 
   // Получение информации о всех местах в данной location
   const getWorkplacesData = useCallback(
-    async ({ locationId, date, startTime, endTime }) => {
+    async ({ id, date, startTime, endTime }) => {
       let result = {};
       try {
         const spotsData = (
-          await getWorkplaces({
-            locationId,
-            type: EQUIPMENT_GENERAL_CATEGORY,
+          await getSpots(id, {
+            category: EQUIPMENT_GENERAL_CATEGORY,
             date,
-            startTime,
-            endTime,
+            start_time: startTime,
+            end_time: endTime,
           })
         ).map((item) => ({
           ...item,
-          isEnabled: !item.isOrdered,
+          isEnabled: !item.is_ordered,
           onClick: handleSpotSelect,
         }));
 
         const meetingRoomsData = (
-          await getWorkplaces({
-            locationId,
-            type: EQUIPMENT_MEETING_CATEGORY,
+          await getSpots(id, {
+            category: EQUIPMENT_MEETING_CATEGORY,
             date,
-            startTime,
-            endTime,
+            start_time: startTime,
+            end_time: endTime,
           })
         ).map((item) => ({
           ...item,
-          isEnabled: !item.isOrdered,
+          isEnabled: !item.is_ordered,
           onClick: handleMeetingRoomSelect,
         }));
         result = {
@@ -350,7 +360,7 @@ export const Booking = () => {
           meetingRooms: meetingRoomsData,
         };
       } catch (err) {
-        console.log(err);
+        console.log(err.message);
       }
       return result;
     },
@@ -395,7 +405,7 @@ export const Booking = () => {
               selectedDate.getMonth() + 1
             }-${selectedDate.getDate()}`;
             const receivedWorkplaces = await getWorkplacesData({
-              id: coworking.id,
+              id: coworking.current.id,
               date: preparedDate,
               startTime: timeItem.startTime,
               endTime: timeItem.endTime,
@@ -429,13 +439,7 @@ export const Booking = () => {
       setSpots(resultSpots.spots);
       setMeetingRooms(resultSpots.meetingRooms);
     }
-  }, [
-    coworking.id,
-    datesSelected,
-    timeRangesSelected,
-    timeRangeItems,
-    getWorkplacesData,
-  ]);
+  }, [datesSelected, timeRangesSelected, timeRangeItems, getWorkplacesData]);
 
   // Начальная загрузка рабочих мест
   // Получаем количество рабочих мест на завтрашний день. Из-за ограничений бэка
@@ -551,24 +555,27 @@ export const Booking = () => {
 
   // Первоначальная загрузка компонента
   useEffect(() => {
+    const coworkingState = JSON.parse(sessionStorage.getItem("coworkingState"));
+
+    if (!coworking.current && !coworkingState) {
+      navigate("/", { replace: true });
+      return;
+    }
+
+    if (!coworking.current) {
+      coworking.current = coworkingState;
+    }
+
+    setCurrentCoworkingState(coworking.current);
+    sessionStorage.setItem("coworkingState", JSON.stringify(coworking.current));
+
+    const { id, openTime, closeTime } = coworking.current;
     setTimeRangeItems(
-      getTimeRangeItems(
-        location.state.openTime,
-        location.state.closeTime,
-        handleTimeItemClick,
-      ),
+      getTimeRangeItems(openTime, closeTime, handleTimeItemClick),
     );
-    setCoworking(location.state);
-    loadPlanPhoto(location.state.id);
-    loadWorkplacesInitial(location.state);
-  }, [
-    coworking.id,
-    loadPlanPhoto,
-    loadWorkplacesInitial,
-    location.state,
-    location.state.openTime,
-    location.state.closeTime,
-  ]);
+    loadPlanPhoto(id);
+    loadWorkplacesInitial(coworking.current);
+  }, [loadPlanPhoto, loadWorkplacesInitial, navigate]);
 
   return (
     <main className="booking" aria-label="Страница бронирования">

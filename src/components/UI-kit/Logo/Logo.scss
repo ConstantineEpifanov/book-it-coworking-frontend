@@ -6,13 +6,13 @@
     fill: $white;
   }
   &:hover path {
-    fill: $green;
+    fill: $pink;
     fill-opacity: 1;
     stroke-opacity: 0;
   }
 
   &:active path {
-    fill: $pink;
+    fill: $green;
   }
 
   & path {
@@ -21,7 +21,11 @@
 }
 
 @include mobile {
-  .logo {
+  .logo_type_responsive {
+    width: 60px;
+    height: 20px;
+  }
+  .logo_type_header {
     width: 76px;
     height: 15px;
   }

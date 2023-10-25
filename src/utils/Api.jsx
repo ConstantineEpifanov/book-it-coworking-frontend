@@ -263,16 +263,24 @@ export function deleteFavorite(id) {
 // Booking
 
 export function getLocationPlanPhoto(id) {
-  return request(`/locations/${id}/plan_photo`, {
+  return request(`/locations/${id}/plan_photo/`, {
     method: "GET",
     headers: setHeaders(),
   });
 }
 
-export function getSpots(id) {
-  return request(`/locations/${id}/spots/`, {
+export function getSpots(id, data) {
+  return request(`/locations/${id}/spots/?${new URLSearchParams(data)}`, {
     method: "GET",
     headers: setHeaders(),
+  });
+}
+
+export function postOrder(locationId, spotId, data) {
+  return request(`/locations/${locationId}/spots/${spotId}/order/`, {
+    method: "POST",
+    headers: setHeaders(),
+    body: JSON.stringify(data),
   });
 }
 
@@ -301,10 +309,12 @@ export function searchLocations(params = {}) {
 
 // Payments
 
-export function postOrder(locationId, spotId, data) {
-  return request(`/locations/${locationId}/spots/${spotId}/order/`, {
-    method: "POST",
-    headers: setHeaders(),
-    body: JSON.stringify(data),
-  });
+export function pay(locationId, spotId, orderId) {
+  return request(
+    `/locations/${locationId}/spots/${spotId}/order/${orderId}/pay/`,
+    {
+      method: "PATCH",
+      headers: setHeaders(),
+    },
+  );
 }

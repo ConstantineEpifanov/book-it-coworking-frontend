@@ -3,7 +3,6 @@
 
 .security {
   font-family: $font-family;
-  width: 600px;
   &__title {
     @include mp-null;
     max-width: 323px;
@@ -20,10 +19,12 @@
       display: flex;
       align-items: center;
       margin-bottom: 20px;
-      & > :first-child {
-        flex-basis: 340px;
-      }
     }
+  }
+  &__password-container,
+  &__sessions-container,
+  &__exit-container {
+    width: 340px;
   }
   &__password-container {
     display: flex;
@@ -42,5 +43,15 @@
     font-style: normal;
     font-weight: 300;
     line-height: 14px;
+  }
+}
+
+@include mobile {
+  .security {
+    &__board-row {
+      flex-direction: column;
+      gap: 20px;
+      margin-bottom: 40px;
+    }
   }
 }

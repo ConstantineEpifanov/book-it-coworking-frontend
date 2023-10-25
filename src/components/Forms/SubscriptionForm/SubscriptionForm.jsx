@@ -1,11 +1,19 @@
-import React from "react";
+import React, { useContext } from "react";
 import PropTypes from "prop-types";
+import { CurrentUserContext } from "../../../contexts/currentUserContext";
+
+import { SUBSCRIPTION_ERROR } from "../../../utils/constants";
+
 import "./SubscriptionForm.scss";
 import Input from "../../UI-kit/Input/Input";
 import Button from "../../UI-kit/Button/Button";
 
 const SubscriptionForm = ({ onSubmit }) => {
-  const onChangeInput = () => {};
+  const { currentUser, isLoggedIn, showMessage } =
+    useContext(CurrentUserContext);
+
+  const handleInputFocus = () =>
+    !isLoggedIn ? showMessage(SUBSCRIPTION_ERROR, "error") : null;
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -25,16 +33,16 @@ const SubscriptionForm = ({ onSubmit }) => {
               inputType="email"
               inputClass="input__subscription"
               inputPlaceholder="E-mail"
-              inputValue=""
-              onChangeInput={onChangeInput}
+              inputValue={currentUser.email}
+              handleFocus={handleInputFocus}
             />
           </div>
           <Button
             btnClass="button__subscription button_type_form"
-            btnText="Подписаться"
+            btnText={currentUser.subscribed ? "Подписаны!" : "Подписаться"}
             btnType="submit"
             onClick={handleSubmit}
-            isValidBtn
+            isValidBtn={isLoggedIn && !currentUser.subscribed}
           />
         </fieldset>
       </form>

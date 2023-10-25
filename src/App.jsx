@@ -107,6 +107,9 @@ function App() {
       currentUser,
       setСurrentUser,
       showMessage,
+      isOpenPopup,
+      handleOpenPopup,
+      handleClosePopup,
     }),
     [
       isLoading,
@@ -116,6 +119,9 @@ function App() {
       currentUser,
       setСurrentUser,
       showMessage,
+      isOpenPopup,
+      handleOpenPopup,
+      handleClosePopup,
     ],
   );
 
@@ -186,7 +192,7 @@ function App() {
           </Routes>
         )}
         <InfoPopup infoType={infoType} infoMessage={infoMessage} />
-        <Footer onSubmit={() => {}} />
+        <Footer />
       </div>
     </CurrentUserContext.Provider>
   );

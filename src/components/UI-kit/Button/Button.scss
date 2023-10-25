@@ -309,6 +309,16 @@
     }
   }
 
+  &_type_sendreview {
+    background-color: transparent;
+    &:hover {
+      color: $pink;
+    }
+    &:active {
+      color: $green;
+    }
+  }
+
   &_width-bookings {
     width: 226px;
   }
@@ -328,7 +338,7 @@
   &__profile {
     box-sizing: border-box;
     background-color: $white;
-    width: 360px;
+    max-width: 360px;
     height: 84px;
     padding: 20px 20px 20px 78px;
     text-align: left;
@@ -464,6 +474,30 @@
 
     &:hover {
       background-color: $main-white;
+    }
+  }
+
+  &_type_popup {
+    width: auto;
+    padding: 16px 32px;
+    display: flex;
+    align-items: center;
+    border-radius: 100vmax;
+    border: 2px solid $main-black;
+    background-color: $main-black;
+    color: $main-white;
+
+    &:hover {
+      background-color: transparent;
+      color: $main-black;
+    }
+  }
+}
+
+@include mobile {
+  .button {
+    &_width-bookings {
+      width: 100%;
     }
   }
 

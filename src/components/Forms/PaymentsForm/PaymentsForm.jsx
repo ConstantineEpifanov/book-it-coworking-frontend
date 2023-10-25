@@ -6,7 +6,7 @@ import EntryForm from "../EntryForm/EntryForm";
 import Input from "../../UI-kit/Input/Input";
 import "./PaymentsForm.scss";
 
-const PaymentsForm = ({ onSubmit }) => {
+const PaymentsForm = ({ onSubmit, onBack }) => {
   const [reviewText, setReviewText] = React.useState("");
   const [inputError, setInputError] = React.useState("");
 
@@ -96,6 +96,7 @@ const PaymentsForm = ({ onSubmit }) => {
           <Button
             btnClass="button_type_transparent button_size_middle"
             btnText="Назад"
+            onClick={onBack}
           />
           <Button
             btnClass="button_type_form button_size_middle"
@@ -110,10 +111,12 @@ const PaymentsForm = ({ onSubmit }) => {
 
 PaymentsForm.propTypes = {
   onSubmit: PropTypes.func,
+  onBack: PropTypes.func,
 };
 
 PaymentsForm.defaultProps = {
   onSubmit: null,
+  onBack: null,
 };
 
 export default PaymentsForm;

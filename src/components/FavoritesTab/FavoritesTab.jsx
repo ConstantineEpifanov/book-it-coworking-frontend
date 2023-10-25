@@ -3,11 +3,12 @@ import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 import { CurrentUserContext } from "../../contexts/currentUserContext";
 
+import { SUCCESSFUL_DISLIKE, BASIC_ERROR } from "../../utils/constants";
+
 import "./FavoritesTab.scss";
 
 import Button from "../UI-kit/Button/Button";
 import { LikeIcon } from "../../images/profile-icons/LikeIcon";
-import { Loader } from "../Loader/Loader";
 import { SectionTitle } from "../SectionTitle/SectionTitle";
 
 import TagIcon from "../../images/tag.svg";
@@ -15,12 +16,14 @@ import StarIcon from "../../images/star.svg";
 import { getFavorites, deleteFavorite } from "../../utils/Api";
 
 const FavoriteCard = ({ item, onFavoriteDeleted }) => {
+  const { showMessage } = useContext(CurrentUserContext);
   function handleDeleteFavorite() {
     deleteFavorite(item.id)
       .then(() => {
         onFavoriteDeleted(item.id);
+        showMessage(SUCCESSFUL_DISLIKE, "info");
       })
-      .catch(() => {});
+      .catch(() => showMessage(BASIC_ERROR, "error"));
   }
 
   return (
@@ -30,6 +33,7 @@ const FavoriteCard = ({ item, onFavoriteDeleted }) => {
           className="favorites__card-image"
           src={item.main_photo}
           alt={item.name}
+          loading="lazy"
         />
         <button
           className="favorites__card-button"
@@ -41,7 +45,15 @@ const FavoriteCard = ({ item, onFavoriteDeleted }) => {
       </div>
       <div className="favorites__card-text-container">
         <div className="favorites__card-name-row">
-          <span className="favorites__card-name">{item.name}</span>
+          <span className="favorites__card-name">
+            <Link
+              to={`/points/${item.id}`}
+              target="_blank"
+              className="favorites__card-pointlink"
+            >
+              {item.name}
+            </Link>
+          </span>
         </div>
         <div className="favorites__card-rating-row">
           <img
@@ -59,9 +71,11 @@ const FavoriteCard = ({ item, onFavoriteDeleted }) => {
           />
           <p className="favorites__card-address">{item.get_full_address_str}</p>
         </div>
-        <Link to={`/points/${item.id}`} target="_blank">
-          <Button btnText="Посмотреть" btnClass="button__profile-edit" />
-        </Link>
+        <div className="favorites__card-lookbutton">
+          <Link to={`/points/${item.id}`} target="_blank">
+            <Button btnText="Посмотреть" btnClass="button__profile-edit" />
+          </Link>
+        </div>
       </div>
     </li>
   );
@@ -84,35 +98,32 @@ export const FavoritesTab = () => {
     getFavorites()
       .then((res) => setFavoritesArray(res))
       .catch(() => {})
-      .finally(() => setIsLoading(false));
+      .finally(() => {
+        setIsLoading(false);
+      });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
     <section className="favorites">
-      {!isLoading ? (
-        <>
-          <SectionTitle
-            titleText="Избранное"
-            titleClass="section-title_profile"
-          />
+      <SectionTitle titleText="Избранное" titleClass="section-title_profile" />
 
+      {isLoading ? (
+        <span className="favorites__loading">Загрузка...</span>
+      ) : (
+        <ul className="favorites__card-list">
           {favoritesArray.length !== 0 ? (
-            <ul className="favorites__card-list">
-              {favoritesArray.map((item) => (
-                <FavoriteCard
-                  item={item}
-                  key={item.id}
-                  onFavoriteDeleted={handleFavoriteDeleted}
-                />
-              ))}
-            </ul>
+            favoritesArray.map((item) => (
+              <FavoriteCard
+                item={item}
+                key={item.id}
+                onFavoriteDeleted={handleFavoriteDeleted}
+              />
+            ))
           ) : (
             <span className="favorites__nodata">Пока ничего не добавлено</span>
           )}
-        </>
-      ) : (
-        <Loader />
+        </ul>
       )}
     </section>
   );

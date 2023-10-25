@@ -23,7 +23,7 @@ export const spotsButtonsList = [
     .fill(null)
     .map((_, index) => ({
       id: index,
-      name: `${1 + index}`,
+      name: `${1 + index}dddddddddddddddddddddddddd`,
       onClick: spotClickFunc,
       isEnabled: true,
     })),
@@ -34,7 +34,7 @@ export const meetingRoomsButtonsList = [
     .fill(null)
     .map((_, index) => ({
       id: index,
-      name: `${1 + index} Переговорная`,
+      name: `${1 + index} Переговорнаяddddddddddddd`,
       onClick: meetingRoomClickFunc,
       isEnabled: true,
     })),
