@@ -500,4 +500,13 @@
       width: 100%;
     }
   }
+
+  &_type_submit-search {
+    background-color: $black;
+    color: $white;
+  }
+
+  &:hover {
+    opacity: 0.7;
+  }
 }
