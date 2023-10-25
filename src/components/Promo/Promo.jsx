@@ -65,7 +65,7 @@ export const Promo = () => {
         <div className="promo__text">
           <h1 className="promo__title">Spot It</h1>
           <h2 className="promo__subtitle">
-            Сеть коворкингов созданная специально для IT специалистов
+            Сеть коворкингов, созданная специально для IT специалистов
           </h2>
           <form className="promo__search" onSubmit={handleSubmit} noValidate>
             <Input
@@ -73,11 +73,8 @@ export const Promo = () => {
               inputType="text"
               inputName="search"
               inputPlaceholder="Найти рабочее место..."
-              // inputValue=""
               inputValue={form.search}
-              // onChangeInput={onChangeInput}
               handleChange={handleChange}
-              // onFocusInput={handleFocus}
             />
             <Button
               btnClass="button__promo"

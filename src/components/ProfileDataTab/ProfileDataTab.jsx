@@ -14,7 +14,7 @@ import "./ProfileDataTab.scss";
 import ProfilePhoto from "../../images/ProfilePhoto.png";
 
 import { formatPhone, formatDate, getMaxDate } from "../../utils/utils";
-import { PROFILE_DATA_UPDATE } from "../../utils/constants";
+import { PROFILE_DATA_UPDATE, BASIC_ERROR } from "../../utils/constants";
 
 export const ProfileDataTab = () => {
   const { currentUser, setСurrentUser, showMessage } =
@@ -28,6 +28,22 @@ export const ProfileDataTab = () => {
   useEffect(() => {
     setEditedUser(currentUser);
   }, [currentUser]);
+
+  useEffect(() => {
+    function checkIsMobile() {
+      if (window.matchMedia("(max-width: 767px)").matches) {
+        setIsEdited(true);
+      } else {
+        setIsEdited(false);
+      }
+    }
+
+    checkIsMobile();
+    window.addEventListener("resize", checkIsMobile);
+    return () => {
+      window.removeEventListener("resize", checkIsMobile);
+    };
+  }, []);
 
   const handleScrollToTop = () => {
     window.scrollTo({
@@ -64,6 +80,7 @@ export const ProfileDataTab = () => {
         showMessage(PROFILE_DATA_UPDATE, "info");
         setСurrentUser(editedUser);
       })
+      .catch(() => showMessage(BASIC_ERROR, "error"))
       .finally(() => {
         setIsSubmitting(false);
       });
@@ -72,14 +89,20 @@ export const ProfileDataTab = () => {
     handleScrollToTop();
   };
 
+  const infoMessage = (
+    <p className="profile-data__info">
+      *мы запрашиваем информацию исключительно в целях рекламы и промо-акций для
+      вас
+    </p>
+  );
+
   return (
     <section className="profile-data">
-      <div className="profile-data__header-container">
-        <SectionTitle
-          titleText="Персональные данные"
-          titleClass="section-title_profile"
-        />
-      </div>
+      <SectionTitle
+        titleText="Персональные данные"
+        titleClass="section-title_profile"
+      />
+
       <img
         src={ProfilePhoto}
         className="profile-data__image"
@@ -89,40 +112,38 @@ export const ProfileDataTab = () => {
       {!isEdited ? (
         <ul className="profile-data__info-list">
           <li className="profile-data__list-item">
-            <span className="profile-data__label">Имя</span>
-            <span className="profile-data__text-overflow">
+            <h3 className="profile-data__label">Имя</h3>
+            <p className="profile-data__text-overflow">
               {editedUser?.first_name}
-            </span>
+            </p>
           </li>
           <li className="profile-data__list-item">
-            <span className="profile-data__label">Фамилия</span>
-            <span className="profile-data__text-overflow">
+            <h3 className="profile-data__label">Фамилия</h3>
+            <p className="profile-data__text-overflow">
               {editedUser?.last_name}
-            </span>
+            </p>
           </li>
           <li className="profile-data__list-item">
-            <span className="profile-data__label">Дата рождения</span>
-            <span className="profile-data__text-overflow">
+            <h3 className="profile-data__label">Дата рождения</h3>
+            <p className="profile-data__text-overflow">
               {editedUser?.birth_date && formatDate(editedUser?.birth_date)}
-            </span>
+            </p>
           </li>
           <li className="profile-data__list-item">
-            <span className="profile-data__label">Номер телефона</span>
-            <span className="profile-data__text-overflow">
+            <h3 className="profile-data__label">Номер телефона</h3>
+            <p className="profile-data__text-overflow">
               {editedUser?.phone && formatPhone(editedUser?.phone)}
-            </span>
+            </p>
           </li>
           <li className="profile-data__list-item">
-            <span className="profile-data__label">Адрес эл. почты</span>
-            <span className="profile-data__text-overflow">
-              {editedUser?.email}
-            </span>
+            <h3 className="profile-data__label">Адрес эл. почты</h3>
+            <p className="profile-data__text-overflow">{editedUser?.email}</p>
           </li>
           <li className="profile-data__list-item">
-            <span className="profile-data__label">Род деятельности</span>
-            <span className="profile-data__text-overflow">
+            <h3 className="profile-data__label">Род деятельности</h3>
+            <p className="profile-data__text-overflow">
               {editedUser?.occupation}
-            </span>
+            </p>
           </li>
         </ul>
       ) : (
@@ -193,13 +214,11 @@ export const ProfileDataTab = () => {
               ))}
             </ul>
           </ProfileDataForm>
+          {infoMessage}{" "}
         </div>
       )}
 
-      <p className="profile-data__info">
-        мы запрашиваем информацию исключительно в целях рекламы и промо-акций
-        для вас
-      </p>
+      {!isEdited && infoMessage}
       {isEdited ? (
         <div className="profile-data__buttons">
           <Button

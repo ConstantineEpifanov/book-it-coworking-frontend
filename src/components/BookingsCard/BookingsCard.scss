@@ -12,11 +12,12 @@
   overflow: hidden;
   display: flex;
   gap: 15px;
-  width: 600px;
+  max-width: 600px;
   &__image {
     display: block;
     height: 100%;
     width: 235px;
+    min-width: 235px;
     object-fit: cover;
   }
   &__text-container {
@@ -147,5 +148,22 @@
     font-style: normal;
     font-weight: 300;
     line-height: 14px;
+  }
+}
+
+@include tablet {
+  .bookings {
+    &-card {
+      align-self: center;
+      width: 600px;
+    }
+  }
+}
+
+@include mobile {
+  .bookings {
+    &-card {
+      width: 100%;
+    }
   }
 }

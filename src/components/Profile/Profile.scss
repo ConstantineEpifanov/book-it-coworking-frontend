@@ -3,8 +3,7 @@
 
 .profile {
   @include mp-null;
-  margin-top: 52px;
-  margin-bottom: 140px;
+  margin: 52px auto 140px;
   font-family: $font-family;
   color: $black;
   display: flex;
@@ -19,11 +18,13 @@
     display: flex;
     flex-direction: column;
     gap: 12px;
+    flex: 1;
   }
   &__tab {
+    flex: 2;
+    flex-shrink: 1;
     box-sizing: border-box;
-    width: 100%;
-    max-width: 740px;
+    width: 740px;
     height: 100%;
     padding: 50px 40px 70px 40px;
     border-radius: 40px;
@@ -35,11 +36,14 @@
   }
 }
 
+@media (max-width: 1150px) {
+  .profile__menu {
+    display: none;
+  }
+}
+
 @include tablet {
   .profile {
-    &__menu {
-      display: none;
-    }
     &__tab {
       border: none;
       border-radius: 0;
@@ -79,7 +83,14 @@
 }
 
 @include mobile {
-  .profile__back {
-    @include use-font(16px, 20px, 400);
+  .profile {
+    width: 100%;
+    max-width: 100vw;
+    &__back {
+      @include use-font(16px, 20px, 400);
+    }
+    &__tab {
+      width: calc(100% - 40px);
+    }
   }
 }

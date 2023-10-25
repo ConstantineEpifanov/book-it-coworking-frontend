@@ -4,12 +4,11 @@ import { Link } from "react-router-dom";
 
 import { CurrentUserContext } from "../../contexts/currentUserContext";
 
-import { ORDER_STATUSES } from "../../utils/constants";
+import { ORDER_STATUSES, REVIEW_SUCCESS } from "../../utils/constants";
 import { publishReview, cancelOrder } from "../../utils/Api";
 import { formatDate, getPopupText } from "../../utils/utils";
 
 import usePopupOpen from "../../hooks/usePopupOpen";
-
 import ReviewsForm from "../Forms/ReviewsForm/ReviewsForm";
 
 import Button from "../UI-kit/Button/Button";
@@ -67,7 +66,7 @@ export const BookingsCard = ({ item, onUpdateStatus }) => {
     publishReview(item.location_id, item.spot, item.id, data)
       .then(() => {
         handleClosePopup();
-        showMessage("Отзыв отправлен на модерацию", "info");
+        showMessage(REVIEW_SUCCESS, "info");
       })
       .catch((e) => {
         // eslint-disable-next-line no-underscore-dangle
