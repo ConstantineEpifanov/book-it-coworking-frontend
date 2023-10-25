@@ -82,11 +82,7 @@ export const Footer = () => {
         </div>
         <div className="footer__icons_mobile">{links}</div>
         <div className="footer__subscription">
-          <SubscriptionForm
-            formValue={currentUser.email}
-            onSubmit={handleSubmit}
-            subStatus={currentUser.subscribed}
-          />
+          <SubscriptionForm onSubmit={handleSubmit} />
         </div>
       </div>
     </footer>

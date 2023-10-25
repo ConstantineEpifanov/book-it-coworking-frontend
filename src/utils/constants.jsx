@@ -77,6 +77,7 @@ export const SUCCESSFUL_DISLIKE = "Удалено из избранного";
 export const BASIC_ERROR = "Что-то пошло не так...";
 export const REVIEW_SUCCESS = "Отзыв успешно отправлен";
 export const SUBSRIPTION_SUCCESS = "Вы успешно подписались";
+export const SUBSCRIPTION_ERROR = "Нужно войти, чтобы подписаться";
 
 // классы навигации в header
 export const activeLinkClass = "navigation__link navigation__link_active";

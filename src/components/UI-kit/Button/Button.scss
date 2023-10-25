@@ -309,6 +309,16 @@
     }
   }
 
+  &_type_sendreview {
+    background-color: transparent;
+    &:hover {
+      color: $pink;
+    }
+    &:active {
+      color: $green;
+    }
+  }
+
   &_width-bookings {
     width: 226px;
   }
@@ -480,6 +490,14 @@
     &:hover {
       background-color: transparent;
       color: $main-black;
+    }
+  }
+}
+
+@include mobile {
+  .button {
+    &_width-bookings {
+      width: 100%;
     }
   }
 }
