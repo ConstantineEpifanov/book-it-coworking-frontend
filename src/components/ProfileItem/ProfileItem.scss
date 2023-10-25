@@ -67,6 +67,8 @@
     height: 120px;
     padding: 30px 20px;
     border-radius: 20px;
+    max-width: 455px;
+    width: calc(100vw - 40px);
     &__row {
       flex-direction: column;
       gap: 8px;

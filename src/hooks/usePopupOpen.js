@@ -18,10 +18,12 @@ export default function usePopupOpen() {
   const handleOpenPopup = () => {
     setIsOpenPopup(true);
     setPreviousLocation(location);
+    document.body.style.overflow = "hidden";
   };
 
   const handleClosePopup = React.useCallback(() => {
     setIsOpenPopup(false);
+    document.body.style.overflow = "auto";
     if (showPopup) {
       clearApiError();
       setPreviousLocation(null); // обнуляем стейт предыдущей локации

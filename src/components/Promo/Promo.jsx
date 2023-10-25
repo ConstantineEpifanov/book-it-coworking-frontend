@@ -14,7 +14,7 @@ const data = [
   {
     id: 1,
     title: "01",
-    subtitle: "Уникальные локации и комфортная обстановка",
+    subtitle: `Уникальные локации и\u00A0комфортная обстановка`,
   },
   {
     id: 2,
@@ -24,12 +24,12 @@ const data = [
   {
     id: 3,
     title: "03",
-    subtitle: "Гибкие тарифы и индивидуальный подход",
+    subtitle: "Гибкие тарифы и\u00A0индивидуальный подход",
   },
 ];
 
 export const Promo = () => {
-  const lastSearchRequest = localStorage.getItem("lastSearchRequest") || "";
+  const lastSearchRequest = sessionStorage.getItem("lastSearchRequest") || "";
   const { form, handleChange } = useForm({
     search: lastSearchRequest,
   });
@@ -45,7 +45,7 @@ export const Promo = () => {
       const coworkingsArrayFromPromo = [];
       navigate("/points", { state: { coworkingsArrayFromPromo } });
     }
-    localStorage.setItem("lastSearchRequest", form.search);
+    sessionStorage.setItem("lastSearchRequest", form.search);
     searchLocations({
       search: form.search,
       offset,
@@ -65,7 +65,7 @@ export const Promo = () => {
         <div className="promo__text">
           <h1 className="promo__title">Spot It</h1>
           <h2 className="promo__subtitle">
-            Сеть коворкингов созданная специально для IT специалистов
+            Сеть коворкингов, созданная специально для IT специалистов
           </h2>
           <form className="promo__search" onSubmit={handleSubmit} noValidate>
             <Input
@@ -73,11 +73,8 @@ export const Promo = () => {
               inputType="text"
               inputName="search"
               inputPlaceholder="Найти рабочее место..."
-              // inputValue=""
               inputValue={form.search}
-              // onChangeInput={onChangeInput}
               handleChange={handleChange}
-              // onFocusInput={handleFocus}
             />
             <Button
               btnClass="button__promo"

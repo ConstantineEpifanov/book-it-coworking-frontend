@@ -53,7 +53,7 @@ export const SecurityTab = () => {
           />
         </li>
         <li className="security__board-row">
-          <div>
+          <div className="security__sessions-container">
             <span className="security__feature-name">Активные сессии</span>
             <p className="security__feature-description">
               Нажмите “Выйти”, и в течение 10 минут вы выйдете из аккаунта на
@@ -69,7 +69,7 @@ export const SecurityTab = () => {
           />
         </li>
         <li className="security__board-row">
-          <div>
+          <div className="security__exit-container">
             <span className="security__feature-name">Выйти из аккаунта</span>
             <p className="security__feature-description">Завершить сеанс</p>
           </div>

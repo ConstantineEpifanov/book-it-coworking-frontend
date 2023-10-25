@@ -4,7 +4,7 @@ import "./SubscriptionForm.scss";
 import Input from "../../UI-kit/Input/Input";
 import Button from "../../UI-kit/Button/Button";
 
-const SubscriptionForm = ({ onSubmit }) => {
+const SubscriptionForm = ({ onSubmit, formValue, subStatus }) => {
   const onChangeInput = () => {};
 
   const handleSubmit = (e) => {
@@ -25,16 +25,16 @@ const SubscriptionForm = ({ onSubmit }) => {
               inputType="email"
               inputClass="input__subscription"
               inputPlaceholder="E-mail"
-              inputValue=""
+              inputValue={formValue}
               onChangeInput={onChangeInput}
             />
           </div>
           <Button
             btnClass="button__subscription button_type_form"
-            btnText="Подписаться"
+            btnText={subStatus ? "Подписаны!" : "Подписаться"}
             btnType="submit"
             onClick={handleSubmit}
-            isValidBtn
+            isValidBtn={!subStatus}
           />
         </fieldset>
       </form>
@@ -44,10 +44,14 @@ const SubscriptionForm = ({ onSubmit }) => {
 
 SubscriptionForm.propTypes = {
   onSubmit: PropTypes.func,
+  formValue: PropTypes.string,
+  subStatus: PropTypes.string,
 };
 
 SubscriptionForm.defaultProps = {
   onSubmit: () => {},
+  formValue: "",
+  subStatus: "",
 };
 
 export { SubscriptionForm };

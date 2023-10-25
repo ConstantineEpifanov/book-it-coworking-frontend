@@ -1,28 +1,31 @@
 @import "../../../scss/variables.scss";
 @import "../../../scss/mixins.scss";
+.logo {
+  &_type_footer {
+    fill: $white;
+  }
+  &:hover path {
+    fill: $pink;
+    fill-opacity: 1;
+    stroke-opacity: 0;
+  }
+
+  &:active path {
+    fill: $green;
+  }
+
+  & path {
+    transition: all 0.2s ease;
+  }
+}
 
 @include mobile {
   .logo_type_responsive {
     width: 60px;
     height: 20px;
   }
-}
-
-.logo {
-  &_type_footer {
-    fill: $white;
-  }
-  &:hover path {
-    fill: $green;
-    fill-opacity: 1;
-    stroke-opacity: 0;
-  }
-
-  &:active path {
-    fill: $pink;
-  }
-
-  & path {
-    transition: all 0.2s ease;
+  .logo_type_header {
+    width: 76px;
+    height: 15px;
   }
 }

@@ -1,4 +1,5 @@
 export const SCREEN_MEDIUM = 1270;
+export const SCREEN_MEDIUM_TABLET = 1025;
 export const SCREEN_SMALL = 770;
 
 // количество карточек на главной странице в начальном рендере и сколько добавляем от кнопки еще
@@ -73,6 +74,9 @@ export const NOT_FOUND_ERROR_SUBTITLE =
   "Попробуйте изменить параметры поиска и повторите попытку";
 export const SUCCESSFUL_LIKE = "Добавлено в избранное";
 export const SUCCESSFUL_DISLIKE = "Удалено из избранного";
+export const BASIC_ERROR = "Что-то пошло не так...";
+export const REVIEW_SUCCESS = "Отзыв успешно отправлен";
+export const SUBSRIPTION_SUCCESS = "Вы успешно подписались";
 
 // классы навигации в header
 export const activeLinkClass = "navigation__link navigation__link_active";
