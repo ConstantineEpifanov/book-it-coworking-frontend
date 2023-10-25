@@ -1,5 +1,9 @@
 import { useState, useEffect } from "react";
-import { SCREEN_SMALL, SCREEN_MEDIUM } from "../utils/constants";
+import {
+  SCREEN_SMALL,
+  SCREEN_MEDIUM,
+  SCREEN_MEDIUM_TABLET,
+} from "../utils/constants";
 
 export const useResize = () => {
   const [width, setWidth] = useState(0);
@@ -22,6 +26,7 @@ export const useResize = () => {
     width,
     isScreenSmall: width < SCREEN_SMALL,
     isScreenMedium: width < SCREEN_MEDIUM,
+    isScreenMediumTablet: width < SCREEN_MEDIUM_TABLET,
     isScreenLarge: width > SCREEN_MEDIUM,
   };
 };

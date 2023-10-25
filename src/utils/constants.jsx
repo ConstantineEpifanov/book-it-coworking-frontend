@@ -1,4 +1,5 @@
 export const SCREEN_MEDIUM = 1270;
+export const SCREEN_MEDIUM_TABLET = 1025;
 export const SCREEN_SMALL = 770;
 
 // количество карточек на главной странице в начальном рендере и сколько добавляем от кнопки еще

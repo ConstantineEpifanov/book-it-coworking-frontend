@@ -107,6 +107,9 @@ function App() {
       currentUser,
       setСurrentUser,
       showMessage,
+      isOpenPopup,
+      handleOpenPopup,
+      handleClosePopup,
     }),
     [
       isLoading,
@@ -116,6 +119,9 @@ function App() {
       currentUser,
       setСurrentUser,
       showMessage,
+      isOpenPopup,
+      handleOpenPopup,
+      handleClosePopup,
     ],
   );
 

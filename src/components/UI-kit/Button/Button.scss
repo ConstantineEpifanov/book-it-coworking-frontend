@@ -476,6 +476,22 @@
       background-color: $main-white;
     }
   }
+
+  &_type_popup {
+    width: auto;
+    padding: 16px 32px;
+    display: flex;
+    align-items: center;
+    border-radius: 100vmax;
+    border: 2px solid $main-black;
+    background-color: $main-black;
+    color: $main-white;
+
+    &:hover {
+      background-color: transparent;
+      color: $main-black;
+    }
+  }
 }
 
 @include mobile {
