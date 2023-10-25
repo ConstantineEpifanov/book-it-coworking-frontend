@@ -7,13 +7,19 @@ import { editUserData } from "../../utils/Api";
 import Button from "../UI-kit/Button/Button";
 import Input from "../UI-kit/Input/Input";
 import ProfileDataForm from "../Forms/ProfileDataForm/ProfileDataForm";
+import AvatarUpload from "../AvatarUpload/AvatarUpload";
 import { SectionTitle } from "../SectionTitle/SectionTitle";
 
 import "./ProfileDataTab.scss";
 
-import ProfilePhoto from "../../images/ProfilePhoto.png";
+// import ProfilePhoto from "../../images/ProfilePhoto.png";
 
-import { formatPhone, formatDate, getMaxDate } from "../../utils/utils";
+import {
+  formatPhone,
+  formatDate,
+  getMaxDate,
+  checkMobile,
+} from "../../utils/utils";
 import { PROFILE_DATA_UPDATE, BASIC_ERROR } from "../../utils/constants";
 
 export const ProfileDataTab = () => {
@@ -30,18 +36,16 @@ export const ProfileDataTab = () => {
   }, [currentUser]);
 
   useEffect(() => {
-    function checkIsMobile() {
-      if (window.matchMedia("(max-width: 767px)").matches) {
-        setIsEdited(true);
-      } else {
-        setIsEdited(false);
-      }
+    function handleResize() {
+      setIsEdited(checkMobile());
     }
 
-    checkIsMobile();
-    window.addEventListener("resize", checkIsMobile);
+    setIsEdited(checkMobile());
+
+    window.addEventListener("resize", handleResize);
+
     return () => {
-      window.removeEventListener("resize", checkIsMobile);
+      window.removeEventListener("resize", handleResize);
     };
   }, []);
 
@@ -72,6 +76,16 @@ export const ProfileDataTab = () => {
     }));
   };
 
+  function handleErrors(err) {
+    if (err.phone) {
+      showMessage(err.phone[0], "error");
+    } else if (err.email) {
+      showMessage(err.email[0], "error");
+    } else {
+      showMessage(BASIC_ERROR, "error");
+    }
+  }
+
   const handleSubmit = (e) => {
     e.preventDefault();
     setIsSubmitting(true);
@@ -80,12 +94,12 @@ export const ProfileDataTab = () => {
         showMessage(PROFILE_DATA_UPDATE, "info");
         setСurrentUser(editedUser);
       })
-      .catch(() => showMessage(BASIC_ERROR, "error"))
+      .catch(handleErrors)
       .finally(() => {
         setIsSubmitting(false);
       });
 
-    setIsEdited(false);
+    setIsEdited(checkMobile());
     handleScrollToTop();
   };
 
@@ -102,12 +116,12 @@ export const ProfileDataTab = () => {
         titleText="Персональные данные"
         titleClass="section-title_profile"
       />
-
-      <img
+      <AvatarUpload />
+      {/* <img
         src={ProfilePhoto}
         className="profile-data__image"
         alt="Фото профиля"
-      />
+      /> */}
 
       {!isEdited ? (
         <ul className="profile-data__info-list">
@@ -158,6 +172,7 @@ export const ProfileDataTab = () => {
                   required: true,
                   type: "text",
                   maxLength: 21,
+                  minLength: 2,
                 },
                 {
                   id: 2,
@@ -166,6 +181,7 @@ export const ProfileDataTab = () => {
                   required: true,
                   type: "text",
                   maxLength: 21,
+                  minLength: 2,
                 },
                 {
                   id: 3,
@@ -208,6 +224,7 @@ export const ProfileDataTab = () => {
                     inputPlaceholder={field.placeholder}
                     inputRequired={field.required}
                     inputMaxLength={field.maxLength}
+                    inputMinLength={field.minLength}
                     inputMaxValue={field.max}
                   />
                 </li>

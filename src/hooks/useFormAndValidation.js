@@ -2,9 +2,9 @@ import React from "react";
 
 const validationPatterns = {
   // first_name: /^[a-zA-Zа-яА-Я\sё.-]+$/,
-  first_name: /^[a-zA-Zа-яА-Я\sё.-]{0,20}$/,
+  first_name: /^[a-zA-Zа-яА-Я\sё.-]{2,20}$/,
   // last_name: /^[a-zA-Zа-яА-Я\sё.-]+$/,
-  last_name: /^[a-zA-Zа-яА-Я\sё.-]{0,20}$/,
+  last_name: /^[a-zA-Zа-яА-Я\sё.-]{2,20}$/,
   email: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
   phone: /^\+7\d{10}$/,
   // birth_date: /^(0[1-9]|[12][0-9]|3[01])\.(0[1-9]|1[0-2])\.\d{4}$/,
@@ -15,8 +15,8 @@ const validationPatterns = {
 };
 
 const validationMessages = {
-  first_name: "Не более 20 символов, только буквы, дефисы и точки",
-  last_name: "Не более 20 символов, только буквы, дефисы и точки",
+  first_name: "от 2 до 20 символов, только буквы, дефисы и точки",
+  last_name: "от 2 до 20 символов, только буквы, дефисы и точки",
   email: "Введите корректный email",
   phone: "Введите номер телефона в формате +7XXXXXXXXXX",
   birth_date: "Введите дату в формате гггг-мм-дд",
