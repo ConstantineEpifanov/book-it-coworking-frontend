@@ -1,11 +1,19 @@
-import React from "react";
+import React, { useContext } from "react";
 import PropTypes from "prop-types";
+import { CurrentUserContext } from "../../../contexts/currentUserContext";
+
+import { SUBSCRIPTION_ERROR } from "../../../utils/constants";
+
 import "./SubscriptionForm.scss";
 import Input from "../../UI-kit/Input/Input";
 import Button from "../../UI-kit/Button/Button";
 
-const SubscriptionForm = ({ onSubmit, formValue, subStatus }) => {
-  const onChangeInput = () => {};
+const SubscriptionForm = ({ onSubmit }) => {
+  const { currentUser, isLoggedIn, showMessage } =
+    useContext(CurrentUserContext);
+
+  const handleInputFocus = () =>
+    !isLoggedIn ? showMessage(SUBSCRIPTION_ERROR, "error") : null;
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -25,16 +33,16 @@ const SubscriptionForm = ({ onSubmit, formValue, subStatus }) => {
               inputType="email"
               inputClass="input__subscription"
               inputPlaceholder="E-mail"
-              inputValue={formValue}
-              onChangeInput={onChangeInput}
+              inputValue={currentUser.email}
+              handleFocus={handleInputFocus}
             />
           </div>
           <Button
             btnClass="button__subscription button_type_form"
-            btnText={subStatus ? "Подписаны!" : "Подписаться"}
+            btnText={currentUser.subscribed ? "Подписаны!" : "Подписаться"}
             btnType="submit"
             onClick={handleSubmit}
-            isValidBtn={!subStatus}
+            isValidBtn={isLoggedIn && !currentUser.subscribed}
           />
         </fieldset>
       </form>
@@ -44,14 +52,10 @@ const SubscriptionForm = ({ onSubmit, formValue, subStatus }) => {
 
 SubscriptionForm.propTypes = {
   onSubmit: PropTypes.func,
-  formValue: PropTypes.string,
-  subStatus: PropTypes.string,
 };
 
 SubscriptionForm.defaultProps = {
   onSubmit: () => {},
-  formValue: "",
-  subStatus: "",
 };
 
 export { SubscriptionForm };

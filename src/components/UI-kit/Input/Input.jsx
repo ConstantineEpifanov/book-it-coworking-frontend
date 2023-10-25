@@ -11,6 +11,7 @@ function Input({
   inputPlaceholder,
   inputInfo,
   handleChange,
+  handleFocus,
   inputRequired,
   inputDisabled,
   inputMaxLength,
@@ -34,6 +35,7 @@ function Input({
         placeholder={inputPlaceholder}
         value={inputValue || ""}
         onChange={handleChange}
+        onFocus={handleFocus}
         required={inputRequired}
         disabled={inputDisabled}
         maxLength={inputMaxLength}
@@ -64,6 +66,7 @@ Input.propTypes = {
   inputMaxValue: PropTypes.string,
 
   handleChange: () => {},
+  handleFocus: () => {},
 };
 
 Input.defaultProps = {
@@ -78,6 +81,7 @@ Input.defaultProps = {
   inputMaxLength: undefined,
   inputMaxValue: undefined,
   handleChange: () => {},
+  handleFocus: () => {},
 };
 
 export default Input;

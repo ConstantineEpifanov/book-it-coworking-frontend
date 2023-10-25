@@ -47,7 +47,7 @@
     max-width: 100%;
   }
   &__input {
-    min-width: 415px;
+    width: 415px;
     height: 58px;
     padding: 16px 12px 12px 20px;
   }
@@ -118,6 +118,9 @@
     }
     &__buttons > :first-child {
       display: none;
+    }
+    &__input {
+      width: calc(100vw - 40px);
     }
   }
 }

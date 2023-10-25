@@ -161,9 +161,28 @@
 }
 
 @include mobile {
-  .bookings {
-    &-card {
+  .bookings-card {
+    flex-direction: column;
+    height: 100%;
+    width: calc(100vw - 40px);
+    max-width: 500px;
+    gap: 12px;
+    &__image {
+      display: block;
+      height: 100%;
+      max-height: 160px;
       width: 100%;
+      object-fit: cover;
+    }
+    &__text-container {
+      padding: 0px 12px 12px 12px;
+    }
+    &__name {
+      line-height: 24px;
+    }
+    &__status {
+      margin: 12px 0;
+      @include use-font(10px, 14px, 300);
     }
   }
 }
