@@ -492,14 +492,6 @@
       color: $main-black;
     }
   }
-}
-
-@include mobile {
-  .button {
-    &_width-bookings {
-      width: 100%;
-    }
-  }
 
   &_type_submit-search {
     background-color: $black;
@@ -508,5 +500,13 @@
 
   &:hover {
     opacity: 0.7;
+  }
+}
+
+@include mobile {
+  .button {
+    &_width-bookings {
+      width: 100%;
+    }
   }
 }
