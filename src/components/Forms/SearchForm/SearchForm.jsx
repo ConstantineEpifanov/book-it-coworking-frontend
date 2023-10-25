@@ -85,7 +85,7 @@ const SearchForm = ({
         />
         <MultiChoiceDropdown
           dropdownName="metro"
-          dropdownTitle="Станции метро"
+          dropdownTitle="Линии метро"
           array={metroArray}
           size="max"
           handleSelectChange={handleSelectChange}
