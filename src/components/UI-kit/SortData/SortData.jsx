@@ -47,6 +47,7 @@ const SortData = ({
         <div className="sort__label">
           <p className="sort__label_text">{!sort ? titleSort : sort}</p>
           <button
+            type="button"
             className={`sort__label_button   ${
               open && "sort__label_button-active"
             } `}

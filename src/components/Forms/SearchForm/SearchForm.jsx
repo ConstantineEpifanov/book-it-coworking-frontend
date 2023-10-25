@@ -4,16 +4,24 @@ import Button from "../../UI-kit/Button/Button";
 import Input from "../../UI-kit/Input/Input";
 import logoSearch from "../../../images/search-icon.svg";
 import SortData from "../../UI-kit/SortData/SortData";
-import { coWorkingOptions, metroOptions } from "../../../config/dataOptions";
+import MultiChoiceDropdown from "../../UI-kit/MultiChoiceDropdown/MultiChoiceDropdown";
+import { coWorkingOptions } from "../../../config/dataOptions";
 import { searchLocations } from "../../../utils/Api";
 
 import useForm from "../../../hooks/useForm";
 
-const SearchForm = ({ handleUpdateCoworkings, limit, offset }) => {
-  const lastSearchRequest = localStorage.getItem("lastSearchRequest") || "";
+const SearchForm = ({
+  metroArray,
+  handleUpdateCoworkings,
+  limit,
+  offset,
+  resetPagination,
+}) => {
+  const lastSearchRequest = sessionStorage.getItem("lastSearchRequest") || "";
   const { form, handleChange, handleSelectChange } = useForm({
     search: lastSearchRequest,
     category: "",
+    metro: [],
   });
 
   const inputComponent = React.useMemo(
@@ -33,7 +41,8 @@ const SearchForm = ({ handleUpdateCoworkings, limit, offset }) => {
 
   const formSearchSubmit = (e) => {
     e.preventDefault();
-    localStorage.setItem("lastSearchRequest", form.search);
+    sessionStorage.setItem("lastSearchRequest", form.search);
+    resetPagination();
     searchLocations({
       search: form.search,
       category: form.category,
@@ -74,13 +83,20 @@ const SearchForm = ({ handleUpdateCoworkings, limit, offset }) => {
           size="max"
           handleSelectChange={handleSelectChange}
         />
-        <SortData
-          selectName="metro"
-          titleSort="Линия метро"
-          array={metroOptions}
-          size="min"
+        <MultiChoiceDropdown
+          dropdownName="metro"
+          dropdownTitle="Станции метро"
+          array={metroArray}
+          size="max"
           handleSelectChange={handleSelectChange}
         />
+        {/* <SortData
+selectName="metro"
+titleSort="Линия метро"
+array={metroOptions}
+size="min"
+handleSelectChange={handleSelectChange}
+/> */}
         <Button
           btnClass="button_type_form button_type_form-select"
           btnType="submit"
@@ -96,6 +112,8 @@ SearchForm.propTypes = {
   handleUpdateCoworkings: PropTypes.func.isRequired,
   limit: PropTypes.number,
   offset: PropTypes.number,
+  metroArray: PropTypes.arrayOf(PropTypes.string).isRequired,
+  resetPagination: PropTypes.func.isRequired,
 };
 
 SearchForm.defaultProps = {

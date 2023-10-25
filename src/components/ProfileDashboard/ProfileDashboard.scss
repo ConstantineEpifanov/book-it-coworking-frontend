@@ -28,8 +28,8 @@
   }
   &__link {
     text-decoration: none;
-    stroke: $green;
-    color: $green;
+    stroke: $white;
+    color: $white;
     &:hover {
       stroke: $pink;
       color: $pink;
@@ -37,6 +37,18 @@
     &:active {
       stroke: $black;
       color: $black;
+    }
+  }
+}
+
+@include tablet {
+  .profile-dashboard {
+    margin: 0 auto;
+    &__card-row {
+      flex-direction: column;
+    }
+    &__link {
+      margin: 0 auto;
     }
   }
 }

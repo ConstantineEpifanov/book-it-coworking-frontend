@@ -333,35 +333,85 @@
     padding: 20px 20px 20px 78px;
     text-align: left;
     border: 2px solid $black;
+    border-radius: 40px;
     font-size: 18px;
     font-style: normal;
     font-weight: 400;
     line-height: 44px;
-    transition: opacity 0.3s ease-in-out;
-
+    transition: all 0.3s ease-in-out;
     &:hover {
-      opacity: 0.7;
+      color: $pink;
+    }
+    &:active {
+      color: $black;
+      background-color: $pink;
     }
 
     &_data {
       @include button-with-image("../../../images/profile-icons/user.svg");
+      &:hover {
+        @include button-with-image(
+          "../../../images/profile-icons/user-hover.svg"
+        );
+      }
+      &:active {
+        @include button-with-image("../../../images/profile-icons/user.svg");
+      }
     }
 
     &_security {
       line-height: 22px;
       @include button-with-image("../../../images/profile-icons/security.svg");
+      &:hover {
+        @include button-with-image(
+          "../../../images/profile-icons/security-hover.svg"
+        );
+      }
+      &:active {
+        @include button-with-image(
+          "../../../images/profile-icons/security.svg"
+        );
+      }
     }
 
     &_payment {
       @include button-with-image("../../../images/profile-icons/payment.svg");
+      &:hover {
+        @include button-with-image(
+          "../../../images/profile-icons/payment-hover.svg"
+        );
+      }
+      &:active {
+        @include button-with-image("../../../images/profile-icons/payment.svg");
+      }
     }
 
     &_bookings {
       @include button-with-image("../../../images/profile-icons/bookings.svg");
+      &:hover {
+        @include button-with-image(
+          "../../../images/profile-icons/bookings-hover.svg"
+        );
+      }
+      &:active {
+        @include button-with-image(
+          "../../../images/profile-icons/bookings.svg"
+        );
+      }
     }
 
     &_favorites {
       @include button-with-image("../../../images/profile-icons/favorites.svg");
+      &:hover {
+        @include button-with-image(
+          "../../../images/profile-icons/favorites-hover.svg"
+        );
+      }
+      &:active {
+        @include button-with-image(
+          "../../../images/profile-icons/favorites.svg"
+        );
+      }
     }
 
     &_data-active {
@@ -387,7 +437,7 @@
 
     &_bookings-active {
       @include button-with-image(
-        "../../../images/profile-icons/bookings-active.svg"
+        "../../../images/profile-icons/bookings-activ.svg"
       );
       @include button-active;
     }
