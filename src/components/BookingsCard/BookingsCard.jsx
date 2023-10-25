@@ -1,13 +1,14 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 
-import { ORDER_STATUSES } from "../../utils/constants";
+import { CurrentUserContext } from "../../contexts/currentUserContext";
+
+import { ORDER_STATUSES, REVIEW_SUCCESS } from "../../utils/constants";
 import { publishReview, cancelOrder } from "../../utils/Api";
 import { formatDate, getPopupText } from "../../utils/utils";
 
 import usePopupOpen from "../../hooks/usePopupOpen";
-
 import ReviewsForm from "../Forms/ReviewsForm/ReviewsForm";
 
 import Button from "../UI-kit/Button/Button";
@@ -37,6 +38,7 @@ export const BookingsCard = ({ item, onUpdateStatus }) => {
   const [isCancellationConfirmed, setIsCancellationConfirmed] = useState(false);
   const [isReviewFormOpen, setIsReviewFormOpen] = useState(false);
   const [serverError, setServerError] = useState(null);
+  const { showMessage } = useContext(CurrentUserContext);
 
   const handleCloseBookingPopup = () => {
     handleClosePopup();
@@ -64,6 +66,7 @@ export const BookingsCard = ({ item, onUpdateStatus }) => {
     publishReview(item.location_id, item.spot, item.id, data)
       .then(() => {
         handleClosePopup();
+        showMessage(REVIEW_SUCCESS, "info");
       })
       .catch((e) => {
         // eslint-disable-next-line no-underscore-dangle

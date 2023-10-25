@@ -3,8 +3,8 @@
 
 @include mobile {
   .logo_type_responsive {
-    width: 60px;
-    height: 20px;
+    width: 76px;
+    height: 15px;
   }
 }
 
@@ -13,13 +13,13 @@
     fill: $white;
   }
   &:hover path {
-    fill: $green;
+    fill: $pink;
     fill-opacity: 1;
     stroke-opacity: 0;
   }
 
   &:active path {
-    fill: $pink;
+    fill: $green;
   }
 
   & path {

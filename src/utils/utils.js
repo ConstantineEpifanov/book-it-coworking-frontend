@@ -50,3 +50,8 @@ export const getPopupText = (booking) => {
   }
   return "Отменить бронирование";
 };
+
+export const getMaxDate = () => {
+  const maxDate = new Date();
+  return maxDate.toISOString().split("T")[0];
+};

@@ -186,7 +186,7 @@ function App() {
           </Routes>
         )}
         <InfoPopup infoType={infoType} infoMessage={infoMessage} />
-        <Footer onSubmit={() => {}} />
+        <Footer />
       </div>
     </CurrentUserContext.Provider>
   );

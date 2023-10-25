@@ -328,7 +328,7 @@
   &__profile {
     box-sizing: border-box;
     background-color: $white;
-    width: 360px;
+    max-width: 360px;
     height: 84px;
     padding: 20px 20px 20px 78px;
     text-align: left;

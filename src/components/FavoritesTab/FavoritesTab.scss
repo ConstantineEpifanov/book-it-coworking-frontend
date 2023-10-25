@@ -4,10 +4,11 @@
 .favorites {
   font-family: $font-family;
   color: $black;
-  width: 600px;
   text-align: center;
   &__title {
     @include mp-null;
+    display: block;
+    width: 100%;
     text-align: left;
     font-size: 28px;
     font-style: normal;
@@ -83,6 +84,17 @@
       display: block;
       cursor: pointer;
     }
+    &-pointlink {
+      text-decoration: none;
+      color: $black;
+      transition: 0.3s all ease;
+      &:hover {
+        color: $green;
+      }
+      &:active {
+        color: $pink;
+      }
+    }
     &-address {
       @include mp-null;
       margin-bottom: 16px;
@@ -100,10 +112,66 @@
       line-height: 22px;
     }
   }
-  &__nodata {
+  &__nodata,
+  &__loading {
     margin-top: 40px;
     display: block;
     width: 100%;
     text-align: center;
+  }
+}
+
+@include mobile {
+  .favorites {
+    &__title {
+      text-align: center;
+    }
+    &__card {
+      border: none;
+      border-radius: 0;
+      max-width: 175px;
+      justify-self: center;
+      &:hover {
+        box-shadow: none;
+      }
+      &:last-child {
+        align-self: flex-start;
+      }
+      &-address {
+        display: -webkit-box;
+        -webkit-line-clamp: 2; /* Ограничение до двух строк */
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+      }
+      &-list {
+        margin: 30px auto 0;
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(185px, 1fr));
+        grid-template-rows: auto;
+        justify-content: center;
+      }
+      &-text-container {
+        @include mp-null;
+      }
+      &-rating-row {
+        margin: 8px auto 8px;
+      }
+      &-name {
+        @include use-font;
+        @include use-cut;
+        margin-top: 8px;
+        text-align: left;
+      }
+      &-image {
+        box-sizing: border-box;
+        width: 175px;
+        height: 175px;
+        border-radius: 40px;
+        border: 2px solid $black;
+      }
+      &-lookbutton {
+        display: none;
+      }
+    }
   }
 }

@@ -14,6 +14,7 @@ function Input({
   inputRequired,
   inputDisabled,
   inputMaxLength,
+  inputMaxValue,
 }) {
   return (
     <div className="input__items">
@@ -37,6 +38,7 @@ function Input({
         disabled={inputDisabled}
         maxLength={inputMaxLength}
         autoComplete="off"
+        max={inputMaxValue}
       />
       {/* если нет ошибки ввода, то покажи информацию */}
       {inputError ? (
@@ -59,6 +61,7 @@ Input.propTypes = {
   inputRequired: PropTypes.bool,
   inputMaxLength: PropTypes.number,
   inputDisabled: PropTypes.bool,
+  inputMaxValue: PropTypes.string,
 
   handleChange: () => {},
 };
@@ -73,6 +76,7 @@ Input.defaultProps = {
   inputRequired: true,
   inputDisabled: false,
   inputMaxLength: undefined,
+  inputMaxValue: undefined,
   handleChange: () => {},
 };
 

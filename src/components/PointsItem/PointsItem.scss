@@ -8,7 +8,7 @@
   max-height: 500px;
   display: flex;
   flex-direction: column;
-  border-radius: 40px;
+  border-radius: 47px;
   border: 2px solid $black;
   background-color: $main-white;
   overflow: hidden;
@@ -35,6 +35,7 @@
     flex-direction: row;
     max-width: 1120px;
     max-height: 460px;
+    border-radius: 40px;
   }
 
   &__container {

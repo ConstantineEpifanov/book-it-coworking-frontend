@@ -67,6 +67,24 @@
   line-height: 48px;
 }
 
+@mixin use-font(
+  $font-size: 20px,
+  $line-height: 24px,
+  $font-weight: 500,
+  $font-style: normal
+) {
+  font-size: $font-size;
+  line-height: $line-height;
+  font-weight: $font-weight;
+  font-style: $font-style;
+}
+
+@mixin use-cut {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
 //  -------------- INPUT -----------------
 @mixin error-input {
   border: 2px solid $alert-red;
@@ -100,14 +118,16 @@
 
 // --------------CARDS-------------------
 
-@mixin card-border-color {
+@mixin card-border-color($addBoxShadow: true) {
   transition: all 0.3s ease;
+  border: 2px solid transparent;
 
   &:hover {
     border-color: $pink;
-    box-shadow: 0px 5px 24px 0px rgba(18, 32, 35, 0.1);
+    @if $addBoxShadow {
+      box-shadow: 0px 5px 24px 0px rgba(18, 32, 35, 0.1);
+    }
   }
-
   &:active {
     border-color: $green;
   }
