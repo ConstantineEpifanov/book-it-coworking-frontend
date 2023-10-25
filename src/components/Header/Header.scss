@@ -33,7 +33,12 @@
         padding: 20px 0;
         margin: 0;
         box-sizing: border-box;
+        color: $black;
+        &:hover {
+          color: $pink;
+        }
       }
+
       &_active {
         border-bottom: 2px solid $green;
       }

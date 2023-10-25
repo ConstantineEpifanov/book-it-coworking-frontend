@@ -24,7 +24,7 @@
   user-select: none;
 }
 .navbar__menu_opened {
-  width: 100%; 
+  width: 100%;
 }
 
 .navbar_no-active {
@@ -103,7 +103,7 @@
   /* border-radius: 10px; */
   box-sizing: border-box;
   background: #fdf8f1;
-  padding: 24px 24px 36px 24px; 
+  padding: 24px 24px 36px 24px;
   bottom: border-box;
   /* box-shadow: 0px 0px 25px rgba(0, 0, 0, 0.15); */
   position: relative;
@@ -128,4 +128,3 @@
   visibility: visible;
   background: #fdf8f1;
 }
-
