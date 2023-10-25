@@ -90,15 +90,8 @@ const SearchForm = ({
           size="max"
           handleSelectChange={handleSelectChange}
         />
-        {/* <SortData
-selectName="metro"
-titleSort="Линия метро"
-array={metroOptions}
-size="min"
-handleSelectChange={handleSelectChange}
-/> */}
         <Button
-          btnClass="button_type_form button_type_form-select"
+          btnClass="button_type_form button_type_form-select button_type_submit-search"
           btnType="submit"
           btnText="Искать"
         />

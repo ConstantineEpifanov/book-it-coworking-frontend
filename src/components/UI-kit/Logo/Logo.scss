@@ -1,13 +1,6 @@
 @import "../../../scss/variables.scss";
 @import "../../../scss/mixins.scss";
 
-@include mobile {
-  .logo_type_responsive {
-    width: 60px;
-    height: 20px;
-  }
-}
-
 .logo {
   &_type_footer {
     fill: $white;
@@ -24,5 +17,12 @@
 
   & path {
     transition: all 0.2s ease;
+  }
+}
+
+@include mobile {
+  .logo {
+    width: 76px;
+    height: 15px;
   }
 }
