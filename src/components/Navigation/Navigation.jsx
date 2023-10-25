@@ -4,9 +4,11 @@ import { NavLink } from "react-router-dom";
 
 import "./Navigation.scss";
 import { activeLinkClass } from "../../utils/constants";
+import { HeaderNav } from "../Header/HeaderNav";
 
 function Navigation() {
   return (
+    <>
     <nav className="navigation">
       <div className="navigation__item">
         <NavLink
@@ -35,6 +37,8 @@ function Navigation() {
         </NavLink>
       </div>
     </nav>
+    <HeaderNav/>
+    </>
   );
 }
 

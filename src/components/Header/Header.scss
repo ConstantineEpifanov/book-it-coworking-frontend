@@ -1,5 +1,6 @@
 @import "../../scss/variables.scss";
 @import "../../scss/mixins.scss";
+
 .header {
   position: sticky;
   top: 0;
@@ -16,7 +17,7 @@
   &__profile {
     @include flex-box-row;
     align-items: center;
-    &-img{
+    &-img {
       width: 48px;
       height: 48px;
       // в будущем если будет загружаться картинка, то будет скругление
@@ -37,5 +38,12 @@
         border-bottom: 2px solid $green;
       }
     }
+  }
+}
+
+@include mobile {
+  .header {
+    padding-left: 20px;
+    padding-right: 20px;
   }
 }

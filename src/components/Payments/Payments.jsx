@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { useLocation } from "react-router-dom";
-import PropTypes from "prop-types";
 import "./Payments.scss";
 import PaymentsForm from "../Forms/PaymentsForm/PaymentsForm";
 import Popup from "../Popup/Popup";
@@ -87,19 +86,6 @@ const Payments = () => {
       </article>
     </section>
   );
-};
-
-Payments.propTypes = {
-  place: PropTypes.shape({
-    name: PropTypes.string.isRequired,
-    location: PropTypes.string.isRequired,
-    category: PropTypes.string.isRequired,
-    equipment: PropTypes.string.isRequired,
-    date: PropTypes.string.isRequired,
-    start_time: PropTypes.string.isRequired,
-    end_time: PropTypes.string.isRequired,
-    bill: PropTypes.string.isRequired,
-  }).isRequired,
 };
 
 export default Payments;

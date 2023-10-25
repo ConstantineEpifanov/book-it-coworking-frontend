@@ -12,8 +12,10 @@
   gap: 34px;
   border-radius: 40px;
   border: 2px solid $black;
-  background: $main-white;
+  background: $white;
   color: $black;
+  width: 49%;
+  box-sizing: border-box;
 
   &__author {
     @include mp-null;

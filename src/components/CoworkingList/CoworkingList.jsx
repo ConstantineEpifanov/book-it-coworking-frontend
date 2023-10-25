@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useContext, useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import { CurrentUserContext } from "../../contexts/currentUserContext";
@@ -24,22 +25,20 @@ import { NotFoundError } from "../NotFoundError/NotFoundError";
 export const CoworkingList = () => {
   const [coworkingsArray, setCoworkingsArray] = useState([]);
   const [nextPageURL, setNextPageURL] = useState(null);
-
   const [isNotFoundError, setIsNotFoundError] = useState(false);
-
   const [mapPoints, setMapPoints] = useState([]);
   const { isLoading, setIsLoading } = useContext(CurrentUserContext);
+  const { initialLimit, limit, offset, nextPage } = usePagination();
+
   const location = useLocation();
 
   const coworkingsFromPromo = location.state
     ? location.state.coworkingsFromPromo
     : undefined;
 
-  const { initialLimit, limit, offset, nextPage } = usePagination();
-
-  const getLocations = (offsetParameter, limitParameter, nameParamerer) => {
+  const getLocations = (offsetParameter, limitParameter, nameParameter) => {
     searchLocations({
-      name: nameParamerer,
+      name: nameParameter,
       offset: offsetParameter,
       limit: limitParameter,
     })
@@ -88,7 +87,6 @@ export const CoworkingList = () => {
       setCoworkingsArray(coworkingsFromPromo.results);
       setNextPageURL(coworkingsFromPromo.next);
     } else fetchData();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
