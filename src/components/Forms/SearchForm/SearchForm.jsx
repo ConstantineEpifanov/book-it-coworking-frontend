@@ -91,7 +91,7 @@ const SearchForm = ({
           handleSelectChange={handleSelectChange}
         />
         <Button
-          btnClass="button_type_form button_type_form-select button_type_submit-search"
+          btnClass="button_type_form button_type_submit-search"
           btnType="submit"
           btnText="Искать"
         />
