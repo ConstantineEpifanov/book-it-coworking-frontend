@@ -1,0 +1,63 @@
+@import "../../scss/variables.scss";
+@import "../../scss/mixins.scss";
+
+.avatar {
+  margin-top: 40px;
+  width: 110px;
+  height: 110px;
+  position: relative;
+  transition: all 0.5s ease;
+
+  &:hover .avatar__button {
+    visibility: visible;
+    opacity: 1;
+  }
+  &__image {
+    display: block;
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+  }
+  &__button {
+    visibility: hidden;
+    opacity: 0;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    background-color: $black;
+    color: #fff;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    border: none;
+    outline: none;
+    transition: all 0.5s ease;
+    &:hover {
+      opacity: 0.9;
+      background-color: $pink;
+    }
+    &:active {
+      opacity: 1;
+      background-color: $green;
+    }
+  }
+  &__icon {
+    font-size: 36px;
+  }
+}
+
+@include mobile {
+  .avatar {
+    margin-top: 30px;
+    align-self: center;
+    width: 70px;
+    height: 70px;
+    &__icon {
+      font-size: 24px;
+    }
+  }
+}
