@@ -177,6 +177,12 @@
   }
 }
 
+@mixin tablet-with-minwidth {
+  @media screen and (min-width: #{$mobile-breakpoint + 1}) and (max-width: #{$tablet-breakpoint}) {
+    @content;
+  }
+}
+
 @mixin desktop {
   @media screen and (min-width: #{$tablet-breakpoint + 1}) {
     @content;
