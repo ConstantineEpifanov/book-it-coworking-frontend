@@ -172,6 +172,12 @@
 }
 
 @mixin tablet {
+  @media screen and (max-width: #{$tablet-breakpoint}) {
+    @content;
+  }
+}
+
+@mixin tablet-with-minwidth {
   @media screen and (min-width: #{$mobile-breakpoint + 1}) and (max-width: #{$tablet-breakpoint}) {
     @content;
   }
