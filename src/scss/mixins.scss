@@ -172,7 +172,7 @@
 }
 
 @mixin tablet {
-  @media screen and (min-width: #{$mobile-breakpoint + 1}) and (max-width: #{$tablet-breakpoint}) {
+  @media screen and (max-width: #{$tablet-breakpoint}) {
     @content;
   }
 }
