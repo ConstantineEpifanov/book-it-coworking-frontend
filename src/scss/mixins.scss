@@ -34,7 +34,6 @@
   line-height: 30px;
 }
 
-
 // для выпадающего списка и информации в блоке оплаты
 @mixin text-font-select {
   font-family: $font-family;
@@ -165,6 +164,11 @@
 
 @mixin tablet {
   @media screen and (max-width: #{$tablet-breakpoint}) {
+    @content;
+  }
+}
+@mixin laptop {
+  @media screen and (max-width: #{$desktop-breakpoint}) {
     @content;
   }
 }

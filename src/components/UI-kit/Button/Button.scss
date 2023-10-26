@@ -467,3 +467,12 @@
     }
   }
 }
+
+@include mobile {
+  .button__subscription {
+    @include text-font-normal-mob;
+    padding: 12px;
+    max-width: 120px;
+    height: 44px;
+  }
+}

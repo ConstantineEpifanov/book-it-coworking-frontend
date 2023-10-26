@@ -2,20 +2,21 @@
 @import "./../../scss/mixins.scss";
 
 .footer {
-  padding: 60px 0 120px 0;
+  padding: 80px 160px 120px;
   display: flex;
   background-color: $black;
 
   &__container {
     margin: 0 auto;
-    max-width: calc(100% - 40px);
+    width: 100%;
+    // max-width: calc(100% - 40px);
     display: flex;
-    gap: 74px;
+    gap: 65px;
   }
 
   &__info {
     display: flex;
-    gap: 29px;
+    gap: 125px;
     flex: 1;
     order: 1;
   }
@@ -32,7 +33,7 @@
 
   &__icons {
     display: flex;
-    gap: 12px;
+    gap: 20px;
     &_mobile {
       display: none;
     }
@@ -82,16 +83,23 @@
     font-weight: 400;
     line-height: 30px;
     @include link-color-transition;
+    &_tel {
+      padding-bottom: 8px;
+    }
+  }
+}
+
+@include laptop {
+  .footer {
+    &__container {
+      flex-direction: column;
+      gap: 28px;
+    }
   }
 }
 
 @include tablet {
   .footer {
-    padding-bottom: 60px;
-    &__container {
-      flex-direction: column;
-      gap: 28px;
-    }
     &__subscription {
       order: 1;
     }
@@ -121,6 +129,22 @@
         gap: 40px;
         order: 2;
       }
+    }
+  }
+}
+
+@include mobile {
+  .footer {
+    padding: 60px 20px;
+    &__contacts {
+      @include text-font-normal-mob;
+    }
+    &__container {
+      gap: 0;
+    }
+    &__info {
+      @include text-font-normal-mob;
+      padding-bottom: 28px;
     }
   }
 }
