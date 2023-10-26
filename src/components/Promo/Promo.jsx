@@ -73,11 +73,8 @@ export const Promo = () => {
               inputType="text"
               inputName="search"
               inputPlaceholder="Найти рабочее место..."
-              // inputValue=""
               inputValue={form.search}
-              // onChangeInput={onChangeInput}
               handleChange={handleChange}
-              // onFocusInput={handleFocus}
             />
             <Button
               btnClass="button__promo"

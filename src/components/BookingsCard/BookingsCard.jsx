@@ -4,12 +4,11 @@ import { Link } from "react-router-dom";
 
 import { CurrentUserContext } from "../../contexts/currentUserContext";
 
-import { ORDER_STATUSES } from "../../utils/constants";
+import { ORDER_STATUSES, REVIEW_SUCCESS } from "../../utils/constants";
 import { publishReview, cancelOrder } from "../../utils/Api";
 import { formatDate, getPopupText } from "../../utils/utils";
 
 import usePopupOpen from "../../hooks/usePopupOpen";
-
 import ReviewsForm from "../Forms/ReviewsForm/ReviewsForm";
 
 import Button from "../UI-kit/Button/Button";
@@ -34,7 +33,7 @@ const statusLabels = {
   [ORDER_STATUSES.NOT_PAID]: getStatusLabel(ORDER_STATUSES.NOT_PAID, "warn"),
 };
 
-export const BookingsCard = ({ item, onUpdateStatus }) => {
+export const BookingsCard = ({ item, onUpdateStatus, onReviewSubmit }) => {
   const { isOpenPopup, handleOpenPopup, handleClosePopup } = usePopupOpen();
   const [isCancellationConfirmed, setIsCancellationConfirmed] = useState(false);
   const [isReviewFormOpen, setIsReviewFormOpen] = useState(false);
@@ -67,7 +66,8 @@ export const BookingsCard = ({ item, onUpdateStatus }) => {
     publishReview(item.location_id, item.spot, item.id, data)
       .then(() => {
         handleClosePopup();
-        showMessage("Отзыв отправлен на модерацию", "info");
+        onReviewSubmit(item.id);
+        showMessage(REVIEW_SUCCESS, "info");
       })
       .catch((e) => {
         // eslint-disable-next-line no-underscore-dangle
@@ -93,6 +93,7 @@ export const BookingsCard = ({ item, onUpdateStatus }) => {
         <div className="bookings-card__button-container">
           <Button
             btnText="Назад"
+            btnType="button"
             btnClass="button__profile-transparent"
             onClick={() => {
               handleCloseBookingPopup();
@@ -102,6 +103,7 @@ export const BookingsCard = ({ item, onUpdateStatus }) => {
           <Link to={`/points/${item.location_id}`}>
             <Button
               btnText="Создать"
+              btnType="button"
               btnClass="button__profile-edit"
               onClick={handleOpenReviewForm}
             />
@@ -169,7 +171,7 @@ export const BookingsCard = ({ item, onUpdateStatus }) => {
               btnText={
                 item.reviews === null ? "Оставить отзыв" : "Отзыв оставлен"
               }
-              btnClass="button_width-bookings"
+              btnClass="button_width-bookings button_type_sendreview"
               onClick={handleOpenReviewForm}
               isValidBtn={item.reviews === null && shouldButtonBeDisabled()}
             />
@@ -203,7 +205,7 @@ BookingsCard.propTypes = {
     date: PropTypes.string,
     start_time: PropTypes.string,
     end_time: PropTypes.string,
-    bill: PropTypes.string,
+    bill: PropTypes.number,
     isFinished: PropTypes.bool,
     reviews: PropTypes.number,
     status: PropTypes.oneOf([
@@ -215,9 +217,11 @@ BookingsCard.propTypes = {
     ]),
   }),
   onUpdateStatus: PropTypes.func,
+  onReviewSubmit: PropTypes.func,
 };
 
 BookingsCard.defaultProps = {
   item: PropTypes.shape({}),
   onUpdateStatus: undefined,
+  onReviewSubmit: undefined,
 };

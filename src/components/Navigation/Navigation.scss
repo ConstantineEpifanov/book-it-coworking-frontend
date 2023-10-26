@@ -1,5 +1,5 @@
 @import "../../scss/variables.scss";
-
+@import "../../scss/mixins.scss";
 .navigation {
   display: flex;
   justify-content: space-between;
@@ -27,5 +27,20 @@
 
   &__link_active {
     border-bottom: 2px solid $green;
+  }
+}
+
+@include tablet {
+  .navigation {
+    &__item {
+      flex-direction: column;
+      gap: 12px;
+      align-items: end;
+      text-align: end;
+    }
+    &__link {
+      padding: 12px 0 12px 12px;
+      margin-bottom: 12px;
+    }
   }
 }

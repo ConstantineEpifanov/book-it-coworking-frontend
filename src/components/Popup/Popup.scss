@@ -36,6 +36,15 @@
     &_register-form {
       transform: translateY(15%);
     }
+
+    &_payments-message {
+      min-width: 740px;
+      padding-top: 50px;
+      padding-bottom: 70px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
   }
   &__title {
     font-size: 40px;

@@ -77,7 +77,7 @@
     font-style: normal;
     font-weight: 400;
     line-height: 1.22;
-    width: 220px;
+    width: 195px;
     align-self: flex-end;
     background: url("../../../images/tertiary-icon.svg");
     background-repeat: no-repeat;
@@ -92,7 +92,6 @@
       background: url("../../../images/tertiary-icon-hover.svg");
       background-repeat: no-repeat;
       background-position: 16px 12px;
-      opacity: 0.7;
       color: $pink;
       stroke: $pink;
     }
@@ -309,6 +308,16 @@
     }
   }
 
+  &_type_sendreview {
+    background-color: transparent;
+    &:hover {
+      color: $pink;
+    }
+    &:active {
+      color: $green;
+    }
+  }
+
   &_width-bookings {
     width: 226px;
   }
@@ -328,7 +337,7 @@
   &__profile {
     box-sizing: border-box;
     background-color: $white;
-    width: 360px;
+    max-width: 360px;
     height: 84px;
     padding: 20px 20px 20px 78px;
     text-align: left;
@@ -464,6 +473,40 @@
 
     &:hover {
       background-color: $main-white;
+    }
+  }
+
+  &_type_popup {
+    width: auto;
+    padding: 16px 32px;
+    display: flex;
+    align-items: center;
+    border-radius: 100vmax;
+    border: 2px solid $main-black;
+    background-color: $main-black;
+    color: $main-white;
+
+    &:hover {
+      background-color: transparent;
+      color: $main-black;
+    }
+  }
+
+  &_type_submit-search {
+    width: 265px;
+    background-color: $black;
+    color: $white;
+  }
+
+  &:hover {
+    opacity: 0.7;
+  }
+}
+
+@include mobile {
+  .button {
+    &_width-bookings {
+      width: 100%;
     }
   }
 }

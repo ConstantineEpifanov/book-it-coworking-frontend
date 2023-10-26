@@ -53,6 +53,8 @@ export const getPopupText = (booking) => {
 
 export const getMaxDate = () => {
   const maxDate = new Date();
-  maxDate.setFullYear(maxDate.getFullYear() - 18);
   return maxDate.toISOString().split("T")[0];
 };
+
+export const checkMobile = () =>
+  window.matchMedia("(max-width: 767px)").matches;

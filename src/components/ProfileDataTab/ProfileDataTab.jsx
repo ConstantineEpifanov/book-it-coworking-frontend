@@ -7,14 +7,20 @@ import { editUserData } from "../../utils/Api";
 import Button from "../UI-kit/Button/Button";
 import Input from "../UI-kit/Input/Input";
 import ProfileDataForm from "../Forms/ProfileDataForm/ProfileDataForm";
+import AvatarUpload from "../AvatarUpload/AvatarUpload";
 import { SectionTitle } from "../SectionTitle/SectionTitle";
 
 import "./ProfileDataTab.scss";
 
-import ProfilePhoto from "../../images/ProfilePhoto.png";
+// import ProfilePhoto from "../../images/ProfilePhoto.png";
 
-import { formatPhone, formatDate, getMaxDate } from "../../utils/utils";
-import { PROFILE_DATA_UPDATE } from "../../utils/constants";
+import {
+  formatPhone,
+  formatDate,
+  getMaxDate,
+  checkMobile,
+} from "../../utils/utils";
+import { PROFILE_DATA_UPDATE, BASIC_ERROR } from "../../utils/constants";
 
 export const ProfileDataTab = () => {
   const { currentUser, setСurrentUser, showMessage } =
@@ -28,6 +34,20 @@ export const ProfileDataTab = () => {
   useEffect(() => {
     setEditedUser(currentUser);
   }, [currentUser]);
+
+  useEffect(() => {
+    function handleResize() {
+      setIsEdited(checkMobile());
+    }
+
+    setIsEdited(checkMobile());
+
+    window.addEventListener("resize", handleResize);
+
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
 
   const handleScrollToTop = () => {
     window.scrollTo({
@@ -56,6 +76,16 @@ export const ProfileDataTab = () => {
     }));
   };
 
+  function handleErrors(err) {
+    if (err.phone) {
+      showMessage(err.phone[0], "error");
+    } else if (err.email) {
+      showMessage(err.email[0], "error");
+    } else {
+      showMessage(BASIC_ERROR, "error");
+    }
+  }
+
   const handleSubmit = (e) => {
     e.preventDefault();
     setIsSubmitting(true);
@@ -64,65 +94,70 @@ export const ProfileDataTab = () => {
         showMessage(PROFILE_DATA_UPDATE, "info");
         setСurrentUser(editedUser);
       })
+      .catch(handleErrors)
       .finally(() => {
         setIsSubmitting(false);
       });
 
-    setIsEdited(false);
+    setIsEdited(checkMobile());
     handleScrollToTop();
   };
 
+  const infoMessage = (
+    <p className="profile-data__info">
+      *мы запрашиваем информацию исключительно в целях рекламы и промо-акций для
+      вас
+    </p>
+  );
+
   return (
     <section className="profile-data">
-      <div className="profile-data__header-container">
-        <SectionTitle
-          titleText="Персональные данные"
-          titleClass="section-title_profile"
-        />
-      </div>
-      <img
+      <SectionTitle
+        titleText="Персональные данные"
+        titleClass="section-title_profile"
+      />
+      <AvatarUpload />
+      {/* <img
         src={ProfilePhoto}
         className="profile-data__image"
         alt="Фото профиля"
-      />
+      /> */}
 
       {!isEdited ? (
         <ul className="profile-data__info-list">
           <li className="profile-data__list-item">
-            <span className="profile-data__label">Имя</span>
-            <span className="profile-data__text-overflow">
+            <h3 className="profile-data__label">Имя</h3>
+            <p className="profile-data__text-overflow">
               {editedUser?.first_name}
-            </span>
+            </p>
           </li>
           <li className="profile-data__list-item">
-            <span className="profile-data__label">Фамилия</span>
-            <span className="profile-data__text-overflow">
+            <h3 className="profile-data__label">Фамилия</h3>
+            <p className="profile-data__text-overflow">
               {editedUser?.last_name}
-            </span>
+            </p>
           </li>
           <li className="profile-data__list-item">
-            <span className="profile-data__label">Дата рождения</span>
-            <span className="profile-data__text-overflow">
+            <h3 className="profile-data__label">Дата рождения</h3>
+            <p className="profile-data__text-overflow">
               {editedUser?.birth_date && formatDate(editedUser?.birth_date)}
-            </span>
+            </p>
           </li>
           <li className="profile-data__list-item">
-            <span className="profile-data__label">Номер телефона</span>
-            <span className="profile-data__text-overflow">
+            <h3 className="profile-data__label">Номер телефона</h3>
+            <p className="profile-data__text-overflow">
               {editedUser?.phone && formatPhone(editedUser?.phone)}
-            </span>
+            </p>
           </li>
           <li className="profile-data__list-item">
-            <span className="profile-data__label">Адрес эл. почты</span>
-            <span className="profile-data__text-overflow">
-              {editedUser?.email}
-            </span>
+            <h3 className="profile-data__label">Адрес эл. почты</h3>
+            <p className="profile-data__text-overflow">{editedUser?.email}</p>
           </li>
           <li className="profile-data__list-item">
-            <span className="profile-data__label">Род деятельности</span>
-            <span className="profile-data__text-overflow">
+            <h3 className="profile-data__label">Род деятельности</h3>
+            <p className="profile-data__text-overflow">
               {editedUser?.occupation}
-            </span>
+            </p>
           </li>
         </ul>
       ) : (
@@ -137,6 +172,7 @@ export const ProfileDataTab = () => {
                   required: true,
                   type: "text",
                   maxLength: 21,
+                  minLength: 2,
                 },
                 {
                   id: 2,
@@ -145,6 +181,7 @@ export const ProfileDataTab = () => {
                   required: true,
                   type: "text",
                   maxLength: 21,
+                  minLength: 2,
                 },
                 {
                   id: 3,
@@ -187,19 +224,18 @@ export const ProfileDataTab = () => {
                     inputPlaceholder={field.placeholder}
                     inputRequired={field.required}
                     inputMaxLength={field.maxLength}
+                    inputMinLength={field.minLength}
                     inputMaxValue={field.max}
                   />
                 </li>
               ))}
             </ul>
           </ProfileDataForm>
+          {infoMessage}{" "}
         </div>
       )}
 
-      <p className="profile-data__info">
-        мы запрашиваем информацию исключительно в целях рекламы и промо-акций
-        для вас
-      </p>
+      {!isEdited && infoMessage}
       {isEdited ? (
         <div className="profile-data__buttons">
           <Button

@@ -3,6 +3,8 @@ import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 import { CurrentUserContext } from "../../contexts/currentUserContext";
 
+import { SUCCESSFUL_DISLIKE, BASIC_ERROR } from "../../utils/constants";
+
 import "./FavoritesTab.scss";
 
 import Button from "../UI-kit/Button/Button";
@@ -14,12 +16,14 @@ import StarIcon from "../../images/star.svg";
 import { getFavorites, deleteFavorite } from "../../utils/Api";
 
 const FavoriteCard = ({ item, onFavoriteDeleted }) => {
+  const { showMessage } = useContext(CurrentUserContext);
   function handleDeleteFavorite() {
     deleteFavorite(item.id)
       .then(() => {
         onFavoriteDeleted(item.id);
+        showMessage(SUCCESSFUL_DISLIKE, "info");
       })
-      .catch(() => {});
+      .catch(() => showMessage(BASIC_ERROR, "error"));
   }
 
   return (

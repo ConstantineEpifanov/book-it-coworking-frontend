@@ -30,7 +30,7 @@ export const MainMap = ({ points }) => {
         btnClass={`button_type_tertiary-map${
           isMap ? " button_type_tertiary-map-shown" : ""
         }`}
-        btnText={isMap ? "Скрыть карту" : "Показать на карте"}
+        btnText={isMap ? "Скрыть карту" : "Показать карту"}
       />
       <YMaps>
         <div className={`map ${isMap ? "map_active" : "map_inactive"}`}>

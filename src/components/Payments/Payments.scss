@@ -56,4 +56,22 @@
       line-height: 42px;
     }
   }
+
+  &__popup-text {
+    @include text-font-select;
+    text-align: center;
+    margin-bottom: 30px;
+    font-weight: 400;
+  }
+
+  &__popup-title {
+    @include mp-null;
+    margin-bottom: 20px;
+    font-family: $font-family-accent;
+    font-size: 28px;
+    font-style: normal;
+    font-weight: 800;
+    line-height: 40px;
+    letter-spacing: 0.28px;
+  }
 }

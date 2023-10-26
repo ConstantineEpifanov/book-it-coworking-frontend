@@ -291,7 +291,13 @@ export function searchLocations(params = {}) {
 
   Object.keys(params).forEach((key) => {
     if (params[key] !== undefined && params[key] !== null) {
-      query.append(key, params[key]);
+      if (key === "metro" && Array.isArray(params[key])) {
+        params[key].forEach((value) => {
+          query.append("metro", value);
+        });
+      } else {
+        query.append(key, params[key]);
+      }
     }
   });
 

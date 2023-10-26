@@ -5,7 +5,6 @@
   font-family: $font-family;
   font-style: normal;
   color: $black;
-  width: 600px;
   text-align: left;
   &__title {
     @include mp-null;
@@ -24,6 +23,8 @@
   }
 
   &__tabs {
+    box-sizing: border-box;
+    max-width: 600px;
     margin-top: 30px;
     border-radius: 34px;
     border: 2px solid $black;
@@ -51,5 +52,30 @@
     display: block;
     width: 100%;
     text-align: center;
+  }
+  &__button-container {
+    margin: 0 auto;
+    text-align: center;
+  }
+}
+
+@include tablet {
+  .bookings {
+    &__tabs {
+      margin: 30px auto 0;
+    }
+  }
+}
+
+@include mobile {
+  .bookings {
+    &__tabs {
+      width: calc(100vw - 40px);
+      max-width: 500px;
+    }
+    &__tab-button {
+      @include use-font(14px, 22px, 300);
+      padding: 5px 30px;
+    }
   }
 }
