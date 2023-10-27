@@ -21,7 +21,7 @@ export const TABLET_MORE_POINTS_QUANTITY = 2;
 export const MOBILE_MORE_POINTS_QUANTITY = 2;
 
 // кол-во отзывов для рендера
-export const LAPTOP_REVIEWS_QUANTITY = 5;
+export const LAPTOP_REVIEWS_QUANTITY = 4;
 
 // для фильтра оборудования на сервере и вывода на страницу коворкинга
 export const EQUIPMENT_GENERAL_CATEGORY = "Рабочее место";
@@ -78,6 +78,8 @@ export const BASIC_ERROR = "Что-то пошло не так...";
 export const REVIEW_SUCCESS = "Отзыв успешно отправлен";
 export const SUBSRIPTION_SUCCESS = "Вы успешно подписались";
 export const SUBSCRIPTION_ERROR = "Нужно войти, чтобы подписаться";
+export const IMAGE_VALIDATION_ERROR = "Не более 1 Мб, JPG или PNG";
+export const AVATAR_UPLOAD_SUCCESS = "Изображение успешно обновлено";
 
 // классы навигации в header
 export const activeLinkClass = "navigation__link navigation__link_active";

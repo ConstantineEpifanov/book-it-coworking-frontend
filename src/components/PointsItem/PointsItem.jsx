@@ -67,14 +67,18 @@ export const PointsItem = ({ isCompact, isListed, data }) => {
         .share({
           title: `Коворкинг ${data.name}`,
           text: "Забронируйте место в лучшем коворкинге для IT-специалистов",
-          url: isListed ? window.location.href + data.id : window.location.href,
+          url: isListed
+            ? `${window.location.href}/${data.id}`
+            : window.location.href,
         })
         .then(() => showMessage("Получилось поделиться", "info"))
         .catch((error) => showMessage(error, "error"));
     } else {
       navigator.clipboard
         .writeText(
-          isListed ? window.location.href + data.id : window.location.href,
+          isListed
+            ? `${window.location.href}/${data.id}`
+            : window.location.href,
         )
         .then(() => showMessage("Ссылка скопирована в буфер обмена", "info"));
     }

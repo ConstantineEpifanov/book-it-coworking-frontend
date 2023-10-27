@@ -14,17 +14,18 @@ export const HeaderNav = () => {
 
   return isLoggedIn ? (
     <div className="header__profile">
-      <img
-        className="header__profile_img"
-        src={imgProfile}
-        alt="иконка пользователя"
-      />
       <NavLink
         className={({ isActive }) =>
           isActive ? headerActiveLinkClass : "header__profile_nav"
         }
         to="/profile"
       >
+        {" "}
+        <img
+          className="header__profile_img"
+          src={currentUser.image ?? imgProfile}
+          alt="иконка пользователя"
+        />
         {currentUser && currentUser.last_name && (
           <p className="header__profile_nav-info">{`${
             currentUser.first_name
