@@ -11,14 +11,17 @@ function NavBar() {
       <div className={`navbar__menu ${isToggle ? "navbar__menu_opened" : ""}`}>
         <input
           type="checkbox"
+          checked={isToggle || ""}
           className="navbar__checkbox"
-          onClick={() => setIsToggle(!isToggle)}
+          onChange={() => setIsToggle(!isToggle)}
         />
         <span className="navbar__toogle" />
         <span className="navbar__toogle" />
         <span className="navbar__toogle" />
         <ul className="navbar__list">
-          <Navigation />
+          {isToggle && (
+            <Navigation isToggle={isToggle} setIsToggle={setIsToggle} />
+          )}
         </ul>
       </div>
     </nav>

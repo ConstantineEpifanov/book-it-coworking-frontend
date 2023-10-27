@@ -13,7 +13,7 @@ const Header = () => {
   return (
     <header className="header">
       <Link to="/">
-        <Logo width="102px" height="20px" className="logo_type_header" />
+        <Logo width="102px" height="20px" className="logo_type_responsive" />
       </Link>
       {isScreenMediumTablet ? <NavBar /> : <Navigation />}
     </header>
