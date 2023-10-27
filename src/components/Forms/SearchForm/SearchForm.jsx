@@ -9,6 +9,7 @@ import { coWorkingOptions } from "../../../config/dataOptions";
 import { searchLocations } from "../../../utils/Api";
 
 import useForm from "../../../hooks/useForm";
+import { useResize } from "../../../hooks/useResize";
 
 const SearchForm = ({
   metroArray,
@@ -24,20 +25,23 @@ const SearchForm = ({
     metro: [],
   });
 
-  const inputComponent = React.useMemo(
-    () => (
-      <Input
-        inputClass="input__search"
-        inputType="search"
-        inputName="search"
-        inputValue={form.search}
-        handleChange={handleChange}
-        inputPlaceholder="Искать по названию"
-        inputRequired={false}
-      />
-    ),
-    [form.search, handleChange],
-  );
+  const { isScreenSmall, isScreenMedium } = useResize();
+  const isMobile = isScreenSmall || isScreenMedium;
+
+  // const inputComponent = React.useMemo(
+  //   () => (
+  //     <Input
+  //       inputClass={isMobile ? "input__promo" : "input__search"}
+  //       inputType="search"
+  //       inputName="search"
+  //       inputValue={form.search}
+  //       handleChange={handleChange}
+  //       inputPlaceholder="Искать по названию"
+  //       inputRequired={false}
+  //     />
+  //   ),
+  //   [form.search, handleChange],
+  // );
 
   const formSearchSubmit = (e) => {
     e.preventDefault();
@@ -74,24 +78,45 @@ const SearchForm = ({
             className="entry-form__search-img"
           />
 
-          {inputComponent}
+          {/* {inputComponent} */}
+
+          <Input
+            inputClass="input__search"
+            inputType="search"
+            inputName="search"
+            inputValue={form.search}
+            handleChange={handleChange}
+            inputPlaceholder="Найти рабочее место..."
+            inputRequired={false}
+          />
         </div>
-        <SortData
-          selectName="category"
-          titleSort="Вид рабочего места"
-          array={coWorkingOptions}
-          size="max"
-          handleSelectChange={handleSelectChange}
-        />
-        <MultiChoiceDropdown
-          dropdownName="metro"
-          dropdownTitle="Линии метро"
-          array={metroArray}
-          size="max"
-          handleSelectChange={handleSelectChange}
-        />
+        {!isMobile ? (
+          <>
+            <SortData
+              selectName="category"
+              titleSort="Вид рабочего места"
+              array={coWorkingOptions}
+              size="max"
+              handleSelectChange={handleSelectChange}
+            />
+            <MultiChoiceDropdown
+              dropdownName="metro"
+              dropdownTitle="Линии метро"
+              array={metroArray}
+              size="max"
+              handleSelectChange={handleSelectChange}
+            />
+          </>
+        ) : (
+          ""
+        )}
         <Button
           btnClass="button_type_form button_type_submit-search"
+          // btnClass={`button_type_form ${
+          //   !isMobile
+          //     ? "button_type_submit-search"
+          //     : "button_size_small button__promo"
+          // }`}
           btnType="submit"
           btnText="Искать"
         />

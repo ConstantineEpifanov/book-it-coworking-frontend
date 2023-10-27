@@ -140,3 +140,21 @@
     }
   }
 }
+
+@include mobile {
+  .input__search {
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+    border-right: none;
+    max-width: 305px;
+    border-color: $black;
+    max-height: 44px;
+
+    &::placeholder {
+      font-size: 14px;
+      font-style: normal;
+      font-weight: 300;
+      line-height: 22px;
+    }
+  }
+}

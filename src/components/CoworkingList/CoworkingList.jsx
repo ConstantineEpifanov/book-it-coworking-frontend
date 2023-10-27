@@ -6,33 +6,33 @@ import "./CoworkingList.scss";
 import { Loader } from "../Loader/Loader";
 import { SectionTitle } from "../SectionTitle/SectionTitle";
 import { SectionSubtitle } from "../SectionSubtitle/SectionSubtitle";
-import { PointsList } from "../PointsList/PointsList";
-import { MainMap } from "../Map/Map";
+// import { PointsList } from "../PointsList/PointsList";
+// import { MainMap } from "../Map/Map";
 import SearchForm from "../Forms/SearchForm/SearchForm";
 
-import { defaultState } from "../../config/mapOptions";
+// import { defaultState } from "../../config/mapOptions";
 import usePagination from "../../hooks/usePagination";
 
 import { searchLocations, getMapLocations } from "../../utils/Api";
 
-import {
-  NOT_FOUND_ERROR_TITLE,
-  NOT_FOUND_ERROR_SUBTITLE,
-} from "../../utils/constants";
+// import {
+//   NOT_FOUND_ERROR_TITLE,
+//   NOT_FOUND_ERROR_SUBTITLE,
+// } from "../../utils/constants";
 
-import { NotFoundError } from "../NotFoundError/NotFoundError";
+// import { NotFoundError } from "../NotFoundError/NotFoundError";
 
 export const CoworkingList = () => {
   const [coworkingsArray, setCoworkingsArray] = useState([]);
-  const [nextPageURL, setNextPageURL] = useState(null);
-  const [isNotFoundError, setIsNotFoundError] = useState(false);
+  // const [nextPageURL, setNextPageURL] = useState(null);
+  // const [isNotFoundError, setIsNotFoundError] = useState(false);
   const [mapPoints, setMapPoints] = useState([]);
   const { isLoading, setIsLoading } = useContext(CurrentUserContext);
   const {
     initialLimit,
     limit,
     offset,
-    goToNextPage,
+    // goToNextPage,
     resetPagination,
     requestApproved,
     setRequestApproved,
@@ -60,7 +60,7 @@ export const CoworkingList = () => {
           ...prevCoworkings,
           ...res.results,
         ]);
-        setNextPageURL(res.next);
+        // setNextPageURL(res.next);
       })
       .catch((error) => {
         console.error(error);
@@ -72,7 +72,7 @@ export const CoworkingList = () => {
 
   const handleUpdateCoworkings = (data) => {
     setCoworkingsArray(data.results);
-    setNextPageURL(data.next);
+    // setNextPageURL(data.next);
   };
 
   useEffect(() => {
@@ -97,7 +97,7 @@ export const CoworkingList = () => {
       coworkingsFromPromo.results.length > 0
     ) {
       setCoworkingsArray(coworkingsFromPromo.results);
-      setNextPageURL(coworkingsFromPromo.next);
+      // setNextPageURL(coworkingsFromPromo.next);
     } else {
       setIsLoading(true);
       getLocations(offset, initialLimit);
@@ -112,7 +112,7 @@ export const CoworkingList = () => {
   }, [limit, offset, initialLimit]);
 
   useEffect(() => {
-    setIsNotFoundError(coworkingsArray.length === 0);
+    // setIsNotFoundError(coworkingsArray.length === 0);
   }, [coworkingsArray]);
 
   return (
@@ -122,12 +122,12 @@ export const CoworkingList = () => {
       ) : (
         <>
           <SectionTitle
-            titleText="Поиск по коворкингам сети SPOT IT"
-            titleClass="section-title_search"
+            titleText="Поиск по&#160;коворкингам сети SPOT&#160;IT"
+            titleClass="section-title_location_coworking-list-search"
           />
           <SectionSubtitle
-            titleText="Вы можете снять рабочее место в одном из коворкингов, представленных в нашем каталоге"
-            titleClass="section-subtitle_search"
+            titleText="Вы&#160;можете снять рабочее место в&#160;одном из&#160;наших коворкингов, представленных в&#160;каталоге"
+            titleClass="section-subtitle_search section-subtitle_location_coworking-list-search"
           />
 
           <SearchForm
@@ -138,7 +138,7 @@ export const CoworkingList = () => {
             resetPagination={resetPagination}
           />
 
-          {isNotFoundError ? (
+          {/* {isNotFoundError ? (
             <NotFoundError
               titleText={NOT_FOUND_ERROR_TITLE}
               subtitleText={NOT_FOUND_ERROR_SUBTITLE}
@@ -153,7 +153,7 @@ export const CoworkingList = () => {
                 isMoreButtonVisible={!!nextPageURL}
               />
             </>
-          )}
+          )} */}
         </>
       )}
     </main>

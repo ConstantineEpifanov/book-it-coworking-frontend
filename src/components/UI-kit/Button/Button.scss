@@ -25,6 +25,15 @@
     max-height: 54px;
   }
 
+  // &_location_search-form-search {
+  //   border: 2px solid $black;
+  //   border-top-left-radius: 0;
+  //   border-bottom-left-radius: 0;
+  //   border-left: none;
+  //   max-width: 170px;
+  //   max-height: 54px;
+  // }
+
   &__subscription {
     border-radius: 32px;
     border-top-left-radius: 0;
@@ -518,6 +527,19 @@
   .button {
     &_width-bookings {
       width: 100%;
+    }
+    &_type_submit-search {
+      flex: 1;
+      border: 2px solid $black;
+      border-top-left-radius: 0;
+      border-bottom-left-radius: 0;
+      border-left: none;
+      // max-width: 170px;
+      max-height: 44px;
+      font-size: 16px;
+      font-style: normal;
+      font-weight: 400;
+      line-height: 10px;
     }
   }
 }
