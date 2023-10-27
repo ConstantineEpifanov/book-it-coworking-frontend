@@ -48,7 +48,8 @@
     line-height: 14px;
   }
   &__input {
-    width: calc(100vw - 60px);
+    box-sizing: border-box;
+    width: calc(100vw - 40px);
     max-width: 450px;
     height: 44px;
     padding: 22px 20px 4px 20px;

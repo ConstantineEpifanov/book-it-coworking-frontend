@@ -25,6 +25,9 @@
     }
     &_nav {
       text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 22px;
       &-info {
         font-size: 18px;
         font-style: normal;
@@ -39,7 +42,7 @@
         }
       }
 
-      &_active {
+      &_active .header__profile_nav-info {
         border-bottom: 2px solid $green;
       }
     }
