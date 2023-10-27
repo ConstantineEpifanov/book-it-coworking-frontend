@@ -29,6 +29,13 @@
   &_own-page {
     text-transform: capitalize;
   }
+  &_profile {
+    font-size: 28px;
+    line-height: 40px;
+    font-weight: 800;
+    max-width: 420px;
+    text-align: left;
+  }
 }
 
 @include mobile {

@@ -1,4 +1,4 @@
-export const MAIN_EMAIL = "info@spotit.com";
+export const MAIN_EMAIL = "info@itcoworking.com";
 export const MAIN_PHONE_NUMBER = "+7(800)-130-00-00";
 
 export const INSTAGRAM_LINK = "https://instagram.com/spotit";

@@ -3,9 +3,8 @@
 
 .contacts-item {
   @include mp-null;
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
+  @include flex-box-column;
+  width: 100%;
   max-width: 360px;
   border-radius: 20px;
   padding: 20px;
@@ -26,5 +25,19 @@
   &__image {
     width: 58px;
     height: 58px;
+  }
+}
+
+@include tablet {
+  .contacts-item {
+    max-width: 390px;
+    gap: 12px;
+    &__info {
+      @include mp-null;
+      @include text-font-normal-mob;
+    }
+    &__header {
+      line-height: 24px;
+    }
   }
 }

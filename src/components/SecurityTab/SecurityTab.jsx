@@ -5,6 +5,7 @@ import "./SecurityTab.scss";
 // import PropTypes from "prop-types";
 
 import usePopupOpen from "../../hooks/usePopupOpen";
+import { SectionTitle } from "../SectionTitle/SectionTitle";
 
 import ChangePassForm from "../Forms/ChangePassForm/ChangePassForm";
 
@@ -12,7 +13,7 @@ import Button from "../UI-kit/Button/Button";
 import Popup from "../Popup/Popup";
 
 export const SecurityTab = () => {
-  const { currentUser, setIsLoggedIn, setСurrentUser } =
+  const { currentUser, setIsLoggedIn, setСurrentUser, showMessage } =
     useContext(CurrentUserContext);
   const { isOpenPopup, handleOpenPopup, handleClosePopup } = usePopupOpen();
 
@@ -35,7 +36,10 @@ export const SecurityTab = () => {
 
   return (
     <section className="security">
-      <h2 className="security__title">Безопасность и конфиденциальность</h2>
+      <SectionTitle
+        titleText="Безопасность и конфиденциальность"
+        titleClass="section-title_profile"
+      />
       <ul className="security__board">
         <li className="security__board-row">
           <div className="security__password-container">
@@ -58,8 +62,10 @@ export const SecurityTab = () => {
           </div>
           <Button
             btnText="Выйти"
-            btnClass="button__profile-edit"
-            isValidBtn={false}
+            btnClass="button__profile-small button_type_transparent"
+            onClick={() =>
+              showMessage("Вы успешно вышли на других устройствах", "info")
+            }
           />
         </li>
         <li className="security__board-row">
@@ -70,7 +76,10 @@ export const SecurityTab = () => {
           <Button
             btnText="Завершить"
             btnClass="button__profile-small button_type_transparent"
-            onClick={handleLogout}
+            onClick={() => {
+              handleLogout();
+              showMessage("Вы успешно вышли", "info");
+            }}
           />
         </li>
       </ul>{" "}

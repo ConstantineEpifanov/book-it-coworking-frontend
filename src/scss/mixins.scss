@@ -67,6 +67,11 @@
   line-height: 48px;
 }
 
+//  -------------- FONTS-MOB -----------------
+@mixin text-font-normal-mob {
+  font-size: 16px;
+  line-height: 20px;
+}
 //  -------------- INPUT -----------------
 @mixin error-input {
   border: 2px solid $alert-red;
@@ -88,8 +93,14 @@
 }
 
 @mixin button-active {
-  color: $green;
+  color: $white;
   background-color: $black;
+  &:hover {
+    color: $pink;
+  }
+  &:active {
+    color: $black;
+  }
 }
 
 // --------------CARDS-------------------
@@ -139,6 +150,12 @@
 }
 
 // ------------MEDIA QUERIES------------
+@mixin mobile-min {
+  @media screen and (max-width: $mobile-breakpoint-min) {
+    @content;
+  }
+}
+
 @mixin mobile {
   @media screen and (max-width: $mobile-breakpoint) {
     @content;
@@ -147,6 +164,11 @@
 
 @mixin tablet {
   @media screen and (max-width: #{$tablet-breakpoint}) {
+    @content;
+  }
+}
+@mixin laptop {
+  @media screen and (max-width: #{$desktop-breakpoint}) {
     @content;
   }
 }

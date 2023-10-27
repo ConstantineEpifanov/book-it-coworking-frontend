@@ -7,6 +7,7 @@ import { editUserData } from "../../utils/Api";
 import Button from "../UI-kit/Button/Button";
 import Input from "../UI-kit/Input/Input";
 import ProfileDataForm from "../Forms/ProfileDataForm/ProfileDataForm";
+import { SectionTitle } from "../SectionTitle/SectionTitle";
 
 import "./ProfileDataTab.scss";
 
@@ -74,7 +75,10 @@ export const ProfileDataTab = () => {
   return (
     <section className="profile-data">
       <div className="profile-data__header-container">
-        <h2 className="profile-data__title">Персональные данные</h2>
+        <SectionTitle
+          titleText="Персональные данные"
+          titleClass="section-title_profile"
+        />
       </div>
       <img
         src={ProfilePhoto}

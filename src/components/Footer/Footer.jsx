@@ -51,8 +51,8 @@ export const Footer = ({ onSubmit }) => {
           <div className="footer__column">
             <Link to="/">
               <Logo
-                width="70px"
-                height="22px"
+                width="102px"
+                height="20px"
                 className="logo_type_footer logo_type_responsive"
               />
             </Link>
@@ -61,7 +61,10 @@ export const Footer = ({ onSubmit }) => {
             </a>
           </div>
           <div className="footer__column">
-            <a href={`tel:${MAIN_PHONE_NUMBER}`} className="footer__contacts">
+            <a
+              href={`tel:${MAIN_PHONE_NUMBER}`}
+              className="footer__contacts footer__contacts_tel"
+            >
               {MAIN_PHONE_NUMBER}
             </a>
             <a href={`mailto:${MAIN_EMAIL}`} className="footer__contacts">
