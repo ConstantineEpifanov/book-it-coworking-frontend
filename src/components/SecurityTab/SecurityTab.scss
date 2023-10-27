@@ -19,6 +19,9 @@
       display: flex;
       align-items: center;
       margin-bottom: 20px;
+      .input__text {
+        display: none;
+      }
     }
   }
   &__password-container,
@@ -44,6 +47,12 @@
     font-weight: 300;
     line-height: 14px;
   }
+  &__input {
+    width: calc(100vw - 60px);
+    max-width: 450px;
+    height: 44px;
+    padding: 22px 20px 4px 20px;
+  }
 }
 
 @include mobile {
@@ -52,6 +61,12 @@
       flex-direction: column;
       gap: 20px;
       margin-bottom: 40px;
+    }
+    &__password-container,
+    &__sessions-container,
+    &__exit-container {
+      width: 100%;
+      max-width: 450px;
     }
   }
 }

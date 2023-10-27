@@ -16,7 +16,7 @@ export const HeaderNav = () => {
     <div className="header__profile">
       <img
         className="header__profile_img"
-        src={imgProfile}
+        src={currentUser.image ?? imgProfile}
         alt="иконка пользователя"
       />
       <NavLink

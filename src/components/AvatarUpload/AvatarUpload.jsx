@@ -1,12 +1,21 @@
-import { useContext, useState } from "react";
+/* eslint-disable no-unused-vars */
+import { useContext } from "react";
 import { CurrentUserContext } from "../../contexts/currentUserContext";
 import imgProfile from "../../images/profile-icons/profile-icon-header.svg";
+
+import {
+  BASIC_ERROR,
+  IMAGE_VALIDATION_ERROR,
+  AVATAR_UPLOAD_SUCCESS,
+} from "../../utils/constants";
+
+import { editUserAvatar } from "../../utils/Api";
 
 import "./AvatarUpload.scss";
 
 function AvatarUpload() {
-  const { currentUser } = useContext(CurrentUserContext);
-  const [newAvatar, setnewAvatar] = useState(null);
+  const { currentUser, setСurrentUser, showMessage } =
+    useContext(CurrentUserContext);
 
   const handleEditAvatar = () => {
     const fileInput = document.createElement("input");
@@ -20,9 +29,21 @@ function AvatarUpload() {
           (selectedFile.type === "image/jpeg" ||
             selectedFile.type === "image/png")
         ) {
-          setnewAvatar(selectedFile);
+          const reader = new FileReader();
+          reader.onload = async (e) => {
+            const base64Image = e.target.result;
+            editUserAvatar({ image: base64Image })
+              .then((res) => {
+                setСurrentUser({ ...currentUser, image: res.image });
+                showMessage(AVATAR_UPLOAD_SUCCESS, "info");
+              })
+              .catch(() => {
+                showMessage(BASIC_ERROR);
+              });
+          };
+          reader.readAsDataURL(selectedFile);
         } else {
-          console.log("с файлам что-то не то");
+          showMessage(IMAGE_VALIDATION_ERROR);
         }
       }
     });
@@ -32,11 +53,7 @@ function AvatarUpload() {
   return (
     <div className="avatar">
       <img
-        src={
-          (newAvatar && URL.createObjectURL(newAvatar)) ||
-          currentUser.avatar ||
-          imgProfile
-        }
+        src={currentUser.image ?? imgProfile}
         alt="User Avatar"
         className="avatar__image"
       />

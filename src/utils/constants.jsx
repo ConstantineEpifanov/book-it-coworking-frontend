@@ -78,6 +78,8 @@ export const BASIC_ERROR = "Что-то пошло не так...";
 export const REVIEW_SUCCESS = "Отзыв успешно отправлен";
 export const SUBSRIPTION_SUCCESS = "Вы успешно подписались";
 export const SUBSCRIPTION_ERROR = "Нужно войти, чтобы подписаться";
+export const IMAGE_VALIDATION_ERROR = "Не более 1 Мб, JPG или PNG";
+export const AVATAR_UPLOAD_SUCCESS = "Изображение успешно обновлено";
 
 // классы навигации в header
 export const activeLinkClass = "navigation__link navigation__link_active";
