@@ -19,9 +19,11 @@
     }
     &_select {
       flex-direction: row;
+      flex-wrap: wrap;
       gap: 20px;
       padding-top: 32px;
       align-items: flex-start;
+      justify-content: space-around;
     }
     &_search {
       display: flex;
