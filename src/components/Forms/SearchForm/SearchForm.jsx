@@ -28,21 +28,6 @@ const SearchForm = ({
   const { isScreenSmall, isScreenMedium } = useResize();
   const isMobile = isScreenSmall || isScreenMedium;
 
-  // const inputComponent = React.useMemo(
-  //   () => (
-  //     <Input
-  //       inputClass={isMobile ? "input__promo" : "input__search"}
-  //       inputType="search"
-  //       inputName="search"
-  //       inputValue={form.search}
-  //       handleChange={handleChange}
-  //       inputPlaceholder="Искать по названию"
-  //       inputRequired={false}
-  //     />
-  //   ),
-  //   [form.search, handleChange],
-  // );
-
   const formSearchSubmit = (e) => {
     e.preventDefault();
     sessionStorage.setItem("lastSearchRequest", form.search);
@@ -77,9 +62,6 @@ const SearchForm = ({
             alt="иконка поиска"
             className="entry-form__search-img"
           />
-
-          {/* {inputComponent} */}
-
           <Input
             inputClass="input__search"
             inputType="search"
@@ -112,11 +94,6 @@ const SearchForm = ({
         )}
         <Button
           btnClass="button_type_form button_type_submit-search"
-          // btnClass={`button_type_form ${
-          //   !isMobile
-          //     ? "button_type_submit-search"
-          //     : "button_size_small button__promo"
-          // }`}
           btnType="submit"
           btnText="Искать"
         />
