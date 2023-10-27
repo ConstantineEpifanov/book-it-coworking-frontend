@@ -2,6 +2,7 @@
 import { useContext } from "react";
 import { CurrentUserContext } from "../../contexts/currentUserContext";
 import imgProfile from "../../images/profile-icons/profile-icon-header.svg";
+import AvatarLoader from "./AvatarLoader";
 
 import {
   BASIC_ERROR,
@@ -14,7 +15,7 @@ import { editUserAvatar } from "../../utils/Api";
 import "./AvatarUpload.scss";
 
 function AvatarUpload() {
-  const { currentUser, setСurrentUser, showMessage } =
+  const { currentUser, setСurrentUser, showMessage, isLoading, setIsLoading } =
     useContext(CurrentUserContext);
 
   const handleEditAvatar = () => {
@@ -31,6 +32,7 @@ function AvatarUpload() {
         ) {
           const reader = new FileReader();
           reader.onload = async (e) => {
+            setIsLoading(true);
             const base64Image = e.target.result;
             editUserAvatar({ image: base64Image })
               .then((res) => {
@@ -39,7 +41,8 @@ function AvatarUpload() {
               })
               .catch(() => {
                 showMessage(BASIC_ERROR);
-              });
+              })
+              .finally(() => setIsLoading(false));
           };
           reader.readAsDataURL(selectedFile);
         } else {
@@ -52,19 +55,25 @@ function AvatarUpload() {
 
   return (
     <div className="avatar">
-      <img
-        src={currentUser.image ?? imgProfile}
-        alt="User Avatar"
-        className="avatar__image"
-      />
-
-      <button
-        className="avatar__button"
-        type="button"
-        onClick={handleEditAvatar}
-      >
-        <span className="avatar__icon">✎</span>
-      </button>
+      {!isLoading ? (
+        <>
+          <img
+            src={currentUser.image ?? imgProfile}
+            alt="User Avatar"
+            className="avatar__image"
+          />
+          <span className="avatar__tooltip">{IMAGE_VALIDATION_ERROR}</span>
+          <button
+            className="avatar__button"
+            type="button"
+            onClick={handleEditAvatar}
+          >
+            <span className="avatar__icon">✎</span>
+          </button>
+        </>
+      ) : (
+        <AvatarLoader />
+      )}
     </div>
   );
 }
