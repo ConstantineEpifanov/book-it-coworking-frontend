@@ -24,7 +24,7 @@ function Input({
         <label
           htmlFor={inputName}
           tabIndex="-1"
-          className={`input__label ${inputError ? "input__label-error" : ""}}`}
+          className={`input__label ${inputError ? "input__label-error" : ""}`}
         >
           {inputPlaceholder}
         </label>

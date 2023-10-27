@@ -1,8 +1,11 @@
 import React, { useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { CurrentUserContext } from "../../contexts/currentUserContext";
+import { useResize } from "../../hooks/useResize";
 import "./SecurityTab.scss";
 // import PropTypes from "prop-types";
+
+import Input from "../UI-kit/Input/Input";
 
 import usePopupOpen from "../../hooks/usePopupOpen";
 import { SectionTitle } from "../SectionTitle/SectionTitle";
@@ -18,6 +21,8 @@ export const SecurityTab = () => {
   const { isOpenPopup, handleOpenPopup, handleClosePopup } = usePopupOpen();
 
   const navigate = useNavigate();
+
+  const { isScreenSmall } = useResize();
 
   function hidePassword(password) {
     const maxLength = 15;
@@ -42,13 +47,22 @@ export const SecurityTab = () => {
       />
       <ul className="security__board">
         <li className="security__board-row">
-          <div className="security__password-container">
-            <span className="security__feature-name">Пароль</span>
-            <span>{hidePassword(currentUser.password)}</span>
-          </div>
+          {!isScreenSmall ? (
+            <div className="security__password-container">
+              <span className="security__feature-name">Пароль</span>
+              <span>{hidePassword(currentUser.password)}</span>
+            </div>
+          ) : (
+            <Input
+              inputPlaceholder="Пароль"
+              inputValue={hidePassword()}
+              inputClass="security__input"
+              inputDisabled
+            />
+          )}
           <Button
             btnText="Изменить"
-            btnClass="button__profile-small button_type_transparent"
+            btnClass="button__profile-small button_type_transparent button_type_security"
             onClick={handleOpenPopup}
           />
         </li>
@@ -62,7 +76,7 @@ export const SecurityTab = () => {
           </div>
           <Button
             btnText="Выйти"
-            btnClass="button__profile-small button_type_transparent"
+            btnClass="button__profile-small button_type_transparent button_type_security"
             onClick={() =>
               showMessage("Вы успешно вышли на других устройствах", "info")
             }
@@ -75,7 +89,7 @@ export const SecurityTab = () => {
           </div>
           <Button
             btnText="Завершить"
-            btnClass="button__profile-small button_type_transparent"
+            btnClass="button__profile-small button_type_transparent button_type_security"
             onClick={() => {
               handleLogout();
               showMessage("Вы успешно вышли", "info");

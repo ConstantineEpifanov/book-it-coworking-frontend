@@ -232,6 +232,14 @@ export function editUserData(data) {
   });
 }
 
+export function editUserAvatar(data) {
+  return request("/avatar", {
+    method: "PUT",
+    headers: setHeaders(),
+    body: JSON.stringify(data),
+  });
+}
+
 export function changePass({ current_password, password, re_password }) {
   return request("/users/change_password/", {
     method: "POST",

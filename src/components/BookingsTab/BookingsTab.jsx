@@ -1,7 +1,10 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
+import { CurrentUserContext } from "../../contexts/currentUserContext";
 
 import { BookingsCard } from "../BookingsCard/BookingsCard";
 import { SectionTitle } from "../SectionTitle/SectionTitle";
+
+import { BASIC_ERROR } from "../../utils/constants";
 
 import Button from "../UI-kit/Button/Button";
 
@@ -15,8 +18,11 @@ export const BookingsTab = () => {
   const [bookings, setBookings] = useState([]);
   const [loadedCount, setLoadedCount] = useState(defaultCardsNumber);
   const [visibleBookings, setVisibleBookings] = useState([]);
+  const { isLoading, setIsLoading, showMessage } =
+    useContext(CurrentUserContext);
 
   useEffect(() => {
+    setIsLoading(true);
     if (activeTab === "active") {
       getActiveOrders()
         .then((data) => {
@@ -27,7 +33,10 @@ export const BookingsTab = () => {
           setBookings(modData);
           setLoadedCount(defaultCardsNumber);
         })
-        .catch(() => {});
+        .catch(() => {
+          showMessage(BASIC_ERROR);
+        })
+        .finally(() => setIsLoading(false));
     } else if (activeTab === "finished") {
       getFinishedOrders()
         .then((data) => {
@@ -38,8 +47,12 @@ export const BookingsTab = () => {
           setBookings(modData);
           setLoadedCount(defaultCardsNumber);
         })
-        .catch(() => {});
+        .catch(() => {
+          showMessage(BASIC_ERROR);
+        })
+        .finally(() => setIsLoading(false));
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [activeTab]);
 
   useEffect(() => {
@@ -94,27 +107,33 @@ export const BookingsTab = () => {
           Завершенные
         </button>
       </div>
-      <ul className="bookings__card-list">
-        {bookings.length === 0 && (
-          <span className="bookings__nodata">Пока бронирований нет</span>
-        )}
-        {visibleBookings.map((item) => (
-          <BookingsCard
-            item={item}
-            key={item.id}
-            onUpdateStatus={onUpdateStatus}
-            onReviewSubmit={onReviewSubmit}
-          />
-        ))}
-      </ul>
-      {visibleBookings.length !== bookings.length && (
-        <div className="bookings__button-container">
-          <Button
-            btnText="Еще"
-            onClick={handleShowMore}
-            btnClass="button_more button_type_transparent button_size_medium"
-          />
-        </div>
+      {isLoading ? (
+        <span className="bookings__loading">Загрузка...</span>
+      ) : (
+        <>
+          <ul className="bookings__card-list">
+            {bookings.length === 0 && (
+              <span className="bookings__nodata">Пока бронирований нет</span>
+            )}
+            {visibleBookings.map((item) => (
+              <BookingsCard
+                item={item}
+                key={item.id}
+                onUpdateStatus={onUpdateStatus}
+                onReviewSubmit={onReviewSubmit}
+              />
+            ))}
+          </ul>
+          {visibleBookings.length !== bookings.length && (
+            <div className="bookings__button-container">
+              <Button
+                btnText="Еще"
+                onClick={handleShowMore}
+                btnClass="button_more button_type_transparent button_size_medium"
+              />
+            </div>
+          )}
+        </>
       )}
     </section>
   );

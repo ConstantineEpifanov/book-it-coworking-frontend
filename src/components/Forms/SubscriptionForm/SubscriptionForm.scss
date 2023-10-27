@@ -1,6 +1,7 @@
 @import "../../../scss/variables.scss";
 @import url("../../../vendor/fonts/fonts.css");
 @import url("../../../vendor/normalize.css");
+@import "../../../scss/mixins.scss";
 
 .subscription {
   color: $white;
@@ -26,4 +27,15 @@
   max-width: 360px;
   display: flex;
   flex-direction: column;
+}
+
+@include mobile {
+  .subscription {
+    &__message {
+      font-size: 24px;
+      font-style: normal;
+      font-weight: 300;
+      line-height: 36px;
+    }
+  }
 }
