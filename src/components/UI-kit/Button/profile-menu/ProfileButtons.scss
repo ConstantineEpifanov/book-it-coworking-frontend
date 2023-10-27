@@ -1,0 +1,107 @@
+.button__profile {
+  &_data {
+    @include button-with-image("../../../../images/profile-icons/user.svg");
+    &:hover {
+      @include button-with-image(
+        "../../../../images/profile-icons/user-hover.svg"
+      );
+    }
+    &:active {
+      @include button-with-image("../../../../images/profile-icons/user.svg");
+    }
+  }
+
+  &_security {
+    line-height: 22px;
+    @include button-with-image("../../../../images/profile-icons/security.svg");
+    &:hover {
+      @include button-with-image(
+        "../../../../images/profile-icons/security-hover.svg"
+      );
+    }
+    &:active {
+      @include button-with-image(
+        "../../../../images/profile-icons/security.svg"
+      );
+    }
+  }
+
+  &_payment {
+    @include button-with-image("../../../../images/profile-icons/payment.svg");
+    &:hover {
+      @include button-with-image(
+        "../../../../images/profile-icons/payment-hover.svg"
+      );
+    }
+    &:active {
+      @include button-with-image(
+        "../../../../images/profile-icons/payment.svg"
+      );
+    }
+  }
+
+  &_bookings {
+    @include button-with-image("../../../../images/profile-icons/bookings.svg");
+    &:hover {
+      @include button-with-image(
+        "../../../../images/profile-icons/bookings-hover.svg"
+      );
+    }
+    &:active {
+      @include button-with-image(
+        "../../../../images/profile-icons/bookings.svg"
+      );
+    }
+  }
+
+  &_favorites {
+    @include button-with-image(
+      "../../../../images/profile-icons/favorites.svg"
+    );
+    &:hover {
+      @include button-with-image(
+        "../../../../images/profile-icons/favorites-hover.svg"
+      );
+    }
+    &:active {
+      @include button-with-image(
+        "../../../../images/profile-icons/favorites.svg"
+      );
+    }
+  }
+
+  &_data-active {
+    @include button-with-image(
+      "../../../../images/profile-icons/user-active.svg"
+    );
+    @include button-active;
+  }
+
+  &_security-active {
+    @include button-with-image(
+      "../../../../images/profile-icons/security-active.svg"
+    );
+    @include button-active;
+  }
+
+  &_payment-active {
+    @include button-with-image(
+      "../../../../images/profile-icons/payment-active.svg"
+    );
+    @include button-active;
+  }
+
+  &_bookings-active {
+    @include button-with-image(
+      "../../../../images/profile-icons/bookings-activ.svg"
+    );
+    @include button-active;
+  }
+
+  &_favorites-active {
+    @include button-with-image(
+      "../../../../images/profile-icons/favorites-active.svg"
+    );
+    @include button-active;
+  }
+}

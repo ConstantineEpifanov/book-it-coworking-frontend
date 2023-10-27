@@ -68,3 +68,9 @@
     line-height: 30px;
   }
 }
+
+@include mobile {
+  .popup_type_whitemobile {
+    background-color: white;
+  }
+}

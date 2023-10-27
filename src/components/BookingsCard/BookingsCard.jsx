@@ -82,19 +82,19 @@ export const BookingsCard = ({ item, onUpdateStatus, onReviewSubmit }) => {
   if (isCancellationConfirmed) {
     content = (
       <>
-        <p className="bookings-card__popup-text bookings-card__popup-text_type_long">
+        <p className="bookings-card__popup-text">
           Бронирование «{item.location_name.toUpperCase()} с {item.start_time}{" "}
-          до {item.end_time}» отменено.
-          <br /> Мы отправим вам подтверждение на почту и вернем предоплату.
+          до {item.end_time}» отменено. Мы отправим вам подтверждение на почту и
+          вернем предоплату.
         </p>
         <p className="bookings-card__popup-text">
           Хотите создать бронирование на другую дату?
         </p>
         <div className="bookings-card__button-container">
           <Button
-            btnText="Назад"
+            btnText="Нет"
             btnType="button"
-            btnClass="button__profile-transparent"
+            btnClass="button__profile-transparent button_type_cancel"
             onClick={() => {
               handleCloseBookingPopup();
               onUpdateStatus(item.id);
@@ -104,7 +104,7 @@ export const BookingsCard = ({ item, onUpdateStatus, onReviewSubmit }) => {
             <Button
               btnText="Создать"
               btnType="button"
-              btnClass="button__profile-edit"
+              btnClass="button__profile-edit button_type_createorder"
               onClick={handleOpenReviewForm}
             />
           </Link>
@@ -126,12 +126,12 @@ export const BookingsCard = ({ item, onUpdateStatus, onReviewSubmit }) => {
         <div className="bookings-card__button-container">
           <Button
             btnText="Назад"
-            btnClass="button__profile-transparent"
+            btnClass="button__profile-transparent button_type_cancel"
             onClick={handleCloseBookingPopup}
           />
           <Button
-            btnText="Отменить"
-            btnClass="button__profile-edit "
+            btnText="Да, Отменить"
+            btnClass="button__profile-edit button_type_order"
             onClick={handleConfirmCancellation}
           />
         </div>
@@ -186,8 +186,11 @@ export const BookingsCard = ({ item, onUpdateStatus, onReviewSubmit }) => {
       </li>
       <Popup
         isOpen={isOpenPopup}
-        popupClass="bookings-card__popup"
-        onClickClose={handleCloseBookingPopup}
+        popupClass="bookings-card__popup popup_type_whitemobile"
+        onClickClose={() => {
+          handleCloseBookingPopup();
+          onUpdateStatus(item.id);
+        }}
       >
         {content}
       </Popup>
