@@ -116,6 +116,58 @@
   }
 }
 
+@mixin primary-button-black {
+  background-color: $black;
+  color: $main-white;
+  transition: all 0.3s ease;
+  &:hover {
+    color: $black;
+    background-color: $green;
+  }
+  &:active {
+    color: $green;
+    background-color: $black;
+  }
+  &:disabled {
+    background-color: $light-gray;
+    color: $gray;
+  }
+}
+
+@mixin primary-button {
+  background-color: $green;
+  color: $black;
+  transition: all 0.3s ease;
+  &:active {
+    color: $green;
+    background-color: $black;
+  }
+  &:disabled {
+    background-color: $light-gray;
+    color: $gray;
+  }
+}
+
+@mixin secondary-button {
+  background-color: transparent;
+  color: $black;
+  transition: all 0.3s ease;
+  &:hover {
+    border-color: $pink;
+    color: $pink;
+    background-color: transparent;
+  }
+  &:active {
+    color: $black;
+    background-color: $pink;
+  }
+  &:disabled {
+    background-color: transparent;
+    border-color: $gray;
+    color: $gray;
+  }
+}
+
 // --------------CARDS-------------------
 
 @mixin card-border-color($addBoxShadow: true) {

@@ -84,7 +84,6 @@
     min-width: 740px;
     min-height: 276px;
     text-align: center;
-
     padding: 60px 95px 95px 95px;
   }
   &__popup-content {
@@ -164,7 +163,7 @@
   .bookings-card {
     flex-direction: column;
     height: 100%;
-    width: calc(100vw - 40px);
+    width: 100%;
     max-width: 500px;
     gap: 12px;
     &__image {
@@ -173,6 +172,13 @@
       max-height: 160px;
       width: 100%;
       object-fit: cover;
+    }
+    &__popup {
+      min-width: calc(100vw - 40px);
+      padding: 50px 45px 80px;
+      &-text {
+        @include use-font(14px, 22px, 300);
+      }
     }
     &__text-container {
       padding: 0px 12px 12px 12px;
@@ -183,6 +189,10 @@
     &__status {
       margin: 12px 0;
       @include use-font(10px, 14px, 300);
+    }
+    &__button-container {
+      flex-direction: column;
+      gap: 8px;
     }
   }
 }

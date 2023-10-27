@@ -47,7 +47,8 @@
       color: $white;
     }
   }
-  &__nodata {
+  &__nodata,
+  &__loading {
     margin-top: 40px;
     display: block;
     width: 100%;
@@ -70,7 +71,6 @@
 @include mobile {
   .bookings {
     &__tabs {
-      width: calc(100vw - 40px);
       max-width: 500px;
     }
     &__tab-button {
