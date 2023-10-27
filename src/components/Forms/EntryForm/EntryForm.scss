@@ -143,3 +143,19 @@
     }
   }
 }
+
+@include mobile {
+  .entry-form__inner_select {
+    padding-top: 28px;
+    gap: 0;
+  }
+
+  .entry-form__search {
+    flex: 2.1;
+  }
+
+  .entry-form__search-img {
+    top: 11px;
+    left: 13px;
+  }
+}

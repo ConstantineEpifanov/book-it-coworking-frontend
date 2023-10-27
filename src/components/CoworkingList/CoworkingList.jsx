@@ -60,7 +60,7 @@ export const CoworkingList = () => {
           ...prevCoworkings,
           ...res.results,
         ]);
-        setNextPageURL(res.next);
+        // setNextPageURL(res.next);
       })
       .catch((error) => {
         console.error(error);
@@ -122,12 +122,12 @@ export const CoworkingList = () => {
       ) : (
         <>
           <SectionTitle
-            titleText="Поиск по коворкингам сети SPOT IT"
-            titleClass="section-title_search"
+            titleText="Поиск по&#160;коворкингам сети SPOT&#160;IT"
+            titleClass="section-title_location_coworking-list-search"
           />
           <SectionSubtitle
-            titleText="Вы можете снять рабочее место в одном из коворкингов, представленных в нашем каталоге"
-            titleClass="section-subtitle_search"
+            titleText="Вы&#160;можете снять рабочее место в&#160;одном из&#160;наших коворкингов, представленных в&#160;каталоге"
+            titleClass="section-subtitle_search section-subtitle_location_coworking-list-search"
           />
 
           <SearchForm
