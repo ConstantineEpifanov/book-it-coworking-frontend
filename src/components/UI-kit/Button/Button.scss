@@ -135,6 +135,44 @@
     }
   }
 
+  &_type_show-filters {
+    color: $black;
+    background-color: transparent;
+    padding: 16px 12px 16px 36px;
+    margin-bottom: 12px;
+    font-size: 18px;
+    text-align: right;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 1.22;
+    width: 271px;
+    align-self: flex-end;
+    background: url("../../../images/filter-icon.svg");
+    background-repeat: no-repeat;
+    background-position: 63px 12px;
+    transition: none;
+
+    &-shown {
+      width: 177px;
+    }
+
+    &:hover {
+      background: url("../../../images/filter-icon-hover.svg");
+      background-repeat: no-repeat;
+      background-position: 16px 12px;
+      color: $pink;
+      stroke: $pink;
+    }
+
+    &:active {
+      background: url("../../../images/filter-icon-active.svg");
+      background-repeat: no-repeat;
+      background-position: 16px 12px;
+      color: $green;
+      stroke: $green;
+    }
+  }
+
   &_type_form {
     background-color: $green;
     color: $black;
@@ -461,14 +499,59 @@
       font-weight: 400;
       line-height: 10px;
     }
-  }
-}
+    &__subscription {
+      @include text-font-normal-mob;
+      padding: 12px;
+      max-width: 120px;
+      height: 44px;
+    }
 
-@include mobile {
-  .button__subscription {
-    @include text-font-normal-mob;
-    padding: 12px;
-    max-width: 120px;
-    height: 44px;
+    &_type_tertiary-map {
+      font-size: 16px;
+      padding-top: 1px;
+      background-repeat: no-repeat;
+      background-size: 20px;
+      background-position: 36px 1px;
+
+      &:hover {
+        background: url("../../../images/tertiary-icon-hover.svg");
+        background-repeat: no-repeat;
+        padding-top: 1px;
+        background-size: 20px;
+        background-position: 36px 1px;
+      }
+
+      &:active {
+        background: url("../../../images/tertiary-icon-active.svg");
+        background-repeat: no-repeat;
+        padding-top: 1px;
+        background-size: 20px;
+        background-position: 36px 1px;
+      }
+    }
+
+    &_type_show-filters {
+      width: 195px;
+      font-size: 16px;
+      padding-top: 1px;
+      background-size: 20px;
+      background-position: 12px 1px;
+
+      &:hover {
+        background: url("../../../images/filter-icon-hover.svg");
+        background-repeat: no-repeat;
+        padding-top: 1px;
+        background-size: 20px;
+        background-position: 12px 1px;
+      }
+
+      &:active {
+        background: url("../../../images/filter-icon-active.svg");
+        background-repeat: no-repeat;
+        padding-top: 1px;
+        background-size: 20px;
+        background-position: 12px 1px;
+      }
+    }
   }
 }

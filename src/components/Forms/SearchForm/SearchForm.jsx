@@ -83,7 +83,7 @@ const SearchForm = ({
             />
             <MultiChoiceDropdown
               dropdownName="metro"
-              dropdownTitle="Линии метро"
+              dropdownTitle="Станции метро"
               array={metroArray}
               size="max"
               handleSelectChange={handleSelectChange}

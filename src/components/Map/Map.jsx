@@ -12,10 +12,15 @@ import MapIcon from "../../images/map.png";
 import Star from "../../images/star.svg";
 import Tag from "../../images/tag.svg";
 
+import { useResize } from "../../hooks/useResize";
+
 export const MainMap = ({ points }) => {
   const [isMap, setMap] = useState(false);
   const center = generateCenterFromPoints(points);
   const mapRef = useRef(null);
+
+  const { isScreenSmall, isScreenMedium } = useResize();
+  const isMobile = isScreenSmall || isScreenMedium;
 
   const handleMapButtonClick = () => {
     setMap(!isMap);
@@ -23,8 +28,21 @@ export const MainMap = ({ points }) => {
       mapRef.current.scrollIntoView({ behavior: "smooth" });
     }
   };
+
+  const handleShowFiltersClick = () => {
+    console.log("handleShowFiltersClick");
+  };
+
   return (
     <div className="map__container" ref={mapRef}>
+      {isMobile && (
+        <Button
+          onClick={handleShowFiltersClick}
+          btnClass="button_type_show-filters"
+          btnText="Показать фильтры"
+        />
+      )}
+
       <Button
         onClick={handleMapButtonClick}
         btnClass={`button_type_tertiary-map${
