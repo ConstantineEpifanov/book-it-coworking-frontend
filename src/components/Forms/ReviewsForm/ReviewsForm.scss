@@ -9,7 +9,8 @@
   }
   &__popup-content {
     text-align: left;
-    max-width: 550px;
+    width: 100%;
+    max-width: 585px;
   }
   &__popup-text {
     @include mp-null;
@@ -23,11 +24,9 @@
       min-width: 641px;
     }
     &_type_review {
+      font-family: $font-family-accent;
+      @include use-font(26px, 40px, 800);
       margin-bottom: 20px;
-      font-size: 28px;
-      font-style: normal;
-      font-weight: 300;
-      line-height: 42px;
     }
     &_uppercase {
       text-transform: uppercase;
@@ -102,5 +101,15 @@
     color: $alert-red;
     font-size: 16px;
     padding-bottom: 20px;
+  }
+}
+
+@include mobile {
+  .reviews-form {
+    &__popup-text {
+      &_type_review {
+        @include use-font(24px, 36px, 800);
+      }
+    }
   }
 }

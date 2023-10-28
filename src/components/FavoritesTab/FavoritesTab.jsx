@@ -90,10 +90,6 @@ export const FavoritesTab = () => {
   };
 
   useEffect(() => {
-    window.scrollTo(0, 0);
-  }, []);
-
-  useEffect(() => {
     setIsLoading(true);
     getFavorites()
       .then((res) => setFavoritesArray(res))

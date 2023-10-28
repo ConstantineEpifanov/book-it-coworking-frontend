@@ -113,11 +113,16 @@
 @mixin button-active {
   color: $white;
   background-color: $black;
+  transition: all 0.3s ease;
   &:hover {
-    color: $pink;
+    background-color: $green;
+    color: $black;
+    opacity: 0.7;
   }
   &:active {
-    color: $black;
+    background-color: $black;
+    color: $green;
+    opacity: 1;
   }
 }
 

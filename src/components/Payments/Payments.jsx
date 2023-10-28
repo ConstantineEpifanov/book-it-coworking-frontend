@@ -102,14 +102,19 @@ const Payments = () => {
         <h3 className="payments-place__info">коворкинг</h3>
         <p className="payments-place__header">{placeState?.name}</p>
         <ul className="payments-place__list">
-          <li className="payments-place__list-item">
-            <span>Адрес: </span>
-            <span>{placeState?.location}</span>
-          </li>
-          <li className="payments-place__list-item">
-            <span>{placeState?.category}:</span>
-            <span>{placeState?.equipment}</span>
-          </li>
+          {placeState?.location && (
+            <li className="payments-place__list-item">
+              <span>Адрес:</span>
+              <span>{placeState?.location}</span>
+            </li>
+          )}
+
+          {placeState?.category && (
+            <li className="payments-place__list-item">
+              <span>{placeState.category}:</span>
+              <span>{placeState.equipment}</span>
+            </li>
+          )}
           <li className="payments-place__list-item">
             <span>Начало:</span>
             <span>
