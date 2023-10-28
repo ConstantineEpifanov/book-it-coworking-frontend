@@ -15,3 +15,9 @@
     margin-top: 32px;
   }
 }
+
+@include mobile {
+  .rules__list {
+    grid-template-columns: 1fr;
+  }
+}

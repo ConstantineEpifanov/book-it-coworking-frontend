@@ -142,25 +142,30 @@
       max-width: 280px;
       height: 44px;
     }
-  }
-  .input__search {
-    border-top-right-radius: 0;
-    border-bottom-right-radius: 0;
-    border-right: none;
-    width: 100%;
-    border-color: $black;
-    max-height: 44px;
-    padding: 0;
-    padding-left: 45px;
 
-    &::placeholder {
-      font-size: 14px;
-      font-style: normal;
-      font-weight: 300;
-      line-height: 22px;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
+    &__promo {
+      max-width: 100%;
+    }
+
+    &__search {
+      border-top-right-radius: 0;
+      border-bottom-right-radius: 0;
+      border-right: none;
+      width: 100%;
+      border-color: $black;
+      max-height: 44px;
+      padding: 0;
+      padding-left: 45px;
+
+      &::placeholder {
+        font-size: 14px;
+        font-style: normal;
+        font-weight: 300;
+        line-height: 22px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
     }
   }
 }
