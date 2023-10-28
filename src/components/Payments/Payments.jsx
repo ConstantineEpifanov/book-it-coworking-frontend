@@ -100,7 +100,7 @@ const Payments = () => {
       <PaymentsForm onSubmit={handleSubmit} onBack={handleBack} />
       <article className="payments-place">
         <h3 className="payments-place__info">коворкинг</h3>
-        <h3 className="payments-place__header">{placeState?.name}</h3>
+        <p className="payments-place__header">{placeState?.name}</p>
         <ul className="payments-place__list">
           <li className="payments-place__list-item">
             <span>Адрес: </span>

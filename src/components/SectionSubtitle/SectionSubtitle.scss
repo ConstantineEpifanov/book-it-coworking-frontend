@@ -13,8 +13,25 @@
   &_search {
     max-width: 643px;
   }
+
+  &_location_coworking-list-search {
+    max-width: 643px;
+  }
+
   &_promo {
     font-weight: 500;
     text-transform: uppercase;
+  }
+}
+
+@include mobile {
+  .section-subtitle {
+    max-width: 90%;
+
+    &_location_coworking-list-search {
+      padding-top: 16px;
+      font-size: 16px;
+      line-height: 20px;
+    }
   }
 }

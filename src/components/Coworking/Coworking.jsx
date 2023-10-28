@@ -70,7 +70,7 @@ export const Coworking = () => {
         setReviews(res.results);
         setReviewsLength(res.count);
         setReviewsAddCount((prev) => prev + LAPTOP_REVIEWS_QUANTITY);
-        if (res.results.length < LAPTOP_REVIEWS_QUANTITY) {
+        if (res.results.length <= LAPTOP_REVIEWS_QUANTITY) {
           setMoreButtonVisible(false);
         }
         return reviewsLength;

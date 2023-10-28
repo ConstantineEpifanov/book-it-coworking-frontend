@@ -19,9 +19,11 @@
     }
     &_select {
       flex-direction: row;
+      flex-wrap: wrap;
       gap: 20px;
       padding-top: 32px;
       align-items: flex-start;
+      justify-content: space-around;
     }
     &_search {
       display: flex;
@@ -139,5 +141,21 @@
       left: 15px;
       z-index: 1;
     }
+  }
+}
+
+@include mobile {
+  .entry-form__inner_select {
+    padding-top: 28px;
+    gap: 0;
+  }
+
+  .entry-form__search {
+    flex: 2.1;
+  }
+
+  .entry-form__search-img {
+    top: 11px;
+    left: 13px;
   }
 }
