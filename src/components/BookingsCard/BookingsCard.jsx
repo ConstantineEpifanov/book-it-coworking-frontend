@@ -1,6 +1,6 @@
 import React, { useState, useContext } from "react";
 import PropTypes from "prop-types";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 import { CurrentUserContext } from "../../contexts/currentUserContext";
 
@@ -43,6 +43,7 @@ export const BookingsCard = ({ item, onUpdateStatus, onReviewSubmit }) => {
   const [isReviewFormOpen, setIsReviewFormOpen] = useState(false);
   const [serverError, setServerError] = useState(null);
   const { showMessage } = useContext(CurrentUserContext);
+  const navigate = useNavigate();
 
   const handleCloseBookingPopup = () => {
     handleClosePopup();
@@ -81,6 +82,26 @@ export const BookingsCard = ({ item, onUpdateStatus, onReviewSubmit }) => {
   };
 
   const shouldButtonBeDisabled = () => item.status !== ORDER_STATUSES.CANCEL;
+
+  function handleCardAction(status) {
+    if (status === ORDER_STATUSES.WAIT_PAY) {
+      navigate("/payments", {
+        state: {
+          id: item.location_id,
+          spotId: item.spot,
+          name: item.location_name,
+          location: item.location_id,
+          date: item.date,
+          startTime: item.start_time,
+          endTime: item.end_time,
+          bill: item.bill,
+          orderId: item.id,
+        },
+      });
+    } else {
+      handleOpenPopup();
+    }
+  }
 
   let content;
   if (isCancellationConfirmed) {
@@ -182,12 +203,16 @@ export const BookingsCard = ({ item, onUpdateStatus, onReviewSubmit }) => {
           ) : (
             <Button
               btnText={
-                item.status === ORDER_STATUSES.WAIT_PAY
+                item.status !== ORDER_STATUSES.WAIT_PAY
                   ? "Отменить"
                   : "Оплатить"
               }
-              btnClass="button__profile-small button_type_transparent button_width-bookings"
-              onClick={handleOpenPopup}
+              btnClass={
+                item.status !== ORDER_STATUSES.WAIT_PAY
+                  ? "button__profile-small button_type_transparent button_width-bookings"
+                  : "button__profile-small button_type_order button_width-bookings"
+              }
+              onClick={() => handleCardAction(item.status)}
             />
           )}
         </div>
@@ -197,7 +222,9 @@ export const BookingsCard = ({ item, onUpdateStatus, onReviewSubmit }) => {
         popupClass="bookings-card__popup popup_type_whitemobile"
         onClickClose={() => {
           handleCloseBookingPopup();
-          onUpdateStatus(item.id);
+          if (isCancellationConfirmed) {
+            onUpdateStatus(item.id);
+          }
         }}
       >
         {content}

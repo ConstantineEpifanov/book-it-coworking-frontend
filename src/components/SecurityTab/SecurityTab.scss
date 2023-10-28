@@ -36,10 +36,7 @@
   &__popup-text {
     @include mp-null;
     max-width: 641px;
-    font-size: 20px;
-    font-style: normal;
-    font-weight: 400;
-    line-height: 30px;
+    @include use-font(20px, 30px, 400);
     margin-bottom: 24px;
   }
 
@@ -77,6 +74,12 @@
     height: 44px;
     padding: 22px 20px 4px 20px;
   }
+  &__button-container {
+    margin: 24px auto 0;
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+  }
 }
 
 @include mobile {
@@ -99,6 +102,10 @@
       &-text {
         @include use-font(14px, 22px, 300);
       }
+    }
+    &__button-container {
+      flex-direction: column;
+      gap: 8px;
     }
   }
 }

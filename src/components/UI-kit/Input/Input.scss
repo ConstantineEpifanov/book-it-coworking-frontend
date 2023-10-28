@@ -137,6 +137,12 @@
 }
 
 @include mobile {
+  .input {
+    &__subscription {
+      max-width: 280px;
+      height: 44px;
+    }
+  }
   .input__search {
     border-top-right-radius: 0;
     border-bottom-right-radius: 0;

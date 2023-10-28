@@ -3,10 +3,14 @@ import React, { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { CurrentUserContext } from "../../contexts/currentUserContext";
 import { useResize } from "../../hooks/useResize";
-import "./SecurityTab.scss";
 
 import { deleteUser } from "../../utils/Api";
-import { BASIC_ERROR } from "../../utils/constants";
+import {
+  BASIC_ERROR,
+  SUCCESSFUL_LOGOUT,
+  LOGOUT_OTHER_DEVICES,
+  SUCCESSFUL_ACCOUNT_DELETE,
+} from "../../utils/constants";
 
 import Input from "../UI-kit/Input/Input";
 
@@ -18,6 +22,8 @@ import ChangePassForm from "../Forms/ChangePassForm/ChangePassForm";
 import Button from "../UI-kit/Button/Button";
 import Popup from "../Popup/Popup";
 
+import "./SecurityTab.scss";
+
 export const SecurityTab = () => {
   const { currentUser, setIsLoggedIn, setСurrentUser, showMessage } =
     useContext(CurrentUserContext);
@@ -26,7 +32,7 @@ export const SecurityTab = () => {
 
   const navigate = useNavigate();
 
-  const { isScreenSmall } = useResize();
+  const { width } = useResize();
 
   function hidePassword(password) {
     const maxLength = 15;
@@ -52,7 +58,7 @@ export const SecurityTab = () => {
     deleteUser(currentUser.id)
       .then(() => {
         handleLogout();
-        showMessage("Аккаунт успешно удален", "info");
+        showMessage(SUCCESSFUL_ACCOUNT_DELETE, "info");
       })
       .catch(() => showMessage(BASIC_ERROR))
       .finally(() => {
@@ -68,7 +74,7 @@ export const SecurityTab = () => {
       />
       <ul className="security__board">
         <li className="security__board-row">
-          {!isScreenSmall ? (
+          {width >= 767 ? (
             <div className="security__password-container">
               <span className="security__feature-name">Пароль</span>
               <span>{hidePassword(currentUser.password)}</span>
@@ -102,9 +108,7 @@ export const SecurityTab = () => {
           <Button
             btnText="Выйти"
             btnClass="button__profile-small button_type_security"
-            onClick={() =>
-              showMessage("Вы успешно вышли на других устройствах", "info")
-            }
+            onClick={() => showMessage(LOGOUT_OTHER_DEVICES, "info")}
           />
         </li>
         <li className="security__board-row">
@@ -117,7 +121,7 @@ export const SecurityTab = () => {
             btnClass="button__profile-small button_type_security"
             onClick={() => {
               handleLogout();
-              showMessage("Вы успешно вышли", "info");
+              showMessage(SUCCESSFUL_LOGOUT, "info");
             }}
           />
         </li>
@@ -153,7 +157,7 @@ export const SecurityTab = () => {
               Вы действительно хотите удалить аккаунт? Данная операция
               необратима.
             </p>
-            <div className="bookings-card__button-container">
+            <div className="security__button-container">
               <Button
                 btnText="Нет"
                 btnType="button"
