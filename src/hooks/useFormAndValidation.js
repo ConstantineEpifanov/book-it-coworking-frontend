@@ -21,8 +21,8 @@ const validationMessages = {
   phone: "Введите номер телефона в формате +7XXXXXXXXXX",
   birth_date: "Введите дату в формате гггг-мм-дд",
   confirmation_code: "Некорректный код",
-  current_password: "Пароль должен содержать не менее 6 символов",
-  password: "Пароль должен содержать не менее 6 символов",
+  current_password: "Пароль должен содержать не менее 8 символов",
+  password: "Пароль должен содержать не менее 8 символов",
   re_password: "Пароли должны совпадать",
 };
 
@@ -50,7 +50,7 @@ export default function useFormAndValidation() {
       }
       // валидация полей с паролем
       else if (name === "password" || name === "current_password") {
-        if (value.length < 6) {
+        if (value.length < 8) {
           setErrors({ ...errors, [name]: validationMessages[name] });
           setIsValid(false);
         } else {

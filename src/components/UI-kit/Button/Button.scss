@@ -313,8 +313,13 @@
     }
   }
 
-  &_type_order,
   &_type_security {
+    @include use-font(18px, 22px, 400);
+    @include primary-button-black;
+    height: 54px;
+  }
+  &_type_order,
+  &_type_delete {
     @include primary-button-black;
   }
   &_type_createorder {
@@ -430,7 +435,8 @@
       width: 100%;
     }
     &_type_order,
-    &_type_createorder {
+    &_type_createorder,
+    &_type_delete {
       @include use-font(16px, 20px, 400);
       order: 1;
       height: 44px;

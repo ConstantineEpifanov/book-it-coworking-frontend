@@ -224,6 +224,13 @@ export function cancelOrder(locationId, spotId, orderId) {
   });
 }
 
+export function subscribe() {
+  return request("/subscribe/", {
+    method: "POST",
+    headers: setHeaders(),
+  });
+}
+
 export function editUserData(data) {
   return request("/users/me/", {
     method: "PATCH",
@@ -237,6 +244,13 @@ export function editUserAvatar(data) {
     method: "PUT",
     headers: setHeaders(),
     body: JSON.stringify(data),
+  });
+}
+
+export function deleteUser(id) {
+  return request(`/users/${id}/`, {
+    method: "DELETE",
+    headers: setHeaders(),
   });
 }
 
