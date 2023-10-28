@@ -22,10 +22,6 @@ export const BookingsTab = () => {
     useContext(CurrentUserContext);
 
   useEffect(() => {
-    window.scrollTo(0, 0);
-  }, []);
-
-  useEffect(() => {
     setIsLoading(true);
     if (activeTab === "active") {
       getActiveOrders()

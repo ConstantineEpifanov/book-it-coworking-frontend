@@ -90,7 +90,7 @@ export const BookingsCard = ({ item, onUpdateStatus, onReviewSubmit }) => {
           id: item.location_id,
           spotId: item.spot,
           name: item.location_name,
-          location: item.location_id,
+          location_name: item.location_name,
           date: item.date,
           startTime: item.start_time,
           endTime: item.end_time,

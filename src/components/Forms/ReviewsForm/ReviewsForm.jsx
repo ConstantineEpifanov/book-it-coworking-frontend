@@ -26,7 +26,7 @@ const ReviewsForm = ({ onSubmit, serverError }) => {
   return (
     <div className="reviews-form__popup-content">
       <p className="reviews-form__popup-text reviews-form__popup-text_type_review">
-        Поставьте оценку и оставьте отзыв
+        Поставьте оценку и&nbsp;оставьте отзыв
       </p>
       <section className="reviews-form__container" aria-label="форма отзывов">
         <div className=" ">

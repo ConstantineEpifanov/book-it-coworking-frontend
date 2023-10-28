@@ -35,11 +35,11 @@ const StarRating = ({ rating, onRatingChange }) => {
             width="24"
             height="24"
             viewBox="0 0 24 24"
-            fill={i <= (hoverRating || rating) ? "#ffea30" : "none"} // Изменяем fill в зависимости от состояния
+            fill={i <= (hoverRating || rating) ? "#B0FF1A" : "none"} // Изменяем fill в зависимости от состояния
           >
             <path
               d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z"
-              stroke={i <= (hoverRating || rating) ? "#ffea30" : "#122023"}
+              stroke={i <= (hoverRating || rating) ? "#122023" : "#122023"}
               strokeWidth="2"
               strokeLinecap="round"
               strokeLinejoin="round"
