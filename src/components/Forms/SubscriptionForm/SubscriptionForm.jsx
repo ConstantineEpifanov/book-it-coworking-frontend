@@ -39,10 +39,10 @@ const SubscriptionForm = ({ onSubmit }) => {
           </div>
           <Button
             btnClass="button__subscription button_type_form"
-            btnText={currentUser.subscribed ? "Подписаны!" : "Подписаться"}
+            btnText={currentUser.is_subscribed ? "Подписаны!" : "Подписаться"}
             btnType="submit"
             onClick={handleSubmit}
-            isValidBtn={isLoggedIn && !currentUser.subscribed}
+            isValidBtn={isLoggedIn && !currentUser.is_subscribed}
           />
         </fieldset>
       </form>

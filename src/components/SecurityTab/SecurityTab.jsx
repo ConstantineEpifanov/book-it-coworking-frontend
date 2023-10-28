@@ -1,9 +1,12 @@
-import React, { useContext } from "react";
+/* eslint-disable no-unused-vars */
+import React, { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { CurrentUserContext } from "../../contexts/currentUserContext";
 import { useResize } from "../../hooks/useResize";
 import "./SecurityTab.scss";
-// import PropTypes from "prop-types";
+
+import { deleteUser } from "../../utils/Api";
+import { BASIC_ERROR } from "../../utils/constants";
 
 import Input from "../UI-kit/Input/Input";
 
@@ -19,6 +22,7 @@ export const SecurityTab = () => {
   const { currentUser, setIsLoggedIn, setСurrentUser, showMessage } =
     useContext(CurrentUserContext);
   const { isOpenPopup, handleOpenPopup, handleClosePopup } = usePopupOpen();
+  const [popupActive, setPopupActive] = useState(null);
 
   const navigate = useNavigate();
 
@@ -31,12 +35,29 @@ export const SecurityTab = () => {
     );
   }
 
+  const handleCloseSecurityPopup = () => {
+    handleClosePopup();
+    setPopupActive(null);
+  };
+
   const handleLogout = () => {
     localStorage.removeItem("jwt");
     setIsLoggedIn(false);
     setСurrentUser({});
     localStorage.clear();
     navigate("/");
+  };
+
+  const handleDelete = () => {
+    deleteUser(currentUser.id)
+      .then(() => {
+        handleLogout();
+        showMessage("Аккаунт успешно удален", "info");
+      })
+      .catch(() => showMessage(BASIC_ERROR))
+      .finally(() => {
+        setPopupActive(null);
+      });
   };
 
   return (
@@ -57,13 +78,17 @@ export const SecurityTab = () => {
               inputPlaceholder="Пароль"
               inputValue={hidePassword()}
               inputClass="security__input"
+              inputType="password"
               inputDisabled
             />
           )}
           <Button
             btnText="Изменить"
-            btnClass="button__profile-small button_type_transparent button_type_security"
-            onClick={handleOpenPopup}
+            btnClass="button__profile-small button_type_security"
+            onClick={() => {
+              setPopupActive("pass");
+              handleOpenPopup();
+            }}
           />
         </li>
         <li className="security__board-row">
@@ -76,7 +101,7 @@ export const SecurityTab = () => {
           </div>
           <Button
             btnText="Выйти"
-            btnClass="button__profile-small button_type_transparent button_type_security"
+            btnClass="button__profile-small button_type_security"
             onClick={() =>
               showMessage("Вы успешно вышли на других устройствах", "info")
             }
@@ -89,31 +114,63 @@ export const SecurityTab = () => {
           </div>
           <Button
             btnText="Завершить"
-            btnClass="button__profile-small button_type_transparent button_type_security"
+            btnClass="button__profile-small button_type_security"
             onClick={() => {
               handleLogout();
               showMessage("Вы успешно вышли", "info");
             }}
           />
         </li>
-      </ul>{" "}
-      <Popup isOpen={isOpenPopup} popupClass="" onClickClose={handleClosePopup}>
-        <ChangePassForm handleClosePopup={handleClosePopup} />
+        <li className="security__board-row">
+          <div className="security__delete-container">
+            <span className="security__feature-name">Удалить аккаунт</span>
+            <p className="security__feature-description">
+              Мы вас ценим как клиента
+            </p>
+          </div>
+          <Button
+            btnText="Удалить"
+            btnClass="button__profile-small button_type_security"
+            onClick={() => {
+              setPopupActive("delete");
+              handleOpenPopup();
+            }}
+          />
+        </li>
+      </ul>
+      <Popup
+        isOpen={isOpenPopup}
+        popupClass={
+          popupActive === "pass" ? "" : "security__popup popup_type_whitemobile"
+        }
+        onClickClose={handleCloseSecurityPopup}
+      >
+        {popupActive === "pass" ? (
+          <ChangePassForm handleClosePopup={handleCloseSecurityPopup} />
+        ) : (
+          <>
+            <p className="security__popup-text">
+              Вы действительно хотите удалить аккаунт? Данная операция
+              необратима.
+            </p>
+            <div className="bookings-card__button-container">
+              <Button
+                btnText="Нет"
+                btnType="button"
+                btnClass="button__profile-transparent button_type_cancel"
+                onClick={handleCloseSecurityPopup}
+              />
+
+              <Button
+                btnText="Да, удалить"
+                btnType="button"
+                btnClass="button__profile-edit button_type_delete"
+                onClick={handleDelete}
+              />
+            </div>
+          </>
+        )}
       </Popup>
     </section>
   );
 };
-
-// SecurityTab.propTypes = {
-//   user: PropTypes.shape({
-//     password: PropTypes.string,
-//     sessions: PropTypes.arrayOf(PropTypes.string),
-//   }),
-// };
-
-// SecurityTab.defaultProps = {
-//   user: {
-//     password: "",
-//     sessions: [],
-//   },
-// };

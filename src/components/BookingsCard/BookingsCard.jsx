@@ -4,7 +4,11 @@ import { Link } from "react-router-dom";
 
 import { CurrentUserContext } from "../../contexts/currentUserContext";
 
-import { ORDER_STATUSES, REVIEW_SUCCESS } from "../../utils/constants";
+import {
+  ORDER_STATUSES,
+  REVIEW_SUCCESS,
+  BASIC_ERROR,
+} from "../../utils/constants";
 import { publishReview, cancelOrder } from "../../utils/Api";
 import { formatDate, getPopupText } from "../../utils/utils";
 
@@ -52,7 +56,7 @@ export const BookingsCard = ({ item, onUpdateStatus, onReviewSubmit }) => {
       .then(() => {
         setIsCancellationConfirmed(true);
       })
-      .catch((e) => console.log(e))
+      .catch(() => showMessage(BASIC_ERROR))
       .finally(() => {});
   };
 
@@ -177,7 +181,11 @@ export const BookingsCard = ({ item, onUpdateStatus, onReviewSubmit }) => {
             />
           ) : (
             <Button
-              btnText="Отменить"
+              btnText={
+                item.status === ORDER_STATUSES.WAIT_PAY
+                  ? "Отменить"
+                  : "Оплатить"
+              }
               btnClass="button__profile-small button_type_transparent button_width-bookings"
               onClick={handleOpenPopup}
             />

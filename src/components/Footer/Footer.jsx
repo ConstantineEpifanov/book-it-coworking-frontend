@@ -5,13 +5,15 @@ import { CurrentUserContext } from "../../contexts/currentUserContext";
 import "./Footer.scss";
 import { Logo } from "../UI-kit/Logo/Logo";
 
+import { subscribe } from "../../utils/Api";
+
 import YoutubeIcon from "../../images/social-icons/YoutubeIcon";
 import InstagramIcon from "../../images/social-icons/InstagramIcon";
 import TwitterIcon from "../../images/social-icons/TwitterIcon";
 import TelegramIcon from "../../images/social-icons/TelegramIcon";
 
 import { SubscriptionForm } from "../Forms/SubscriptionForm/SubscriptionForm";
-import { SUBSRIPTION_SUCCESS } from "../../utils/constants";
+import { SUBSRIPTION_SUCCESS, BASIC_ERROR } from "../../utils/constants";
 
 import {
   MAIN_EMAIL,
@@ -49,9 +51,15 @@ export const Footer = () => {
   const links = generateLinks(linksData);
 
   const handleSubmit = () => {
-    showMessage(SUBSRIPTION_SUCCESS, "info");
-    const updatedUser = { ...currentUser, subscribed: true };
-    setСurrentUser(updatedUser);
+    subscribe()
+      .then(() => {
+        showMessage(SUBSRIPTION_SUCCESS, "info");
+        const updatedUser = { ...currentUser, is_subscribed: true };
+        setСurrentUser(updatedUser);
+      })
+      .catch(() => {
+        showMessage(BASIC_ERROR);
+      });
   };
 
   return (
