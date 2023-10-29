@@ -40,7 +40,7 @@ export default {
 
 export const Example = {
   args: {
-    firstCaption: "Общая зона",
+    firstCaption: "Рабочее место",
     secondCaption: "Переговорная",
   },
 };

@@ -189,7 +189,7 @@ const spotsSortFunc = (a, b) => {
 };
 
 export const Booking = () => {
-  const FIRST_SPOT_TYPE = "Общая зона";
+  const FIRST_SPOT_TYPE = "Рабочее место";
   const SECOND_SPOT_TYPE = "Переговорная";
 
   const location = useLocation();
