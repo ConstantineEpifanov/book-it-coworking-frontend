@@ -10,7 +10,7 @@
   border-radius: 40px;
 
   &__header {
-    min-height: 80px;
+    min-height: 82px;
     padding: 6px 48px 4px;
     border: 2px solid $main-black;
     border-radius: 40px;
@@ -18,23 +18,23 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    background-color: $green;
+    background-color: $main-black;
 
     &-title {
       @include mp-null;
       @include text-font-normal;
+      padding-top: 0;
       font-weight: 500;
+      color: $white;
     }
   }
 
   &__body {
     width: 100%;
-    padding: 39px 3px 54px 45px;
+    padding: 16px 28px 26px 20px;
     box-sizing: border-box;
     display: grid;
     grid-template-columns: repeat(7, 1fr);
-    grid-auto-rows: 32px;
-    row-gap: 48px;
   }
 
   &__cell {
@@ -44,6 +44,7 @@
     align-items: center;
     justify-content: center;
     user-select: none;
+    aspect-ratio: 126 / 80;
 
     &_type_header {
       cursor: auto;
