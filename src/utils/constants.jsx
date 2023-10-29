@@ -80,6 +80,21 @@ export const SUBSRIPTION_SUCCESS = "Вы успешно подписались";
 export const SUBSCRIPTION_ERROR = "Нужно войти, чтобы подписаться";
 export const IMAGE_VALIDATION_ERROR = "Не более 1 Мб, JPG или PNG";
 export const AVATAR_UPLOAD_SUCCESS = "Изображение успешно обновлено";
+export const SUCCESSFUL_LOGOUT = "Вы успешно вышли";
+export const LOGOUT_OTHER_DEVICES = "Вы успешно вышли на других устройствах";
+export const SUCCESSFUL_ACCOUNT_DELETE = "Аккаунт успешно удален";
+
+// меню в профиле
+
+export const profileMenuItems = [
+  { id: "data", text: "Персональные данные" },
+  {
+    id: "security",
+    text: "Безопасность и конфиденциальность",
+  },
+  { id: "bookings", text: "Бронирования" },
+  { id: "favorites", text: "Избранное" },
+];
 
 // классы навигации в header
 export const activeLinkClass = "navigation__link navigation__link_active";

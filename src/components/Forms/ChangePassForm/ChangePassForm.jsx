@@ -36,13 +36,14 @@ const ChangePassForm = ({ handleClosePopup }) => {
   return (
     <EntryForm title="Смена пароля" onSubmit={handleSubmit}>
       <PasswordInput
-        inputType="current_password"
+        inputType="password"
         inputPlaceholder="Текущий Пароль"
         inputInfo="Введите текущий пароль"
         inputValue={values.current_password}
         inputError={errors.current_password}
         inputName="current_password"
         handleChange={handleChange}
+        inputRequired
       />
 
       <PasswordInput
@@ -53,6 +54,7 @@ const ChangePassForm = ({ handleClosePopup }) => {
         inputError={errors.password}
         inputName="password"
         handleChange={handleChange}
+        inputRequired
       />
       <PasswordInput
         inputType="password"
@@ -62,6 +64,7 @@ const ChangePassForm = ({ handleClosePopup }) => {
         inputError={errors.re_password}
         inputName="re_password"
         handleChange={handleChange}
+        inputRequired
       />
       <span className="entry-form__text_error">
         {isErrApi && `${isErrApi.message}`}

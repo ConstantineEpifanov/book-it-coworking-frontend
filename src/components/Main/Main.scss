@@ -8,6 +8,12 @@
   margin: $main-margin;
 }
 
+@include tablet {
+  .main {
+    margin: $main-margin-tablet;
+  }
+}
+
 @include mobile {
   .main {
     margin: $main-margin-mobile;

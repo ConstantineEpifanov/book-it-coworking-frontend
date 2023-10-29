@@ -326,9 +326,15 @@
     width: 170px;
   }
 
-  &__profile-edit,
-  &__profile-transparent,
   &__profile-review {
+    width: 265px;
+    height: 54px;
+    @include primary-button-black;
+    @include use-font(18px, 22px, 400);
+  }
+
+  &__profile-edit,
+  &__profile-transparent {
     width: 170px;
     height: 54px;
     background-color: $green;
@@ -351,8 +357,13 @@
     }
   }
 
-  &_type_order,
   &_type_security {
+    @include use-font(18px, 22px, 400);
+    @include primary-button-black;
+    height: 54px;
+  }
+  &_type_order,
+  &_type_delete {
     @include primary-button-black;
   }
   &_type_createorder {
@@ -384,31 +395,6 @@
     background-color: transparent;
     border-radius: 32px;
     border: 2px solid $black;
-  }
-
-  //стили кнопок меню на странице профиля
-
-  &__profile {
-    box-sizing: border-box;
-    background-color: $white;
-    max-width: 360px;
-    height: 84px;
-    padding: 20px 20px 20px 78px;
-    text-align: left;
-    border: 2px solid $black;
-    border-radius: 40px;
-    font-size: 18px;
-    font-style: normal;
-    font-weight: 400;
-    line-height: 44px;
-    transition: all 0.3s ease-in-out;
-    &:hover {
-      color: $pink;
-    }
-    &:active {
-      color: $black;
-      background-color: $pink;
-    }
   }
 
   &_type_buttons-list {
@@ -468,7 +454,8 @@
       width: 100%;
     }
     &_type_order,
-    &_type_createorder {
+    &_type_createorder,
+    &_type_delete {
       @include use-font(16px, 20px, 400);
       order: 1;
       height: 44px;
@@ -482,7 +469,8 @@
       width: 100%;
       max-width: 450px;
     }
-    &_type_security {
+    &_type_security,
+    &__profile-review {
       width: 100%;
       max-width: 450px;
     }

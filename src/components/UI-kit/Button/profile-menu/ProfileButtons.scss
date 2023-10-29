@@ -1,107 +1,63 @@
+@import "../../../../scss/mixins.scss";
+@import "../../../../scss/variables.scss";
+
 .button__profile {
-  &_data {
-    @include button-with-image("../../../../images/profile-icons/user.svg");
-    &:hover {
-      @include button-with-image(
-        "../../../../images/profile-icons/user-hover.svg"
-      );
-    }
-    &:active {
-      @include button-with-image("../../../../images/profile-icons/user.svg");
-    }
+  box-sizing: border-box;
+  background-color: $white;
+  max-width: 360px;
+  height: 84px;
+  padding: 20px 20px 20px 78px;
+  text-align: left;
+  border: 2px solid $black;
+  border-radius: 40px;
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 44px;
+  transition: all 0.3s ease-in-out;
+  &:hover {
+    background-color: transparent;
+    border-color: $main-white;
+    opacity: 1;
   }
-
-  &_security {
-    line-height: 22px;
-    @include button-with-image("../../../../images/profile-icons/security.svg");
-    &:hover {
-      @include button-with-image(
-        "../../../../images/profile-icons/security-hover.svg"
-      );
-    }
-    &:active {
-      @include button-with-image(
-        "../../../../images/profile-icons/security.svg"
-      );
-    }
+  &:active {
+    color: $white;
+    background-color: $black;
   }
+}
 
-  &_payment {
-    @include button-with-image("../../../../images/profile-icons/payment.svg");
+$tabNames: "data", "security", "bookings", "favorites";
+
+@each $tabName in $tabNames {
+  .button__profile_#{$tabName} {
+    @include button-with-image(
+      "../../../../images/profile-icons/#{$tabName}.svg"
+    );
     &:hover {
       @include button-with-image(
-        "../../../../images/profile-icons/payment-hover.svg"
-      );
-    }
-    &:active {
-      @include button-with-image(
-        "../../../../images/profile-icons/payment.svg"
-      );
-    }
-  }
-
-  &_bookings {
-    @include button-with-image("../../../../images/profile-icons/bookings.svg");
-    &:hover {
-      @include button-with-image(
-        "../../../../images/profile-icons/bookings-hover.svg"
+        "../../../../images/profile-icons/#{$tabName}.svg"
       );
     }
     &:active {
       @include button-with-image(
-        "../../../../images/profile-icons/bookings.svg"
+        "../../../../images/profile-icons/#{$tabName}-active.svg"
       );
     }
   }
 
-  &_favorites {
+  .button__profile_#{$tabName}-active {
     @include button-with-image(
-      "../../../../images/profile-icons/favorites.svg"
+      "../../../../images/profile-icons/#{$tabName}-active.svg"
     );
-    &:hover {
-      @include button-with-image(
-        "../../../../images/profile-icons/favorites-hover.svg"
-      );
-    }
     &:active {
       @include button-with-image(
-        "../../../../images/profile-icons/favorites.svg"
+        "../../../../images/profile-icons/#{$tabName}-pressed.svg"
       );
     }
-  }
-
-  &_data-active {
-    @include button-with-image(
-      "../../../../images/profile-icons/user-active.svg"
-    );
     @include button-active;
   }
+}
 
-  &_security-active {
-    @include button-with-image(
-      "../../../../images/profile-icons/security-active.svg"
-    );
-    @include button-active;
-  }
-
-  &_payment-active {
-    @include button-with-image(
-      "../../../../images/profile-icons/payment-active.svg"
-    );
-    @include button-active;
-  }
-
-  &_bookings-active {
-    @include button-with-image(
-      "../../../../images/profile-icons/bookings-activ.svg"
-    );
-    @include button-active;
-  }
-
-  &_favorites-active {
-    @include button-with-image(
-      "../../../../images/profile-icons/favorites-active.svg"
-    );
-    @include button-active;
-  }
+.button__profile_security {
+  line-height: 22px;
 }

@@ -158,6 +158,7 @@ const RestorePassForm = ({ isOpenPopup, handleClosePopup }) => {
             inputError={errors.password}
             inputName="password"
             handleChange={handleChange}
+            inputRequired
           />
           <PasswordInput
             inputType="password"
@@ -167,6 +168,7 @@ const RestorePassForm = ({ isOpenPopup, handleClosePopup }) => {
             inputError={errors.re_password}
             inputName="re_password"
             handleChange={handleChange}
+            inputRequired
           />
           <span className="entry-form__text_error">
             {isErrApi && `${isErrApi.message}`}

@@ -5,6 +5,7 @@ import { Route, Routes, useLocation, useNavigate } from "react-router-dom";
 import { CurrentUserContext } from "./contexts/currentUserContext";
 
 import { ProtectedRouteElement } from "./HOC/ProtectedRoute";
+import ScrollToTop from "./utils/ScrollToTop";
 
 import "./App.css";
 
@@ -126,75 +127,77 @@ function App() {
   );
 
   return (
-    <CurrentUserContext.Provider value={contextValue}>
-      <div className="App">
-        <Header
-          profileInfo={currentUser}
-          onOpenPopup={handleOpenPopup}
-          isLoggedIn={isLoggedIn}
-          onLogout={handleLogout}
-        />
-        <Routes location={previousLocation || location}>
-          <Route path="/" element={<Main />} />
-          <Route path="/points" element={<CoworkingList />} />
-          <Route path="/faq" element={<RulesQuestions />} />
-          <Route
-            path="/profile"
-            exact
-            element={<ProtectedRouteElement element={ProfileDashboard} />}
+    <ScrollToTop>
+      <CurrentUserContext.Provider value={contextValue}>
+        <div className="App">
+          <Header
+            profileInfo={currentUser}
+            onOpenPopup={handleOpenPopup}
+            isLoggedIn={isLoggedIn}
+            onLogout={handleLogout}
           />
-          <Route
-            path="/profile/*"
-            exact
-            state={null}
-            element={<ProtectedRouteElement element={Profile} />}
-          />
+          <Routes location={previousLocation || location}>
+            <Route path="/" element={<Main />} />
+            <Route path="/points" element={<CoworkingList />} />
+            <Route path="/faq" element={<RulesQuestions />} />
+            <Route
+              path="/profile"
+              exact
+              element={<ProtectedRouteElement element={ProfileDashboard} />}
+            />
+            <Route
+              path="/profile/*"
+              exact
+              state={null}
+              element={<ProtectedRouteElement element={Profile} />}
+            />
 
-          <Route path="/contacts" element={<Contacts />} />
-          <Route path="/points/:id" element={<Coworking />} />
-          <Route path="/booking" element={<Booking />} />
-          <Route path="/payments" element={<Payments />} />
-          <Route path="*" element={<PageNotFound />} />
-          {/* для рероутинга попапов, чтобы при переключении не бил в 404 */}
-          <Route path="/popup/*" element={<Main />} />
-        </Routes>
-        {previousLocation && (
-          <Routes>
-            <Route
-              path="/popup/login"
-              element={
-                <LoginForm
-                  isErrApi={isErrApi}
-                  isOpenPopup={isOpenPopup}
-                  onClosePopup={handleClosePopup}
-                  onGetUserInfo={handleGetUserInfo}
-                />
-              }
-            />
-            <Route
-              path="/popup/register"
-              element={
-                <RegisterForm
-                  isOpenPopup={isOpenPopup}
-                  onClosePopup={handleClosePopup}
-                />
-              }
-            />
-            <Route
-              path="/popup/reset_password"
-              element={
-                <RestorePassForm
-                  isOpenPopup={isOpenPopup}
-                  onClosePopup={handleClosePopup}
-                />
-              }
-            />
+            <Route path="/contacts" element={<Contacts />} />
+            <Route path="/points/:id" element={<Coworking />} />
+            <Route path="/booking" element={<Booking />} />
+            <Route path="/payments" element={<Payments />} />
+            <Route path="*" element={<PageNotFound />} />
+            {/* для рероутинга попапов, чтобы при переключении не бил в 404 */}
+            <Route path="/popup/*" element={<Main />} />
           </Routes>
-        )}
-        <InfoPopup infoType={infoType} infoMessage={infoMessage} />
-        <Footer />
-      </div>
-    </CurrentUserContext.Provider>
+          {previousLocation && (
+            <Routes>
+              <Route
+                path="/popup/login"
+                element={
+                  <LoginForm
+                    isErrApi={isErrApi}
+                    isOpenPopup={isOpenPopup}
+                    onClosePopup={handleClosePopup}
+                    onGetUserInfo={handleGetUserInfo}
+                  />
+                }
+              />
+              <Route
+                path="/popup/register"
+                element={
+                  <RegisterForm
+                    isOpenPopup={isOpenPopup}
+                    onClosePopup={handleClosePopup}
+                  />
+                }
+              />
+              <Route
+                path="/popup/reset_password"
+                element={
+                  <RestorePassForm
+                    isOpenPopup={isOpenPopup}
+                    onClosePopup={handleClosePopup}
+                  />
+                }
+              />
+            </Routes>
+          )}
+          <InfoPopup infoType={infoType} infoMessage={infoMessage} />
+          <Footer />
+        </div>
+      </CurrentUserContext.Provider>
+    </ScrollToTop>
   );
 }
 
