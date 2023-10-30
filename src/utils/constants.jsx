@@ -34,6 +34,10 @@ export const DEFAULT_LATITUDE = 59.9;
 export const DEFAULT_LONGITUDE = 30.3;
 export const DEFAULT_ZOOM = 11;
 
+// название города
+
+export const CITY_NAME = "г. Санкт-Петербург";
+
 // Booking
 // Количество рабочих дней для локации
 export const WORKING_DAYS_COUNTS = {

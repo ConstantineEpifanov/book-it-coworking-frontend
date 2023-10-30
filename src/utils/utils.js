@@ -2,6 +2,7 @@ import {
   DEFAULT_LATITUDE,
   DEFAULT_LONGITUDE,
   ORDER_STATUSES,
+  CITY_NAME,
 } from "./constants";
 
 export function formatEventDate(date) {
@@ -58,3 +59,5 @@ export const getMaxDate = () => {
 
 export const checkMobile = () =>
   window.matchMedia("(max-width: 767px)").matches;
+
+export const cutCityName = (str) => str.replace(CITY_NAME.concat(","), "");

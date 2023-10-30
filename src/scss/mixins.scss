@@ -94,6 +94,13 @@
   white-space: nowrap;
 }
 
+@mixin use-rows($num) {
+  display: -webkit-box;
+  -webkit-line-clamp: #{$num};
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
 //  -------------- FONTS-MOB -----------------
 @mixin text-font-normal-mob {
   font-size: 16px;
@@ -218,6 +225,7 @@
 
   &:hover {
     color: $color1;
+    opacity: 1;
   }
 
   &:active {

@@ -7,6 +7,8 @@ import SwiperCore, { Pagination } from "swiper";
 import { EventsItem } from "../EventsItem/EventsItem";
 import { SectionTitle } from "../SectionTitle/SectionTitle";
 
+import { SWIPER_BREAKPOINTS } from "../../utils/constants";
+
 import "swiper/swiper-bundle.min.css";
 import "swiper/swiper.min.css";
 import "./Events.scss";
@@ -33,19 +35,7 @@ export const Events = ({ eventsArray }) => (
           type: "bullets",
           clickable: true,
         }}
-        breakpoints={{
-          768: {
-            slidesPerView: 1.2,
-          },
-          1060: {
-            slidesPerView: 2,
-            spaceBetween: 20,
-          },
-          1440: {
-            slidesPerView: 3,
-            spaceBetween: 20,
-          },
-        }}
+        breakpoints={SWIPER_BREAKPOINTS}
       >
         {eventsArray.map((event) => (
           <SwiperSlide key={event.id}>
