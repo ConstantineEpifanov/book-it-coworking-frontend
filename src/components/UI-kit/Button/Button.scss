@@ -440,6 +440,10 @@
     }
   }
 
+  &_type_not-found {
+    width: 245px;
+  }
+
   &:hover {
     opacity: 0.7;
   }
@@ -579,6 +583,10 @@
     }
     &_more {
       max-width: 350px;
+    }
+    &_type_not-found {
+      @include use-font(16px, 20px, 400, normal);
+      width: 390px;
     }
   }
 }
