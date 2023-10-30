@@ -65,7 +65,7 @@ export const Promo = () => {
         <h1 className="promo__title">Spot It</h1>
         <img className="promo__img" src={img} alt="Промо" />
         <h2 className="promo__subtitle">
-          Сеть коворкингов, созданная специально для IT специалистов
+          Сеть коворкингов созданная специально для&#160;IT специалистов
         </h2>
         <form className="promo__search" onSubmit={handleSubmit} noValidate>
           <Input
@@ -75,9 +75,10 @@ export const Promo = () => {
             inputPlaceholder="Найти рабочее место..."
             inputValue={form.search}
             handleChange={handleChange}
+            isInputSearch
           />
           <Button
-            btnClass="button__promo"
+            btnClass="button__promo button_type_promo-search"
             btnType="submit"
             btnText="Искать"
             isValidBtn

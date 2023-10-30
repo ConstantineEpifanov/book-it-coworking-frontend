@@ -2,6 +2,7 @@
 @import "../../../scss/mixins.scss";
 
 .input {
+  position: relative;
   width: 360px;
   height: 58px;
   padding: 12px 40px 12px 20px;
@@ -100,6 +101,7 @@
   }
 
   &__promo {
+    // position: relative;
     border-top-right-radius: 0;
     border-bottom-right-radius: 0;
     border-right: none;
@@ -120,6 +122,19 @@
 
   &__items {
     position: relative;
+
+    &_type_search {
+      &::before {
+        width: 24px;
+        height: 100%;
+        z-index: 1;
+        position: absolute;
+        top: -7px;
+        left: 12px;
+        content: "";
+        background: url("../../../images/search-icon.svg") no-repeat center 24px/24px;
+      }
+    }
   }
 
   &__search {
@@ -127,12 +142,17 @@
     width: 265px;
     position: relative;
     padding-left: 46px;
+    padding-right: 5px;
     background-color: $main-white;
     border: 2px solid $black;
 
     &::placeholder {
       color: $gray;
     }
+  }
+
+  &_type_search {
+    padding-left: 45px;
   }
 }
 
@@ -145,7 +165,30 @@
     }
 
     &__promo {
+      width: 100%;
       max-width: 100%;
+      max-height: 44px;
+      padding: 0;
+      padding-left: 45px;
+    }
+    &::placeholder {
+      font-size: 14px;
+      font-style: normal;
+      font-weight: 300;
+      line-height: 22px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    &__items {
+      flex: 1;
+
+      &_type_search {
+        &::before {
+          top: -13px;
+        }
+      }
     }
 
     &__search {

@@ -5,7 +5,10 @@ import { CurrentUserContext } from "../../contexts/currentUserContext";
 import "./Main.scss";
 import { SectionTitle } from "../SectionTitle/SectionTitle";
 // import { SectionSubtitle } from "../SectionSubtitle/SectionSubtitle";
-import { PointsList } from "../PointsList/PointsList";
+// import { PointsList } from "../PointsList/PointsList";
+
+import { CoworkingSwiper } from "../CoworkingSwiper/CoworkingSwiper";
+
 import { Promo } from "../Promo/Promo";
 import { Discounts } from "../Discounts/Discounts";
 import { Events } from "../Events/Events";
@@ -111,11 +114,7 @@ export const Main = () => {
                 directionRow
               />
             ) : (
-              <PointsList
-                isCompact
-                coworkingsArray={coworkingsArray}
-                isMoreButtonVisible={false}
-              />
+              <CoworkingSwiper isCompact coworkingsArray={coworkingsArray} />
             )}
           </section>
           <Discounts />

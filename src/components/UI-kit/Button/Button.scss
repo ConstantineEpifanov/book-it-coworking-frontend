@@ -40,6 +40,7 @@
     border-left: none;
     max-width: 190px;
     height: 58px;
+    background-color: $green;
   }
 
   &:disabled {
@@ -487,11 +488,25 @@
       font-weight: 400;
       line-height: 10px;
     }
+    &_type_promo-search {
+      flex: 1;
+      // border: 2px solid $black;
+      // border-top-left-radius: 0;
+      // border-bottom-left-radius: 0;
+      // border-left: none;
+      // max-width: 170px;
+      max-height: 44px;
+      font-size: 16px;
+      font-style: normal;
+      font-weight: 400;
+      line-height: 10px;
+    }
     &__subscription {
       @include text-font-normal-mob;
       padding: 12px;
       max-width: 120px;
       height: 44px;
+      background-color: $green;
     }
 
     &_type_tertiary-map {
