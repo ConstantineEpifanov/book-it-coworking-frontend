@@ -296,32 +296,28 @@
     }
   }
 
-  &_size_mini {
-    width: 75px;
-  }
-
-  &_size_small {
-    width: 148px;
-  }
-
-  &_size_small-s {
-    width: 118px;
-  }
-
-  &_size_medium {
-    width: 245px;
-  }
-
-  &_size_middle {
-    width: 265px;
-  }
-
-  &_size_postmiddle {
-    max-width: 100%;
-  }
-
-  &_size_large {
-    width: 550px;
+  &_size {
+    &_mini {
+      width: 75px;
+    }
+    &_small {
+      width: 148px;
+    }
+    &_small-s {
+      width: 118px;
+    }
+    &_medium {
+      width: 245px;
+    }
+    &_middle {
+      width: 265px;
+    }
+    &_postmiddle {
+      max-width: 100%;
+    }
+    &_large {
+      width: 550px;
+    }
   }
 
   &__profile-small {

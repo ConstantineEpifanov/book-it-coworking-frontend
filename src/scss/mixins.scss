@@ -6,7 +6,11 @@
   margin: 0;
   padding: 0;
 }
-
+// ------------LIST------------
+@mixin mp-null-list {
+  @include mp-null;
+  list-style-type: none;
+}
 // -------------- CONTAINERS -----------------
 @mixin main-box-centered {
   width: 100%;
@@ -23,6 +27,11 @@
   display: flex;
   gap: 20px;
   flex-direction: column;
+}
+@mixin flex-box-column-center {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 //  -------------- FONTS -----------------
@@ -269,8 +278,4 @@
   }
 }
 
-// ------------LIST------------
-@mixin mp-null-list {
-  @include mp-null;
-  list-style-type: none;
-}
+

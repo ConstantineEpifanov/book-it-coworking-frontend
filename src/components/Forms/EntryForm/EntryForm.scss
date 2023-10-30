@@ -4,16 +4,12 @@
 .entry-form {
   width: 100%;
   height: 100%;
-  display: flex;
-  align-items: center;
+  @include flex-box-column-center;
   justify-content: center;
-  flex-direction: column;
   font-family: $font-family;
 
   &__inner {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+   @include flex-box-column-center;
     &_reviews {
       align-items: start;
     }
@@ -34,9 +30,7 @@
   }
 
   &__box {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+    @include flex-box-column-center;
     text-align: start;
     padding: 32px 0 0;
     margin: 0;
@@ -68,37 +62,29 @@
   }
 
   &__title {
-    font-weight: 500;
-    font-size: 20px;
-    line-height: 30px; /* 150% */
+    @include mp-null;
+    @include use-font(20px,30px,500,normal);
     text-transform: uppercase;
     text-align: center;
-    padding: 0;
-    margin: 0;
     color: $black;
     text-align: center;
   }
 
   &__container {
     width: 100%;
-    // max-width: 260px;
     box-sizing: border-box;
     text-align: center;
   }
 
   &__auth-link {
-    font-weight: 400;
-    font-size: 13px;
-    line-height: 16px;
+    @include use-font(13px,16px,400,normal);
     padding-left: 6px;
     color: $black;
   }
 
   &__auth-text {
     display: block;
-    font-weight: 400;
-    font-size: 12px;
-    line-height: 15px;
+    @include use-font(12px,15px,400,normal);
     text-align: center;
     color: $dark-gray;
     text-decoration: none;
@@ -162,7 +148,6 @@
   .entry-form__search {
     flex: 2.1;
   }
-
   .entry-form__search-img {
     top: 11px;
     left: 13px;
