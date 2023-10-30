@@ -6,7 +6,11 @@
   margin: 0;
   padding: 0;
 }
-
+// ------------LIST------------
+@mixin mp-null-list {
+  @include mp-null;
+  list-style-type: none;
+}
 // -------------- CONTAINERS -----------------
 @mixin main-box-centered {
   width: 100%;
@@ -23,6 +27,11 @@
   display: flex;
   gap: 20px;
   flex-direction: column;
+}
+@mixin flex-box-column-center {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 //  -------------- FONTS -----------------
@@ -89,6 +98,13 @@
 @mixin text-font-normal-mob {
   font-size: 16px;
   line-height: 20px;
+}
+
+// текст в импуте
+@mixin text-font-link-mob {
+  font-size: 14px;
+  font-weight: 300;
+  line-height: 22px;
 }
 //  -------------- INPUT -----------------
 @mixin error-input {
@@ -260,10 +276,4 @@
   @media screen and (min-width: #{$tablet-breakpoint + 1}) {
     @content;
   }
-}
-
-// ------------LIST------------
-@mixin mp-null-list {
-  @include mp-null;
-  list-style-type: none;
 }

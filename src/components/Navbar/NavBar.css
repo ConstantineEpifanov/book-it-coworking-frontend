@@ -44,7 +44,7 @@
   width: 30px;
   height: 32px;
   position: absolute;
-  top: 15px;
+  top: 10px;
   right: 20px;
   cursor: pointer;
   opacity: 0;
@@ -56,14 +56,14 @@
   display: block;
   width: 30px;
   height: 2px;
-  margin-bottom: 8px;
+  margin-bottom: 6px;
   position: relative;
-  top: 15px;
+  top: 20px;
   right: 20px;
   background: #122023;
   border-radius: 2px;
   z-index: 1;
-  transform-origin: 10px 0px;
+  transform-origin: 13px 0px;
   transition:
     transform 0.5s cubic-bezier(0.77, 0.2, 0.05, 1),
     background 0.5s cubic-bezier(0.77, 0.2, 0.05, 1),
@@ -80,7 +80,7 @@
 
 .navbar__checkbox:checked ~ span {
   opacity: 1;
-  transform: rotate(45deg) translate(2px, 6px);
+  transform: rotate(45deg) translate(0px, 6px);
   background: #232323;
 }
 

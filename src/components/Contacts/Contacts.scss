@@ -37,7 +37,6 @@
     grid-template-areas:
       "img   header"
       " img   info";
-
     &_info {
       @include mp-null;
       @include text-font-normal;
@@ -85,9 +84,7 @@
       text-align: center;
       &_info {
         @include mp-null;
-        font-size: 14px;
-        line-height: 22px;
-        font-weight: 300;
+        @include text-font-link-mob;
         // плюсуется с  row-gap: 28px;
         padding-top: 30px;
       }

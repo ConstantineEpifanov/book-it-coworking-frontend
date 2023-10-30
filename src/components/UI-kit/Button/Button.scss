@@ -60,8 +60,8 @@
     position: absolute;
     top: 20px;
     right: 20px;
-    width: 20px;
-    height: 20px;
+    width: 24px;
+    height: 24px;
     padding: 0;
   }
 
@@ -267,10 +267,12 @@
 
     &-active {
       background: url("../../../images/visible-password-icon.svg") no-repeat;
+      background-size: 100%;
     }
 
     &-hide {
       background: url("../../../images/hide-pass-icon.svg") no-repeat;
+      background-size: 100%;
     }
   }
 
@@ -295,32 +297,28 @@
     }
   }
 
-  &_size_mini {
-    width: 75px;
-  }
-
-  &_size_small {
-    width: 148px;
-  }
-
-  &_size_small-s {
-    width: 118px;
-  }
-
-  &_size_medium {
-    width: 245px;
-  }
-
-  &_size_middle {
-    width: 265px;
-  }
-
-  &_size_postmiddle {
-    max-width: 100%;
-  }
-
-  &_size_large {
-    width: 550px;
+  &_size {
+    &_mini {
+      width: 75px;
+    }
+    &_small {
+      width: 148px;
+    }
+    &_small-s {
+      width: 118px;
+    }
+    &_medium {
+      width: 245px;
+    }
+    &_middle {
+      width: 265px;
+    }
+    &_postmiddle {
+      max-width: 100%;
+    }
+    &_large {
+      width: 550px;
+    }
   }
 
   &__profile-small {
@@ -488,6 +486,7 @@
       font-weight: 400;
       line-height: 10px;
     }
+
     &_type_promo-search {
       flex: 1;
       // border: 2px solid $black;
@@ -501,12 +500,34 @@
       font-weight: 400;
       line-height: 10px;
     }
+    &_type_form {
+      @include text-font-normal-mob;
+      width: 315px;
+      height: 44px;
+      padding: 12px;
+    }
+
+    &__password-toggle {
+      @include mp-null;
+      width: 20px;
+      height: 20px;
+      top: 12px;
+      right: 12px;
+    }
     &__subscription {
       @include text-font-normal-mob;
-      padding: 12px;
       max-width: 120px;
       height: 44px;
       background-color: $green;
+      padding: 12px;
+    }
+    &_type_link {
+      @include text-font-normal-mob;
+      padding-top: 12px;
+      padding-bottom: 12px;
+      &-password {
+        @include text-font-link-mob;
+      }
     }
 
     &_type_tertiary-map {
