@@ -90,6 +90,13 @@
   font-size: 16px;
   line-height: 20px;
 }
+
+// текст в импуте
+@mixin text-font-link-mob {
+  font-size: 14px;
+  font-weight: 300;
+  line-height: 22px;
+}
 //  -------------- INPUT -----------------
 @mixin error-input {
   border: 2px solid $alert-red;

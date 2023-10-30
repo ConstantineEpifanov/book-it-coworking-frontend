@@ -59,8 +59,8 @@
     position: absolute;
     top: 20px;
     right: 20px;
-    width: 20px;
-    height: 20px;
+    width: 24px;
+    height: 24px;
     padding: 0;
   }
 
@@ -266,10 +266,12 @@
 
     &-active {
       background: url("../../../images/visible-password-icon.svg") no-repeat;
+      background-size: 100%;
     }
 
     &-hide {
       background: url("../../../images/hide-pass-icon.svg") no-repeat;
+      background-size: 100%;
     }
   }
 
@@ -487,11 +489,33 @@
       font-weight: 400;
       line-height: 10px;
     }
+    &_type_form {
+      @include text-font-normal-mob;
+      width: 315px;
+      height: 44px;
+      padding: 12px;
+    }
+    
+    &__password-toggle {
+      @include mp-null;
+      width: 20px;
+      height: 20px;
+      top: 12px;
+      right: 12px;
+    }
     &__subscription {
       @include text-font-normal-mob;
-      padding: 12px;
       max-width: 120px;
       height: 44px;
+      padding: 12px;
+    }
+    &_type_link {
+      @include text-font-normal-mob;
+      padding-top: 12px;
+      padding-bottom: 12px;
+      &-password {
+        @include text-font-link-mob;
+      }
     }
 
     &_type_tertiary-map {

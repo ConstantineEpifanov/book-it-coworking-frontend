@@ -16,14 +16,12 @@ function PasswordInput({
   const [passwordVisible, setPasswordVisible] = React.useState(false);
 
   return (
-    <>
+    <div>
       <div className="input__items">
         {inputValue && (
           <label
             htmlFor={inputName}
-            className={`input__label ${
-              inputError ? "input__label_error" : ""
-            }}`}
+            className={`input__label ${inputError ? "input__label_error" : ""}`}
           >
             {inputPlaceholder}
           </label>
@@ -40,7 +38,7 @@ function PasswordInput({
           disabled={inputDisabled}
           autoComplete="off"
         />
-        {/* если данные введены, покажи кнопку */}
+        {/* Если данные введены, покажи кнопку */}
         {inputValue && (
           <Button
             btnClass={`button__password-toggle ${
@@ -51,14 +49,13 @@ function PasswordInput({
             onClick={() => setPasswordVisible(!passwordVisible)}
           />
         )}
+        {inputError ? (
+          <span className="input__text input__text_error">{inputError}</span>
+        ) : (
+          <span className="input__text input__text_info">{inputInfo}</span>
+        )}
       </div>
-      {/* если нет ошибки ввода, то покажи информацию */}
-      {inputError ? (
-        <span className="input__text input__text_error">{inputError}</span>
-      ) : (
-        <span className="input__text input__text_info">{inputInfo}</span>
-      )}
-    </>
+    </div>
   );
 }
 
