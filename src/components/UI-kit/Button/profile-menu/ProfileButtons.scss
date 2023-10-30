@@ -24,6 +24,12 @@
     color: $white;
     background-color: $black;
   }
+  &-favorites {
+    @include use-font(18px, 22px, 400);
+    background: transparent;
+    width: 100%;
+    @include link-color-transition;
+  }
 }
 
 $tabNames: "data", "security", "bookings", "favorites";

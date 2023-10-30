@@ -28,7 +28,7 @@ import RestorePassForm from "./components/Forms/RestorePassForm/RestorePassForm"
 import { Coworking } from "./components/Coworking/Coworking";
 import { Booking } from "./components/Booking/Booking";
 
-import InfoPopup from "./components/InfoPopup/InfoPopup";
+import InfoPopup from "./components/UI-kit/InfoPopup/InfoPopup";
 
 import usePopupOpen from "./hooks/usePopupOpen";
 import { useInfoMessage } from "./hooks/useInfoMessage";
