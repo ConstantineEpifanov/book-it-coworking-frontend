@@ -19,29 +19,10 @@
     display: none;
   }
 
-  /* кастомный псевдоэлемент для placeholder */
-  // &::before {
-  //   content: attr(
-  //     placeholder
-  //   ); // Отображаем текст placeholder в качестве содержимого псевдоэлемента
-  //   color: $gray;
-  //   opacity: 0.4;
-  //   font-size: 16px;
-  //   font-style: normal;
-  //   font-weight: 300;
-  //   line-height: 22px;
-  //   position: absolute;
-  //   pointer-events: none; // Позволяет щелкать через placeholder
-  // }
-
   /* При фокусе убираем placeholder */
   &:focus {
     border: 2px solid $green;
     outline: none;
-
-    &::before {
-      display: none;
-    }
   }
   // стили для ошибки импута
   &-error {
@@ -67,11 +48,11 @@
     position: absolute;
     top: 15px;
     transform: translateY(-50%);
-    left: 22px;
     color: $dark-gray;
     pointer-events: none;
     transition: 0.3s ease-in-out;
     z-index: 1;
+    padding-left: 22px;
     padding-bottom: 2px;
   }
 
@@ -158,10 +139,24 @@
 
 @include mobile {
   .input {
+    @include text-font-link-mob;
+    height: 44px;
+    max-width: 310px;
+    &__label {
+      top: 12px;
+    }
     &__subscription {
       max-width: 280px;
-      height: 44px;
       width: 100%;
+    }
+    &__text {
+      min-height: 21px;
+      padding: 3;
+      &_confirm {
+        font-size: 12px;
+        font-weight: 300;
+        line-height: 14px;
+      }
     }
 
     &__promo {
@@ -190,8 +185,8 @@
         }
       }
     }
-
     &__search {
+      max-width: 100%;
       border-top-right-radius: 0;
       border-bottom-right-radius: 0;
       border-right: none;

@@ -87,7 +87,7 @@
     &__board-row {
       flex-direction: column;
       gap: 20px;
-      margin-bottom: 40px;
+      margin-bottom: 30px;
     }
     &__password-container,
     &__sessions-container,
@@ -106,6 +106,9 @@
     &__button-container {
       flex-direction: column;
       gap: 8px;
+    }
+    &__feature-name {
+      @include use-font(16px, 24px, 400);
     }
   }
 }

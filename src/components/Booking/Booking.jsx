@@ -7,10 +7,10 @@ import React, {
 } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import PropTypes from "prop-types";
+import clsx from "clsx";
 
 import "./Booking.scss";
 import { getLocationPlanPhoto, getSpots, postOrder } from "../../utils/Api";
-// import { locationData } from "../../config/exampleBookingData";
 import Button from "../UI-kit/Button/Button";
 import { SectionTitle } from "../SectionTitle/SectionTitle";
 import { Calendar } from "../Calendar/Calendar";
@@ -21,7 +21,10 @@ import {
   EQUIPMENT_GENERAL_CATEGORY,
   EQUIPMENT_MEETING_CATEGORY,
   ALLOWED_TIME_RANGES,
+  COWORKING_SPOTS_SPACE_TYPE,
+  COWORKING_MEETING_ROOMS_SPACE_TYPE,
 } from "../../utils/constants";
+import useInitialVisibilityState from "./hooks/useInitialVisibilityState";
 
 // Возвращает число дня: от 1 до 7
 const getWeekDayNumber = (date) => {
@@ -192,8 +195,6 @@ const spotsSortFunc = (a, b) => {
 };
 
 export const Booking = () => {
-  const FIRST_SPOT_TYPE = "Рабочее место";
-  const SECOND_SPOT_TYPE = "Переговорная";
   const IS_TIME_RANGES_MULTISELECT = false;
 
   const location = useLocation();
@@ -214,6 +215,42 @@ export const Booking = () => {
   const [isSpotsEnabled, setSpotsEnabled] = useState(true);
   const [isWorkplacesEnabled, setWorkplacesEnabled] = useState(false);
   const [isMeetingRoomsEnabled, setMeetingRoomsEnabled] = useState(false);
+  const [isPlanPhotoVisible, setIsPlanPhotoVisible] = useState(false);
+
+  const initialVisibilityState = useInitialVisibilityState();
+  const [sectionsVisibility, setSectionsVisibility] = useState(
+    initialVisibilityState,
+  );
+
+  // Обнволение видимости секций
+  const updateSectionsVisibility = (initiator) => {
+    switch (initiator) {
+      case "time":
+        setSectionsVisibility((prev) => ({
+          ...prev,
+          spotsSection: { ...prev.spotsSection, isVisible: true },
+        }));
+        break;
+      case "spotType":
+        setSectionsVisibility((prev) => ({
+          ...prev,
+          dateSection: { ...prev.dateSection, isVisible: true },
+        }));
+        break;
+      default:
+        break;
+    }
+  };
+
+  // Обработчик клика по кнопке "Показать план помещения"
+  const handleShowPlanPhoto = () => {
+    setIsPlanPhotoVisible((prev) => !prev);
+  };
+
+  // Обработчик клика по изображению плана помещения
+  const handlePlanPhotoClick = (e) => {
+    e.preventDefault();
+  };
 
   // Обработчик выбора даты
   const handleCalendarClick = (dates) => {
@@ -235,7 +272,7 @@ export const Booking = () => {
 
   // Обработчик выбора типа места
   const handleSwitcherClick = (selectedSpotType) => {
-    if (selectedSpotType === FIRST_SPOT_TYPE) {
+    if (selectedSpotType === COWORKING_SPOTS_SPACE_TYPE) {
       setSpotsEnabled(true);
       setMeetingRoomsEnabled(false);
       return;
@@ -243,6 +280,28 @@ export const Booking = () => {
     setSpotsEnabled(false);
     setMeetingRoomsEnabled(true);
   };
+
+  // Обработчик выбора типа места для мобильной версии
+  const handleSpotTypeClick = (selectedSpotType) => {
+    updateSectionsVisibility("spotType");
+    handleSwitcherClick(selectedSpotType);
+  };
+
+  // Конфиг кнопок типов для мобильной версии
+  const spotTypes = useRef([
+    {
+      id: 0,
+      name: COWORKING_SPOTS_SPACE_TYPE,
+      onClick: () => handleSpotTypeClick(COWORKING_SPOTS_SPACE_TYPE),
+      isEnabled: true,
+    },
+    {
+      id: 1,
+      name: COWORKING_MEETING_ROOMS_SPACE_TYPE,
+      onClick: () => handleSpotTypeClick(COWORKING_MEETING_ROOMS_SPACE_TYPE),
+      isEnabled: true,
+    },
+  ]);
 
   // Обработчик выбора места в общей зоне
   const handleSpotSelect = (selectedItems) => {
@@ -257,7 +316,7 @@ export const Booking = () => {
   // Обработчик клика по кнопке "Назад"
   const handleBackButton = (e) => {
     e.preventDefault();
-    navigate(-1);
+    navigate("/points");
   };
 
   // Обработчик кнопки "Перейти к оплате"
@@ -562,7 +621,12 @@ export const Booking = () => {
     [datesSelected],
   );
 
-  // Рекация на изменение доступности
+  // Реакция на изменение размера окна. Установка обновленной видимости секций
+  useEffect(() => {
+    setSectionsVisibility(initialVisibilityState);
+  }, [initialVisibilityState]);
+
+  // Рекация на изменение доступности. Сброс выбранных значений
   useEffect(() => {
     if (!isSpotsEnabled) {
       setSpotsSelected([]);
@@ -597,6 +661,7 @@ export const Booking = () => {
   // Реакция на изменение выбранных промежутков времени
   useEffect(() => {
     if (timeRangesSelected.length > 0) {
+      updateSectionsVisibility("time");
       loadWorkplaces();
       setWorkplacesEnabled(true);
       return;
@@ -644,104 +709,176 @@ export const Booking = () => {
         btnText="Назад"
       />
       <SectionTitle titleText="Бронирование" />
-      <section
-        className="booking__section"
-        aria-label="Секция выбора даты и времени"
-      >
-        <h2 className="booking__section-title">1. Выберите дату и время</h2>
-        <div className="booking__flex-container">
-          <Calendar
-            selectCallback={handleCalendarClick}
-            extraRules={calendarExtraRules}
-          />
+      {sectionsVisibility.dividedSpotTypesSection.isVisible && (
+        <section
+          className="booking__section"
+          aria-label="Секция выбора типа рабочего времени"
+        >
+          <h2 className="booking__section-title">
+            {sectionsVisibility.dividedSpotTypesSection.stepNumber}. Выберите
+            тип рабочего места
+          </h2>
           <ButtonsList
-            isEnabled={datesSelected.length > 0}
-            listType="time-ranges"
-            itemsList={timeRangeItems}
-            allowedRanges={allowedRanges}
-            sortFunc={timeSortFunc}
-            isMultiselect={IS_TIME_RANGES_MULTISELECT}
+            itemsList={spotTypes.current}
+            itemsClassName="button_type_booking booking__spot-type-button"
+            disableDeselect
+            listClassName="booking__buttons-list booking__buttons-list_type_spot-types"
           />
-        </div>
-      </section>
-
-      <section
-        className="booking__section"
-        aria-label="Секция выбора рабочего места"
-      >
-        <h2 className="booking__section-title">
-          2. Выберете тип рабочего места
-        </h2>
-        <img
-          className="booking__plan-photo"
-          src={planPhoto}
-          alt="Схема коворкинга"
-        />
-        <div className="booking__flex-container">
-          <TabSwitcher
-            firstCaption={FIRST_SPOT_TYPE}
-            secondCaption={SECOND_SPOT_TYPE}
-            containerClassName="booking__spot-switcher"
-            onClick={handleSwitcherClick}
-          />
-          <div className="booking__tabs-container">
-            <section
-              className={`booking__tab${
-                !isWorkplacesEnabled ? " booking__text-disabled" : ""
-              }`}
-            >
-              <h3 className="booking__tab-title">
-                Одна цифра - одно рабочее место
-              </h3>
-              <p className="booking__spot-price">{currentSpotPrice}</p>
-              <ButtonsList
-                isEnabled={
-                  isWorkplacesEnabled &&
-                  isSpotsEnabled &&
-                  datesSelected.length > 0 &&
-                  timeRangesSelected.length > 0
-                }
-                listType="spots"
-                itemsList={spots}
-                sortFunc={spotsSortFunc}
-              />
-            </section>
-            <section
-              className={`booking__tab${
-                !isMeetingRoomsEnabled ? " booking__text-disabled" : ""
-              }`}
-            >
-              <h3 className="booking__tab-title">
-                В одной переговорной 8 мест
-              </h3>
-              <p className="booking__spot-price">{currentMeetingPrice}</p>
-              <ButtonsList
-                isEnabled={
-                  isWorkplacesEnabled &&
-                  isMeetingRoomsEnabled &&
-                  datesSelected.length > 0 &&
-                  timeRangesSelected.length > 0
-                }
-                listType="meeting-rooms"
-                itemsList={meetingRooms}
-                sortFunc={spotsSortFunc}
-              />
-            </section>
+        </section>
+      )}
+      {sectionsVisibility.dateSection.isVisible && (
+        <section
+          className="booking__section"
+          aria-label="Секция выбора даты и времени"
+        >
+          <h2 className="booking__section-title">
+            {sectionsVisibility.dateSection.stepNumber}. Выберите дату и время
+          </h2>
+          <div className="booking__flex-container">
+            <Calendar
+              selectCallback={handleCalendarClick}
+              extraRules={calendarExtraRules}
+            />
+            <ButtonsList
+              isEnabled={datesSelected.length > 0}
+              listType="time-ranges"
+              itemsList={timeRangeItems}
+              allowedRanges={allowedRanges}
+              sortFunc={timeSortFunc}
+              isMultiselect={IS_TIME_RANGES_MULTISELECT}
+              listClassName="booking__buttons-list booking__buttons-list_type_time-ranges"
+            />
           </div>
-        </div>
-      </section>
-      <section
-        className="booking__section"
-        aria-label="Секция итоговой суммы к оплате"
-      >
-        <h2 className="booking__section-title">{`Сумма к оплате: ${totalPrice}`}</h2>
-        <Button
-          btnClass="button_type_form button_size_middle"
-          btnText="Перейти к оплате"
-          isValidBtn={!!totalPrice}
-          onClick={handlePayClick}
-        />
-      </section>
+        </section>
+      )}
+
+      {sectionsVisibility.spotsSection.isVisible && (
+        <>
+          <section
+            className="booking__section"
+            aria-label="Секция выбора рабочего места"
+          >
+            <header className="booking__section-header">
+              <h2 className="booking__section-title">
+                {sectionsVisibility.spotsSection.stepNumber}. Выберете тип
+                рабочего места
+              </h2>
+              {!sectionsVisibility.isMobileView && (
+                <Button
+                  btnClass="button_type_link-underline booking__photo-button"
+                  btnText={
+                    isPlanPhotoVisible
+                      ? "Скрыть план помещения"
+                      : "Посмотреть план помещения"
+                  }
+                  onClick={handleShowPlanPhoto}
+                />
+              )}
+            </header>
+            <div className="booking__flex-container booking__flex-container_type_spots">
+              <a
+                href="/"
+                onClick={handlePlanPhotoClick}
+                className={clsx({
+                  "booking__plan-photo-link": true,
+                  "booking__plan-photo-link_visible":
+                    isPlanPhotoVisible || sectionsVisibility.isMobileView,
+                })}
+              >
+                <img
+                  className={clsx({
+                    "booking__plan-photo": true,
+                    "booking__plan-photo_visible":
+                      isPlanPhotoVisible || sectionsVisibility.isMobileView,
+                  })}
+                  src={planPhoto}
+                  alt="Схема коворкинга"
+                />
+              </a>
+              {!sectionsVisibility.isMobileView && (
+                <TabSwitcher
+                  firstCaption={COWORKING_SPOTS_SPACE_TYPE}
+                  secondCaption={COWORKING_MEETING_ROOMS_SPACE_TYPE}
+                  containerClassName="booking__spot-switcher"
+                  onClick={handleSwitcherClick}
+                />
+              )}
+              <div className="booking__tabs-container">
+                <section
+                  className={clsx({
+                    booking__tab: true,
+                    booking__tab_disabled:
+                      (!isWorkplacesEnabled || !isSpotsEnabled) &&
+                      !sectionsVisibility.isMobileView,
+                    booking__tab_hidden:
+                      (!isWorkplacesEnabled || !isSpotsEnabled) &&
+                      sectionsVisibility.isMobileView,
+                  })}
+                  aria-hidden={!isWorkplacesEnabled || !isSpotsEnabled}
+                >
+                  <h3 className="booking__tab-title">
+                    Одна цифра - одно рабочее место
+                  </h3>
+                  <p className="booking__spot-price">{currentSpotPrice}</p>
+                  <ButtonsList
+                    isEnabled={
+                      isWorkplacesEnabled &&
+                      isSpotsEnabled &&
+                      datesSelected.length > 0 &&
+                      timeRangesSelected.length > 0
+                    }
+                    listType="spots"
+                    itemsList={spots}
+                    sortFunc={spotsSortFunc}
+                    listClassName="booking__buttons-list booking__buttons-list_type_spots"
+                  />
+                </section>
+                <section
+                  className={clsx({
+                    booking__tab: true,
+                    booking__tab_disabled:
+                      (!isWorkplacesEnabled || !isMeetingRoomsEnabled) &&
+                      !sectionsVisibility.isMobileView,
+                    booking__tab_hidden:
+                      (!isWorkplacesEnabled || !isMeetingRoomsEnabled) &&
+                      sectionsVisibility.isMobileView,
+                  })}
+                  aria-hidden={!isWorkplacesEnabled || !isMeetingRoomsEnabled}
+                >
+                  <h3 className="booking__tab-title">
+                    В одной переговорной 8 мест
+                  </h3>
+                  <p className="booking__spot-price">{currentMeetingPrice}</p>
+                  <ButtonsList
+                    isEnabled={
+                      isWorkplacesEnabled &&
+                      isMeetingRoomsEnabled &&
+                      datesSelected.length > 0 &&
+                      timeRangesSelected.length > 0
+                    }
+                    listType="meeting-rooms"
+                    itemsList={meetingRooms}
+                    sortFunc={spotsSortFunc}
+                    listClassName="booking__buttons-list booking__buttons-list_type_meeting-rooms"
+                  />
+                </section>
+              </div>
+            </div>
+          </section>
+          <section
+            className="booking__section"
+            aria-label="Секция итоговой суммы к оплате"
+          >
+            <h2 className="booking__section-title">{`Сумма к оплате: ${totalPrice}`}</h2>
+            <Button
+              btnClass="button_type_form button_size_middle"
+              btnText="Перейти к оплате"
+              isValidBtn={!!totalPrice}
+              onClick={handlePayClick}
+            />
+          </section>
+        </>
+      )}
     </main>
   );
 };

@@ -38,39 +38,46 @@
     }
 
     &_payments-message {
+      @include flex-box-column-center;
       min-width: 740px;
       padding-top: 50px;
       padding-bottom: 70px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
     }
   }
   &__title {
-    font-size: 40px;
-    font-style: normal;
-    font-weight: 400;
-    line-height: 48px;
+    @include use-font(40px, 48px, 400, normal);
   }
   &__subtitle {
     @include mp-null;
     color: $main-black;
-    font-size: 28px;
-    font-style: normal;
-    font-weight: 300;
-    line-height: 42px; /* 150% */
+    @include use-font(28px, 42px, 300, normal);
   }
   &__text {
     @include mp-null;
-    font-size: 20px;
-    font-style: normal;
-    font-weight: 400;
-    line-height: 30px;
+    @include use-font(20px, 30px, 400, normal);
   }
 }
 
 @include mobile {
-  .popup_type_whitemobile {
-    background-color: white;
+  .popup {
+    &__container {
+      min-width: calc(100vw - 120px);
+      padding-left: 60px;
+      padding-right: 60px;
+    }
+    &_type_whitemobile {
+      background-color: white;
+    }
+  }
+}
+
+@include mobile-min {
+  .popup {
+    &__container {
+      min-width: calc(100vw - 40px);
+      padding-left: 40px;
+      padding-right: 40px;
+      border-radius: 30px;
+    }
   }
 }

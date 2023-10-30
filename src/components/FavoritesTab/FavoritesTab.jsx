@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import { CurrentUserContext } from "../../contexts/currentUserContext";
 
 import { SUCCESSFUL_DISLIKE, BASIC_ERROR } from "../../utils/constants";
+import { cutCityName } from "../../utils/utils";
 
 import "./FavoritesTab.scss";
 
@@ -69,11 +70,13 @@ const FavoriteCard = ({ item, onFavoriteDeleted }) => {
             className="favorites__card-like"
             alt="Метка адреса"
           />
-          <p className="favorites__card-address">{item.get_full_address_str}</p>
+          <p className="favorites__card-address">
+            {cutCityName(item.get_full_address_str)}
+          </p>
         </div>
         <div className="favorites__card-lookbutton">
           <Link to={`/points/${item.id}`} target="_blank">
-            <Button btnText="Посмотреть" btnClass="button__profile-edit" />
+            <Button btnText="Посмотреть" btnClass="button__profile-favorites" />
           </Link>
         </div>
       </div>

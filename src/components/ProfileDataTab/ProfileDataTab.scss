@@ -115,12 +115,18 @@
     }
     &__info {
       align-self: flex-start;
+      @include use-font(10px, 14px, 300);
     }
     &__buttons > :first-child {
       display: none;
     }
     &__input {
       width: calc(100vw - 40px);
+      max-width: 450px;
+      height: 44px;
+      > .input__items {
+        max-height: 30px;
+      }
     }
   }
 }

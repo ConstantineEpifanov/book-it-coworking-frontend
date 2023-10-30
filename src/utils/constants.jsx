@@ -35,6 +35,10 @@ export const DEFAULT_LATITUDE = 59.9;
 export const DEFAULT_LONGITUDE = 30.3;
 export const DEFAULT_ZOOM = 11;
 
+// название города
+
+export const CITY_NAME = "г. Санкт-Петербург";
+
 // Booking
 // Количество рабочих дней для локации
 export const WORKING_DAYS_COUNTS = {
@@ -42,6 +46,10 @@ export const WORKING_DAYS_COUNTS = {
   "пн-сб": 6,
   "пн-пт": 5,
 };
+
+// Тип помещения для рабочего места
+export const COWORKING_SPOTS_SPACE_TYPE = "Общая зона";
+export const COWORKING_MEETING_ROOMS_SPACE_TYPE = "Переговорная";
 
 // Количество доступных дней в календаре для бронирования
 export const CALENDAR_MAX_ALLOWED_DAYS = 60;
