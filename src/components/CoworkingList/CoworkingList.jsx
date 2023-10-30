@@ -60,7 +60,7 @@ export const CoworkingList = () => {
           ...prevCoworkings,
           ...res.results,
         ]);
-        // setNextPageURL(res.next);
+        setNextPageURL(res.next);
       })
       .catch((error) => {
         console.error(error);

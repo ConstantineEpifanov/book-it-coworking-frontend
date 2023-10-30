@@ -3,11 +3,11 @@ import PropTypes from "prop-types";
 
 import { Swiper, SwiperSlide } from "swiper/react";
 import SwiperCore, { Pagination } from "swiper";
+import { SWIPER_BREAKPOINTS } from "../../utils/constants";
 
 import { PointsItem } from "../PointsItem/PointsItem";
 
 import "swiper/swiper-bundle.min.css";
-import "swiper/swiper.min.css";
 
 SwiperCore.use([Pagination]);
 
@@ -22,28 +22,16 @@ export const CoworkingSwiper = ({ isCompact, coworkingsArray }) => (
           type: "bullets",
           clickable: true,
         }}
-        breakpoints={{
-          768: {
-            slidesPerView: 1.2,
-          },
-          1060: {
-            slidesPerView: 2,
-            spaceBetween: 20,
-          },
-          1440: {
-            slidesPerView: 3,
-            spaceBetween: 20,
-          },
-        }}
+        breakpoints={SWIPER_BREAKPOINTS}
       >
         {coworkingsArray?.map((coworking) => (
           <SwiperSlide key={coworking.id}>
             <PointsItem isCompact={isCompact} data={coworking} />
           </SwiperSlide>
         ))}
+        <div className="swiper-pagination" />
       </Swiper>
     </div>
-    <div className="swiper-pagination" />
   </section>
 );
 CoworkingSwiper.propTypes = {

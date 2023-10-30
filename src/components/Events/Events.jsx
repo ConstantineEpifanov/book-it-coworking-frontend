@@ -52,9 +52,9 @@ export const Events = ({ eventsArray }) => (
             <EventsItem event={event} />
           </SwiperSlide>
         ))}
+        <div className="swiper-pagination" />
       </Swiper>
     </div>
-    <div className="swiper-pagination" />
   </section>
 );
 

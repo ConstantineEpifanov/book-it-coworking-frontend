@@ -1,6 +1,7 @@
 export const SCREEN_MEDIUM = 1270;
 export const SCREEN_MEDIUM_TABLET = 1025;
 export const SCREEN_SMALL = 770;
+export const SCREEN_SMALL_MOBILE = 429;
 
 // количество карточек на главной странице в начальном рендере и сколько добавляем от кнопки еще
 export const LAPTOP_SHORT_POINTS_QUANTITY = 6;
@@ -100,3 +101,21 @@ export const profileMenuItems = [
 export const activeLinkClass = "navigation__link navigation__link_active";
 export const headerActiveLinkClass =
   "header__profile_nav header__profile_nav_active";
+
+// Новые константы для Swiper breakpoints
+export const SWIPER_BREAKPOINTS = {
+  [SCREEN_SMALL_MOBILE]: {
+    slidesPerView: 1.2,
+  },
+  [SCREEN_SMALL]: {
+    slidesPerView: 1.7,
+  },
+  [SCREEN_MEDIUM_TABLET]: {
+    slidesPerView: 2,
+    spaceBetween: 20,
+  },
+  [SCREEN_MEDIUM]: {
+    slidesPerView: 3,
+    spaceBetween: 20,
+  },
+};
