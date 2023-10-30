@@ -11,7 +11,7 @@ export default {
 
 export const Example = {
   args: {
-    title: "В общей зоне",
+    title: "Рабочее место",
     data: [
       {
         text: "Монитор",

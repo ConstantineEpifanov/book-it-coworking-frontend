@@ -24,7 +24,7 @@ import {
 } from "../../utils/constants";
 
 // Возвращает число дня: от 1 до 7
-const getNormalizedDayNumber = (date) => {
+const getWeekDayNumber = (date) => {
   const dayNumber = date.getDay();
   const resultNumber = dayNumber === 0 ? 7 : dayNumber;
   return resultNumber;
@@ -52,6 +52,7 @@ const isSameDateDay = (firstDate, secondDate) => {
   return firstDay.getTime() === secondDay.getTime();
 };
 
+// Возвращает строку времени в формате "00:00"
 const getTimeWithZeroPrefixedMinutes = (timeArray) => {
   let resultTime = `${timeArray[0]}:`;
   resultTime = `${resultTime}${
@@ -134,7 +135,7 @@ const getTimeRangeItems = (startTime, endTime, onItemClick) => {
 const getHourAndMinutes = (time) =>
   time.split(":").map((item) => parseInt(item, 10));
 
-// Получение массива массивов, являющихся группами - они содержат id элементов,
+// Получение массива массивов, являющихся группами промежутков времени - они содержат id элементов,
 // которым разрешено быть друг с другом в одной группе
 const getAllowedRanges = (baseRanges, itemsList) => {
   const allowedRanges = baseRanges.reduce((ranges, allowedRange) => {
@@ -171,6 +172,7 @@ const getAllowedRanges = (baseRanges, itemsList) => {
   return allowedRanges;
 };
 
+// Функция сортировки элементов списка промежутков времени
 const timeSortFunc = (a, b) => {
   const [firstHour, firstMinutes] = getHourAndMinutes(a.startTime);
   const [secondHour, secondMinutes] = getHourAndMinutes(b.startTime);
@@ -182,6 +184,7 @@ const timeSortFunc = (a, b) => {
   return firstHour - secondHour;
 };
 
+// Функция сортировки элементов списка рабочих мест
 const spotsSortFunc = (a, b) => {
   const aNum = parseInt(a.name, 10);
   const bNum = parseInt(b.name, 10);
@@ -189,8 +192,9 @@ const spotsSortFunc = (a, b) => {
 };
 
 export const Booking = () => {
-  const FIRST_SPOT_TYPE = "Общая зона";
+  const FIRST_SPOT_TYPE = "Рабочее место";
   const SECOND_SPOT_TYPE = "Переговорная";
+  const IS_TIME_RANGES_MULTISELECT = false;
 
   const location = useLocation();
 
@@ -316,8 +320,9 @@ export const Booking = () => {
   // Если функция возвращает true - дата календаря будет недоступной
   const getCalendarExtraRules = useCallback(
     () => [
+      // Дата будет недоступной, если день недели даты будет больше рабочих дней недели для коворкинга
       (date) =>
-        getNormalizedDayNumber(date) >
+        getWeekDayNumber(date) >
         WORKING_DAYS_COUNTS[currentCoworkingState.daysOpen],
     ],
     [currentCoworkingState],
@@ -325,7 +330,7 @@ export const Booking = () => {
 
   const calendarExtraRules = getCalendarExtraRules();
 
-  // Получение информации о всех местах в данной location
+  // Получение информации о всех местах в данной location, по заданной дате и промежутку времени
   const getWorkplacesData = useCallback(
     async ({ id, date, startTime, endTime }) => {
       let result = {};
@@ -387,50 +392,99 @@ export const Booking = () => {
     });
   };
 
+  // Получение состояния рабочих мест для даты, для каждого выбранного промежутка времени
+  // Для каждого промежутка времени будет выполнен запрос к серверу
+  // Имеет смысл, когда сервер не умеет обрабатывать разрывы в промежутках
+  const getSpotsStatesByDividedTimes = useCallback(
+    async (selectedDate) => {
+      const result = await timeRangesSelected.reduce(
+        async (timeResult, timeRange) => {
+          const previousTimeResult = await timeResult;
+          const timeItem = timeRangeItems.find(
+            (item) => item.id === timeRange.id,
+          );
+          if (!timeItem) {
+            return timeResult;
+          }
+          const preparedDate = `${selectedDate.getFullYear()}-${
+            selectedDate.getMonth() + 1
+          }-${selectedDate.getDate()}`;
+          const receivedWorkplaces = await getWorkplacesData({
+            id: coworking.current.id,
+            date: preparedDate,
+            startTime: timeItem.startTime,
+            endTime: timeItem.endTime,
+          });
+
+          return {
+            spots: mergeSpotsStates(
+              previousTimeResult.spots,
+              receivedWorkplaces.spots,
+            ),
+            meetingRooms: mergeSpotsStates(
+              previousTimeResult.meetingRooms,
+              receivedWorkplaces.meetingRooms,
+            ),
+          };
+        },
+        {},
+      );
+      return result;
+    },
+    [getWorkplacesData, timeRangeItems, timeRangesSelected],
+  );
+
+  // Получение состояния рабочих мест для даты
+  const getSpotsStates = useCallback(
+    async (selectedDate) => {
+      const { startTime } = timeRangesSelected.at(0);
+      const { endTime } = timeRangesSelected.at(-1);
+
+      const preparedDate = `${selectedDate.getFullYear()}-${
+        selectedDate.getMonth() + 1
+      }-${selectedDate.getDate()}`;
+      const receivedWorkplaces = await getWorkplacesData({
+        id: coworking.current.id,
+        date: preparedDate,
+        startTime,
+        endTime,
+      });
+
+      return {
+        spots: receivedWorkplaces.spots,
+        meetingRooms: receivedWorkplaces.meetingRooms,
+      };
+    },
+    [getWorkplacesData, timeRangesSelected],
+  );
+
   // Запрос данных и сравнение данных о всех местах в локации
   // Запрос к бэку будет выполнен для каждой выбранной даты, для каждого выбранного времени
   // Для варианта с singleSelect, запрос должен будет выполниться один раз при выборе времени
   const loadWorkplaces = useCallback(async () => {
     const resultSpots = await datesSelected.reduce(
       async (dateResult, selectedDate) => {
-        const dateSpots = await timeRangesSelected.reduce(
-          async (timeResult, timeRange) => {
-            const timeItem = timeRangeItems.find(
-              (item) => item.id === timeRange.id,
-            );
-            if (!timeItem) {
-              return timeResult;
-            }
-            const preparedDate = `${selectedDate.getFullYear()}-${
-              selectedDate.getMonth() + 1
-            }-${selectedDate.getDate()}`;
-            const receivedWorkplaces = await getWorkplacesData({
-              id: coworking.current.id,
-              date: preparedDate,
-              startTime: timeItem.startTime,
-              endTime: timeItem.endTime,
-            });
+        const previousDateResult = await dateResult;
+        let dateSpots = {};
 
-            return {
-              spots: mergeSpotsStates(
-                timeResult.spots,
-                receivedWorkplaces.spots,
-              ),
-              meetingRooms: mergeSpotsStates(
-                timeResult.meetingRooms,
-                receivedWorkplaces.meetingRooms,
-              ),
-            };
-          },
-          {},
-        );
-        return {
-          spots: mergeSpotsStates(dateResult.spots, dateSpots.spots),
+        // Если включен мультиселект в списке промежутков времени, то могут быть разрывы
+        // между выбранными промежутками, для этого будет использоваться getSpotsStatesByDividedTimes
+        // Если сервер будет сам обрабатывать случай с разрывами, то эта проверка будет лишней
+        // и тяжелую getSpotsStatesByDividedTimes можно будет убрать
+        if (IS_TIME_RANGES_MULTISELECT) {
+          dateSpots = await getSpotsStatesByDividedTimes(selectedDate);
+        } else {
+          dateSpots = await getSpotsStates(selectedDate);
+        }
+
+        const mergedLists = {
+          spots: mergeSpotsStates(previousDateResult.spots, dateSpots.spots),
           meetingRooms: mergeSpotsStates(
-            dateResult.meetingRooms,
+            previousDateResult.meetingRooms,
             dateSpots.meetingRooms,
           ),
         };
+        return mergedLists;
       },
       {},
     );
@@ -439,7 +493,12 @@ export const Booking = () => {
       setSpots(resultSpots.spots);
       setMeetingRooms(resultSpots.meetingRooms);
     }
-  }, [datesSelected, timeRangesSelected, timeRangeItems, getWorkplacesData]);
+  }, [
+    IS_TIME_RANGES_MULTISELECT,
+    datesSelected,
+    getSpotsStatesByDividedTimes,
+    getSpotsStates,
+  ]);
 
   // Начальная загрузка рабочих мест
   // Получаем количество рабочих мест на завтрашний день. Из-за ограничений бэка
@@ -601,6 +660,7 @@ export const Booking = () => {
             itemsList={timeRangeItems}
             allowedRanges={allowedRanges}
             sortFunc={timeSortFunc}
+            isMultiselect={IS_TIME_RANGES_MULTISELECT}
           />
         </div>
       </section>

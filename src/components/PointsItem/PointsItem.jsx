@@ -274,7 +274,7 @@ export const PointsItem = ({ isCompact, isListed, data }) => {
             <li className="point__list-item">
               <GeneralRoom />
               <p className="point__info-text">
-                Мест в общей зоне:
+                Рабочих мест:
                 <span className="point__span"> {data.count_workspace}</span>
               </p>
             </li>

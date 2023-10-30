@@ -13,7 +13,7 @@ export const Example = {
   args: {
     equipment: [
       {
-        title: "В общей зоне",
+        title: "Рабочее место",
         data: [
           {
             text: "Монитор",
