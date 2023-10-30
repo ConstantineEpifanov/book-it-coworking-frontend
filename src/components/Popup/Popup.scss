@@ -65,6 +65,9 @@
       padding-left: 60px;
       padding-right: 60px;
     }
+    &_type_whitemobile {
+      background-color: white;
+    }
   }
 }
 
@@ -75,9 +78,6 @@
       padding-left: 40px;
       padding-right: 40px;
       border-radius: 30px;
-    }
-    &_type_whitemobile {
-      background-color: white;
     }
   }
 }

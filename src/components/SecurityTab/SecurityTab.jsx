@@ -168,7 +168,7 @@ export const SecurityTab = () => {
               <Button
                 btnText="Да, удалить"
                 btnType="button"
-                btnClass="button__profile-edit button_type_delete"
+                btnClass="button_type_delete"
                 onClick={handleDelete}
               />
             </div>
