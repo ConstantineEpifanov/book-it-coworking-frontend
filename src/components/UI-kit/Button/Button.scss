@@ -345,10 +345,14 @@
     @include use-font(18px, 22px, 400);
   }
 
-  &__profile-edit,
+  &__profile-edit {
+    @include primary-button-black;
+    @include use-font(18px, 22px, 400);
+    @include profile-size-button;
+  }
+
   &__profile-transparent {
-    width: 170px;
-    height: 54px;
+    @include profile-size-button;
     background-color: $green;
     @include use-font(18px, 22px, 400);
     transition: opacity 0.3s ease-in-out;
@@ -376,9 +380,13 @@
   }
   &_type_order,
   &_type_delete {
+    @include profile-size-button;
+    @include use-font(18px, 22px, 400);
     @include primary-button-black;
   }
   &_type_createorder {
+    @include profile-size-button;
+    @include use-font(18px, 22px, 400);
     @include primary-button;
   }
   &_type_cancel {
@@ -478,11 +486,13 @@
     &_type_order,
     &_type_createorder,
     &_type_delete {
+      @include primary-button-black;
       @include use-font(16px, 20px, 400);
       order: 1;
       height: 44px;
       width: 100%;
       max-width: 450px;
+      align-self: center;
     }
     &_type_cancel {
       @include use-font(16px, 20px, 400);
@@ -490,11 +500,14 @@
       height: 44px;
       width: 100%;
       max-width: 450px;
+      align-self: center;
     }
     &_type_security,
     &__profile-review {
+      @include use-font(16px, 20px, 400);
       width: 100%;
       max-width: 450px;
+      height: 44px;
     }
     &_type_submit-search {
       flex: 1;
@@ -551,6 +564,12 @@
       &-password {
         @include text-font-link-mob;
       }
+    }
+    &__profile-edit {
+      @include use-font(16px, 20px, 400);
+      width: calc(100vw - 40px);
+      max-width: 450px;
+      height: 44px;
     }
 
     &_type_tertiary-map {

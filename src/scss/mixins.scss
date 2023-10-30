@@ -210,6 +210,11 @@
   }
 }
 
+@mixin profile-size-button {
+  width: 170px;
+  height: 54px;
+}
+
 // --------------CARDS-------------------
 
 @mixin card-border-color($addBoxShadow: true) {
