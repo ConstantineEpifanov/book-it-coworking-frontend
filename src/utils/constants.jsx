@@ -41,6 +41,10 @@ export const WORKING_DAYS_COUNTS = {
   "пн-пт": 5,
 };
 
+// Тип помещения для рабочего места
+export const COWORKING_SPOTS_SPACE_TYPE = "Общая зона";
+export const COWORKING_MEETING_ROOMS_SPACE_TYPE = "Переговорная";
+
 // Количество доступных дней в календаре для бронирования
 export const CALENDAR_MAX_ALLOWED_DAYS = 60;
 

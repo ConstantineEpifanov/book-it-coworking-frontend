@@ -3,11 +3,15 @@
 
 .payments {
   @include main-box-centered;
-  display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
-  padding: 0 160px 132px;
+  width: auto;
+  margin: $main-margin;
   box-sizing: border-box;
+
+  &__container {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+  }
 
   &-place {
     @include flex-box-column;

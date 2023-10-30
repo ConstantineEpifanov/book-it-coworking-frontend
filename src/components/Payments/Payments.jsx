@@ -96,45 +96,51 @@ const Payments = () => {
           />
         </Popup>
       )}
+      <Button
+        onClick={handleBack}
+        btnClass="button_type_back"
+        btnText="Назад"
+      />
+      <div className="payments__container">
+        <PaymentsForm onSubmit={handleSubmit} onBack={handleBack} />
+        <article className="payments-place">
+          <h3 className="payments-place__info">коворкинг</h3>
+          <p className="payments-place__header">{placeState?.name}</p>
+          <ul className="payments-place__list">
+            {placeState?.location && (
+              <li className="payments-place__list-item">
+                <span>Адрес:</span>
+                <span>{placeState?.location}</span>
+              </li>
+            )}
 
-      <PaymentsForm onSubmit={handleSubmit} onBack={handleBack} />
-      <article className="payments-place">
-        <h3 className="payments-place__info">коворкинг</h3>
-        <p className="payments-place__header">{placeState?.name}</p>
-        <ul className="payments-place__list">
-          {placeState?.location && (
+            {placeState?.category && (
+              <li className="payments-place__list-item">
+                <span>{placeState.category}:</span>
+                <span>{placeState.equipment}</span>
+              </li>
+            )}
             <li className="payments-place__list-item">
-              <span>Адрес:</span>
-              <span>{placeState?.location}</span>
+              <span>Начало:</span>
+              <span>
+                {placeState?.date && getPrettifiedDate(placeState?.date)}{" "}
+                {placeState?.startTime}
+              </span>
             </li>
-          )}
-
-          {placeState?.category && (
             <li className="payments-place__list-item">
-              <span>{placeState.category}:</span>
-              <span>{placeState.equipment}</span>
+              <span>Окончание:</span>
+              <span>
+                {placeState?.date && getPrettifiedDate(placeState?.date)}{" "}
+                {placeState?.endTime}
+              </span>
             </li>
-          )}
-          <li className="payments-place__list-item">
-            <span>Начало:</span>
-            <span>
-              {placeState?.date && getPrettifiedDate(placeState?.date)}{" "}
-              {placeState?.startTime}
-            </span>
-          </li>
-          <li className="payments-place__list-item">
-            <span>Окончание:</span>
-            <span>
-              {placeState?.date && getPrettifiedDate(placeState?.date)}{" "}
-              {placeState?.endTime}
-            </span>
-          </li>
-        </ul>
-        <div className="payments-place__bill">
-          <span>К оплате:</span>
-          <span>{placeState?.bill}</span>
-        </div>
-      </article>
+          </ul>
+          <div className="payments-place__bill">
+            <span>К оплате:</span>
+            <span>{placeState?.bill}</span>
+          </div>
+        </article>
+      </div>
     </section>
   );
 };

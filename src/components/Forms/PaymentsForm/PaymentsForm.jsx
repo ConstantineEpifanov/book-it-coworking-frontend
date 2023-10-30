@@ -11,7 +11,10 @@ const PaymentsForm = ({ onSubmit, onBack }) => {
   const [inputError, setInputError] = React.useState("");
 
   return (
-    <EntryForm formClass="entry-form__inner_payments-form" onSubmit={onSubmit}>
+    <EntryForm
+      formClass="entry-form__inner_payments-form entry-form_type_payments"
+      onSubmit={onSubmit}
+    >
       <div className="payments-form">
         <SectionTitle titleText="Оплата" />
         <h3 className="payments-form__subtitle">
