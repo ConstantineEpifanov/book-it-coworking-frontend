@@ -37,7 +37,6 @@
     grid-template-areas:
       "img   header"
       " img   info";
-
     &_info {
       @include mp-null;
       @include text-font-normal;
