@@ -12,11 +12,14 @@ const PageNotFound = () => (
         src={logo404}
         className="not-found__image"
       />
-      <h4 className="not-found__title">Сожалеем, но здесь ничего нет</h4>
+      <h4 className="not-found__title">Страница не найдена</h4>
+      <p className="not-found__info">
+        В адресе есть ошибка или страница удалена{" "}
+      </p>
     </div>
     <Link to="/">
       <Button
-        btnClass="button_type_transparent button_size_medium"
+        btnClass="button button_type_transparent button_type_not-found"
         btnText="Перейти на главную"
         onClick={() => {}}
       />

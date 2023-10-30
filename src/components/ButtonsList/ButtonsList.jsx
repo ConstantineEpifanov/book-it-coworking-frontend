@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
+import clsx from "clsx";
 
 import "./ButtonsList.scss";
 import Button from "../UI-kit/Button/Button";
@@ -8,16 +9,17 @@ import Button from "../UI-kit/Button/Button";
 const defaultSort = (a, b) => a.name.localeCompare(b.name);
 
 export const ButtonsList = ({
-  listType = "time-ranges",
   itemsList = [],
   isEnabled = true,
   isMultiselect = false,
   isSelectByRanges = true,
   allowedRanges = [],
   ariaLabel = "Список кнопок",
+  wrapperClassName = "",
   listClassName = "",
   itemsClassName = "",
   // extraRules = null,
+  disableDeselect = false,
   sortFunc = defaultSort,
 }) => {
   // const [baseItemsList, setBaseItemsList] = useState([]);
@@ -54,19 +56,6 @@ export const ButtonsList = ({
   //   setItemsStatesList(resultStatesList);
   //   return resultStatesList;
   // };
-
-  // Получение класса для текущего элемента
-  const getClassName = (id) => {
-    let resultClass = `buttons-list__button button_type_buttons-list button_type_transparent${
-      itemsClassName ? ` ${itemsClassName}` : ""
-    }`;
-
-    if (selectedItems.find((item) => item.id === id)) {
-      resultClass += " button_type_buttons-list-selected";
-    }
-
-    return resultClass;
-  };
 
   // Проверка принадлежности элементов к одним и тем же наборам
   const isBelongsToSameRanges = (items, ranges) => {
@@ -126,6 +115,10 @@ export const ButtonsList = ({
       (selectedItem) => item.id === selectedItem.id,
     );
 
+    if (isAlreadySelected && disableDeselect) {
+      return;
+    }
+
     if (isAlreadySelected && isSelectByRanges) {
       resultSelected = [];
     } else if (isAlreadySelected) {
@@ -167,11 +160,18 @@ export const ButtonsList = ({
   }, [itemsList, isEnabled, sortFunc]);
 
   return (
-    <section className="buttons-list" aria-label={ariaLabel}>
+    <section
+      className={clsx({
+        "buttons-list": true,
+        [wrapperClassName]: wrapperClassName,
+      })}
+      aria-label={ariaLabel}
+    >
       <ul
-        className={`buttons-list__container buttons-list__container_type_${listType}${
-          listClassName ? ` ${listClassName}` : ""
-        }`}
+        className={clsx({
+          "buttons-list__container": true,
+          [listClassName]: listClassName,
+        })}
       >
         {itemsStatesList.map((item) => {
           const { id, name, onClick, isEnabled: isButtonEnabled } = item;
@@ -179,7 +179,13 @@ export const ButtonsList = ({
             <li key={`${name}-item-${id}`} className="buttons-list__item">
               <Button
                 key={`${name}-button-${id}`}
-                btnClass={getClassName(id)}
+                btnClass={clsx({
+                  "button_type_buttons-list button_type_transparent": true,
+                  [itemsClassName]: itemsClassName,
+                  "button_type_buttons-list-selected": selectedItems.find(
+                    (i) => i.id === id,
+                  ),
+                })}
                 btnType="button"
                 btnText={name}
                 onClick={() => handleClick(item, onClick)}
@@ -194,7 +200,6 @@ export const ButtonsList = ({
 };
 
 ButtonsList.propTypes = {
-  listType: PropTypes.oneOf(["time-ranges", "spots", "meeting-rooms"]),
   itemsList: PropTypes.arrayOf(
     PropTypes.shape({
       id: PropTypes.number,
@@ -208,22 +213,25 @@ ButtonsList.propTypes = {
   isSelectByRanges: PropTypes.bool,
   allowedRanges: PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.number)),
   ariaLabel: PropTypes.string,
+  wrapperClassName: PropTypes.string,
   listClassName: PropTypes.string,
   itemsClassName: PropTypes.string,
   // extraRules: PropTypes.arrayOf(PropTypes.func),
+  disableDeselect: PropTypes.bool,
   sortFunc: PropTypes.func,
 };
 
 ButtonsList.defaultProps = {
-  listType: "time-ranges",
   itemsList: [],
   isEnabled: true,
   isMultiselect: false,
   isSelectByRanges: true,
   allowedRanges: [],
   ariaLabel: "Список кнопок",
+  wrapperClassName: "",
   listClassName: "",
   itemsClassName: "",
   // extraRules: null,
+  disableDeselect: false,
   sortFunc: defaultSort,
 };
