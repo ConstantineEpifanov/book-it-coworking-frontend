@@ -329,7 +329,13 @@
     @include use-font(18px, 22px, 400);
   }
 
-  &__profile-edit,
+  &__profile-edit {
+    @include primary-button-black;
+    @include use-font(18px, 22px, 400);
+    width: 170px;
+    height: 54px;
+  }
+
   &__profile-transparent {
     width: 170px;
     height: 54px;
@@ -358,7 +364,7 @@
     @include primary-button-black;
     height: 54px;
   }
-  &_type_order,
+  & &_type_order,
   &_type_delete {
     @include primary-button-black;
   }
@@ -467,8 +473,10 @@
     }
     &_type_security,
     &__profile-review {
+      @include use-font(16px, 20px, 400);
       width: 100%;
       max-width: 450px;
+      height: 44px;
     }
     &_type_submit-search {
       flex: 1;
@@ -525,6 +533,12 @@
       &-password {
         @include text-font-link-mob;
       }
+    }
+    &__profile-edit {
+      @include use-font(16px, 20px, 400);
+      width: calc(100vw - 40px);
+      max-width: 450px;
+      height: 44px;
     }
 
     &_type_tertiary-map {
