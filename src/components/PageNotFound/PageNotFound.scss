@@ -6,7 +6,7 @@
   width: 100%;
   padding: 20px 0 192px;
   background-color: $main-white;
-  
+
   &__inner {
     @include flex-box-column-center;
     max-width: 550px;
@@ -22,7 +22,7 @@
 
   &__title {
     @include mp-null;
-    @include use-font(20px,30px,500,normal);
+    @include use-font(20px, 30px, 500, normal);
     color: $main-black;
     font-family: $font-family;
     text-transform: uppercase;

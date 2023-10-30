@@ -9,7 +9,7 @@
   font-family: $font-family;
 
   &__inner {
-   @include flex-box-column-center;
+    @include flex-box-column-center;
     &_reviews {
       align-items: start;
     }
@@ -63,7 +63,7 @@
 
   &__title {
     @include mp-null;
-    @include use-font(20px,30px,500,normal);
+    @include use-font(20px, 30px, 500, normal);
     text-transform: uppercase;
     text-align: center;
     color: $black;
@@ -77,14 +77,14 @@
   }
 
   &__auth-link {
-    @include use-font(13px,16px,400,normal);
+    @include use-font(13px, 16px, 400, normal);
     padding-left: 6px;
     color: $black;
   }
 
   &__auth-text {
     display: block;
-    @include use-font(12px,15px,400,normal);
+    @include use-font(12px, 15px, 400, normal);
     text-align: center;
     color: $dark-gray;
     text-decoration: none;
