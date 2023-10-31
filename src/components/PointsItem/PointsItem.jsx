@@ -213,18 +213,18 @@ export const PointsItem = ({ isCompact, isListed, data }) => {
               <button
                 type="button"
                 className="point__action-button"
-                onClick={onLikeClick}
-                aria-labelledby="Добавить в избранное"
-              >
-                <LikeButton isLiked={isLiked} />
-              </button>
-              <button
-                type="button"
-                className="point__action-button"
                 onClick={handleShare}
                 aria-labelledby="Поделиться"
               >
                 <Share />
+              </button>
+              <button
+                type="button"
+                className="point__action-button"
+                onClick={onLikeClick}
+                aria-labelledby="Добавить в избранное"
+              >
+                <LikeButton isLiked={isLiked} />
               </button>
             </div>
           )}

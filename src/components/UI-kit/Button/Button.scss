@@ -22,6 +22,18 @@
     border-left: none;
     max-width: 170px;
     max-height: 54px;
+    color: $black;
+    background-color: $green;
+
+    &:hover {
+      color: $black;
+      background-color: $green;
+    }
+
+    &:active {
+      color: $green;
+      background-color: $black;
+    }
   }
 
   // &_location_search-form-search {
@@ -292,7 +304,7 @@
   // Кнопка назад на странице коворкинга
   &_type_back {
     width: auto;
-    padding: 4px 24px 22px 42px;
+    padding: 4px 24px 22px 36px;
     background: url("../../../images/back-button.svg");
     background-position: left top;
     background-repeat: no-repeat;
@@ -464,6 +476,11 @@
     &:hover {
       color: $black;
       background-color: $green;
+    }
+
+    &:active {
+      color: $green;
+      background-color: $black;
     }
   }
 

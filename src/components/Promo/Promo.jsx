@@ -82,7 +82,6 @@ export const Promo = () => {
             btnType="submit"
             btnText="Искать"
             isValidBtn
-            backgroundColor="#b0ff1a"
           />
         </form>
       </div>

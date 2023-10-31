@@ -70,7 +70,8 @@ export const Coworking = () => {
         setReviews(res.results);
         setReviewsLength(res.count);
         setReviewsAddCount((prev) => prev + LAPTOP_REVIEWS_QUANTITY);
-        if (res.results.length <= LAPTOP_REVIEWS_QUANTITY) {
+
+        if (res.count <= res.results.length) {
           setMoreButtonVisible(false);
         }
         return reviewsLength;
@@ -88,8 +89,7 @@ export const Coworking = () => {
     getReviews(pathId, LAPTOP_REVIEWS_QUANTITY, reviewsAddCount).then((res) => {
       setReviews(reviews.concat(res.results));
 
-      if (res.count === reviews.length + LAPTOP_REVIEWS_QUANTITY)
-        setMoreButtonVisible(false);
+      if (res.next === null) setMoreButtonVisible(false);
     });
   };
 
