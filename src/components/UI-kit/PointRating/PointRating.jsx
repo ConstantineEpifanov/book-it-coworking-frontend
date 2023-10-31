@@ -1,9 +1,10 @@
 import React from "react";
 import PropTypes from "prop-types";
+import clsx from "clsx";
 import "./PointRating.scss";
 
 export const PointRating = ({ rating, optionalClass }) => (
-  <div className={`point-rating ${optionalClass}`}>
+  <div className={clsx("point-rating", optionalClass || "")}>
     <p className="point-rating__number">{rating}</p>
     <svg
       xmlns="http://www.w3.org/2000/svg"

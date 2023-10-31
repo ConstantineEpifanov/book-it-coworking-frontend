@@ -1,24 +1,21 @@
 /* eslint-disable no-unused-vars */
-import { useContext } from "react";
+import { useContext, useCallback } from "react";
 import { CurrentUserContext } from "../../contexts/currentUserContext";
-import imgProfile from "../../images/profile-icons/profile-icon-header.svg";
+import { editUserAvatar } from "../../utils/Api";
 import AvatarLoader from "./AvatarLoader";
-
 import {
   BASIC_ERROR,
   IMAGE_VALIDATION_ERROR,
   AVATAR_UPLOAD_SUCCESS,
 } from "../../utils/constants";
-
-import { editUserAvatar } from "../../utils/Api";
-
+import imgProfile from "../../images/profile-icons/profile-icon-header.svg";
 import "./AvatarUpload.scss";
 
 function AvatarUpload() {
   const { currentUser, setСurrentUser, showMessage, isLoading, setIsLoading } =
     useContext(CurrentUserContext);
 
-  const handleEditAvatar = () => {
+  const handleEditAvatar = useCallback(() => {
     const fileInput = document.createElement("input");
     fileInput.type = "file";
     fileInput.accept = "image/jpeg, image/png";
@@ -51,7 +48,7 @@ function AvatarUpload() {
       }
     });
     fileInput.click();
-  };
+  }, [setСurrentUser, showMessage, setIsLoading, currentUser]);
 
   return (
     <div className="avatar">

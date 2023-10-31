@@ -29,6 +29,7 @@ export const ReviewList = ({
             date={item.pub_date}
             text={item.description}
             rating={item.rating}
+            image={item.image}
           />
         </li>
       ))}
