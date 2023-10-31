@@ -172,6 +172,14 @@ export const ButtonsList = ({
           "buttons-list__container": true,
           [listClassName]: listClassName,
         })}
+        style={{
+          "--buttons-list-rows-main": Math.ceil(itemsStatesList.length / 5),
+          "--buttons-list-rows-1256": Math.ceil(itemsStatesList.length / 4),
+          "--buttons-list-rows-1064": Math.ceil(itemsStatesList.length / 3),
+          "--buttons-list-rows-1024": Math.ceil(itemsStatesList.length / 4),
+          "--buttons-list-rows-944": Math.ceil(itemsStatesList.length / 3),
+          "--buttons-list-rows-594": Math.ceil(itemsStatesList.length / 2),
+        }}
       >
         {itemsStatesList.map((item) => {
           const { id, name, onClick, isEnabled: isButtonEnabled } = item;

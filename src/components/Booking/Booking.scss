@@ -151,7 +151,7 @@
 
     &_type_time-ranges {
       grid-template-columns: repeat(auto-fill, minmax(171px, max-content));
-      grid-template-rows: repeat(3, min-content);
+      grid-template-rows: repeat(var(--buttons-list-rows-main), min-content);
       grid-auto-flow: column;
       gap: 19px;
     }
@@ -174,14 +174,10 @@
     &__section-header {
       flex-direction: column;
     }
-  }
-}
 
-@media screen and (max-width: 1256px) {
-  .booking {
     &__buttons-list {
       &_type_time-ranges {
-        grid-template-rows: repeat(4, min-content);
+        grid-template-rows: repeat(var(--buttons-list-rows-1256), min-content);
       }
     }
   }
@@ -191,7 +187,7 @@
   .booking {
     &__buttons-list {
       &_type_time-ranges {
-        grid-template-rows: repeat(5, min-content);
+        grid-template-rows: repeat(var(--buttons-list-rows-1064), min-content);
       }
     }
   }
@@ -201,7 +197,7 @@
   .booking {
     &__buttons-list {
       &_type_time-ranges {
-        grid-template-rows: repeat(4, min-content);
+        grid-template-rows: repeat(var(--buttons-list-rows-1024), min-content);
       }
     }
   }
@@ -211,7 +207,7 @@
   .booking {
     &__buttons-list {
       &_type_time-ranges {
-        grid-template-rows: repeat(5, min-content);
+        grid-template-rows: repeat(var(--buttons-list-rows-944), min-content);
       }
     }
   }
@@ -231,7 +227,7 @@
   .booking {
     &__buttons-list {
       &_type_time-ranges {
-        grid-template-rows: repeat(8, min-content);
+        grid-template-rows: repeat(var(--buttons-list-rows-594), min-content);
       }
     }
   }
