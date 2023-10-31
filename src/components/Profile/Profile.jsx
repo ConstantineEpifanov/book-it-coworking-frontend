@@ -10,7 +10,6 @@ import "./Profile.scss";
 
 import { ProfileDataTab } from "../ProfileDataTab/ProfileDataTab";
 import { SecurityTab } from "../SecurityTab/SecurityTab";
-import { PaymentTab } from "../PaymentTab/PaymentTab";
 import { BookingsTab } from "../BookingsTab/BookingsTab";
 import { FavoritesTab } from "../FavoritesTab/FavoritesTab";
 
@@ -20,8 +19,6 @@ const renderTabContent = (active) => {
       return <ProfileDataTab />;
     case "security":
       return <SecurityTab />;
-    case "payment":
-      return <PaymentTab />;
     case "bookings":
       return <BookingsTab />;
     case "favorites":

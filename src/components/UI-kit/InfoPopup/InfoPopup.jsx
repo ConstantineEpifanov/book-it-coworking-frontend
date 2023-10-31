@@ -3,8 +3,8 @@ import PropTypes from "prop-types";
 // import infoImage from "../../images/success.svg";
 // import errorImage from "../../images/error.svg";
 
-import SuccessIcon from "../../images/info-popup/success";
-import ErrorIcon from "../../images/info-popup/error";
+import SuccessIcon from "../../../images/info-popup/success";
+import ErrorIcon from "../../../images/info-popup/error";
 import "./InfoPopup.scss";
 
 const InfoPopup = ({ infoType, infoMessage }) => (

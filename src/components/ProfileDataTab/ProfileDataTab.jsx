@@ -12,8 +12,6 @@ import { SectionTitle } from "../SectionTitle/SectionTitle";
 
 import "./ProfileDataTab.scss";
 
-// import ProfilePhoto from "../../images/ProfilePhoto.png";
-
 import {
   formatPhone,
   formatDate,
@@ -117,11 +115,6 @@ export const ProfileDataTab = () => {
         titleClass="section-title_profile"
       />
       <AvatarUpload />
-      {/* <img
-        src={ProfilePhoto}
-        className="profile-data__image"
-        alt="Фото профиля"
-      /> */}
 
       {!isEdited ? (
         <ul className="profile-data__info-list">
@@ -255,7 +248,7 @@ export const ProfileDataTab = () => {
       ) : (
         <Button
           btnText="Редактировать"
-          btnClass="button__profile-small button_type_transparent"
+          btnClass="button__profile-small button__profile-edit"
           onClick={handleEditClick}
           btnType="button"
         />

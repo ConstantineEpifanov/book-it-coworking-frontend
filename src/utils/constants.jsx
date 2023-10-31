@@ -1,7 +1,8 @@
 export const SCREEN_MEDIUM = 1270;
 export const SCREEN_MEDIUM_TABLET = 1025;
 export const SCREEN_SMALL = 770;
-export const SCREEN_SMALL_MOBILE = 429;
+export const SCREEN_SXMALL = 525;
+export const SCREEN_SSXMALL = 380;
 
 // количество карточек на главной странице в начальном рендере и сколько добавляем от кнопки еще
 export const LAPTOP_SHORT_POINTS_QUANTITY = 6;
@@ -33,6 +34,10 @@ export const EQUIPMENT_MEETING_CATEGORY = "Переговорная";
 export const DEFAULT_LATITUDE = 59.9;
 export const DEFAULT_LONGITUDE = 30.3;
 export const DEFAULT_ZOOM = 11;
+
+// название города
+
+export const CITY_NAME = "г. Санкт-Петербург";
 
 // Booking
 // Количество рабочих дней для локации
@@ -107,9 +112,32 @@ export const headerActiveLinkClass =
   "header__profile_nav header__profile_nav_active";
 
 // Новые константы для Swiper breakpoints
+// export const SWIPER_BREAKPOINTS = {
+//   [SCREEN_SSXMALL]: {
+//     slidesPerView: 1.2,
+//   },
+//   [SCREEN_SXMALL]: {
+//     slidesPerView: 1.7,
+//   },
+//   [SCREEN_MEDIUM_TABLET]: {
+//     slidesPerView: 2,
+//     spaceBetween: 20,
+//   },
+//   [SCREEN_MEDIUM]: {
+//     slidesPerView: 3,
+//     spaceBetween: 20,
+//   },
+// };
+
 export const SWIPER_BREAKPOINTS = {
-  [SCREEN_SMALL_MOBILE]: {
+  0: {
+    slidesPerView: 1,
+  },
+  [SCREEN_SSXMALL]: {
     slidesPerView: 1.2,
+  },
+  [SCREEN_SXMALL]: {
+    slidesPerView: 1.5,
   },
   [SCREEN_SMALL]: {
     slidesPerView: 1.7,
