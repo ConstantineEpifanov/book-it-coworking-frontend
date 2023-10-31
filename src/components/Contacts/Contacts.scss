@@ -16,7 +16,7 @@
     max-width: 1440px;
     min-height: 764px;
     align-self: normal;
-    background: url("../../images/contact-overlay.png") 100% 100% no-repeat;
+    background: url("../../images/contact-overlay.jpg") 100% 100% no-repeat;
   }
   &__list {
     @include mp-null;
@@ -45,6 +45,8 @@
     }
     &_img {
       grid-area: img;
+      width: 265px;
+      height: 265px;
     }
 
     &_header {
@@ -90,6 +92,10 @@
       }
       &_img {
         margin: auto;
+        width: 100%;
+        height: 100%;
+        max-width: 334px;
+        max-height: 334px;
       }
     }
   }
@@ -101,13 +107,12 @@
       width: calc(100% + 40px);
       min-height: 801px;
       transform: translateX(-20px);
-      background: url("../../images/contacts-photo-mob.png") 100% 100% no-repeat;
+      background: url("../../images/contacts-photo-mob.jpg") 100% 100% no-repeat;
       background-position: center;
     }
     &__team {
       text-align: start;
       &_img {
-        width: 334px;
         margin: 0;
       }
     }
