@@ -730,6 +730,14 @@ export const Booking = () => {
         <section
           className="booking__section"
           aria-label="Секция выбора даты и времени"
+          style={{
+            "--buttons-list-rows-main": Math.ceil(timeRangeItems.length / 5),
+            "--buttons-list-rows-1256": Math.ceil(timeRangeItems.length / 4),
+            "--buttons-list-rows-1064": Math.ceil(timeRangeItems.length / 3),
+            "--buttons-list-rows-1024": Math.ceil(timeRangeItems.length / 4),
+            "--buttons-list-rows-944": Math.ceil(timeRangeItems.length / 3),
+            "--buttons-list-rows-594": Math.ceil(timeRangeItems.length / 2),
+          }}
         >
           <h2 className="booking__section-title">
             {sectionsVisibility.dateSection.stepNumber}. Выберите дату и время
