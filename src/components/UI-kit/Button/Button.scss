@@ -332,6 +332,16 @@
       color: $pink;
       fill: $pink;
     }
+
+    @include mobile {
+      @include text-font-normal-mob;
+      font-weight: 400;
+      line-height: 1.25;
+      padding: 10px 24px 10px 32px;
+      margin-bottom: 26px;
+      background-position: left center;
+      background-size: 24px;
+    }
   }
 
   &_size {

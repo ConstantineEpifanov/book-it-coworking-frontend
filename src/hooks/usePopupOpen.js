@@ -27,7 +27,7 @@ export default function usePopupOpen() {
     if (showPopup) {
       clearApiError();
       setPreviousLocation(null); // обнуляем стейт предыдущей локации
-      // window.history.replaceState(null, null, "/"); // обнуляем url
+      window.history.replaceState(null, null, "/"); // обнуляем url
     }
   }, [clearApiError, showPopup]);
 
