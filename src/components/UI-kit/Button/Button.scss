@@ -260,6 +260,18 @@
       background: $pink;
       color: $black;
     }
+
+    @include mobile {
+      border: 1.5px solid $black;
+
+      &:hover {
+        border: 1.5px solid $pink;
+      }
+
+      &:active {
+        border: 1.5px solid $black;
+      }
+    }
   }
 
   //стили кнопки пароля
@@ -425,11 +437,23 @@
     width: 100%;
     padding-top: 14px;
     padding-bottom: 14px;
+    background: transparent;
+
+    @include mobile-medium {
+      @include text-font-normal-mob;
+      line-height: 1.25;
+      padding-top: 11px;
+      padding-bottom: 10px;
+      border: 1.5px solid $main-black;
+    }
   }
 
   &_type_buttons-list:disabled {
     border: 2px solid $gray;
     color: $gray;
+    @include mobile {
+      border: 1.5px solid $gray;
+    }
   }
 
   &_type_buttons-list-selected {

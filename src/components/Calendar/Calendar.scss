@@ -8,6 +8,7 @@
     inset -2px 0 $main-black,
     inset 0 -2px $main-black;
   border-radius: 40px;
+  position: relative;
 
   &__header {
     min-height: 82px;
@@ -26,6 +27,16 @@
       padding-top: 0;
       font-weight: 500;
       color: $white;
+
+      @include mobile {
+        line-height: 1.2;
+      }
+    }
+
+    @include mobile {
+      margin: 0 29px;
+      min-height: 48px;
+      padding: 0 14px 0 20px;
     }
   }
 
@@ -35,6 +46,10 @@
     box-sizing: border-box;
     display: grid;
     grid-template-columns: repeat(7, 1fr);
+
+    @include mobile {
+      padding: 5px 16px 0 13px;
+    }
   }
 
   &__cell {
@@ -48,6 +63,15 @@
 
     &_type_header {
       cursor: auto;
+    }
+
+    @include mobile {
+      // @include text-font-link-mob;
+      aspect-ratio: 126 / 123;
+    }
+
+    @include mobile-medium {
+      @include text-font-link-mob;
     }
   }
 
@@ -82,6 +106,10 @@
     &_next-month {
       color: $dark-gray;
     }
+
+    @include mobile-medium {
+      @include text-font-link-mob;
+    }
   }
 
   &__navigation {
@@ -102,16 +130,41 @@
 
       &_type_previous {
         background-image: url("../../images/Calendar-button-chevron.svg");
+        background-size: 120%;
+        background-position: center;
       }
 
       &_type_next {
         background-image: url("../../images/Calendar-button-chevron.svg");
+        background-size: 120%;
+        background-position: center;
         transform: scale(-1, 1);
       }
 
       &:hover {
         opacity: 0.7;
       }
+
+      @include mobile {
+        min-width: 32px;
+        min-height: 32px;
+      }
+    }
+  }
+
+  @include mobile {
+    border-radius: 0;
+    box-shadow: none;
+
+    &::after {
+      content: "";
+      position: absolute;
+      left: 50%;
+      bottom: -17px;
+      height: 2px;
+      width: 84%;
+      background: $main-black;
+      transform: translateX(-50%);
     }
   }
 }

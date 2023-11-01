@@ -6,6 +6,7 @@
   color: $main-black;
   margin: $main-margin;
   flex-grow: 1;
+  position: relative;
 
   &__section-header {
     display: flex;
@@ -57,6 +58,13 @@
       max-height: 1000px;
       transition: max-height 0.3s ease;
     }
+  }
+
+  &__choose-date-button {
+    @include text-font-normal-mob;
+    width: 100%;
+    font-weight: 400;
+    line-height: 1.25;
   }
 
   &__plan-photo {
@@ -213,21 +221,15 @@
   }
 }
 
-@media screen and (max-width: 768px) {
+@include mobile {
   .booking {
     &__buttons-list {
       &_type_time-ranges {
-        justify-content: center;
-      }
-    }
-  }
-}
-
-@media screen and (max-width: 594px) {
-  .booking {
-    &__buttons-list {
-      &_type_time-ranges {
-        grid-template-rows: repeat(var(--buttons-list-rows-594), min-content);
+        grid-template-columns: repeat(2, 1fr);
+        grid-template-rows: none;
+        grid-auto-flow: unset;
+        column-gap: 7px;
+        row-gap: 7px;
       }
     }
   }

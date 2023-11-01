@@ -8,6 +8,8 @@ import React, {
 import { useLocation, useNavigate } from "react-router-dom";
 import PropTypes from "prop-types";
 import clsx from "clsx";
+import dayjs from "dayjs";
+import "dayjs/locale/ru";
 
 import "./Booking.scss";
 import { getLocationPlanPhoto, getSpots, postOrder } from "../../utils/Api";
@@ -25,6 +27,9 @@ import {
   COWORKING_MEETING_ROOMS_SPACE_TYPE,
 } from "../../utils/constants";
 import useInitialVisibilityState from "./hooks/useInitialVisibilityState";
+import BookingCalendarPopup from "../BookingCalendarPopup/BookingCalendarPopup";
+
+dayjs.locale("ru");
 
 // Возвращает число дня: от 1 до 7
 const getWeekDayNumber = (date) => {
@@ -196,6 +201,7 @@ const spotsSortFunc = (a, b) => {
 
 export const Booking = () => {
   const IS_TIME_RANGES_MULTISELECT = false;
+  const DEFAULT_DATE_BUTTON_TEXT = "Выбрать дату и время";
 
   const location = useLocation();
 
@@ -216,6 +222,10 @@ export const Booking = () => {
   const [isWorkplacesEnabled, setWorkplacesEnabled] = useState(false);
   const [isMeetingRoomsEnabled, setMeetingRoomsEnabled] = useState(false);
   const [isPlanPhotoVisible, setIsPlanPhotoVisible] = useState(false);
+  const [isDatePopupOpened, setDatePopupOpened] = useState(false);
+  const [chooseDateButtonText, setChooseDateButtonText] = useState(
+    DEFAULT_DATE_BUTTON_TEXT,
+  );
 
   const initialVisibilityState = useInitialVisibilityState();
   const [sectionsVisibility, setSectionsVisibility] = useState(
@@ -240,6 +250,33 @@ export const Booking = () => {
       default:
         break;
     }
+  };
+
+  // Обработчик клика по кнопке выбора даты и времени
+  const handleOpenDatePopup = () => {
+    setDatePopupOpened(true);
+  };
+
+  // Обработчик закрытия попапа выбора даты и времени
+  const handleCloseDatePopup = () => {
+    setDatesSelected([]);
+    setTimeRangesSelected([]);
+    setDatePopupOpened(false);
+    setChooseDateButtonText(DEFAULT_DATE_BUTTON_TEXT);
+  };
+
+  // Обработчик закрытия попапа выбора даты и времени
+  const handleSaveDatePopup = () => {
+    setDatePopupOpened(false);
+    if (datesSelected.length > 0 && timeRangesSelected.length > 0) {
+      const dateText = dayjs(datesSelected.at(0)).format("D MMMM YYYY");
+      const timeText = `${timeRangesSelected.at(0).startTime}-${
+        timeRangesSelected.at(-1).endTime
+      }`;
+      setChooseDateButtonText(`${dateText} ${timeText}`);
+      return;
+    }
+    setChooseDateButtonText(DEFAULT_DATE_BUTTON_TEXT);
   };
 
   // Обработчик клика по кнопке "Показать план помещения"
@@ -694,6 +731,7 @@ export const Booking = () => {
     sessionStorage.setItem("coworkingState", JSON.stringify(coworking.current));
 
     const { id, openTime, closeTime } = coworking.current;
+
     setTimeRangeItems(
       getTimeRangeItems(openTime, closeTime, handleTimeItemClick),
     );
@@ -703,6 +741,23 @@ export const Booking = () => {
 
   return (
     <main className="booking" aria-label="Страница бронирования">
+      {initialVisibilityState.isMobileView && (
+        <BookingCalendarPopup
+          onDateSelect={handleCalendarClick}
+          onClickClose={handleCloseDatePopup}
+          onSaveClick={handleSaveDatePopup}
+          isOpen={isDatePopupOpened}
+          timeListProps={{
+            isEnabled: datesSelected.length > 0,
+            itemsList: timeRangeItems,
+            allowedRanges,
+            sortFunc: timeSortFunc,
+            isMultiselect: IS_TIME_RANGES_MULTISELECT,
+            listClassName:
+              "booking__buttons-list booking__buttons-list_type_time-ranges",
+          }}
+        />
+      )}
       <Button
         onClick={handleBackButton}
         btnClass="button_type_back"
@@ -742,21 +797,29 @@ export const Booking = () => {
           <h2 className="booking__section-title">
             {sectionsVisibility.dateSection.stepNumber}. Выберите дату и время
           </h2>
-          <div className="booking__flex-container">
-            <Calendar
-              selectCallback={handleCalendarClick}
-              extraRules={calendarExtraRules}
+
+          {!initialVisibilityState.isMobileView ? (
+            <div className="booking__flex-container">
+              <Calendar
+                selectCallback={handleCalendarClick}
+                extraRules={calendarExtraRules}
+              />
+              <ButtonsList
+                isEnabled={datesSelected.length > 0}
+                itemsList={timeRangeItems}
+                allowedRanges={allowedRanges}
+                sortFunc={timeSortFunc}
+                isMultiselect={IS_TIME_RANGES_MULTISELECT}
+                listClassName="booking__buttons-list booking__buttons-list_type_time-ranges"
+              />
+            </div>
+          ) : (
+            <Button
+              onClick={handleOpenDatePopup}
+              btnClass="booking__choose-date-button button_type_transparent"
+              btnText={chooseDateButtonText}
             />
-            <ButtonsList
-              isEnabled={datesSelected.length > 0}
-              listType="time-ranges"
-              itemsList={timeRangeItems}
-              allowedRanges={allowedRanges}
-              sortFunc={timeSortFunc}
-              isMultiselect={IS_TIME_RANGES_MULTISELECT}
-              listClassName="booking__buttons-list booking__buttons-list_type_time-ranges"
-            />
-          </div>
+          )}
         </section>
       )}
 
@@ -816,7 +879,8 @@ export const Booking = () => {
                   className={clsx({
                     booking__tab: true,
                     booking__tab_disabled:
-                      (!isWorkplacesEnabled || !isSpotsEnabled) &&
+                      isMeetingRoomsEnabled &&
+                      !isSpotsEnabled &&
                       !sectionsVisibility.isMobileView,
                     booking__tab_hidden:
                       (!isWorkplacesEnabled || !isSpotsEnabled) &&
@@ -845,7 +909,8 @@ export const Booking = () => {
                   className={clsx({
                     booking__tab: true,
                     booking__tab_disabled:
-                      (!isWorkplacesEnabled || !isMeetingRoomsEnabled) &&
+                      isSpotsEnabled &&
+                      !isMeetingRoomsEnabled &&
                       !sectionsVisibility.isMobileView,
                     booking__tab_hidden:
                       (!isWorkplacesEnabled || !isMeetingRoomsEnabled) &&

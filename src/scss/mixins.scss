@@ -271,6 +271,18 @@
   }
 }
 
+@mixin mobile-medium {
+  @media screen and (max-width: $mobile-breakpoint-medium) {
+    @content;
+  }
+}
+
+@mixin mobile-large {
+  @media screen and (max-width: $mobile-breakpoint-large) {
+    @content;
+  }
+}
+
 @mixin mobile {
   @media screen and (max-width: $mobile-breakpoint) {
     @content;
