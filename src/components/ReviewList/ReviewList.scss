@@ -42,3 +42,13 @@
     @include mp-null;
   }
 }
+
+@include mobile {
+  .review-list {
+    &__length-container {
+      font-size: 14px;
+      font-weight: 400;
+      line-height: 2.1;
+    }
+  }
+}

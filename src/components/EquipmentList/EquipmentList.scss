@@ -9,3 +9,9 @@
   gap: 20px;
   list-style: none;
 }
+
+@include mobile {
+  .equipment-list {
+    flex-direction: column;
+  }
+}
