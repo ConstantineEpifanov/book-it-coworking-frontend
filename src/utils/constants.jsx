@@ -111,24 +111,6 @@ export const activeLinkClass = "navigation__link navigation__link_active";
 export const headerActiveLinkClass =
   "header__profile_nav header__profile_nav_active";
 
-// Новые константы для Swiper breakpoints
-// export const SWIPER_BREAKPOINTS = {
-//   [SCREEN_SSXMALL]: {
-//     slidesPerView: 1.2,
-//   },
-//   [SCREEN_SXMALL]: {
-//     slidesPerView: 1.7,
-//   },
-//   [SCREEN_MEDIUM_TABLET]: {
-//     slidesPerView: 2,
-//     spaceBetween: 20,
-//   },
-//   [SCREEN_MEDIUM]: {
-//     slidesPerView: 3,
-//     spaceBetween: 20,
-//   },
-// };
-
 export const SWIPER_BREAKPOINTS = {
   0: {
     slidesPerView: 1,

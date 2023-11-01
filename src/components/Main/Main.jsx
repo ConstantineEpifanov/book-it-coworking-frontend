@@ -57,17 +57,24 @@ export const Main = () => {
   }, []);
 
   useEffect(() => {
-    setIsLoading(true);
-    getShortLocations(limit, offset)
-      .then((res) => {
-        setCoworkingsArray(res.results);
-      })
-      .catch((err) => {
-        showMessage(err.detail);
-      })
-      .finally(() => {
-        setIsLoading(false);
-      });
+    if (
+      coworkingsArray &&
+      coworkingsArray.length !== 0 &&
+      coworkingsArray.length < limit + offset
+    ) {
+      setIsLoading(true);
+      getShortLocations(limit, offset)
+        .then((res) => setCoworkingsArray(res.results))
+        .catch((err) => {
+          showMessage(err.detail);
+        })
+        .finally(() => {
+          setIsLoading(false);
+        });
+    } else if (coworkingsArray && coworkingsArray.length > limit) {
+      setCoworkingsArray(coworkingsArray.slice(0, limit));
+    }
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [limit]);
 
