@@ -28,6 +28,7 @@ import {
 } from "../../utils/constants";
 import useInitialVisibilityState from "./hooks/useInitialVisibilityState";
 import BookingCalendarPopup from "../BookingCalendarPopup/BookingCalendarPopup";
+import SortData from "../UI-kit/SortData/SortData";
 
 dayjs.locale("ru");
 
@@ -232,6 +233,17 @@ export const Booking = () => {
     initialVisibilityState,
   );
 
+  const permittedSpots = useMemo(
+    () => [
+      { text: "--", id: -1 },
+      ...spots
+        .filter((item) => item.isEnabled)
+        .sort(spotsSortFunc)
+        .map((item) => ({ text: item.name, id: item.id })),
+    ],
+    [spots],
+  );
+
   // Обнволение видимости секций
   const updateSectionsVisibility = (initiator) => {
     switch (initiator) {
@@ -348,6 +360,16 @@ export const Booking = () => {
   // Обработчик выбора переговорной
   const handleMeetingRoomSelect = (selectedItems) => {
     setMeetingRoomsSelected(selectedItems);
+  };
+
+  // Обработчик выбора рабочего метса в выпадающем списке
+  const handleSpotDropdownSelect = ({ spot }) => {
+    const foundSpot = spots.find((item) => item.name === spot);
+    if (foundSpot) {
+      setSpotsSelected((prev) => [...prev, foundSpot]);
+      return;
+    }
+    setSpotsSelected([]);
   };
 
   // Обработчик клика по кнопке "Назад"
@@ -763,7 +785,10 @@ export const Booking = () => {
         btnClass="button_type_back"
         btnText="Назад"
       />
-      <SectionTitle titleText="Бронирование" />
+      <SectionTitle
+        titleText="Бронирование"
+        titleClass="section-title_booking"
+      />
       {sectionsVisibility.dividedSpotTypesSection.isVisible && (
         <section
           className="booking__section"
@@ -831,8 +856,11 @@ export const Booking = () => {
           >
             <header className="booking__section-header">
               <h2 className="booking__section-title">
-                {sectionsVisibility.spotsSection.stepNumber}. Выберете тип
-                рабочего места
+                {`${sectionsVisibility.spotsSection.stepNumber}. Выберите ${
+                  sectionsVisibility.isMobileView
+                    ? "место"
+                    : "тип рабочего места"
+                }`}
               </h2>
               {!sectionsVisibility.isMobileView && (
                 <Button
@@ -888,22 +916,44 @@ export const Booking = () => {
                   })}
                   aria-hidden={!isWorkplacesEnabled || !isSpotsEnabled}
                 >
-                  <h3 className="booking__tab-title">
-                    Одна цифра - одно рабочее место
-                  </h3>
-                  <p className="booking__spot-price">{currentSpotPrice}</p>
-                  <ButtonsList
-                    isEnabled={
-                      isWorkplacesEnabled &&
-                      isSpotsEnabled &&
-                      datesSelected.length > 0 &&
-                      timeRangesSelected.length > 0
-                    }
-                    listType="spots"
-                    itemsList={spots}
-                    sortFunc={spotsSortFunc}
-                    listClassName="booking__buttons-list booking__buttons-list_type_spots"
-                  />
+                  {!sectionsVisibility.isMobileView ? (
+                    <>
+                      <h3 className="booking__tab-title">
+                        Одна цифра - одно рабочее место
+                      </h3>
+                      <p className="booking__spot-price">{currentSpotPrice}</p>
+                      <ButtonsList
+                        isEnabled={
+                          isWorkplacesEnabled &&
+                          isSpotsEnabled &&
+                          datesSelected.length > 0 &&
+                          timeRangesSelected.length > 0
+                        }
+                        listType="spots"
+                        itemsList={spots}
+                        sortFunc={spotsSortFunc}
+                        listClassName="booking__buttons-list booking__buttons-list_type_spots"
+                      />
+                    </>
+                  ) : (
+                    <SortData
+                      handleSelectChange={handleSpotDropdownSelect}
+                      selectName="spot"
+                      titleSort=""
+                      array={permittedSpots}
+                      size="medium"
+                      isDisabled
+                      className="booking__spots-dropdown"
+                      shouldDropSelected={
+                        !(
+                          isWorkplacesEnabled &&
+                          isSpotsEnabled &&
+                          datesSelected.length > 0 &&
+                          timeRangesSelected.length > 0
+                        )
+                      }
+                    />
+                  )}
                 </section>
                 <section
                   className={clsx({
@@ -918,10 +968,16 @@ export const Booking = () => {
                   })}
                   aria-hidden={!isWorkplacesEnabled || !isMeetingRoomsEnabled}
                 >
-                  <h3 className="booking__tab-title">
-                    В одной переговорной 8 мест
-                  </h3>
-                  <p className="booking__spot-price">{currentMeetingPrice}</p>
+                  {!sectionsVisibility.isMobileView && (
+                    <>
+                      <h3 className="booking__tab-title">
+                        В одной переговорной 8 мест
+                      </h3>
+                      <p className="booking__spot-price">
+                        {currentMeetingPrice}
+                      </p>
+                    </>
+                  )}
                   <ButtonsList
                     isEnabled={
                       isWorkplacesEnabled &&
@@ -942,9 +998,11 @@ export const Booking = () => {
             className="booking__section"
             aria-label="Секция итоговой суммы к оплате"
           >
-            <h2 className="booking__section-title">{`Сумма к оплате: ${totalPrice}`}</h2>
+            {!sectionsVisibility.isMobileView && (
+              <h2 className="booking__section-title">{`Сумма к оплате: ${totalPrice}`}</h2>
+            )}
             <Button
-              btnClass="button_type_form button_size_middle"
+              btnClass="button_type_form button_size_middle booking__pay-button"
               btnText="Перейти к оплате"
               isValidBtn={!!totalPrice}
               onClick={handlePayClick}

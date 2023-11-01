@@ -1,7 +1,8 @@
 import PropTypes from "prop-types";
-import React from "react";
+import React, { useEffect } from "react";
 
 import "./SortData.scss";
+import clsx from "clsx";
 
 const SortData = ({
   titleSort,
@@ -9,6 +10,8 @@ const SortData = ({
   size,
   handleSelectChange,
   selectName,
+  className,
+  shouldDropSelected = false,
 }) => {
   const sortRef = React.useRef(null);
   const [open, setOpen] = React.useState(false);
@@ -33,10 +36,21 @@ const SortData = ({
     return () => document.body.removeEventListener("click", handleClickOutside);
   }, []);
 
+  // Сброс выбора
+  useEffect(() => {
+    if (shouldDropSelected) {
+      setSort("");
+    }
+  }, [shouldDropSelected]);
+
   return (
     <section
       ref={sortRef}
-      className={`sort  sort_size-${size}`}
+      className={clsx({
+        sort: true,
+        [`sort_size-${size}`]: size,
+        [className]: className,
+      })}
       aria-label={`фильтр коворкингов ${titleSort} `}
     >
       <div
@@ -89,11 +103,15 @@ SortData.propTypes = {
   size: PropTypes.string,
   handleSelectChange: PropTypes.func.isRequired,
   selectName: PropTypes.string.isRequired,
+  className: PropTypes.string,
+  shouldDropSelected: PropTypes.bool,
 };
 
 SortData.defaultProps = {
   size: "",
   array: [{ icon: {} }],
+  className: "",
+  shouldDropSelected: false,
 };
 
 export default SortData;
