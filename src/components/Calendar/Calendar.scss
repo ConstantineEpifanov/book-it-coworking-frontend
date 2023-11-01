@@ -31,6 +31,10 @@
       @include mobile {
         line-height: 1.2;
       }
+
+      @include mobile-small {
+        @include text-font-link-mob;
+      }
     }
 
     @include mobile {

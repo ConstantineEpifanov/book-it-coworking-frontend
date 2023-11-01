@@ -265,6 +265,12 @@
 }
 
 // ------------MEDIA QUERIES------------
+@mixin mobile-small {
+  @media screen and (max-width: $mobile-breakpoint-small) {
+    @content;
+  }
+}
+
 @mixin mobile-min {
   @media screen and (max-width: $mobile-breakpoint-min) {
     @content;

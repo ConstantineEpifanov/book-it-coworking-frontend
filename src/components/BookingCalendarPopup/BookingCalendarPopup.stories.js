@@ -47,7 +47,6 @@ export const Example = () => (
       isEnabled: true,
       itemsList: timesButtonsList,
       allowedRanges: null,
-      sortFunc: null,
       isMultiselect: false,
       listClassName:
         "booking__buttons-list booking__buttons-list_type_time-ranges",

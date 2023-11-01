@@ -221,7 +221,7 @@
   }
 }
 
-@include mobile {
+@media screen and (max-width: 769px) {
   .booking {
     &__buttons-list {
       &_type_time-ranges {

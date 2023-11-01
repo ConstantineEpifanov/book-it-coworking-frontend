@@ -454,8 +454,7 @@
     @include mobile-medium {
       @include text-font-normal-mob;
       line-height: 1.25;
-      padding-top: 11px;
-      padding-bottom: 10px;
+      padding: 11px 0 10px;
       border: 1.5px solid $main-black;
     }
   }
