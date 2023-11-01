@@ -1,0 +1,157 @@
+@import "./../../scss/variables.scss";
+@import "./../../scss/mixins.scss";
+
+.favorites {
+  font-family: $font-family;
+  color: $black;
+  text-align: center;
+  &__card-list {
+    @include mp-null;
+    list-style-type: none;
+    margin-top: 30px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 20px;
+    max-width: 552px;
+  }
+  &__card {
+    @include card-border-color;
+    box-sizing: border-box;
+    border-radius: 40px;
+    border: 2px solid $black;
+    width: 266px;
+    overflow: hidden;
+
+    &-image {
+      display: block;
+      height: 200px;
+      width: 100%;
+      object-fit: cover;
+      &-container {
+        position: relative;
+      }
+    }
+
+    &-button {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      border: none;
+      background-color: transparent;
+      cursor: pointer;
+      &:hover {
+        opacity: 0.9;
+      }
+    }
+
+    &-text-container {
+      padding: 20px;
+    }
+    &-name {
+      text-transform: uppercase;
+      font-size: 20px;
+      font-style: normal;
+      font-weight: 500;
+      line-height: 30px;
+    }
+    &-name-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    &-address-row,
+    &-rating-row {
+      margin-top: 16px;
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+    }
+    &-rating-row {
+      margin-bottom: 13px;
+    }
+    &-like {
+      display: block;
+      cursor: pointer;
+    }
+    &-pointlink {
+      text-decoration: none;
+      color: $black;
+      transition: 0.3s all ease;
+      &:hover {
+        color: $green;
+      }
+      &:active {
+        color: $pink;
+      }
+    }
+    &-address {
+      @include mp-null;
+      @include use-rows(1);
+      @include use-font(14px, 22px, 300);
+      margin-bottom: 16px;
+      text-align: left;
+    }
+    &-rating {
+      @include mp-null;
+      @include use-font(16px, 22px, 300);
+    }
+  }
+  &__nodata,
+  &__loading {
+    margin-top: 40px;
+    display: block;
+    width: 100%;
+    text-align: center;
+  }
+}
+
+@include mobile {
+  .favorites {
+    &__card {
+      border: none;
+      border-radius: 0;
+      max-width: 185px;
+      justify-self: center;
+      &:hover {
+        box-shadow: none;
+      }
+      &:last-child {
+        align-self: flex-start;
+      }
+      &-address-row {
+        margin-top: 10px;
+      }
+
+      &-list {
+        margin: 30px auto 0;
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(185px, 1fr));
+        grid-template-rows: auto;
+        justify-content: center;
+      }
+      &-text-container {
+        @include mp-null;
+      }
+      &-rating-row {
+        margin: 8px auto 8px;
+      }
+      &-name {
+        @include use-font;
+        @include use-cut;
+        margin-top: 8px;
+        text-align: left;
+      }
+      &-image {
+        box-sizing: border-box;
+        width: 185px;
+        height: 185px;
+        border-radius: 30px;
+        border: 2px solid $black;
+      }
+      &-lookbutton {
+        display: none;
+      }
+    }
+  }
+}

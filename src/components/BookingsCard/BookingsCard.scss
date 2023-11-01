@@ -1,0 +1,204 @@
+@import "./../../scss/variables.scss";
+@import "./../../scss/mixins.scss";
+
+.bookings-card {
+  @include card-border-color;
+  font-family: $font-family;
+  color: $black;
+  box-sizing: border-box;
+  border-radius: 40px;
+  border: 2px solid $black;
+  height: 200px;
+  overflow: hidden;
+  display: flex;
+  gap: 15px;
+  max-width: 600px;
+  opacity: 0;
+  transition: opacity 1s ease;
+  &__image {
+    display: block;
+    height: 100%;
+    width: 235px;
+    min-width: 235px;
+    object-fit: cover;
+  }
+  &__text-container {
+    padding: 14px 0 15px;
+    min-width: 247px;
+  }
+  &__name {
+    @include mp-null;
+    text-transform: uppercase;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 30px;
+  }
+
+  &__date-row {
+    margin-bottom: 8px;
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    &_isfinished {
+      margin-top: 31px;
+    }
+  }
+  &__price-container {
+    display: flex;
+    gap: 8px;
+  }
+  &__price {
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 300;
+    line-height: 22px;
+  }
+
+  &__date {
+    @include mp-null;
+    text-align: left;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 300;
+    line-height: 22px;
+  }
+  &__status {
+    margin: 9px 0;
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 300;
+    line-height: 14px;
+    &_main {
+      color: $black;
+    }
+    &_warn {
+      color: #ffc329;
+    }
+    &_alert {
+      color: $alert-red;
+    }
+    &_success {
+      color: #1fdf00;
+    }
+  }
+  &__popup {
+    min-width: 740px;
+    min-height: 276px;
+    text-align: center;
+    padding: 60px 95px 95px 95px;
+  }
+  &__popup-content {
+    text-align: left;
+  }
+  &__popup-text {
+    @include mp-null;
+    max-width: 641px;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 30px;
+    margin-bottom: 24px;
+    &_type_long {
+      min-width: 641px;
+    }
+    &_type_review {
+      margin-bottom: 20px;
+      font-size: 28px;
+      font-style: normal;
+      font-weight: 300;
+      line-height: 42px;
+    }
+    &_uppercase {
+      text-transform: uppercase;
+    }
+  }
+  &__button-container {
+    margin: 24px auto 0;
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+  }
+  &__review-text {
+    box-sizing: border-box;
+    padding: 16px 20px;
+    border-radius: 28px;
+    border: 2px solid $black;
+    width: 100%;
+    height: 164px;
+    resize: none;
+    margin-top: 20px;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 22px;
+    &::placeholder {
+      font-family: $font-family;
+      font-size: 16px;
+      font-style: normal;
+      font-weight: 400;
+      line-height: 22px;
+      color: $gray;
+    }
+  }
+  &__character-count {
+    @include mp-null;
+    margin-top: 8px;
+    text-align: right;
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 300;
+    line-height: 14px;
+  }
+}
+
+.fade-in {
+  opacity: 1;
+}
+
+@include tablet {
+  .bookings {
+    &-card {
+      align-self: center;
+      width: 600px;
+    }
+  }
+}
+
+@include mobile {
+  .bookings-card {
+    flex-direction: column;
+    height: 100%;
+    width: 100%;
+    max-width: 500px;
+    gap: 12px;
+    &__image {
+      display: block;
+      height: 100%;
+      max-height: 160px;
+      width: 100%;
+      object-fit: cover;
+    }
+    &__popup {
+      min-width: calc(100vw - 40px);
+      padding: 50px 45px 80px;
+      &-text {
+        @include use-font(14px, 22px, 300);
+      }
+    }
+    &__text-container {
+      padding: 0px 12px 12px 12px;
+    }
+    &__name {
+      line-height: 24px;
+    }
+    &__status {
+      margin: 12px 0;
+      @include use-font(10px, 14px, 300);
+    }
+    &__button-container {
+      flex-direction: column;
+      gap: 8px;
+    }
+  }
+}

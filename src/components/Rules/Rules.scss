@@ -1,0 +1,23 @@
+@import "./../../scss/variables.scss";
+@import "./../../scss/mixins.scss";
+
+.rules {
+  @include mp-null;
+  display: flex;
+  flex-direction: column;
+
+  &__list {
+    @include mp-null;
+    list-style: none;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    margin-top: 32px;
+  }
+}
+
+@include mobile {
+  .rules__list {
+    grid-template-columns: 1fr;
+  }
+}

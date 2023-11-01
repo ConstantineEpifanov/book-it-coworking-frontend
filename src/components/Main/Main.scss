@@ -1,0 +1,22 @@
+@import "./../../scss/variables.scss";
+@import "./../../scss/mixins.scss";
+
+.main {
+  display: flex;
+  flex-direction: column;
+  gap: $desktop-gap;
+  margin: $main-margin;
+}
+
+@include tablet {
+  .main {
+    margin: $main-margin-tablet;
+  }
+}
+
+@include mobile {
+  .main {
+    margin: $main-margin-mobile;
+    gap: 66px;
+  }
+}

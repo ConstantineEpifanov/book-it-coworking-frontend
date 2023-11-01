@@ -1,0 +1,47 @@
+@import "./../../scss/variables.scss";
+@import "./../../scss/mixins.scss";
+
+.section-subtitle {
+  @include mp-null;
+  padding-top: 20px;
+  color: $black;
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 1.5;
+  font-family: $font-family;
+  &_search {
+    max-width: 643px;
+  }
+
+  &_location_coworking-list-search {
+    max-width: 643px;
+  }
+
+  &_promo {
+    font-weight: 500;
+    text-transform: uppercase;
+  }
+}
+
+@include mobile {
+  .section-subtitle {
+    max-width: 90%;
+
+    &_location_coworking-list-search {
+      padding-top: 16px;
+      font-size: 16px;
+      line-height: 20px;
+    }
+
+    &_promo {
+      font-size: 12px;
+      line-height: 1.12;
+      font-weight: 400;
+      text-transform: none;
+
+      line-height: 18px;
+      padding-top: 8px;
+    }
+  }
+}

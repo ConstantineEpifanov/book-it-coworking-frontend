@@ -1,0 +1,33 @@
+@import "../../../scss/variables.scss";
+@import "../../../scss/mixins.scss";
+
+.point-rating {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  font-family: $font-family;
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 1.5;
+  gap: 8px;
+
+  &_on-image {
+    position: absolute;
+    bottom: 20px;
+    left: 20px;
+    padding: 4px 12px;
+    border-radius: 20px;
+    z-index: 2;
+    background-color: $main-white;
+  }
+
+  &_own-page {
+    bottom: 7px;
+    left: 17px;
+  }
+
+  &__number {
+    @include mp-null;
+  }
+}

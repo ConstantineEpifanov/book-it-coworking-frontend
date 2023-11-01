@@ -1,0 +1,25 @@
+.error-info {
+  display: flex;
+  flex-direction: column;
+  max-width: 100%;
+  align-items: center;
+
+  &__img {
+    max-width: 100%;
+
+    &_row {
+      max-width: 30%;
+    }
+  }
+
+  &__container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+  }
+
+  &_row {
+    flex-direction: row;
+  }
+}

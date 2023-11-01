@@ -1,0 +1,15 @@
+@import "./../../scss/variables.scss";
+@import "./../../scss/mixins.scss";
+
+.promo-item {
+  @include mp-null;
+  display: flex;
+  flex-direction: column;
+  max-width: 360px;
+}
+
+@include mobile {
+  .promo-item {
+    max-width: 120px;
+  }
+}

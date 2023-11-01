@@ -1,0 +1,319 @@
+@import "./variables.scss";
+// Миксины
+
+//  -------------- BASIC -----------------
+@mixin mp-null {
+  margin: 0;
+  padding: 0;
+}
+// ------------LIST------------
+@mixin mp-null-list {
+  @include mp-null;
+  list-style-type: none;
+}
+// -------------- CONTAINERS -----------------
+@mixin main-box-centered {
+  width: 100%;
+  max-width: 1440px;
+  margin: 0 auto;
+}
+
+@mixin flex-box-row {
+  display: flex;
+  gap: 20px;
+}
+
+@mixin flex-box-column {
+  display: flex;
+  gap: 20px;
+  flex-direction: column;
+}
+@mixin flex-box-column-center {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+//  -------------- FONTS -----------------
+@mixin text-font-normal {
+  font-family: $font-family;
+  color: $black;
+  font-size: 20px;
+  font-style: normal;
+  line-height: 30px;
+}
+
+// для выпадающего списка и информации в блоке оплаты
+@mixin text-font-select {
+  font-family: $font-family;
+  font-size: 16px;
+  font-style: normal;
+  line-height: 22px;
+}
+
+// для информации под импутами, текст с маленьким шрифтом.
+@mixin text-info {
+  font-family: $font-family;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 300;
+  line-height: 14px;
+  display: block;
+  min-height: 34px;
+  padding: 0;
+  margin: 0;
+  border: 0;
+}
+
+// крупный шрифт заголовков
+// Используется в макетах: List_of_cowrking_spaces, book PLAN, payment2
+@mixin text-font-large {
+  font-family: $font-family;
+  color: $black;
+  font-size: 40px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 48px;
+}
+
+@mixin text-font-large-mobile {
+  font-family: $font-family;
+  color: $black;
+  font-size: 28px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 34px;
+}
+
+@mixin use-font(
+  $font-size: 20px,
+  $line-height: 24px,
+  $font-weight: 500,
+  $font-style: normal
+) {
+  font-size: $font-size;
+  line-height: $line-height;
+  font-weight: $font-weight;
+  font-style: $font-style;
+}
+
+@mixin use-cut {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+@mixin use-rows($num) {
+  display: -webkit-box;
+  -webkit-line-clamp: #{$num};
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+//  -------------- FONTS-MOB -----------------
+@mixin text-font-normal-mob {
+  font-size: 16px;
+  line-height: 20px;
+}
+
+// текст в импуте
+@mixin text-font-link-mob {
+  font-size: 14px;
+  font-weight: 300;
+  line-height: 22px;
+}
+//  -------------- INPUT -----------------
+@mixin error-input {
+  border: 2px solid $alert-red;
+  background: $alert-light-red;
+  color: $alert-red;
+
+  &:focus {
+    border: 2px solid $alert-red;
+    outline: none;
+  }
+}
+
+//  ------------ BUTTON -----------------
+@mixin button-with-image($image-path) {
+  background-image: url($image-path);
+  background-repeat: no-repeat;
+  background-position: 30px 24px;
+  background-size: 32px;
+}
+
+@mixin button-active {
+  color: $white;
+  background-color: $black;
+  transition: all 0.3s ease;
+  &:hover {
+    background-color: $green;
+    color: $black;
+    opacity: 0.7;
+  }
+  &:active {
+    background-color: $black;
+    color: $green;
+    opacity: 1;
+  }
+}
+
+@mixin primary-button-black {
+  background-color: $black;
+  color: $main-white;
+  transition: all 0.3s ease;
+  &:hover {
+    color: $black;
+    background-color: $green;
+  }
+  &:active {
+    color: $green;
+    background-color: $black;
+  }
+  &:disabled {
+    background-color: $light-gray;
+    color: $gray;
+  }
+}
+
+@mixin primary-button {
+  background-color: $green;
+  color: $black;
+  transition: all 0.3s ease;
+  &:active {
+    color: $green;
+    background-color: $black;
+  }
+  &:disabled {
+    background-color: $light-gray;
+    color: $gray;
+  }
+}
+
+@mixin secondary-button {
+  background-color: transparent;
+  color: $black;
+  transition: all 0.3s ease;
+  &:hover {
+    border-color: $pink;
+    color: $pink;
+    background-color: transparent;
+  }
+  &:active {
+    color: $black;
+    background-color: $pink;
+  }
+  &:disabled {
+    background-color: transparent;
+    border-color: $gray;
+    color: $gray;
+  }
+}
+
+@mixin profile-size-button {
+  width: 170px;
+  height: 54px;
+}
+
+// --------------CARDS-------------------
+
+@mixin card-border-color($addBoxShadow: true) {
+  transition: all 0.3s ease;
+  border: 2px solid transparent;
+
+  &:hover {
+    border-color: $pink;
+    @if $addBoxShadow {
+      box-shadow: 0px 5px 24px 0px rgba(18, 32, 35, 0.1);
+    }
+  }
+  &:active {
+    border-color: $green;
+  }
+}
+
+// -------------EFFECTS---------------
+
+@mixin link-color-transition($color1: $pink, $color2: $green, $duration: 0.3s) {
+  transition: color $duration ease-in-out;
+
+  &:hover {
+    color: $color1;
+    opacity: 1;
+  }
+
+  &:active {
+    color: $color2;
+  }
+}
+
+@mixin svg-color-transition($color1: $pink, $color2: $green, $duration: 0.3s) {
+  transition: stroke $duration ease-in-out;
+
+  &:hover {
+    stroke: $color1;
+  }
+
+  &:active {
+    stroke: $color2;
+  }
+}
+
+@mixin render-animation {
+  transform: translateX(70%);
+  animation: render-cards 1s forwards;
+}
+
+// ------------MEDIA QUERIES------------
+@mixin mobile-small {
+  @media screen and (max-width: $mobile-breakpoint-small) {
+    @content;
+  }
+}
+
+@mixin mobile-min {
+  @media screen and (max-width: $mobile-breakpoint-min) {
+    @content;
+  }
+}
+
+@mixin mobile-medium {
+  @media screen and (max-width: $mobile-breakpoint-medium) {
+    @content;
+  }
+}
+
+@mixin mobile-large {
+  @media screen and (max-width: $mobile-breakpoint-large) {
+    @content;
+  }
+}
+
+@mixin mobile {
+  @media screen and (max-width: $mobile-breakpoint) {
+    @content;
+  }
+}
+
+@mixin tablet {
+  @media screen and (max-width: #{$tablet-breakpoint}) {
+    @content;
+  }
+}
+@mixin laptop {
+  @media screen and (max-width: #{$desktop-breakpoint}) {
+    @content;
+  }
+}
+
+@mixin tablet-with-minwidth {
+  @media screen and (min-width: #{$mobile-breakpoint + 1}) and (max-width: #{$tablet-breakpoint}) {
+    @content;
+  }
+}
+
+@mixin desktop {
+  @media screen and (min-width: #{$tablet-breakpoint + 1}) {
+    @content;
+  }
+}

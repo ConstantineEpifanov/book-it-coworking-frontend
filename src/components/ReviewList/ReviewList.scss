@@ -1,0 +1,44 @@
+@import "./../../scss/variables.scss";
+@import "./../../scss/mixins.scss";
+
+.review-list {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  box-sizing: border-box;
+  max-width: 100%;
+
+  &__container {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-self: flex-start;
+    gap: 12px;
+  }
+
+  &__items {
+    @include mp-null;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    list-style: none;
+    gap: 16px;
+  }
+
+  &__length-container {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-items: center;
+    font-family: $font-family;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 1.5;
+  }
+
+  &__text,
+  &__length {
+    @include mp-null;
+  }
+}

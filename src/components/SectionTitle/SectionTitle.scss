@@ -1,0 +1,74 @@
+@import "./../../scss/variables.scss";
+@import "./../../scss/mixins.scss";
+
+.section-title {
+  @include mp-null;
+  color: $black;
+  font-size: 60px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 72px;
+  font-family: $font-family-accent;
+  letter-spacing: 1.2px;
+
+  &_search {
+    font-family: $font-family;
+    font-size: 40px;
+    font-weight: 500;
+    line-height: 48px;
+  }
+
+  &_location_coworking-list-search {
+    font-family: $font-family;
+    font-size: 40px;
+    font-weight: 400;
+    line-height: 48px;
+    letter-spacing: 0;
+  }
+
+  &_margin-to-subtitle {
+    margin-bottom: 20px;
+  }
+
+  &_margin-to-block {
+    margin-bottom: 32px;
+  }
+
+  &_own-page {
+    text-transform: capitalize;
+    margin-bottom: 16px;
+  }
+  &_profile {
+    font-size: 28px;
+    line-height: 40px;
+    font-weight: 800;
+    max-width: 100%;
+    text-align: left;
+  }
+}
+
+@include mobile {
+  .section-title {
+    font-size: 36px;
+    line-height: 44px;
+    &_profile {
+      @include use-font(24px, 36px, 800);
+      text-align: center;
+      width: 100%;
+      max-width: 400px;
+      margin: 0 auto;
+    }
+
+    &_location_coworking-list-search {
+      font-size: 28px;
+      font-style: normal;
+      font-weight: 500;
+      line-height: 34px;
+    }
+
+    &_margin-to-block {
+      margin-bottom: 24px;
+      letter-spacing: 0;
+    }
+  }
+}

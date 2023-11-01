@@ -1,0 +1,102 @@
+@import "../../../scss/variables.scss";
+@import "../../../scss/mixins.scss";
+
+.dropdown {
+  position: relative;
+
+  &.dropdown_size_min {
+    width: 170px;
+  }
+
+  &.dropdown_size_max {
+    width: 265px;
+  }
+
+  &__label {
+    display: flex;
+    align-items: center;
+    padding: 12px 16px;
+    border-radius: 40px;
+    background: $main-white;
+    text-align: center;
+    justify-content: space-between;
+    cursor: pointer;
+
+    &-text {
+      @include mp-null;
+      @include text-font-select;
+      font-weight: 400;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    &-button {
+      width: 24px;
+      height: 24px;
+      border: 0;
+      padding: 15px;
+      cursor: pointer;
+      background: url("../../../images/drowdown-icon.svg") no-repeat center;
+
+      &.dropdown__label-button_active {
+        transform: rotate(180deg);
+      }
+    }
+  }
+
+  &__items {
+    position: absolute;
+    left: 0;
+    top: 0;
+    border: 2px $black solid;
+    border-radius: 40px;
+    background: $main-white;
+    overflow: hidden;
+    z-index: 1;
+
+    &.dropdown__items_size_min {
+      width: 170px;
+    }
+
+    &.dropdown__items_size_max {
+      width: 265px;
+    }
+
+    &.dropdown__items_active {
+      border-radius: 28px;
+    }
+  }
+
+  &__popup {
+    background: $main-white;
+    overflow: hidden;
+
+    &-list {
+      padding-left: 0;
+    }
+  }
+
+  &__item {
+    width: 100%;
+    @include text-font-select;
+    color: $black;
+    display: flex;
+    gap: 10px;
+    overflow: hidden;
+    padding: 12px 20px;
+    cursor: pointer;
+    @include text-font-select;
+    border: 0;
+    background-color: inherit;
+
+    &:hover {
+      background-color: $green;
+      opacity: 0.7;
+    }
+
+    &.dropdown__item_selected {
+      background-color: $green;
+    }
+  }
+}

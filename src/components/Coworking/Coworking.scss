@@ -1,0 +1,43 @@
+@import "./../../scss/variables.scss";
+@import "./../../scss/mixins.scss";
+
+.coworking {
+  margin: $main-margin;
+
+  &__subtitle {
+    @include mp-null;
+    font-family: $font-family;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 1.37;
+    margin-bottom: 30px;
+  }
+
+  &__section {
+    display: flex;
+    flex-direction: column;
+    max-width: 100%;
+    margin-top: 30px;
+  }
+  &__section-title {
+    @include mp-null;
+    font-family: $font-family;
+    font-size: 40px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 1.2;
+    margin-bottom: 30px;
+    max-width: 75%;
+  }
+
+  &__section-text {
+    @include mp-null;
+    font-family: $font-family;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 1.5;
+    max-width: 75%;
+  }
+}

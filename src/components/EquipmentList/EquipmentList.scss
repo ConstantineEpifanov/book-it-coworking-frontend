@@ -1,0 +1,11 @@
+@import "./../../scss/variables.scss";
+@import "./../../scss/mixins.scss";
+
+.equipment-list {
+  @include mp-null;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  gap: 20px;
+  list-style: none;
+}

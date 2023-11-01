@@ -1,0 +1,159 @@
+@import "../../../scss/variables.scss";
+@import "../../../scss/mixins.scss";
+
+.entry-form {
+  width: 100%;
+  height: 100%;
+  @include flex-box-column-center;
+  justify-content: center;
+  font-family: $font-family;
+
+  &__inner {
+    @include flex-box-column-center;
+    &_reviews {
+      align-items: start;
+    }
+    &_select {
+      flex-direction: row;
+      flex-wrap: wrap;
+      gap: 20px;
+      padding-top: 32px;
+      align-items: flex-start;
+      justify-content: space-around;
+    }
+    &_search {
+      display: flex;
+      flex-direction: column;
+      padding-top: 40px;
+      align-items: flex-start;
+    }
+  }
+
+  &__box {
+    @include flex-box-column-center;
+    text-align: start;
+    padding: 32px 0 0;
+    margin: 0;
+    border: none;
+    div {
+      align-self: flex-start;
+    }
+    &_reviews {
+      align-items: start;
+    }
+    &_text {
+      display: block;
+      color: $black;
+      font-size: 12px;
+      font-style: normal;
+      font-weight: 300;
+      line-height: 14px;
+      min-height: 34px;
+      padding: 5px 0 20px;
+      align-self: end;
+    }
+    &_error {
+      color: $alert-red;
+    }
+    &_payments {
+      align-items: flex-start;
+      text-align: center;
+    }
+  }
+
+  &__title {
+    @include mp-null;
+    @include use-font(20px, 30px, 500, normal);
+    text-transform: uppercase;
+    text-align: center;
+    color: $black;
+    text-align: center;
+  }
+
+  &__container {
+    width: 100%;
+    box-sizing: border-box;
+    text-align: center;
+  }
+
+  &__auth-link {
+    @include use-font(13px, 16px, 400, normal);
+    padding-left: 6px;
+    color: $black;
+  }
+
+  &__auth-text {
+    display: block;
+    @include use-font(12px, 15px, 400, normal);
+    text-align: center;
+    color: $dark-gray;
+    text-decoration: none;
+    padding-top: 15px;
+    margin: 0;
+  }
+  &__text_error {
+    @include text-info;
+    align-self: center;
+    color: $alert-red;
+    padding-top: 5px;
+  }
+  &__reviews {
+    @include mp-null;
+    display: flex;
+    padding: 16px 12px 0px 20px;
+    margin-top: 20px;
+    border-radius: 28px;
+    border: 2px solid $black;
+    background: $white;
+    resize: none;
+    &:focus {
+      border: 2px solid $green;
+      outline: none;
+    }
+    &-error {
+      @include error-input;
+    }
+  }
+
+  &__search {
+    position: relative;
+
+    &-img {
+      display: block;
+      width: 24px;
+      height: 24px;
+      position: absolute;
+      top: 17px;
+      left: 15px;
+      z-index: 1;
+    }
+  }
+
+  &_type_payments &__box {
+    padding-top: 0;
+  }
+}
+
+@include mobile {
+  .entry-form__inner_select {
+    padding-top: 28px;
+    gap: 0;
+  }
+  .entry-form__text_error {
+    min-height: 23px;
+  }
+  .entry-form__box {
+    text-align: center;
+    padding-top: 28px;
+    div {
+      align-self: center;
+    }
+  }
+  .entry-form__search {
+    flex: 2.1;
+  }
+  .entry-form__search-img {
+    top: 11px;
+    left: 13px;
+  }
+}

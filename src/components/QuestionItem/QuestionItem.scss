@@ -1,0 +1,70 @@
+@import "./../../scss/variables.scss";
+@import url("./../../vendor/fonts/fonts.css");
+@import url("./../../vendor/normalize.css");
+
+.question {
+  background-color: $black;
+  border-radius: 34px;
+  padding: 12px 12px 12px 20px;
+  box-sizing: border-box;
+  cursor: pointer;
+
+  &__container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  &__title {
+    margin: 0;
+    padding: 0;
+    color: $white;
+    font-family: $font-family;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 1.5;
+    max-width: 75vw;
+  }
+
+  &__button {
+    width: 44px;
+    height: 44px;
+    padding: 0;
+    margin: 0;
+    border: none;
+    background-color: transparent;
+    stroke: $white;
+    border-radius: 50%;
+    transition: all 0.3s;
+    overflow: hidden;
+    cursor: pointer;
+
+    &_active {
+      transform: rotate(45deg);
+    }
+
+    &:hover {
+      background-color: $white;
+      stroke: $black;
+      fill: $black;
+    }
+  }
+
+  &__text {
+    margin: 0;
+    padding-top: 10px;
+    font-family: $font-family;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 300;
+    line-height: 1.38;
+    color: $white;
+    display: none;
+
+    &_active {
+      display: block;
+    }
+  }
+}

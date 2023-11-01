@@ -1,0 +1,93 @@
+@import "../../scss/variables.scss";
+@import "../../scss/mixins.scss";
+
+.avatar {
+  margin-top: 40px;
+  width: 110px;
+  height: 110px;
+  border-radius: 50%;
+  position: relative;
+  transition: all 0.5s ease;
+  &:hover .avatar__button {
+    visibility: visible;
+    opacity: 1;
+  }
+  &__image {
+    display: block;
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+  }
+  &__tooltip {
+    @include use-font(12px, 20px, 400);
+    display: none;
+    width: 170px;
+    position: absolute;
+    top: 50%;
+    left: 95%;
+    transform: translate(10px, -50%);
+    background-color: $white;
+    color: $black;
+    padding: 5px;
+    border-radius: 5px;
+    z-index: 1;
+    &::after {
+      content: "";
+      position: absolute;
+      top: 50%;
+      right: 100%;
+      border-width: 5px;
+      border-style: solid;
+      border-color: transparent $white transparent transparent;
+      transform: translateY(-50%) translateX(0%);
+    }
+  }
+  &__button {
+    visibility: hidden;
+    opacity: 0;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    background-color: $black;
+    color: #fff;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    border: none;
+    outline: none;
+    transition: all 0.5s ease;
+    &:hover {
+      opacity: 0.9;
+      background-color: $pink;
+    }
+    &:active {
+      opacity: 1;
+      background-color: $green;
+    }
+  }
+  &__icon {
+    font-size: 36px;
+  }
+  &:hover &__tooltip {
+    display: block;
+  }
+}
+
+@include mobile {
+  .avatar {
+    margin-top: 30px;
+    align-self: center;
+    width: 70px;
+    height: 70px;
+    &__icon {
+      font-size: 24px;
+    }
+    &__tooltip {
+      width: 130px;
+    }
+  }
+}

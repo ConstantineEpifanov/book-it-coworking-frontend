@@ -1,0 +1,21 @@
+@import "./../../scss/variables.scss";
+@import "./../../scss/mixins.scss";
+
+.rules-questions {
+  margin: $main-margin;
+  display: flex;
+  flex-direction: column;
+  gap: $desktop-gap;
+}
+
+@include tablet {
+  .rules-questions {
+    margin: $main-margin-tablet;
+  }
+}
+
+@include mobile {
+  .rules-questions {
+    margin: $main-margin-mobile;
+  }
+}

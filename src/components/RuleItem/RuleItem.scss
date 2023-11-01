@@ -1,0 +1,93 @@
+@import "./../../scss/variables.scss";
+@import "./../../scss/mixins.scss";
+
+.rule {
+  @include mp-null;
+  display: flex;
+  max-width: 550px;
+  padding: 20px;
+  flex-direction: column;
+  border-radius: 40px;
+  background-color: $black;
+  box-sizing: border-box;
+  cursor: pointer;
+
+  &__img {
+    width: 170px;
+    height: 170px;
+  }
+
+  &__container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+  }
+
+  &__title {
+    @include mp-null;
+    font-family: $font-family;
+    font-style: normal;
+    font-weight: 500;
+    margin: 20px 0;
+    font-size: 20px;
+    line-height: 1.5;
+    text-transform: uppercase;
+    color: $white;
+  }
+
+  // &__scroll-content {
+  //   border-radius: 20px;
+  //   width: 510px;
+  //   height: 292px;
+  //   background-color: $white;
+  //   overflow-y: auto;
+
+  //   &::-webkit-scrollbar {
+  //     width: 4px;
+  //     background-color: transparent;
+  //     border-radius: 20px;
+  //     cursor: pointer;
+  //   }
+
+  //   &::-webkit-scrollbar-thumb {
+  //     width: 4px;
+  //     background-color: $gray;
+  //     border-radius: 20px;
+  //   }
+
+  //   &::-webkit-scrollbar-track {
+  //     margin: 20px 0;
+  //   }
+  // }
+
+  &__text {
+    font-family: $font-family;
+    @include mp-null;
+    font-style: normal;
+    font-weight: 300;
+    color: $white;
+    font-size: 14px;
+    line-height: 1.57;
+  }
+
+  &__button {
+    padding: 0;
+    margin: 0;
+    border: none;
+    background-color: transparent;
+    transition: all 0.3s;
+    overflow: hidden;
+    stroke: $white;
+    color: $white;
+    fill: none;
+    cursor: pointer;
+
+    &_active {
+      transform: matrix(1, 0, 0, -1, 0, 0);
+    }
+
+    &:hover {
+      opacity: 0.8;
+    }
+  }
+}

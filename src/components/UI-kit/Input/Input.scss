@@ -1,0 +1,210 @@
+@import "../../../scss/variables.scss";
+@import "../../../scss/mixins.scss";
+
+.input {
+  position: relative;
+  width: 360px;
+  height: 58px;
+  padding: 12px 40px 12px 20px;
+  box-sizing: border-box;
+  border-radius: 40px;
+  border: 2px solid $dark-gray;
+  background: $white;
+  font-family: $font-family;
+  z-index: 0;
+  position: relative;
+
+  // убирает дефолтный показ иконки пароля в Microsoft Edge
+  &::-ms-reveal {
+    display: none;
+  }
+
+  /* При фокусе убираем placeholder */
+  &:focus {
+    border: 2px solid $green;
+    outline: none;
+  }
+  // стили для ошибки импута
+  &-error {
+    @include error-input;
+    font-family: $font-family;
+  }
+
+  &_size-middle {
+    width: 300px;
+  }
+
+  &_type_card {
+    width: 170px;
+    padding: 18px 20px 18px 20px;
+  }
+
+  &__label {
+    font-family: $font-family;
+    font-size: 10px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 12px;
+    position: absolute;
+    top: 15px;
+    transform: translateY(-50%);
+    color: $dark-gray;
+    pointer-events: none;
+    transition: 0.3s ease-in-out;
+    z-index: 1;
+    padding-left: 22px;
+    padding-bottom: 2px;
+  }
+
+  &__text {
+    @include text-info;
+    align-self: self-start;
+
+    &_error {
+      color: $alert-red;
+      padding-top: 5px;
+      padding-left: 20px;
+    }
+
+    &_info {
+      color: $dark-gray;
+      padding-top: 5px;
+      padding-left: 20px;
+    }
+
+    &_confirm {
+      color: $dark-gray;
+      font-size: 14px;
+      line-height: 22px;
+      padding: 0 7px;
+      text-align: center;
+    }
+  }
+
+  &__promo {
+    // position: relative;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+    border-right: none;
+    max-width: 305px;
+    border-color: $black;
+    max-height: 54px;
+  }
+
+  &__subscription {
+    border-radius: 32px;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+    border-right: none;
+    border: none;
+    // width: 100%;
+    height: 58px;
+  }
+
+  &__items {
+    position: relative;
+
+    &_type_search {
+      &::before {
+        width: 24px;
+        height: 100%;
+        z-index: 1;
+        position: absolute;
+        top: -7px;
+        left: 12px;
+        content: "";
+        background: url("../../../images/search-icon.svg") no-repeat center 24px/24px;
+      }
+    }
+  }
+
+  &__search {
+    font-family: $font-family;
+    width: 265px;
+    position: relative;
+    padding-left: 46px;
+    padding-right: 5px;
+    background-color: $main-white;
+    border: 2px solid $black;
+
+    &::placeholder {
+      color: $gray;
+    }
+  }
+
+  &_type_search {
+    padding-left: 45px;
+  }
+}
+
+@include mobile {
+  .input {
+    @include text-font-link-mob;
+    height: 44px;
+    max-width: 310px;
+    &__label {
+      top: 12px;
+    }
+    &__subscription {
+      max-width: 280px;
+      width: 100%;
+    }
+    &__text {
+      min-height: 21px;
+      padding: 3;
+      &_confirm {
+        font-size: 12px;
+        font-weight: 300;
+        line-height: 14px;
+      }
+    }
+
+    &__promo {
+      width: 100%;
+      max-width: 100%;
+      max-height: 44px;
+      padding: 0;
+      padding-left: 45px;
+    }
+    &::placeholder {
+      font-size: 14px;
+      font-style: normal;
+      font-weight: 300;
+      line-height: 22px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    &__items {
+      flex: 1;
+
+      &_type_search {
+        &::before {
+          top: -13px;
+        }
+      }
+    }
+    &__search {
+      max-width: 100%;
+      border-top-right-radius: 0;
+      border-bottom-right-radius: 0;
+      border-right: none;
+      width: 100%;
+      border-color: $black;
+      max-height: 44px;
+      padding: 0;
+      padding-left: 45px;
+
+      &::placeholder {
+        font-size: 14px;
+        font-style: normal;
+        font-weight: 300;
+        line-height: 22px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+    }
+  }
+}

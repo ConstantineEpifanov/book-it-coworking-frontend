@@ -1,0 +1,36 @@
+@import "../../../scss/variables.scss";
+@import "../../../scss/mixins.scss";
+
+.payments-form {
+  display: flex;
+  flex-direction: column;
+  &__text_info {
+    @include text-info;
+    @include mp-null;
+    max-width: 500px;
+    padding: 12px 0 20px;
+    &-btn {
+      padding-bottom: 30px;
+      padding-top: 0;
+    }
+  }
+  &__box {
+    @include flex-box-row;
+  }
+  &__subtitle {
+    @include mp-null;
+    max-width: 472px;
+    background-color: $green;
+    padding: 16px 32px;
+    border-radius: 32px;
+    border: 2px solid $black;
+    font-family: $font-family;
+    text-align: center;
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 22px;
+    margin-top: 35px;
+    box-sizing: border-box;
+  }
+}

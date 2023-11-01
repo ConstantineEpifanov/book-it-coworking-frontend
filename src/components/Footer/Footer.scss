@@ -1,0 +1,150 @@
+@import "./../../scss/variables.scss";
+@import "./../../scss/mixins.scss";
+
+.footer {
+  padding: 80px 160px 120px;
+  display: flex;
+  background-color: $black;
+
+  &__container {
+    margin: 0 auto;
+    width: 100%;
+    // max-width: calc(100% - 40px);
+    display: flex;
+    gap: 65px;
+  }
+
+  &__info {
+    display: flex;
+    gap: 125px;
+    flex: 1;
+    order: 1;
+  }
+
+  &__subscription {
+    flex: 1;
+    order: 2;
+    flex-shrink: 2;
+  }
+
+  &__column {
+    text-align: left;
+  }
+
+  &__icons {
+    display: flex;
+    gap: 20px;
+    &_mobile {
+      display: none;
+    }
+  }
+
+  &__icon {
+    display: block;
+    width: 32px;
+    height: 32px;
+    stroke: $white;
+    @include svg-color-transition;
+    &_type_fill {
+      transition: fill 0.3s ease-in-out;
+      fill: $white;
+      &:hover {
+        fill: $pink;
+      }
+      &:active {
+        fill: $green;
+      }
+    }
+  }
+
+  &__link {
+    margin-top: 22px;
+    max-width: 170px;
+    display: block;
+    font-family: $font-family;
+    text-decoration: none;
+    color: $main-white;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 300;
+    line-height: 22px;
+    transition: color 0.3s;
+    @include link-color-transition;
+  }
+
+  &__contacts {
+    display: block;
+    padding-bottom: 16px;
+    font-family: $font-family;
+    text-decoration: none;
+    color: $white;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 30px;
+    @include link-color-transition;
+    &_tel {
+      padding-bottom: 8px;
+    }
+  }
+}
+
+@include laptop {
+  .footer {
+    &__container {
+      flex-direction: column;
+      gap: 28px;
+    }
+  }
+}
+
+@include tablet {
+  .footer {
+    &__subscription {
+      order: 1;
+    }
+    &__info {
+      order: 2;
+      gap: 20px;
+    }
+    &__contacts {
+      text-align: right;
+    }
+    &__link {
+      max-width: 120px;
+      margin-top: 8px;
+      font-size: 10px;
+      font-style: normal;
+      font-weight: 300;
+      line-height: 20px;
+    }
+    &__column {
+      flex-basis: 50%;
+    }
+    &__icons {
+      display: none;
+      &_mobile {
+        display: flex;
+        justify-content: center;
+        gap: 40px;
+        order: 2;
+      }
+    }
+  }
+}
+
+@include mobile {
+  .footer {
+    padding: 60px 20px;
+    &__contacts {
+      @include text-font-normal-mob;
+    }
+    &__container {
+      gap: 0;
+    }
+    &__info {
+      @include text-font-normal-mob;
+      padding-bottom: 28px;
+    }
+  }
+}

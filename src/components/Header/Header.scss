@@ -1,0 +1,55 @@
+@import "../../scss/variables.scss";
+@import "../../scss/mixins.scss";
+
+.header {
+  position: sticky;
+  top: 0;
+  z-index: 4;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  text-align: center;
+  padding: 20px 160px 20px;
+  box-sizing: border-box;
+  font-family: $font-family;
+  background-color: $main-white;
+  &__profile {
+    @include flex-box-row;
+    align-items: center;
+    &_img {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      object-fit: cover;
+    }
+    &_nav {
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 22px;
+      &-info {
+        @include use-font(18px, 22px, 400, normal);
+        padding: 20px 0;
+        margin: 0;
+        box-sizing: border-box;
+        color: $black;
+        &:hover {
+          color: $pink;
+        }
+      }
+
+      &_active .header__profile_nav-info {
+        border-bottom: 2px solid $green;
+      }
+    }
+  }
+}
+
+@include mobile {
+  .header {
+    padding-left: 20px;
+    padding-right: 20px;
+    padding-bottom: 30px;
+  }
+}

@@ -1,0 +1,40 @@
+@import "../../../scss/mixins.scss";
+@import "../../../scss/variables.scss";
+
+.info-popup {
+  font-family: $font-family;
+  font-size: 20px;
+  color: $black;
+  position: fixed;
+  top: 10px;
+  right: 10px;
+  max-width: 40%;
+  display: flex;
+  justify-content: left;
+  padding: 20px;
+  gap: 10px;
+  align-items: center;
+  border-radius: 40px;
+  transition: all 2s ease;
+  z-index: 10;
+  &_info {
+    background: $green;
+  }
+  &_error {
+    background: $pink;
+  }
+  &__image {
+    width: 30px;
+  }
+  &__message {
+    @include mp-null;
+    font-size: 0.8em;
+  }
+}
+
+@include mobile {
+  .info-popup {
+    @include use-font(16px, 1.2, 400);
+    padding: 10px;
+  }
+}

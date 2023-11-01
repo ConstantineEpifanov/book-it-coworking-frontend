@@ -1,0 +1,94 @@
+@import "./../../scss/variables.scss";
+@import "./../../scss/mixins.scss";
+
+.profile-item {
+  box-sizing: border-box;
+  width: 455px;
+  height: 225px;
+  padding: 40px 58px;
+  border-radius: 40px;
+  background-color: $black;
+  border: 2px solid $black;
+  font-family: $font-family;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+  &:hover {
+    opacity: 0.9;
+    .profile-item__title {
+      color: $pink;
+    }
+  }
+  &:active {
+    background-color: white;
+    .profile-item__title,
+    .profile-item__link {
+      color: $black;
+    }
+  }
+
+  &__row {
+    display: flex;
+    gap: 16px;
+  }
+
+  &__title {
+    align-self: center;
+    margin: 0;
+    padding: 0;
+    font-family: $font-family;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 30px;
+    text-transform: uppercase;
+    text-decoration: none;
+  }
+
+  &__link {
+    color: $white;
+    display: inline-block;
+    margin: 32px 0 0;
+    padding: 16px 12px;
+    font-family: $font-family;
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 22px;
+    transition: opacity 0.3s ease;
+    cursor: pointer;
+    &:hover {
+      opacity: 0.7;
+    }
+  }
+}
+
+@include mobile {
+  .profile-item {
+    height: 120px;
+    padding: 30px 20px;
+    border-radius: 20px;
+    max-width: 455px;
+    width: calc(100vw - 40px);
+    &__row {
+      flex-direction: column;
+      gap: 8px;
+    }
+    &__svg svg {
+      width: 32px;
+      height: 32px;
+      display: block;
+    }
+
+    &__title {
+      font-size: 20px;
+      text-align: left;
+      width: 100%;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+    &__link {
+      display: none;
+    }
+  }
+}

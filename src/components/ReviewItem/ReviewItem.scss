@@ -1,0 +1,65 @@
+@import "./../../scss/variables.scss";
+@import "./../../scss/mixins.scss";
+
+.review-item {
+  @include render-animation;
+  font-family: $font-family;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: space-between;
+  padding: 16px 20px;
+  align-items: flex-start;
+  gap: 34px;
+  border-radius: 40px;
+  border: 2px solid $black;
+  background: $white;
+  color: $black;
+  width: 49%;
+  box-sizing: border-box;
+
+  &__author-container {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 6px;
+  }
+
+  &__author {
+    @include mp-null;
+    @include use-font(20px, 1.5, 500);
+    padding-top: 6px;
+    padding-bottom: 6px;
+    text-transform: uppercase;
+  }
+
+  &__image {
+    display: block;
+    object-fit: cover;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+  }
+
+  &__date {
+    @include mp-null;
+    @include use-font(14px, 1.57, 300);
+    padding-bottom: 8px;
+  }
+
+  &__text {
+    @include mp-null;
+    @include use-font(18px, 1.22, 400);
+    // word-break: break-all;
+  }
+
+  &__rating-container {
+    margin-top: 5px;
+  }
+
+  &__rating {
+    @include mp-null;
+    @include use-font(20px, 1.5, 400);
+    font-family: $font-family;
+  }
+}

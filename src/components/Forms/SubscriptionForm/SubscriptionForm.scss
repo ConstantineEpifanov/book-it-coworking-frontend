@@ -1,0 +1,42 @@
+@import "../../../scss/variables.scss";
+@import url("../../../vendor/fonts/fonts.css");
+@import url("../../../vendor/normalize.css");
+@import "../../../scss/mixins.scss";
+
+.subscription {
+  color: $white;
+  font-family: $font-family;
+  text-align: left;
+  &__message {
+    margin: 0;
+    padding: 0 0 20px 0;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 30px;
+  }
+  &-form__box {
+    border: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+  }
+}
+
+.input__wrapper {
+  max-width: 360px;
+  display: flex;
+  flex-direction: column;
+}
+
+@include mobile {
+  .subscription {
+    &__message {
+      font-size: 24px;
+      font-style: normal;
+      font-weight: 300;
+      line-height: 36px;
+    }
+  }
+}

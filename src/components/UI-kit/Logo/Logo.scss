@@ -1,0 +1,32 @@
+@import "../../../scss/variables.scss";
+@import "../../../scss/mixins.scss";
+
+.logo {
+  &_type_footer {
+    fill: $white;
+  }
+  &:hover path {
+    fill: $pink;
+    fill-opacity: 1;
+    stroke-opacity: 0;
+  }
+
+  &:active path {
+    fill: $green;
+  }
+
+  & path {
+    transition: all 0.2s ease;
+  }
+}
+
+@include mobile {
+  .logo {
+    &_type_responsive {
+      width: 76px;
+      height: 15px;
+      // width: 60px;
+      // height: 20px;
+    }
+  }
+}

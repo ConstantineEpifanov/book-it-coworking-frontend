@@ -1,0 +1,49 @@
+@import "../../scss/variables.scss";
+@import "../../scss/mixins.scss";
+
+.not-found {
+  @include flex-box-column-center;
+  width: 100%;
+  padding: 20px 0 192px;
+  background-color: $main-white;
+
+  &__inner {
+    @include flex-box-column-center;
+    max-width: 550px;
+    gap: 20px;
+    padding-bottom: 28px;
+  }
+  &__image {
+    width: 100%;
+    object-fit: cover;
+    min-height: 253px;
+  }
+  &__info {
+    @include mp-null;
+    @include text-font-select;
+  }
+  &__title {
+    @include mp-null;
+    @include use-font(40px, 48px, 500, normal);
+    color: $main-black;
+    font-family: $font-family;
+    padding-top: 20px;
+  }
+}
+
+@include mobile {
+  .not-found {
+    box-sizing: border-box;
+    padding-left: 20px;
+    padding-right: 20px;
+    &__info {
+      @include text-font-link-mob;
+    }
+    // &__image {
+    //   max-width: 390px;
+    // }
+    &__title {
+      @include use-font(28px, 34px, 500, normal);
+    }
+  }
+}

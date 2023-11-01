@@ -1,0 +1,115 @@
+@import "../../../scss/variables.scss";
+@import "../../../scss/mixins.scss";
+
+.reviews-form {
+  &__popup {
+    min-height: 276px;
+    text-align: center;
+    padding: 0;
+  }
+  &__popup-content {
+    text-align: left;
+    width: 100%;
+    max-width: 585px;
+  }
+  &__popup-text {
+    @include mp-null;
+    max-width: 641px;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 30px;
+    margin-bottom: 24px;
+    &_type_long {
+      min-width: 641px;
+    }
+    &_type_review {
+      font-family: $font-family-accent;
+      @include use-font(26px, 40px, 800);
+      margin-bottom: 20px;
+    }
+    &_uppercase {
+      text-transform: uppercase;
+    }
+  }
+  &__fieldset {
+    @include mp-null;
+    border: none;
+  }
+  &__reviews {
+    box-sizing: border-box;
+    @include mp-null;
+    display: flex;
+    padding: 16px 12px 0px 20px;
+    margin-top: 20px;
+    border-radius: 28px;
+    border: 2px solid $black;
+    background: $white;
+    resize: none;
+    width: 100%;
+    max-height: 164px;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 22px;
+    &:focus {
+      border: 2px solid $green;
+      outline: none;
+    }
+    &-error {
+      @include error-input;
+    }
+  }
+  &__character-count {
+    @include mp-null;
+    margin-top: 8px;
+    text-align: right;
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 300;
+    line-height: 14px;
+  }
+  &__box {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: right;
+    padding: 32px 0 0;
+    margin: 0;
+    border: none;
+    div {
+      align-self: flex-start;
+    }
+    &_text {
+      text-align: right;
+      display: block;
+      color: $black;
+      font-size: 12px;
+      font-style: normal;
+      font-weight: 300;
+      line-height: 14px;
+      padding: 5px 12px 20px 0;
+      align-self: end;
+    }
+    &_error {
+      color: $alert-red;
+    }
+  }
+  &__server-error {
+    display: block;
+    text-align: center;
+    color: $alert-red;
+    font-size: 16px;
+    padding-bottom: 20px;
+  }
+}
+
+@include mobile {
+  .reviews-form {
+    &__popup-text {
+      &_type_review {
+        @include use-font(24px, 36px, 800);
+      }
+    }
+  }
+}

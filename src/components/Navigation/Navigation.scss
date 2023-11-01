@@ -1,0 +1,42 @@
+@import "../../scss/variables.scss";
+@import "../../scss/mixins.scss";
+.navigation {
+  display: flex;
+  justify-content: space-between;
+  font-family: $font-family;
+
+  &__item {
+    @include flex-box-row;
+  }
+
+  &__link {
+    @include use-font(18px, 22px, 400, normal);
+    padding: 20px 10px;
+    box-sizing: border-box;
+    text-decoration: none;
+    color: $black;
+
+    &:hover {
+      color: $pink;
+    }
+  }
+
+  &__link_active {
+    border-bottom: 2px solid $green;
+  }
+}
+
+@include tablet {
+  .navigation {
+    &__item {
+      flex-direction: column;
+      gap: 12px;
+      align-items: end;
+      text-align: end;
+    }
+    &__link {
+      padding: 12px 0 12px 12px;
+      margin-bottom: 12px;
+    }
+  }
+}

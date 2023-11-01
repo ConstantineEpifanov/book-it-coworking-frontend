@@ -1,0 +1,236 @@
+@import "../../scss/variables.scss";
+@import "../../scss/mixins.scss";
+
+.booking {
+  font-family: $font-family;
+  color: $main-black;
+  margin: $main-margin;
+  flex-grow: 1;
+  position: relative;
+
+  &__section-header {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  &__section-title {
+    @include mp-null;
+    @include text-font-large;
+
+    @include tablet {
+      @include text-font-large-mobile;
+    }
+  }
+
+  &__section {
+    padding: 34px 0 58px;
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+  }
+
+  &__section:last-child {
+    padding-bottom: 0;
+  }
+
+  &__spot-type-button {
+    flex-grow: 1;
+  }
+
+  &__flex-container {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+
+    &_type_spots {
+      gap: 0;
+    }
+  }
+
+  &__plan-photo-link {
+    display: flex;
+    height: auto;
+    max-height: 0;
+
+    transition: max-height 0.2s ease 0.1s;
+
+    &_visible {
+      max-height: 1000px;
+      transition: max-height 0.3s ease;
+    }
+  }
+
+  &__choose-date-button {
+    @include text-font-normal-mob;
+    width: 100%;
+    font-weight: 400;
+    line-height: 1.25;
+  }
+
+  &__plan-photo {
+    width: 100%;
+    max-width: 1120px;
+    margin-bottom: 30px;
+    display: block;
+    opacity: 0;
+
+    transition: opacity 0.1s linear;
+
+    &_visible {
+      opacity: 1;
+      transition: opacity 0.1s linear 0.2s;
+    }
+  }
+
+  &__spot-switcher {
+    align-self: center;
+  }
+
+  &__tabs-container {
+    padding-top: 20px;
+    display: flex;
+    gap: 17.7%;
+
+    @include tablet {
+      gap: 0;
+    }
+  }
+
+  &__tab {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    transition: opacity 0.3s ease;
+    user-select: none;
+
+    &_disabled {
+      opacity: 0;
+    }
+
+    &_hidden {
+      display: none;
+    }
+  }
+
+  &__tab-title {
+    @include mp-null;
+    font-family: $font-family;
+    font-size: 28px;
+    font-style: normal;
+    font-weight: 300;
+    line-height: 42px;
+  }
+
+  &__spot-price {
+    @include mp-null;
+    font-family: $font-family;
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 22px;
+  }
+
+  @include tablet {
+    padding: $main-margin-tablet;
+    margin: 0;
+  }
+
+  @include mobile {
+    padding: $main-margin-mobile;
+  }
+
+  &__buttons-list {
+    @include mp-null;
+    display: grid;
+
+    list-style-type: none;
+
+    &_type_spot-types {
+      max-width: 100%;
+      display: flex;
+      gap: 20px;
+
+      & li {
+        display: flex;
+        flex-grow: 1;
+        flex-basis: 0;
+      }
+    }
+
+    &_type_time-ranges {
+      grid-template-columns: repeat(auto-fill, minmax(171px, max-content));
+      grid-template-rows: repeat(var(--buttons-list-rows-main), min-content);
+      grid-auto-flow: column;
+      gap: 19px;
+    }
+
+    &_type_spots {
+      grid-template-columns: repeat(auto-fill, minmax(75px, max-content));
+      gap: 20px;
+    }
+
+    &_type_meeting-rooms {
+      grid-template-columns: minmax(265px, max-content);
+      grid-auto-flow: row;
+      gap: 17px;
+    }
+  }
+}
+
+@media screen and (max-width: 1256px) {
+  .booking {
+    &__section-header {
+      flex-direction: column;
+    }
+
+    &__buttons-list {
+      &_type_time-ranges {
+        grid-template-rows: repeat(var(--buttons-list-rows-1256), min-content);
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 1064px) {
+  .booking {
+    &__buttons-list {
+      &_type_time-ranges {
+        grid-template-rows: repeat(var(--buttons-list-rows-1064), min-content);
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 1024px) {
+  .booking {
+    &__buttons-list {
+      &_type_time-ranges {
+        grid-template-rows: repeat(var(--buttons-list-rows-1024), min-content);
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 944px) {
+  .booking {
+    &__buttons-list {
+      &_type_time-ranges {
+        grid-template-rows: repeat(var(--buttons-list-rows-944), min-content);
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 769px) {
+  .booking {
+    &__buttons-list {
+      &_type_time-ranges {
+        grid-template-columns: repeat(2, 1fr);
+        grid-template-rows: none;
+        grid-auto-flow: unset;
+        column-gap: 7px;
+        row-gap: 7px;
+      }
+    }
+  }
+}

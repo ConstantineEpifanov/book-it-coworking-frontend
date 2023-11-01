@@ -1,0 +1,132 @@
+@import "./../../scss/variables.scss";
+@import "./../../scss/mixins.scss";
+
+.profile-data {
+  box-sizing: border-box;
+  font-family: $font-family;
+  color: $black;
+  &__header-container {
+    margin-bottom: 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  &__title {
+    @include mp-null;
+    font-size: 28px;
+    font-style: normal;
+    font-weight: 300;
+    line-height: 42px;
+  }
+  &__image {
+    margin-top: 40px;
+    display: block;
+    object-fit: contain;
+    width: 110px;
+    height: 110px;
+  }
+  &__form {
+    margin-top: 20px;
+  }
+  &__info-list {
+    @include mp-null;
+    margin-bottom: 20px;
+    list-style-type: none;
+    width: 100%;
+  }
+  &__list {
+    @include mp-null;
+    list-style-type: none;
+    &-input {
+      @include mp-null;
+    }
+  }
+  &__list-item {
+    margin-top: 20px;
+    display: flex;
+    max-width: 100%;
+  }
+  &__input {
+    width: 415px;
+    height: 58px;
+    padding: 16px 12px 12px 20px;
+  }
+  &__info {
+    @include mp-null;
+    margin-bottom: 30px;
+    max-width: 280px;
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 300;
+    line-height: 14px;
+  }
+  &__buttons {
+    display: flex;
+    gap: 20px;
+  }
+  &__text-overflow {
+    @include mp-null;
+    display: block;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    line-height: 30px;
+    flex-shrink: 1;
+  }
+  &__label {
+    @include mp-null;
+    @include use-font(20px, 30px, 400);
+    display: block;
+    min-width: 235px;
+    line-height: 30px;
+  }
+}
+
+@include mobile {
+  .profile-data {
+    margin: 0 auto;
+    max-width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    &__image {
+      margin-top: 30px;
+      align-self: center;
+      width: 70px;
+      height: 70px;
+    }
+    &__list-item {
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 30px;
+    }
+    &__text-overflow {
+      @include use-font(18px, 22px, 300);
+      text-align: center;
+    }
+    &__label {
+      @include use-font(20px, 22px, 300);
+      text-align: center;
+    }
+    &__text-overflow {
+      max-width: calc(100vw - 10%);
+    }
+    &__info {
+      align-self: flex-start;
+      @include use-font(10px, 14px, 300);
+    }
+    &__buttons > :first-child {
+      display: none;
+    }
+    &__input {
+      width: calc(100vw - 40px);
+      max-width: 450px;
+      height: 44px;
+      > .input__items {
+        max-height: 30px;
+      }
+    }
+  }
+}
