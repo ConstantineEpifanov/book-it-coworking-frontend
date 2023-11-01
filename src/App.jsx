@@ -158,7 +158,16 @@ function App() {
             <Route path="/payments" element={<Payments />} />
             <Route path="*" element={<PageNotFound />} />
             {/* для рероутинга попапов, чтобы при переключении не бил в 404 */}
-            <Route path="/popup/*" element={<Main />} />
+            <Route
+              path="/popup/*"
+              element={
+                previousLocation?.pathname === "/booking" ? (
+                  <Booking />
+                ) : (
+                  <Main />
+                )
+              }
+            />
           </Routes>
           {previousLocation && (
             <Routes>
