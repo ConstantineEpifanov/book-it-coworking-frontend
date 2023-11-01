@@ -4,12 +4,14 @@ import React, {
   useCallback,
   useMemo,
   useRef,
+  useContext,
 } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import PropTypes from "prop-types";
 import clsx from "clsx";
 import dayjs from "dayjs";
 import "dayjs/locale/ru";
+import { CurrentUserContext } from "../../contexts/currentUserContext";
 
 import "./Booking.scss";
 import { getLocationPlanPhoto, getSpots, postOrder } from "../../utils/Api";
@@ -224,6 +226,7 @@ export const Booking = () => {
   const [isMeetingRoomsEnabled, setMeetingRoomsEnabled] = useState(false);
   const [isPlanPhotoVisible, setIsPlanPhotoVisible] = useState(false);
   const [isDatePopupOpened, setDatePopupOpened] = useState(false);
+  const { showMessage } = useContext(CurrentUserContext);
   const [chooseDateButtonText, setChooseDateButtonText] = useState(
     DEFAULT_DATE_BUTTON_TEXT,
   );
@@ -423,7 +426,7 @@ export const Booking = () => {
         },
       });
     } catch (err) {
-      console.log(err.message);
+      showMessage("Бронирование доступно после авторизации");
     }
   };
 
