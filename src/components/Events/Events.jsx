@@ -12,6 +12,7 @@ import { SWIPER_BREAKPOINTS } from "../../utils/constants";
 import "swiper/swiper-bundle.min.css";
 import "swiper/swiper.min.css";
 import "./Events.scss";
+import { NotFoundError } from "../NotFoundError/NotFoundError";
 
 SwiperCore.use([Pagination]);
 
@@ -26,25 +27,33 @@ export const Events = ({ eventsArray }) => (
       на&nbsp;базе&nbsp;наших коворкингов
     </p>
 
-    <div className="events__list">
-      <Swiper
-        spaceBetween={20}
-        slidesPerView={1.2}
-        pagination={{
-          el: ".swiper-pagination",
-          type: "bullets",
-          clickable: true,
-        }}
-        breakpoints={SWIPER_BREAKPOINTS}
-      >
-        {eventsArray.map((event) => (
-          <SwiperSlide key={event.id}>
-            <EventsItem event={event} />
-          </SwiperSlide>
-        ))}
-        <div className="swiper-pagination" />
-      </Swiper>
-    </div>
+    {eventsArray.length === 0 ? (
+      <NotFoundError
+        titleText="Данные с сервера не получены"
+        subtitleText="Попробуйте чуть позже"
+        directionRow
+      />
+    ) : (
+      <div className="events__list">
+        <Swiper
+          spaceBetween={20}
+          slidesPerView={1.2}
+          pagination={{
+            el: ".swiper-pagination",
+            type: "bullets",
+            clickable: true,
+          }}
+          breakpoints={SWIPER_BREAKPOINTS}
+        >
+          {eventsArray.map((event) => (
+            <SwiperSlide key={event.id}>
+              <EventsItem event={event} />
+            </SwiperSlide>
+          ))}
+          <div className="swiper-pagination" />
+        </Swiper>
+      </div>
+    )}
   </section>
 );
 
