@@ -1,7 +1,13 @@
 /* eslint-disable camelcase */
 import React from "react";
 
-import { Route, Routes, useLocation, useNavigate } from "react-router-dom";
+import {
+  Navigate,
+  Route,
+  Routes,
+  useLocation,
+  useNavigate,
+} from "react-router-dom";
 import { CurrentUserContext } from "./contexts/currentUserContext";
 
 import { ProtectedRouteElement } from "./HOC/ProtectedRoute";
@@ -163,7 +169,7 @@ function App() {
               path="/popup/*"
               element={
                 location?.state?.previousLocation?.pathname === "/booking" ? (
-                  <Booking />
+                  <Navigate to="/booking" />
                 ) : (
                   <Main />
                 )
