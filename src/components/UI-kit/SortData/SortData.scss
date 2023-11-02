@@ -96,7 +96,11 @@
       }
     }
   }
-  // &_location_coworking-search-mobile {
-  //   grid-area: place-filter;
-  // }
+  &_location_coworking-search-mobile {
+    font-size: 14px;
+    font-weight: 300;
+    line-height: 22px;
+    width: 186px;
+    height: 44px;
+  }
 }

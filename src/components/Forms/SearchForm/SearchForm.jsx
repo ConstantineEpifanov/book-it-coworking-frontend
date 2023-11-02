@@ -95,7 +95,7 @@ const SearchForm = ({
               selectName="category"
               titleSort="Вид рабочего места"
               array={coWorkingOptions}
-              size="max"
+              size={isMobile ? "mini" : "max"}
               handleSelectChange={handleSelectChange}
             />
             <MultiChoiceDropdown
@@ -105,7 +105,7 @@ const SearchForm = ({
               dropdownName="metro"
               dropdownTitle="Станции метро"
               array={metroArray}
-              size="max"
+              size={isMobile ? "mini" : "max"}
               handleSelectChange={handleSelectChange}
             />
           </>

@@ -126,7 +126,6 @@ export const CoworkingList = () => {
   }, [coworkingsArray]);
 
   const handleShowFiltersClick = () => {
-    console.log("handleShowFiltersClick");
     setFiltersShown(!isFiltersShown);
   };
 
@@ -166,7 +165,9 @@ export const CoworkingList = () => {
               <Button
                 onClick={handleShowFiltersClick}
                 btnClass="button_type_show-filters"
-                btnText="Показать фильтры"
+                btnText={
+                  !isFiltersShown ? "Показать фильтры" : "Скрыть фильтры"
+                }
               />
             )}
             <Button
