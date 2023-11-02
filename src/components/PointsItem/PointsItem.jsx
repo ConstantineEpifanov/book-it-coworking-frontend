@@ -106,12 +106,12 @@ export const PointsItem = ({ isCompact, isListed, data }) => {
   // Компактная карточка для главной страницы
   const compactCard = () => (
     <div className="point">
-      <div className="point__image-container">
+      <div className="point__image-container point__image-container_compact">
         <img
           loading="lazy"
           src={data.main_photo}
           alt={data.name}
-          className="point__image"
+          className="point__image point__image_compact"
         />
         <p className="point__cost">От {data.low_price}&#8381;/час</p>
         <PointRating
@@ -288,13 +288,13 @@ export const PointsItem = ({ isCompact, isListed, data }) => {
           </ul>
           <div className="point__buttons">
             <Button
-              btnClass="button_type_form button_size_middle"
+              btnClass="button_type_form button_type_point"
               btnText="Забронировать место"
               onClick={handleBooking}
             />
             {isListed && (
               <Button
-                btnClass="button_type_transparent button_size_middle"
+                btnClass="button_type_transparent button_type_point"
                 btnText="Подробнее"
                 onClick={handleDetailsButton}
               />

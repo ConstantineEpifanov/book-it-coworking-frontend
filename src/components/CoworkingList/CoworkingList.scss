@@ -7,6 +7,12 @@
   flex-direction: column;
 }
 
+@include laptop {
+  .coworking-list {
+    margin: $main-margin-tablet;
+  }
+}
+
 @include mobile {
   .coworking-list {
     margin: $main-margin-mobile;
