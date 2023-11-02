@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useState, useRef } from "react";
 import { useLocation } from "react-router-dom";
 import { CurrentUserContext } from "../../contexts/currentUserContext";
 import "./CoworkingList.scss";
@@ -22,6 +22,9 @@ import {
 
 import { NotFoundError } from "../NotFoundError/NotFoundError";
 
+import { useResize } from "../../hooks/useResize";
+import Button from "../UI-kit/Button/Button";
+
 export const CoworkingList = () => {
   const [coworkingsArray, setCoworkingsArray] = useState([]);
   const [nextPageURL, setNextPageURL] = useState(null);
@@ -39,6 +42,13 @@ export const CoworkingList = () => {
   } = usePagination();
 
   const location = useLocation();
+
+  const { isScreenSmall, isScreenMedium } = useResize();
+  const isMobile = isScreenSmall || isScreenMedium;
+
+  const [isMap, setMap] = useState(false);
+  const [isFiltersShown, setFiltersShown] = useState(false);
+  const mapRef = useRef(null);
 
   const coworkingsFromPromo = location.state
     ? location.state.coworkingsFromPromo
@@ -115,6 +125,18 @@ export const CoworkingList = () => {
     setIsNotFoundError(coworkingsArray.length === 0);
   }, [coworkingsArray]);
 
+  const handleShowFiltersClick = () => {
+    console.log("handleShowFiltersClick");
+    setFiltersShown(!isFiltersShown);
+  };
+
+  const handleMapButtonClick = () => {
+    setMap(!isMap);
+    if (!isMap) {
+      mapRef.current.scrollIntoView({ behavior: "smooth" });
+    }
+  };
+
   return (
     <main className="coworking-list">
       {isLoading ? (
@@ -136,8 +158,25 @@ export const CoworkingList = () => {
             limit={limit}
             offset={offset}
             resetPagination={resetPagination}
+            isFiltersShown={isFiltersShown}
           />
-
+          <div className="entry-form__buttons-container">
+            {" "}
+            {isMobile && (
+              <Button
+                onClick={handleShowFiltersClick}
+                btnClass="button_type_show-filters"
+                btnText="Показать фильтры"
+              />
+            )}
+            <Button
+              onClick={handleMapButtonClick}
+              btnClass={`button_type_tertiary-map${
+                isMap ? " button_type_tertiary-map-shown" : ""
+              }`}
+              btnText={isMap ? "Скрыть карту" : "Показать карту"}
+            />
+          </div>
           {isNotFoundError ? (
             <NotFoundError
               titleText={NOT_FOUND_ERROR_TITLE}
@@ -145,7 +184,12 @@ export const CoworkingList = () => {
             />
           ) : (
             <>
-              <MainMap points={mapPoints} defaultState={defaultState} />
+              <MainMap
+                points={mapPoints}
+                defaultState={defaultState}
+                isMap={isMap}
+                mapRef={mapRef}
+              />
               <PointsList
                 isListed
                 coworkingsArray={coworkingsArray}

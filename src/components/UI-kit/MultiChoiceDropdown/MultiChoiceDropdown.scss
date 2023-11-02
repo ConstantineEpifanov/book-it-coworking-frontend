@@ -91,12 +91,20 @@
     background-color: inherit;
 
     &:hover {
-      background-color: $green;
       opacity: 0.7;
+      background-color: rgba($green, 0.7);
     }
 
     &.dropdown__item_selected {
       background-color: $green;
+      &:hover {
+        opacity: 1;
+        color: $black;
+        background-color: rgba($green, 0.7);
+      }
     }
   }
+  // &_location_coworking-search-mobile {
+  //   grid-area: metro-filter;
+  // }
 }

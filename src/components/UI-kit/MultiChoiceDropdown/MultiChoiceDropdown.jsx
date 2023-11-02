@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import "./MultiChoiceDropdown.scss";
 
 const MultiChoiceDropdown = ({
+  extraClass,
   dropdownName,
   dropdownTitle,
   array,
@@ -50,7 +51,7 @@ const MultiChoiceDropdown = ({
   return (
     <section
       ref={dropdownRef}
-      className={`dropdown dropdown_size_${size}`}
+      className={`dropdown dropdown_size_${size} ${extraClass}`}
       aria-label={`Filter by ${dropdownTitle}`}
     >
       <div
@@ -100,6 +101,7 @@ const MultiChoiceDropdown = ({
 };
 
 MultiChoiceDropdown.propTypes = {
+  extraClass: PropTypes.string,
   dropdownTitle: PropTypes.string.isRequired,
   array: PropTypes.arrayOf(PropTypes.string).isRequired,
   size: PropTypes.string,
@@ -108,6 +110,7 @@ MultiChoiceDropdown.propTypes = {
 };
 
 MultiChoiceDropdown.defaultProps = {
+  extraClass: "",
   size: "",
 };
 

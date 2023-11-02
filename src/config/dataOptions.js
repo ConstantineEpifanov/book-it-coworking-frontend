@@ -2,11 +2,6 @@ import MetroIcon from "../components/UI-kit/SortData/MetroIcon/MetroIcon";
 
 export const metroOptions = [
   {
-    id: 0,
-    text: "--",
-    icon: <MetroIcon stroke="#000" />,
-  },
-  {
     id: 1,
     text: "Зелёная",
     icon: <MetroIcon stroke="#1FDF00" />,
@@ -18,7 +13,6 @@ export const metroOptions = [
 ];
 
 export const coWorkingOptions = [
-  { id: 0, text: "--" },
   { id: 1, text: "Переговорная" },
   { id: 2, text: "Рабочее место" },
 ];

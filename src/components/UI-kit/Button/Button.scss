@@ -24,6 +24,11 @@
     max-height: 54px;
   }
 
+  &_location_coworking-search-mobile {
+    // grid-area: search-button;
+    flex: 1.4;
+  }
+
   // &_location_search-form-search {
   //   border: 2px solid $black;
   //   border-top-left-radius: 0;

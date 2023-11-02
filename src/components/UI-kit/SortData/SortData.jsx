@@ -4,6 +4,7 @@ import React from "react";
 import "./SortData.scss";
 
 const SortData = ({
+  extraClass,
   titleSort,
   array,
   size,
@@ -15,7 +16,7 @@ const SortData = ({
   const [sort, setSort] = React.useState("");
 
   const onClickListItem = (obj) => {
-    const newSort = obj.text === "--" ? "" : obj.text;
+    const newSort = obj.text === sort ? "" : obj.text;
     setSort(newSort);
     handleSelectChange({ [selectName]: newSort });
     setOpen(false);
@@ -36,7 +37,7 @@ const SortData = ({
   return (
     <section
       ref={sortRef}
-      className={`sort  sort_size-${size}`}
+      className={`sort  sort_size-${size} ${extraClass}`}
       aria-label={`фильтр коворкингов ${titleSort} `}
     >
       <div
@@ -63,7 +64,9 @@ const SortData = ({
                 <button
                   key={data.id}
                   onClick={() => onClickListItem(data)}
-                  className="sort__popup_list-active"
+                  className={`sort__popup_list-active ${
+                    data.text === sort ? "sort__popup_list-selected" : ""
+                  }`}
                 >
                   {data.icon}
                   {data.text}
@@ -78,6 +81,7 @@ const SortData = ({
 };
 
 SortData.propTypes = {
+  extraClass: PropTypes.string,
   titleSort: PropTypes.string.isRequired,
   array: PropTypes.arrayOf(
     PropTypes.shape({
@@ -92,6 +96,7 @@ SortData.propTypes = {
 };
 
 SortData.defaultProps = {
+  extraClass: "",
   size: "",
   array: [{ icon: {} }],
 };

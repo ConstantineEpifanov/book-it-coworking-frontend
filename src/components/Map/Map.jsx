@@ -1,9 +1,10 @@
-import React, { useState, useRef } from "react";
+// import React, { useState, useRef } from "react";
+import React from "react";
 import { YMaps, Map as YandexMap, Placemark } from "@pbe/react-yandex-maps";
 import PropTypes from "prop-types";
 import "./Map.scss";
 
-import Button from "../UI-kit/Button/Button";
+// import Button from "../UI-kit/Button/Button";
 
 import { generateCenterFromPoints } from "../../utils/utils";
 import { DEFAULT_ZOOM } from "../../utils/constants";
@@ -12,44 +13,44 @@ import MapIcon from "../../images/map.png";
 import Star from "../../images/star.svg";
 import Tag from "../../images/tag.svg";
 
-import { useResize } from "../../hooks/useResize";
+// import { useResize } from "../../hooks/useResize";
 
-export const MainMap = ({ points }) => {
-  const [isMap, setMap] = useState(false);
+export const MainMap = ({ points, isMap, mapRef }) => {
+  // const [isMap, setMap] = useState(false);
   const center = generateCenterFromPoints(points);
-  const mapRef = useRef(null);
+  // const mapRef = useRef(null);
 
-  const { isScreenSmall, isScreenMedium } = useResize();
-  const isMobile = isScreenSmall || isScreenMedium;
+  // const { isScreenSmall, isScreenMedium } = useResize();
+  // const isMobile = isScreenSmall || isScreenMedium;
 
-  const handleMapButtonClick = () => {
-    setMap(!isMap);
-    if (!isMap) {
-      mapRef.current.scrollIntoView({ behavior: "smooth" });
-    }
-  };
+  // const handleMapButtonClick = () => {
+  //   setMap(!isMap);
+  //   if (!isMap) {
+  //     mapRef.current.scrollIntoView({ behavior: "smooth" });
+  //   }
+  // };
 
-  const handleShowFiltersClick = () => {
-    console.log("handleShowFiltersClick");
-  };
+  // const handleShowFiltersClick = () => {
+  //   console.log("handleShowFiltersClick");
+  // };
 
   return (
     <div className="map__container" ref={mapRef}>
-      {isMobile && (
+      {/* {isMobile && (
         <Button
           onClick={handleShowFiltersClick}
           btnClass="button_type_show-filters"
           btnText="Показать фильтры"
         />
-      )}
+      )} */}
 
-      <Button
+      {/* <Button
         onClick={handleMapButtonClick}
         btnClass={`button_type_tertiary-map${
           isMap ? " button_type_tertiary-map-shown" : ""
         }`}
         btnText={isMap ? "Скрыть карту" : "Показать карту"}
-      />
+      /> */}
       <YMaps>
         <div className={`map ${isMap ? "map_active" : "map_inactive"}`}>
           <YandexMap
@@ -116,8 +117,12 @@ MainMap.propTypes = {
       get_full_address_str: PropTypes.string,
     }),
   ),
+  isMap: PropTypes.bool,
+  mapRef: PropTypes.shape({}),
 };
 
 MainMap.defaultProps = {
   points: [],
+  isMap: false,
+  mapRef: {},
 };
