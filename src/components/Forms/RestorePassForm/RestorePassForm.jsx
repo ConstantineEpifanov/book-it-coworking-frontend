@@ -66,7 +66,6 @@ const RestorePassForm = ({ isOpenPopup, handleClosePopup }) => {
       });
       if (res) {
         showMessage(res.message, "info");
-        console.log(res.message);
         setIsSuccessApi({
           ...isSuccessApi,
           changePass: true,
