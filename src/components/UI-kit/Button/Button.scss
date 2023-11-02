@@ -668,7 +668,7 @@
       max-width: 350px;
     }
     &_type_not-found {
-      @include use-font(16px, 20px, 400, normal);
+      @include use-font(16px, 20px, 400);
       width: 390px;
     }
     &_type_point {

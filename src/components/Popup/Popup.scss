@@ -45,25 +45,35 @@
     }
   }
   &__title {
-    @include use-font(40px, 48px, 400, normal);
+    @include use-font(40px, 48px, 400);
   }
   &__subtitle {
     @include mp-null;
     color: $main-black;
-    @include use-font(28px, 42px, 300, normal);
+    @include use-font(28px, 42px, 300);
   }
   &__text {
     @include mp-null;
-    @include use-font(20px, 30px, 400, normal);
+    @include use-font(20px, 30px, 400);
+  }
+}
+
+@include tablet-with-minwidth {
+  .popup {
+    &__container {
+      width: calc(100vw - 120px);
+      padding-left: 60px;
+      padding-right: 60px;
+    }
   }
 }
 
 @include mobile {
   .popup {
     &__container {
-      min-width: calc(100vw - 120px);
-      padding-left: 60px;
-      padding-right: 60px;
+      width: calc(100vw - 100px);
+      padding-left: 50px;
+      padding-right: 50px;
     }
     &_type_whitemobile {
       background-color: white;
