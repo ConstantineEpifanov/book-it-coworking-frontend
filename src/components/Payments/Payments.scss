@@ -9,8 +9,10 @@
 
   &__container {
     display: flex;
-    align-items: flex-start;
+    flex-direction: column-reverse;
+    align-items: center;
     justify-content: space-between;
+    gap: 30px;
   }
 
   &-place {
@@ -19,7 +21,7 @@
     border: 2px solid $black;
     padding: 40px 20px 56px 40px;
     box-sizing: border-box;
-    margin-top: 144px;
+    margin-top: 5vh;
 
     &__header {
       @include mp-null;
@@ -78,5 +80,23 @@
     font-weight: 800;
     line-height: 40px;
     letter-spacing: 0.28px;
+  }
+}
+
+@include tablet {
+  .payments {
+    margin: $main-margin-tablet;
+    &__container {
+      display: flex;
+      flex-direction: column-reverse;
+      align-items: flex-start;
+      justify-content: space-between;
+    }
+  }
+}
+
+@include mobile {
+  .payments {
+    margin: $main-margin-mobile;
   }
 }

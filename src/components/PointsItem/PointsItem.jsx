@@ -72,7 +72,10 @@ export const PointsItem = ({ isCompact, isListed, data }) => {
             : window.location.href,
         })
         .then(() => showMessage("Получилось поделиться", "info"))
-        .catch((error) => showMessage(error, "error"));
+        .catch((error) => {
+          showMessage(error, "error");
+          window.location.reload(true);
+        });
     } else {
       navigator.clipboard
         .writeText(
@@ -80,7 +83,8 @@ export const PointsItem = ({ isCompact, isListed, data }) => {
             ? `${window.location.href}/${data.id}`
             : window.location.href,
         )
-        .then(() => showMessage("Ссылка скопирована в буфер обмена", "info"));
+        .then(() => showMessage("Ссылка скопирована в буфер обмена", "info"))
+        .catch((error) => showMessage(error, "error"));
     }
   };
 
