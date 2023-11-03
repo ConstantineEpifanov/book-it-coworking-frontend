@@ -30,6 +30,7 @@ function Popup({
           <Button
             btnClass={clsx({
               button_type_close: true,
+              button_type_close_popup: true,
               [popupCloseButtonClass]: popupCloseButtonClass,
             })}
             onClick={onClickClose}

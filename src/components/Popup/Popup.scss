@@ -2,15 +2,8 @@
 @import "../../scss/mixins.scss";
 
 .popup {
-  display: flex;
-  position: fixed;
-  bottom: 0;
-  right: 0;
-  left: 0;
-  top: 0;
-  height: 100vh;
-  width: 100%;
-  backdrop-filter: blur(5px);
+  @include popup-basic;
+  // height: 100vh;
   align-items: center;
   justify-content: center;
   z-index: 4;

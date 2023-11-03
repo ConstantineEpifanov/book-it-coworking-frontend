@@ -31,6 +31,8 @@ import {
 import useInitialVisibilityState from "./hooks/useInitialVisibilityState";
 import BookingCalendarPopup from "../BookingCalendarPopup/BookingCalendarPopup";
 import SortData from "../UI-kit/SortData/SortData";
+import BookingImagePopup from "../BookingImagePopup/BookingImagePopup";
+import usePopupOpen from "../../hooks/usePopupOpen";
 
 dayjs.locale("ru");
 
@@ -207,7 +209,7 @@ export const Booking = () => {
   const DEFAULT_DATE_BUTTON_TEXT = "Выбрать дату и время";
 
   const location = useLocation();
-
+  const { isOpenPopup, handleOpenPopup, handleClosePopup } = usePopupOpen();
   const navigate = useNavigate();
   const coworking = useRef(location.state);
   const [currentCoworkingState, setCurrentCoworkingState] = useState(coworking);
@@ -226,6 +228,7 @@ export const Booking = () => {
   const [isMeetingRoomsEnabled, setMeetingRoomsEnabled] = useState(false);
   const [isPlanPhotoVisible, setIsPlanPhotoVisible] = useState(false);
   const [isDatePopupOpened, setDatePopupOpened] = useState(false);
+  // const [isImgPopupOpened, setImgPopupOpened] = useState(false);
   const { showMessage } = useContext(CurrentUserContext);
   const [chooseDateButtonText, setChooseDateButtonText] = useState(
     DEFAULT_DATE_BUTTON_TEXT,
@@ -783,6 +786,15 @@ export const Booking = () => {
           }}
         />
       )}
+      {initialVisibilityState.isMobileView && (
+        <BookingImagePopup
+          planPhoto={planPhoto}
+          isOpen={isOpenPopup}
+          onClickClose={() => {
+            handleClosePopup();
+          }}
+        />
+      )}
       <Button
         onClick={handleBackButton}
         btnClass="button_type_back"
@@ -896,6 +908,32 @@ export const Booking = () => {
                   src={planPhoto}
                   alt="Схема коворкинга"
                 />
+                <button
+                  className="button_type_openImg"
+                  // btnText="Открыть"
+                  onClick={() => {
+                    handleOpenPopup();
+                  }}
+                >
+                  <svg
+                    width="27"
+                    height="27"
+                    viewBox="0 0 27 27"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <rect width="27" height="27" rx="12" fill="#FDF8F1" />
+                    <path
+                      d="M20.9993 14.0001C20.9993 14.125 21.0877 13.9117 20.9993 14.0001C20.911 14.0884 21.1243 14.0001 20.9993 14.0001H13.9993V21.0001C13.9993 21.125 14.0877 20.9117 13.9993 21.0001C13.911 21.0884 14.1243 21.0001 13.9993 21.0001C13.8744 21.0001 13.0877 21.0884 12.9993 21.0001C12.911 20.9117 12.9993 21.125 12.9993 21.0001V14.0001H5.99933C5.87442 14.0001 6.08766 14.0884 5.99933 14.0001C5.91101 13.9117 5.99933 14.125 5.99933 14.0001C5.99933 13.8752 5.91101 13.0884 5.99933 13.0001C5.87442 13.0001 6.08766 12.9117 5.99933 13.0001H12.9993V6.00007C12.911 6.0884 12.9993 5.87515 12.9993 6.00007C13.0877 5.91174 13.8744 6.00007 13.9993 6.00007C13.911 5.91174 14.1243 6.00007 13.9993 6.00007C13.9993 5.87515 14.0877 6.0884 13.9993 6.00007V13.0001H20.9993C20.911 12.9117 21.1243 13.0001 20.9993 13.0001C21.0877 13.0884 20.9993 13.8752 20.9993 14.0001Z"
+                      fill="#122023"
+                    />
+                    <path
+                      d="M20.9993 14.0001C20.9993 14.125 21.0877 13.9117 20.9993 14.0001C20.911 14.0884 21.1243 14.0001 20.9993 14.0001H13.9993V21.0001C13.9993 21.125 14.0877 20.9117 13.9993 21.0001C13.911 21.0884 14.1243 21.0001 13.9993 21.0001C13.8744 21.0001 13.0877 21.0884 12.9993 21.0001C12.911 20.9117 12.9993 21.125 12.9993 21.0001V14.0001H5.99933C5.87442 14.0001 6.08766 14.0884 5.99933 14.0001C5.91101 13.9117 5.99933 14.125 5.99933 14.0001C5.99933 13.8752 5.91101 13.0884 5.99933 13.0001C5.87442 13.0001 6.08766 12.9117 5.99933 13.0001H12.9993V6.00007C12.911 6.0884 12.9993 5.87515 12.9993 6.00007C13.0877 5.91174 13.8744 6.00007 13.9993 6.00007C13.911 5.91174 14.1243 6.00007 13.9993 6.00007C13.9993 5.87515 14.0877 6.0884 13.9993 6.00007V13.0001H20.9993C20.911 12.9117 21.1243 13.0001 20.9993 13.0001C21.0877 13.0884 20.9993 13.8752 20.9993 14.0001Z"
+                      fill="black"
+                      fillOpacity="0.2"
+                    />
+                  </svg>
+                </button>
               </a>
               {!sectionsVisibility.isMobileView && (
                 <TabSwitcher

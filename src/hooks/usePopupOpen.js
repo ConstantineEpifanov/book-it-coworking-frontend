@@ -41,7 +41,8 @@ export default function usePopupOpen() {
     function closeByOverlayClick(evt) {
       if (
         evt.target.classList.contains("popup") ||
-        evt.target.classList.contains("button_type_close")
+        evt.target.classList.contains("button_type_close") ||
+        evt.target.classList.contains("bookingImg")
       ) {
         handleClosePopup();
       }
