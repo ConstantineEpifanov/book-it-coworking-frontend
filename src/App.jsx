@@ -67,7 +67,6 @@ function App() {
       );
     }
   };
-  console.log(location);
 
   //  ---------- AUTH FUNC ---------
 
