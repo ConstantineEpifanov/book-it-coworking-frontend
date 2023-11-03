@@ -1,5 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
+import { Link } from "react-router-dom";
 
 import { Swiper, SwiperSlide } from "swiper/react";
 import SwiperCore, { Pagination } from "swiper";
@@ -8,6 +9,9 @@ import { SWIPER_BREAKPOINTS } from "../../utils/constants";
 import { PointsItem } from "../PointsItem/PointsItem";
 
 import "swiper/swiper-bundle.min.css";
+import "./CoworkingSwiper.scss";
+
+import Button from "../UI-kit/Button/Button";
 
 SwiperCore.use([Pagination]);
 
@@ -31,6 +35,14 @@ export const CoworkingSwiper = ({ isCompact, coworkingsArray }) => (
         ))}
         <div className="swiper-pagination" />
       </Swiper>
+    </div>
+    <div className="coworking-swiper__more-button">
+      <Link to="/points">
+        <Button
+          btnClass="button_more button_type_tertiary"
+          btnText="Больше локаций"
+        />
+      </Link>
     </div>
   </section>
 );

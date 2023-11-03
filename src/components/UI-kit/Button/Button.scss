@@ -22,6 +22,18 @@
     border-left: none;
     max-width: 170px;
     max-height: 54px;
+    color: $black;
+    background-color: $green;
+
+    &:hover {
+      color: $black;
+      background-color: $green;
+    }
+
+    &:active {
+      color: $green;
+      background-color: $black;
+    }
   }
 
   // &_location_search-form-search {
@@ -260,6 +272,18 @@
       background: $pink;
       color: $black;
     }
+
+    @include mobile {
+      border: 1.5px solid $black;
+
+      &:hover {
+        border: 1.5px solid $pink;
+      }
+
+      &:active {
+        border: 1.5px solid $black;
+      }
+    }
   }
 
   //стили кнопки пароля
@@ -292,7 +316,7 @@
   // Кнопка назад на странице коворкинга
   &_type_back {
     width: auto;
-    padding: 4px 24px 22px 42px;
+    padding: 4px 24px 22px 36px;
     background: url("../../../images/back-button.svg");
     background-position: left top;
     background-repeat: no-repeat;
@@ -307,6 +331,16 @@
       opacity: 0.7;
       color: $pink;
       fill: $pink;
+    }
+
+    @include mobile {
+      @include text-font-normal-mob;
+      font-weight: 400;
+      line-height: 1.25;
+      padding: 10px 24px 10px 32px;
+      margin-bottom: 26px;
+      background-position: left center;
+      background-size: 24px;
     }
   }
 
@@ -425,11 +459,22 @@
     width: 100%;
     padding-top: 14px;
     padding-bottom: 14px;
+    background: transparent;
+
+    @include mobile-medium {
+      @include text-font-normal-mob;
+      line-height: 1.25;
+      padding: 11px 0 10px;
+      border: 1.5px solid $main-black;
+    }
   }
 
   &_type_buttons-list:disabled {
     border: 2px solid $gray;
     color: $gray;
+    @include mobile {
+      border: 1.5px solid $gray;
+    }
   }
 
   &_type_buttons-list-selected {
@@ -465,6 +510,11 @@
       color: $black;
       background-color: $green;
     }
+
+    &:active {
+      color: $green;
+      background-color: $black;
+    }
   }
 
   &_type_not-found {
@@ -473,6 +523,10 @@
 
   &:hover {
     opacity: 0.7;
+  }
+
+  &_type_point {
+    width: 265px;
   }
 }
 
@@ -614,8 +668,12 @@
       max-width: 350px;
     }
     &_type_not-found {
-      @include use-font(16px, 20px, 400, normal);
+      @include use-font(16px, 20px, 400);
       width: 390px;
+    }
+    &_type_point {
+      width: 350px;
+      height: 44px;
     }
   }
 }

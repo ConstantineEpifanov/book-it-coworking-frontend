@@ -2,7 +2,7 @@
 @import "./../../scss/mixins.scss";
 
 .events-item {
-  @include card-border-color(false);
+  @include card-border-color(true);
   margin-bottom: 2px;
   font-family: $font-family;
   color: $black;
@@ -54,7 +54,7 @@
     @include mp-null;
     margin-top: 8px;
     display: flex;
-    align-items: flex-start;
+    align-items: center;
     justify-content: flex-start;
     gap: 12px;
     font-size: 16px;

@@ -18,16 +18,16 @@
     display: flex;
     flex-direction: column;
     max-width: 100%;
-    margin-top: 30px;
+    margin-top: 50px;
   }
   &__section-title {
     @include mp-null;
     font-family: $font-family;
     font-size: 40px;
     font-style: normal;
-    font-weight: 400;
+    font-weight: 500;
     line-height: 1.2;
-    margin-bottom: 30px;
+    margin-bottom: 40px;
     max-width: 75%;
   }
 
@@ -39,5 +39,31 @@
     font-weight: 400;
     line-height: 1.5;
     max-width: 75%;
+  }
+}
+
+@include tablet {
+  .coworking {
+    margin: $main-margin-tablet;
+  }
+}
+
+@include mobile {
+  .coworking {
+    margin: $main-margin-mobile;
+
+    &__section-title {
+      font-size: 28px;
+      margin-bottom: 20px;
+    }
+
+    &__section-text {
+      font-size: 14px;
+      font-weight: 300;
+    }
+
+    &__section-text {
+      max-width: 90%;
+    }
   }
 }

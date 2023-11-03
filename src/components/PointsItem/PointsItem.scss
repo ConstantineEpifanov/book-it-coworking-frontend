@@ -79,6 +79,10 @@
       width: 740px;
       height: 450px;
     }
+
+    &_compact {
+      height: 260px;
+    }
   }
 
   &__cost {
@@ -120,6 +124,7 @@
     flex-direction: row;
     flex-wrap: nowrap;
     gap: 8px;
+    align-items: center;
 
     :first-child {
       flex-shrink: 0;
@@ -218,6 +223,7 @@
     font-style: normal;
     font-weight: 300;
     line-height: 1.37;
+    max-height: 45px;
   }
 
   &__buttons {
@@ -250,6 +256,60 @@
 
     &-active {
       background-color: $dark-gray;
+    }
+  }
+}
+
+@include laptop {
+  .point {
+    &__info-container {
+      gap: 16px;
+    }
+    &__subtitle-container {
+      gap: 15px;
+    }
+
+    &_large {
+      flex-direction: column;
+      max-width: 390px;
+      max-height: 100%;
+      border-radius: 42px;
+    }
+
+    &_own-page {
+      flex-direction: column;
+      max-width: 390px;
+      max-height: 562px;
+    }
+
+    &__image {
+      width: 390px;
+      height: 300px;
+
+      &_compact {
+        height: 260px;
+      }
+    }
+
+    &__image-container {
+      width: 390px;
+      height: 300px;
+    }
+
+    &__buttons {
+      justify-content: center;
+      flex-direction: column;
+    }
+
+    &__cost {
+      &_own-page {
+        top: 20px;
+        left: 17px;
+      }
+    }
+
+    &__info-buttons {
+      top: 20px;
     }
   }
 }

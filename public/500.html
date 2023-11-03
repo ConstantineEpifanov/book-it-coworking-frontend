@@ -1,0 +1,86 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Внутренняя ошибка сервера</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Onest:wght@300;400;500&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      body {
+        font-family: "Onest", sans-serif;
+        font-style: normal;
+        display: flex;
+        background-color: #fdf8f1;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        margin: 0;
+        color: #122023;
+      }
+      .container {
+        max-width: 550px;
+        text-align: center;
+      }
+      h1 {
+        margin: 0 0 20px;
+        padding: 0;
+        font-size: 200px;
+        font-weight: 400;
+        line-height: 240px;
+      }
+      h2 {
+        margin: 0 0 40px;
+        padding: 0 25px 0;
+        font-size: 40px;
+        font-weight: 500;
+        line-height: 48px;
+      }
+      p {
+        margin: 0;
+        padding: 0;
+        font-size: 16px;
+        font-weight: 300;
+        line-height: 22px;
+      }
+
+      @media screen and (max-width: 767px) {
+        .container {
+          margin: 0 20px;
+          max-width: 390px;
+        }
+        .mobile-hidden {
+          display: none;
+        }
+        h1 {
+          margin-bottom: 28px;
+          font-size: 160px;
+          line-height: 192px;
+        }
+        h2 {
+          font-size: 28px;
+          line-height: 34px;
+        }
+        p {
+          font-size: 14px;
+          line-height: 22px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>500</h1>
+      <h2>Внутренняя ошибка сервера</h2>
+      <p class="mobile-hidden">Попробуйте обновить страницу позже</p>
+      <p>
+        Если ошибка повторяется — напишите нам об этом на info@itcoworking.com
+        или позвоните +7(000)-00–00–00
+      </p>
+    </div>
+  </body>
+</html>

@@ -265,8 +265,26 @@
 }
 
 // ------------MEDIA QUERIES------------
+@mixin mobile-small {
+  @media screen and (max-width: $mobile-breakpoint-small) {
+    @content;
+  }
+}
+
 @mixin mobile-min {
   @media screen and (max-width: $mobile-breakpoint-min) {
+    @content;
+  }
+}
+
+@mixin mobile-medium {
+  @media screen and (max-width: $mobile-breakpoint-medium) {
+    @content;
+  }
+}
+
+@mixin mobile-large {
+  @media screen and (max-width: $mobile-breakpoint-large) {
     @content;
   }
 }
