@@ -17,7 +17,8 @@ const LoginForm = ({ isOpenPopup, onClosePopup, onGetUserInfo }) => {
   const location = useLocation();
   const { isErrApi, setIsErrApi, clearApiError } = useApiError();
   const { setIsLoggedIn, setIsLoading } = React.useContext(CurrentUserContext);
-  const { values, errors, handleChange, isValid } = useFormAndValidation();
+  const { values, errors, handleChange, isValid, resetForm } =
+    useFormAndValidation();
 
   const handleAuthorization = async ({ email, password }) => {
     try {
@@ -39,15 +40,18 @@ const LoginForm = ({ isOpenPopup, onClosePopup, onGetUserInfo }) => {
     }
   };
 
-  function handleSubmit(evt) {
-    evt.preventDefault();
-    handleAuthorization(values);
-    clearApiError();
-  }
-
   return (
     <Popup isOpen={isOpenPopup} onClickClose={onClosePopup}>
-      <EntryForm title="Войдите на сайт" onSubmit={handleSubmit}>
+      <EntryForm
+        title="Войдите на сайт"
+        onSubmit={(evt) => {
+          evt.preventDefault();
+          handleAuthorization(values);
+          // очистка форм и ошибок
+          clearApiError();
+          resetForm();
+        }}
+      >
         <Input
           inputValue={values.email}
           inputError={errors.email}

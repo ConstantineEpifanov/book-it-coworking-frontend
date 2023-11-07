@@ -9,7 +9,7 @@ import { RuleItem } from "../RuleItem/RuleItem";
 export const Rules = ({ rules }) => (
   <section className="rules">
     <SectionTitle titleText="Правила аренды" />
-    <SectionSubtitle titleText="Пожалуйста, ознакомьтесь с правилами перед бронированием" />
+    <SectionSubtitle titleText="Пожалуйста, ознакомьтесь с&#160;правилами перед бронированием" />
     <ul className="rules__list">
       {rules.map((item) => (
         <li key={item.id}>

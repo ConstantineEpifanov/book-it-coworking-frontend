@@ -24,7 +24,7 @@
   }
   &__title {
     @include mp-null;
-    @include use-font(40px, 48px, 500, normal);
+    @include use-font(40px, 48px, 500);
     color: $main-black;
     font-family: $font-family;
     padding-top: 20px;
@@ -43,7 +43,7 @@
     //   max-width: 390px;
     // }
     &__title {
-      @include use-font(28px, 34px, 500, normal);
+      @include use-font(28px, 34px, 500);
     }
   }
 }

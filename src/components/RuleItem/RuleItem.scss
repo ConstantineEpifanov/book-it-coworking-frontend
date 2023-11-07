@@ -35,31 +35,6 @@
     color: $white;
   }
 
-  // &__scroll-content {
-  //   border-radius: 20px;
-  //   width: 510px;
-  //   height: 292px;
-  //   background-color: $white;
-  //   overflow-y: auto;
-
-  //   &::-webkit-scrollbar {
-  //     width: 4px;
-  //     background-color: transparent;
-  //     border-radius: 20px;
-  //     cursor: pointer;
-  //   }
-
-  //   &::-webkit-scrollbar-thumb {
-  //     width: 4px;
-  //     background-color: $gray;
-  //     border-radius: 20px;
-  //   }
-
-  //   &::-webkit-scrollbar-track {
-  //     margin: 20px 0;
-  //   }
-  // }
-
   &__text {
     font-family: $font-family;
     @include mp-null;

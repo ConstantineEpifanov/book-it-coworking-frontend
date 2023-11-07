@@ -63,3 +63,16 @@
     font-family: $font-family;
   }
 }
+
+@include mobile {
+  .review-item {
+    width: 100%;
+    border-radius: 20px;
+
+    &__text {
+      @include mp-null;
+      @include use-font(14px, 1.17, 400);
+      // word-break: break-all;
+    }
+  }
+}

@@ -34,3 +34,19 @@
     box-sizing: border-box;
   }
 }
+
+@include tablet {
+  .payments-form {
+    &__box {
+      @include flex-box-column;
+    }
+  }
+}
+
+@include mobile {
+  .payments-form {
+    &__box {
+      align-items: center;
+    }
+  }
+}

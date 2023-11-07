@@ -24,3 +24,9 @@
   max-width: 100%;
   box-sizing: border-box;
 }
+
+@include laptop {
+  .points-list {
+    flex-direction: row;
+  }
+}
