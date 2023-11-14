@@ -15,10 +15,7 @@ export function checkResponse(res) {
 }
 
 function request(url, options) {
-  return fetch(
-    `https://spotit.acceleratorpracticum.ru/api/v1${url}`,
-    options,
-  ).then(checkResponse);
+  return fetch(`https://spots-it.ru/api/v1${url}`, options).then(checkResponse);
 }
 
 export function setHeaders() {
