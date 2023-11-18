@@ -1,5 +1,3 @@
-/* eslint-disable react/jsx-no-bind */
-/* eslint-disable camelcase */
 import PropTypes from "prop-types";
 import { useLocation, useNavigate } from "react-router-dom";
 import React, { useContext } from "react";

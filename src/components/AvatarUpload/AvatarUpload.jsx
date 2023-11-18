@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 import { useContext, useCallback } from "react";
 import { CurrentUserContext } from "../../contexts/currentUserContext";
 import { editUserAvatar } from "../../utils/Api";

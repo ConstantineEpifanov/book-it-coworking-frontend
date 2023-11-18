@@ -1,4 +1,3 @@
-/* eslint-disable no-nested-ternary */
 import React, { useEffect, useContext, useState } from "react";
 import { CurrentUserContext } from "../../contexts/currentUserContext";
 import "./Main.scss";
