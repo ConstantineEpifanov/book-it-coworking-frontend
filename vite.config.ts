@@ -5,6 +5,7 @@ import svgr from "vite-plugin-svgr";
 
 // https://vitejs.dev/config/
 export default defineConfig({
+  // Раскомментировать для gh-pages, но отвалится роутинг для режима dev
   // base: "/book-it-coworking-frontend/",
   plugins: [react(), tsconfigPaths(), svgr({ include: "**/*.svg?react" })],
   build: {
