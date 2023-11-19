@@ -1,7 +1,7 @@
-import { contactsItems } from "../../config/contactsItems";
-import { ContactsItem } from "../ContactsItem/ContactsItem";
-import { SectionTitle } from "../SectionTitle/SectionTitle";
-import teamImg from "../../images/team_photo.jpg";
+import { contactsItems } from "../../../config/contactsItems";
+import { ContactsItem } from "../../ContactsItem/ContactsItem";
+import { SectionTitle } from "../../SectionTitle/SectionTitle";
+import teamImg from "../../../images/team_photo.jpg";
 import "./Contacts.scss";
 
 const Contacts = () => (

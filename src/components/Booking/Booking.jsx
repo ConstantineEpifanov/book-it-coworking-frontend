@@ -909,7 +909,7 @@ export const Booking = () => {
                   alt="Схема коворкинга"
                 />
                 <button
-                  className="button_type_openImg"
+                  className="button button_type_openImg"
                   // btnText="Открыть"
                   onClick={() => {
                     handleOpenPopup();

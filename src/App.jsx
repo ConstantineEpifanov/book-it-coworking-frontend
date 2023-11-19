@@ -18,7 +18,7 @@ import "./App.css";
 import { Footer } from "./components/Footer/Footer";
 import Header from "./components/Header/Header";
 import PageNotFound from "./components/PageNotFound/PageNotFound";
-import Contacts from "./components/Contacts/Contacts";
+import Contacts from "./components/pages/Contacts/Contacts";
 import { Main } from "./components/Main/Main";
 
 import { CoworkingList } from "./components/CoworkingList/CoworkingList";

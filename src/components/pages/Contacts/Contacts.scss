@@ -1,4 +1,4 @@
-@import "./../../scss/mixins.scss";
+@import "../../../scss/mixins.scss";
 
 .contacts {
   width: 100%;
@@ -16,7 +16,7 @@
     max-width: 1440px;
     min-height: 764px;
     align-self: normal;
-    background: url("../../images/contact-overlay.jpg") 100% 100% no-repeat;
+    background: url("../../../images/contact-overlay.jpg") 100% 100% no-repeat;
   }
   &__list {
     @include mp-null;
@@ -107,7 +107,7 @@
       width: calc(100% + 40px);
       min-height: 801px;
       transform: translateX(-20px);
-      background: url("../../images/contacts-photo-mob.jpg") 100% 100% no-repeat;
+      background: url("../../../images/contacts-photo-mob.jpg") 100% 100% no-repeat;
       background-position: center;
     }
     &__team {
