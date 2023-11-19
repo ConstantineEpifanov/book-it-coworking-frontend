@@ -36,28 +36,24 @@ $tabNames: "data", "security", "bookings", "favorites";
 
 @each $tabName in $tabNames {
   .button__profile_#{$tabName} {
-    @include button-with-image(
-      "../../../../images/profile-icons/#{$tabName}.svg"
-    );
+    @include button-with-image("/src/images/profile-icons/#{$tabName}.svg");
     &:hover {
-      @include button-with-image(
-        "../../../../images/profile-icons/#{$tabName}.svg"
-      );
+      @include button-with-image("/src/images/profile-icons/#{$tabName}.svg");
     }
     &:active {
       @include button-with-image(
-        "../../../../images/profile-icons/#{$tabName}-active.svg"
+        "/src/images/profile-icons/#{$tabName}-active.svg"
       );
     }
   }
 
   .button__profile_#{$tabName}-active {
     @include button-with-image(
-      "../../../../images/profile-icons/#{$tabName}-active.svg"
+      "/src/images/profile-icons/#{$tabName}-active.svg"
     );
     &:active {
       @include button-with-image(
-        "../../../../images/profile-icons/#{$tabName}-pressed.svg"
+        "/src/images/profile-icons/#{$tabName}-pressed.svg"
       );
     }
     @include button-active;

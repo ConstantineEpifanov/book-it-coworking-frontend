@@ -1,4 +1,3 @@
-/* eslint-disable camelcase */
 export function checkResponse(res) {
   return res.ok
     ? res.json()

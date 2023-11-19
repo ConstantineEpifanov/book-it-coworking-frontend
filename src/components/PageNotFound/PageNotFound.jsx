@@ -1,4 +1,3 @@
-/* eslint-disable import/no-extraneous-dependencies */
 import { Link } from "react-router-dom";
 import "./PageNotFound.scss";
 import logo404 from "../../images/404-Error.svg";

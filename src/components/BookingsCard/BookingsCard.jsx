@@ -77,7 +77,6 @@ export const BookingsCard = ({ item, onUpdateStatus, onReviewSubmit }) => {
         showMessage(REVIEW_SUCCESS, "info");
       })
       .catch((e) => {
-        // eslint-disable-next-line no-underscore-dangle
         setServerError(e.booked_spot[0]);
       })
       .finally(() => {});

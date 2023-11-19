@@ -8,7 +8,6 @@ import ErrorIcon from "../../../images/info-popup/error";
 import "./InfoPopup.scss";
 
 const InfoPopup = ({ infoType, infoMessage }) => (
-  // eslint-disable-next-line react/jsx-no-useless-fragment
   <>
     {infoMessage && (
       <div
