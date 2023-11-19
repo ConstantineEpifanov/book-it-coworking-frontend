@@ -1,0 +1,22 @@
+@import "../../scss/variables.scss";
+@import "../../scss/mixins.scss";
+
+.bookingImg {
+  @include popup-basic;
+  background: rgb(0, 0, 0, 0.5);
+  align-items: center;
+  box-sizing: border-box;
+  z-index: 5;
+  overflow: scroll;
+  &__figure {
+    position: relative;
+    @include mp-null;
+    width: 100%;
+  }
+  &__image {
+    display: block;
+    width: 180%;
+    height: 100%;
+    overflow-y: scroll;
+  }
+}

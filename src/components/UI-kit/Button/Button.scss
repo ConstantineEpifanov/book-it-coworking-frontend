@@ -69,12 +69,21 @@
     background: url("../../../images/close-icon.svg") no-repeat;
     background-size: cover;
     border: none;
-    position: absolute;
-    top: 20px;
-    right: 20px;
     width: 24px;
     height: 24px;
     padding: 0;
+    &_popup {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+    }
+    &_img {
+      background-color: #fff;
+      border-radius: 50%;
+      position: absolute;
+      bottom: 20px;
+      right: 20px;
+    }
   }
 
   &_box {
@@ -596,7 +605,15 @@
       height: 44px;
       padding: 12px;
     }
-
+    &_type_openImg {
+      width: 27px;
+      height: 27px;
+      position: absolute;
+      bottom: 20px;
+      right: 20px;
+      background: inherit;
+      border: 0;
+    }
     &__password-toggle {
       @include mp-null;
       width: 20px;
