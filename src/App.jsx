@@ -1,7 +1,13 @@
 /* eslint-disable camelcase */
 import React from "react";
 
-import { Route, Routes, useLocation, useNavigate } from "react-router-dom";
+import {
+  Navigate,
+  Route,
+  Routes,
+  useLocation,
+  useNavigate,
+} from "react-router-dom";
 import { CurrentUserContext } from "./contexts/currentUserContext";
 
 import { ProtectedRouteElement } from "./HOC/ProtectedRoute";
@@ -28,7 +34,7 @@ import RestorePassForm from "./components/Forms/RestorePassForm/RestorePassForm"
 import { Coworking } from "./components/Coworking/Coworking";
 import { Booking } from "./components/Booking/Booking";
 
-import InfoPopup from "./components/InfoPopup/InfoPopup";
+import InfoPopup from "./components/UI-kit/InfoPopup/InfoPopup";
 
 import usePopupOpen from "./hooks/usePopupOpen";
 import { useInfoMessage } from "./hooks/useInfoMessage";
@@ -158,7 +164,16 @@ function App() {
             <Route path="/payments" element={<Payments />} />
             <Route path="*" element={<PageNotFound />} />
             {/* для рероутинга попапов, чтобы при переключении не бил в 404 */}
-            <Route path="/popup/*" element={<Main />} />
+            <Route
+              path="/popup/*"
+              element={
+                location?.state?.previousLocation?.pathname === "/booking" ? (
+                  <Navigate to="/booking" />
+                ) : (
+                  <Main />
+                )
+              }
+            />
           </Routes>
           {previousLocation && (
             <Routes>

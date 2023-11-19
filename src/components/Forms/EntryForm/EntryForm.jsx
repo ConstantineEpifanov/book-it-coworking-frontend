@@ -5,7 +5,7 @@ import "./EntryForm.scss";
 
 function EntryForm({ title, formClass, onSubmit, children }) {
   return (
-    <section className={`'entry-form' ${formClass}`} aria-label={title}>
+    <section className={`entry-form ${formClass}`} aria-label={title}>
       <div className="entry-form__container">
         <h3 className="entry-form__title">{title}</h3>
         <form

@@ -19,7 +19,7 @@ body {
 #root {
   max-width: 1440px;
   margin: auto;
-  height: 100vh;
+  min-height: 100vh;
 }
 
 @keyframes render-cards {

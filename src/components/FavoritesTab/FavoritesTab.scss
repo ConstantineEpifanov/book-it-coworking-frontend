@@ -5,16 +5,6 @@
   font-family: $font-family;
   color: $black;
   text-align: center;
-  &__title {
-    @include mp-null;
-    display: block;
-    width: 100%;
-    text-align: left;
-    font-size: 28px;
-    font-style: normal;
-    font-weight: 300;
-    line-height: 42px;
-  }
   &__card-list {
     @include mp-null;
     list-style-type: none;
@@ -35,7 +25,7 @@
 
     &-image {
       display: block;
-      height: 230px;
+      height: 200px;
       width: 100%;
       object-fit: cover;
       &-container {
@@ -97,19 +87,14 @@
     }
     &-address {
       @include mp-null;
+      @include use-rows(1);
+      @include use-font(14px, 22px, 300);
       margin-bottom: 16px;
       text-align: left;
-      font-size: 14px;
-      font-style: normal;
-      font-weight: 300;
-      line-height: 22px;
     }
     &-rating {
       @include mp-null;
-      font-size: 16px;
-      font-style: normal;
-      font-weight: 300;
-      line-height: 22px;
+      @include use-font(16px, 22px, 300);
     }
   }
   &__nodata,
@@ -123,13 +108,10 @@
 
 @include mobile {
   .favorites {
-    &__title {
-      text-align: center;
-    }
     &__card {
       border: none;
       border-radius: 0;
-      max-width: 175px;
+      max-width: 185px;
       justify-self: center;
       &:hover {
         box-shadow: none;
@@ -137,12 +119,10 @@
       &:last-child {
         align-self: flex-start;
       }
-      &-address {
-        display: -webkit-box;
-        -webkit-line-clamp: 2; /* Ограничение до двух строк */
-        -webkit-box-orient: vertical;
-        overflow: hidden;
+      &-address-row {
+        margin-top: 10px;
       }
+
       &-list {
         margin: 30px auto 0;
         display: grid;
@@ -164,9 +144,9 @@
       }
       &-image {
         box-sizing: border-box;
-        width: 175px;
-        height: 175px;
-        border-radius: 40px;
+        width: 185px;
+        height: 185px;
+        border-radius: 30px;
         border: 2px solid $black;
       }
       &-lookbutton {

@@ -17,9 +17,14 @@ function Input({
   inputMaxLength,
   inputMinLength,
   inputMaxValue,
+  isInputSearch,
 }) {
   return (
-    <div className="input__items">
+    <div
+      className={`input__items ${
+        isInputSearch ? "input__items_type_search" : ""
+      }`}
+    >
       {inputValue && (
         <label
           htmlFor={inputName}
@@ -30,7 +35,9 @@ function Input({
         </label>
       )}
       <input
-        className={`input ${inputClass} ${inputError ? "input-error" : ""}`}
+        className={`input ${inputClass} ${inputError ? "input-error" : ""} ${
+          isInputSearch ? "input_type_search" : ""
+        }`}
         type={inputType}
         name={inputName}
         placeholder={inputPlaceholder}
@@ -67,6 +74,7 @@ Input.propTypes = {
   inputMinLength: PropTypes.number,
   inputDisabled: PropTypes.bool,
   inputMaxValue: PropTypes.string,
+  isInputSearch: PropTypes.bool,
 
   handleChange: () => {},
   handleFocus: () => {},
@@ -84,6 +92,7 @@ Input.defaultProps = {
   inputMaxLength: undefined,
   inputMinLength: undefined,
   inputMaxValue: undefined,
+  isInputSearch: false,
   handleChange: () => {},
   handleFocus: () => {},
 };

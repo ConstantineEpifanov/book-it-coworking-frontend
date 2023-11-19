@@ -10,7 +10,7 @@
   }
 
   &__link {
-    @include use-font(18px, 22px, 400, normal);
+    @include use-font(18px, 22px, 400);
     padding: 20px 10px;
     box-sizing: border-box;
     text-decoration: none;

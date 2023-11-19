@@ -1,0 +1,9 @@
+@import "./../../scss/variables.scss";
+@import "./../../scss/mixins.scss";
+
+.coworking-swiper {
+  &__more-button {
+    display: flex;
+    justify-content: center;
+  }
+}

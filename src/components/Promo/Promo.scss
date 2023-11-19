@@ -59,6 +59,7 @@
   }
 
   &__search {
+    position: relative;
     display: flex;
     flex-direction: row;
     flex-wrap: nowrap;
@@ -71,7 +72,32 @@
     &__list {
       gap: 32px;
       justify-content: space-between;
+      margin-top: 6px;
     }
+    &__title {
+      padding-top: 16px;
+      font-size: 60px;
+      letter-spacing: 2.4px;
+      line-height: 72px;
+    }
+    &__subtitle {
+      margin-top: 11px;
+      margin-bottom: 29px;
+      font-size: 24px;
+      font-weight: 300;
+      line-height: 36px;
+    }
+    &__img {
+      width: 100%;
+      height: 100%;
+    }
+
+    &__search {
+      margin-top: 19px;
+    }
+    // &__container {
+
+    // }
   }
 }
 

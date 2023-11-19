@@ -1,43 +1,29 @@
 /* eslint-disable no-nested-ternary */
 import React, { useEffect, useContext, useState } from "react";
-// import PropTypes from "prop-types";
 import { CurrentUserContext } from "../../contexts/currentUserContext";
 import "./Main.scss";
 import { SectionTitle } from "../SectionTitle/SectionTitle";
-// import { SectionSubtitle } from "../SectionSubtitle/SectionSubtitle";
 import { PointsList } from "../PointsList/PointsList";
+import { CoworkingSwiper } from "../CoworkingSwiper/CoworkingSwiper";
 import { Promo } from "../Promo/Promo";
 import { Discounts } from "../Discounts/Discounts";
 import { Events } from "../Events/Events";
-import { Loader } from "../Loader/Loader";
 import { NotFoundError } from "../NotFoundError/NotFoundError";
-
 import { getEvents, getShortLocations } from "../../utils/Api";
-// import { useResize } from "../../hooks/useResize";
-// import SearchForm from "../Forms/SearchForm/SearchForm";
-// import Button from "../UI-kit/Button/Button";
-import {
-  LAPTOP_SHORT_POINTS_QUANTITY,
-  // MOBILE_POINTS_QUANTITY,
-  // TABLET_POINTS_QUANTITY,
-  // TABLET_MORE_POINTS_QUANTITY,
-} from "../../utils/constants";
+import { useResize } from "../../hooks/useResize";
+import usePagination from "../../hooks/usePagination";
 
 export const Main = () => {
   const [coworkingsArray, setCoworkingsArray] = useState([]);
   const [eventsArray, setEventsArray] = useState([]);
-  const { isLoading, setIsLoading, showMessage } =
-    useContext(CurrentUserContext);
-  //  const size = useResize();
+  const { showMessage } = useContext(CurrentUserContext);
+  const { isScreenSmall } = useResize();
+
+  const { initialLimit, offset } = usePagination();
 
   useEffect(() => {
-    setIsLoading(true);
-
     const fetchData = () => {
-      const shortLocationsPromise = getShortLocations(
-        LAPTOP_SHORT_POINTS_QUANTITY,
-        0,
-      )
+      const shortLocationsPromise = getShortLocations(initialLimit, offset)
         .then((res) => {
           setCoworkingsArray(res.results);
         })
@@ -54,74 +40,56 @@ export const Main = () => {
         });
 
       Promise.all([shortLocationsPromise, eventsPromise])
-        .then(() => {
-          setIsLoading(false);
-        })
-        .catch(() => {
-          setIsLoading(false);
-        });
+        .then(() => {})
+        .catch(() => {});
     };
 
     fetchData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  // Кнопка еще для десктопа
-  // const handleMoreClick = () => {
-  //   setPointsAddCount((prev) => prev + LAPTOP_MORE_SHORT_POINTS_QUANTITY);
-  //   getShortLocations(LAPTOP_MORE_SHORT_POINTS_QUANTITY, pointsAddCount)
+  // useEffect(() => {
+  //   setIsLoading(true);
+  //   getShortLocations(limit, offset)
   //     .then((res) => {
-  //       setCoworkingsArray(coworkingsArray.concat(res.results));
-  //       if (res.results.length < LAPTOP_MORE_SHORT_POINTS_QUANTITY)
-  //         setMoreButtonVisible(false);
+  //       setCoworkingsArray(res.results);
   //     })
-  //     .catch(() => {});
-  // };
-
-  // const pointsRender = useMemo(() => {
-  //   // Стартовое кол-во карточек для отображения на разных разрешениях
-  //   const pointsStartQuantity = () =>
-  //     size.isScreenLarge
-  //       ? LAPTOP_SHORT_POINTS_QUANTITY
-  //       : size.isScreenMedium
-  //       ? TABLET_POINTS_QUANTITY
-  //       : MOBILE_POINTS_QUANTITY;
-
-  //   return coworkingsArray.slice(0, pointsStartQuantity() + pointsAddCount);
-
-  //
-  // }, []);
+  //     .catch((err) => {
+  //       showMessage(err.detail);
+  //     })
+  //     .finally(() => {
+  //       setIsLoading(false);
+  //     });
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, [limit]);
 
   return (
     <main className="main">
-      {isLoading ? (
-        <Loader />
-      ) : (
-        <>
-          <Promo />
-          <section className="main__coworkings">
-            <SectionTitle
-              titleClass="section-title_margin-to-block"
-              titleText="Наши коворкинги"
-            />
-            {!coworkingsArray ? (
-              <NotFoundError
-                titleText="Данные с сервера не получены"
-                subtitleText="Попробуйте чуть позже"
-                directionRow
-              />
-            ) : (
-              <PointsList
-                isCompact
-                coworkingsArray={coworkingsArray}
-                isMoreButtonVisible={false}
-              />
-            )}
-          </section>
-          <Discounts />
-          <Events eventsArray={eventsArray} />
-        </>
-      )}
+      <Promo />
+      <section className="main__coworkings">
+        <SectionTitle
+          titleClass="section-title_margin-to-block"
+          titleText="Наши коворкинги"
+        />
+        {coworkingsArray.length === 0 ? (
+          <NotFoundError
+            titleText="Данные с сервера не получены"
+            subtitleText="Попробуйте чуть позже"
+            directionRow
+          />
+        ) : isScreenSmall ? (
+          <CoworkingSwiper isCompact coworkingsArray={coworkingsArray} />
+        ) : (
+          <PointsList
+            isCompact
+            coworkingsArray={coworkingsArray}
+            isMoreButtonVisible={false}
+          />
+        )}
+      </section>
+      <Discounts />
+
+      <Events eventsArray={eventsArray} />
     </main>
   );
 };

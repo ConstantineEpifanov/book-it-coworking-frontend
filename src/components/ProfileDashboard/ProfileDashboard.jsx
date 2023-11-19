@@ -17,7 +17,7 @@ export const ProfileDashboard = () => (
     <SectionTitle titleText="Личный кабинет" />
     <div className="profile-dashboard__card-list">
       <div className="profile-dashboard__card-row">
-        <Link className="profile-dashboard__link" to="/profile/personalData">
+        <Link className="profile-dashboard__link" to="/profile/data">
           <ProfileItem title="Персональные данные" svgElement={<UserIcon />} />
         </Link>
         <Link className="profile-dashboard__link" to="/profile/security">

@@ -18,7 +18,7 @@ export const ReviewList = ({
       <PointRating rating={pointRating} />
       <div className="review-list__length-container">
         <p className="review-list__text">Отзывов:&nbsp;</p>
-        <p className="review-list__length">{reviewsLength}</p>
+        <p className="review-list__text">{reviewsLength}</p>
       </div>
     </div>
     <ul className="review-list__items">
@@ -29,6 +29,7 @@ export const ReviewList = ({
             date={item.pub_date}
             text={item.description}
             rating={item.rating}
+            image={item.image}
           />
         </li>
       ))}

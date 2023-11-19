@@ -72,8 +72,17 @@
   color: $black;
   font-size: 40px;
   font-style: normal;
-  font-weight: 400;
+  font-weight: 500;
   line-height: 48px;
+}
+
+@mixin text-font-large-mobile {
+  font-family: $font-family;
+  color: $black;
+  font-size: 28px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 34px;
 }
 
 @mixin use-font(
@@ -92,6 +101,13 @@
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+}
+
+@mixin use-rows($num) {
+  display: -webkit-box;
+  -webkit-line-clamp: #{$num};
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }
 
 //  -------------- FONTS-MOB -----------------
@@ -194,6 +210,11 @@
   }
 }
 
+@mixin profile-size-button {
+  width: 170px;
+  height: 54px;
+}
+
 // --------------CARDS-------------------
 
 @mixin card-border-color($addBoxShadow: true) {
@@ -218,6 +239,7 @@
 
   &:hover {
     color: $color1;
+    opacity: 1;
   }
 
   &:active {
@@ -243,8 +265,26 @@
 }
 
 // ------------MEDIA QUERIES------------
+@mixin mobile-small {
+  @media screen and (max-width: $mobile-breakpoint-small) {
+    @content;
+  }
+}
+
 @mixin mobile-min {
   @media screen and (max-width: $mobile-breakpoint-min) {
+    @content;
+  }
+}
+
+@mixin mobile-medium {
+  @media screen and (max-width: $mobile-breakpoint-medium) {
+    @content;
+  }
+}
+
+@mixin mobile-large {
+  @media screen and (max-width: $mobile-breakpoint-large) {
     @content;
   }
 }

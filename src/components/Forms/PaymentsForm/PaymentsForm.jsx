@@ -1,18 +1,20 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { SectionTitle } from "../../SectionTitle/SectionTitle";
+// import { SectionTitle } from "../../SectionTitle/SectionTitle";
 import Button from "../../UI-kit/Button/Button";
 import EntryForm from "../EntryForm/EntryForm";
-import Input from "../../UI-kit/Input/Input";
+// import Input from "../../UI-kit/Input/Input";
 import "./PaymentsForm.scss";
 
-const PaymentsForm = ({ onSubmit, onBack }) => {
-  const [reviewText, setReviewText] = React.useState("");
-  const [inputError, setInputError] = React.useState("");
+const PaymentsForm = ({ onSubmit, onBack }) => (
+  // const [reviewText, setReviewText] = React.useState("");
+  // const [inputError, setInputError] = React.useState("");
 
-  return (
-    <EntryForm formClass="entry-form__inner_payments-form" onSubmit={onSubmit}>
-      <div className="payments-form">
+  <EntryForm
+    formClass="entry-form__inner_payments-form entry-form_type_payments"
+    onSubmit={onSubmit}
+  >
+    {/* <div className="payments-form">
         <SectionTitle titleText="Оплата" />
         <h3 className="payments-form__subtitle">
           Не забудьте паспорт или водительские права!
@@ -79,7 +81,7 @@ const PaymentsForm = ({ onSubmit, onBack }) => {
           }}
         />
         {/* если нет ошибки ввода, то покажи информацию */}
-        {inputError ? (
+    {/* {inputError ? (
           <span className="entry-form__box_text entry-form__box_error">
             {inputError}
           </span>
@@ -91,24 +93,21 @@ const PaymentsForm = ({ onSubmit, onBack }) => {
         <p className="payments-form__text_info payments-form__text_info-btn">
           Отправляя форму, вы принимаете условия договора оферты для физических
           лиц, и даете согласие на обработку персональных данных
-        </p>
-        <div className="payments-form__box">
-          <Button
-            btnClass="button_type_transparent button_size_middle"
-            btnText="Назад"
-            onClick={onBack}
-          />
-          <Button
-            btnClass="button_type_form button_size_middle"
-            btnText="Оплатить"
-            btnType="submit"
-          />
-        </div>
-      </div>
-    </EntryForm>
-  );
-};
-
+        </p> */}
+    <div className="payments-form__box">
+      <Button
+        btnClass="button_type_transparent button_size_middle"
+        btnText="Назад"
+        onClick={onBack}
+      />
+      <Button
+        btnClass="button_type_form button_size_middle"
+        btnText="Оплатить"
+        btnType="submit"
+      />
+    </div>
+  </EntryForm>
+);
 PaymentsForm.propTypes = {
   onSubmit: PropTypes.func,
   onBack: PropTypes.func,

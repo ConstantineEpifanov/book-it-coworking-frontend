@@ -1,5 +1,6 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import PropTypes from "prop-types";
+import clsx from "clsx";
 import { Link, useNavigate } from "react-router-dom";
 
 import { CurrentUserContext } from "../../contexts/currentUserContext";
@@ -44,6 +45,7 @@ export const BookingsCard = ({ item, onUpdateStatus, onReviewSubmit }) => {
   const [serverError, setServerError] = useState(null);
   const { showMessage } = useContext(CurrentUserContext);
   const navigate = useNavigate();
+  const [isMounted, setIsMounted] = useState(false);
 
   const handleCloseBookingPopup = () => {
     handleClosePopup();
@@ -103,6 +105,10 @@ export const BookingsCard = ({ item, onUpdateStatus, onReviewSubmit }) => {
     }
   }
 
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
+
   let content;
   if (isCancellationConfirmed) {
     content = (
@@ -129,7 +135,7 @@ export const BookingsCard = ({ item, onUpdateStatus, onReviewSubmit }) => {
             <Button
               btnText="Создать"
               btnType="button"
-              btnClass="button__profile-edit button_type_createorder"
+              btnClass="button_type_createorder"
               onClick={handleOpenReviewForm}
             />
           </Link>
@@ -155,8 +161,8 @@ export const BookingsCard = ({ item, onUpdateStatus, onReviewSubmit }) => {
             onClick={handleCloseBookingPopup}
           />
           <Button
-            btnText="Да, Отменить"
-            btnClass="button__profile-edit button_type_order"
+            btnText="Да, отменить"
+            btnClass="button_type_order"
             onClick={handleConfirmCancellation}
           />
         </div>
@@ -166,7 +172,10 @@ export const BookingsCard = ({ item, onUpdateStatus, onReviewSubmit }) => {
 
   return (
     <>
-      <li className="bookings-card" key={item.id}>
+      <li
+        className={clsx("bookings-card", { "fade-in": isMounted })}
+        key={item.id}
+      >
         <img
           className="bookings-card__image"
           src={item?.location_photo}

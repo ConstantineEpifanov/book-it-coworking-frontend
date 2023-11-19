@@ -18,7 +18,8 @@ const ConfirmRegisterForm = ({ data, isOpenPopup, handleClosePopup }) => {
   const location = useLocation();
   const { isErrApi, setIsErrApi, clearApiError } = useApiError();
   const { showMessage } = useContext(CurrentUserContext);
-  const { values, errors, handleChange, isValid } = useFormAndValidation();
+  const { values, errors, handleChange, isValid, resetForm } =
+    useFormAndValidation();
 
   const handleConfirm = async ({ email, confirmation_code }) => {
     try {
@@ -36,19 +37,21 @@ const ConfirmRegisterForm = ({ data, isOpenPopup, handleClosePopup }) => {
     }
   };
 
-  function handleSubmit(evt) {
-    evt.preventDefault();
-    handleConfirm({
-      email: data.email,
-      confirmation_code: values.confirmation_code,
-    });
-    // очистка ошибок
-    clearApiError();
-  }
-
   return (
     <Popup isOpen={isOpenPopup} onClickClose={handleClosePopup}>
-      <EntryForm title="Завершение регистрации" onSubmit={handleSubmit}>
+      <EntryForm
+        title="Завершение регистрации"
+        onSubmit={(evt) => {
+          evt.preventDefault();
+          handleConfirm({
+            email: data.email,
+            confirmation_code: values.confirmation_code,
+          });
+          // очистка форм и ошибок
+          clearApiError();
+          resetForm();
+        }}
+      >
         <Input
           inputType="text"
           inputPlaceholder="Код подтверждения"

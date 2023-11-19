@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import Button from "../../UI-kit/Button/Button";
 import Input from "../../UI-kit/Input/Input";
-import logoSearch from "../../../images/search-icon.svg";
+// import logoSearch from "../../../images/search-icon.svg";
 import SortData from "../../UI-kit/SortData/SortData";
 import MultiChoiceDropdown from "../../UI-kit/MultiChoiceDropdown/MultiChoiceDropdown";
 import { coWorkingOptions } from "../../../config/dataOptions";
@@ -57,11 +57,11 @@ const SearchForm = ({
       >
         <div className="entry-form__search">
           {/* @ TODO подумать над реализацией смены иконки при ошибке */}
-          <img
+          {/* <img
             src={logoSearch}
             alt="иконка поиска"
             className="entry-form__search-img"
-          />
+          /> */}
           <Input
             inputClass="input__search"
             inputType="search"
@@ -70,6 +70,7 @@ const SearchForm = ({
             handleChange={handleChange}
             inputPlaceholder="Найти рабочее место..."
             inputRequired={false}
+            isInputSearch
           />
         </div>
         {!isMobile ? (

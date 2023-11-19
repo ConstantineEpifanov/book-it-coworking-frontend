@@ -17,5 +17,6 @@
 @include mobile {
   .main {
     margin: $main-margin-mobile;
+    gap: 66px;
   }
 }

@@ -7,9 +7,12 @@ import SwiperCore, { Pagination } from "swiper";
 import { EventsItem } from "../EventsItem/EventsItem";
 import { SectionTitle } from "../SectionTitle/SectionTitle";
 
+import { SWIPER_BREAKPOINTS } from "../../utils/constants";
+
 import "swiper/swiper-bundle.min.css";
 import "swiper/swiper.min.css";
 import "./Events.scss";
+import { NotFoundError } from "../NotFoundError/NotFoundError";
 
 SwiperCore.use([Pagination]);
 
@@ -20,41 +23,37 @@ export const Events = ({ eventsArray }) => (
       titleText="Мероприятия"
     />
     <p className="events__subheader">
-      Здесь собраны все анонсы о предстоящих мероприятиях
-      на&nbsp;базе&nbsp;наших коворкингов
+      Здесь собраны все анонсы о&#160;предстоящих мероприятиях на&#160;базе
+      наших коворкингов
     </p>
 
-    <div className="events__list">
-      <Swiper
-        spaceBetween={20}
-        slidesPerView={1.2}
-        pagination={{
-          el: ".swiper-pagination",
-          type: "bullets",
-          clickable: true,
-        }}
-        breakpoints={{
-          768: {
-            slidesPerView: 1.2,
-          },
-          1060: {
-            slidesPerView: 2,
-            spaceBetween: 20,
-          },
-          1440: {
-            slidesPerView: 3,
-            spaceBetween: 20,
-          },
-        }}
-      >
-        {eventsArray.map((event) => (
-          <SwiperSlide key={event.id}>
-            <EventsItem event={event} />
-          </SwiperSlide>
-        ))}
-      </Swiper>
-    </div>
-    <div className="swiper-pagination" />
+    {eventsArray.length === 0 ? (
+      <NotFoundError
+        titleText="Данные с сервера не получены"
+        subtitleText="Попробуйте чуть позже"
+        directionRow
+      />
+    ) : (
+      <div className="events__list">
+        <Swiper
+          spaceBetween={20}
+          slidesPerView={1.2}
+          pagination={{
+            el: ".swiper-pagination",
+            type: "bullets",
+            clickable: true,
+          }}
+          breakpoints={SWIPER_BREAKPOINTS}
+        >
+          {eventsArray.map((event) => (
+            <SwiperSlide key={event.id}>
+              <EventsItem event={event} />
+            </SwiperSlide>
+          ))}
+          <div className="swiper-pagination" />
+        </Swiper>
+      </div>
+    )}
   </section>
 );
 

@@ -18,7 +18,8 @@ import { useApiError } from "../../../hooks/useApiError";
 
 const RegisterForm = ({ isOpenPopup, handleClosePopup }) => {
   const { isErrApi, setIsErrApi, clearApiError } = useApiError();
-  const { values, errors, isValid, handleChange } = useFormAndValidation();
+  const { values, errors, isValid, handleChange, resetForm } =
+    useFormAndValidation();
   const [isSuccessReg, setIsSuccessReg] = React.useState(false);
   const [userData, setUserData] = React.useState({});
   const location = useLocation();
@@ -50,12 +51,6 @@ const RegisterForm = ({ isOpenPopup, handleClosePopup }) => {
     }
   };
 
-  function handleSubmit(evt) {
-    evt.preventDefault();
-    handleRegister(values);
-    clearApiError();
-  }
-
   return (
     <Popup
       isOpen={isOpenPopup}
@@ -65,7 +60,16 @@ const RegisterForm = ({ isOpenPopup, handleClosePopup }) => {
       {isSuccessReg ? (
         <ConfirmRegisterForm data={userData} />
       ) : (
-        <EntryForm title="зарегистрируйтесь" onSubmit={handleSubmit}>
+        <EntryForm
+          title="зарегистрируйтесь"
+          onSubmit={(evt) => {
+            evt.preventDefault();
+            handleRegister(values);
+            // очистка форм и ошибок
+            clearApiError();
+            resetForm();
+          }}
+        >
           <Input
             inputType="text"
             inputPlaceholder="Имя"
