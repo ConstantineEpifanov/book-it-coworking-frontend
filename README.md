@@ -24,9 +24,21 @@
 
 ## 🖥 Демо проекта
 
-URL: https://spotit.acceleratorpracticum.ru/
+URL: https://spots-it.ru/
 
 Видео: https://skrinshoter.ru/vMgnzjft4SG
+
+## 🖥 Команда
+
+- 🦖  [Константин](https://github.com/ConstantineEpifanov)
+
+- 💪  [Сергей](https://github.com/sergasent)
+
+- 🧞‍♂️  [Влад](https://github.com/vladdevjs)
+
+- 🧘‍♀️  [Евгения](https://github.com/mintolime)
+
+- 🦸‍♂️  [Александр](https://github.com/yacax) 
 
 ## 🚀 Запуск фронтенд-сервера
 
